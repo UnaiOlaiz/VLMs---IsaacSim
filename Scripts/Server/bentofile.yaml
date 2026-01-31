@@ -1,0 +1,31 @@
+service: "server_bento:VLMServiceIsaac"
+labels:
+  owner: Unai Olaizola Osa
+  project: PFG VLM-IsaacSim
+
+include:
+  - "server_bento.py"
+  - "*.py"
+
+python:
+  packages:
+    - torch                      
+    - torchvision                
+    - transformers                
+    - accelerate                  
+    - pillow                      
+    - pydantic                    
+    - flash-attn
+  # MOVE THE PYTORCH LINK HERE:
+  extra_index_url:
+    - "https://download.pytorch.org/whl/cu121"
+
+docker:
+  distro: debian
+  cuda_version: "12.1"            
+  system_packages:
+    - libgl1                      
+    - git                         
+  env:
+    NVIDIA_VISIBLE_DEVICES: all   
+    NVIDIA_DRIVER_CAPABILITIES: compute,utility

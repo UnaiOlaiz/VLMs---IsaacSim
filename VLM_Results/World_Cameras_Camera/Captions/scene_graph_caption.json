@@ -1,0 +1,81 @@
+{
+    "0-hospitalbed": {
+        "class": "hospitalbed",
+        "caption": "A hospital bed with white frame, blue mattress, and multicolored control buttons. The bed has wheels for mobility and various adjustment mechanisms.",
+        "id": 0,
+        "relations": [
+            "near 2-chair",
+            "to the near left of 1-desk"
+        ]
+    },
+    "1-desk": {
+        "class": "desk",
+        "caption": "Gray desk with black tabletop and metal legs, featuring a side cabinet and open shelves.",
+        "id": 1,
+        "relations": [
+            "right 7-trashcan"
+        ]
+    },
+    "2-chair": {
+        "class": "chair",
+        "caption": "Blue office chair with black backrest and silver metal base with wheels.",
+        "id": 2,
+        "relations": []
+    },
+    "3-chair": {
+        "class": "chair",
+        "caption": "Office chair with blue fabric upholstery and black plastic armrests and base.",
+        "id": 3,
+        "relations": []
+    },
+    "4-wheelchair": {
+        "class": "wheelchair",
+        "caption": "A blue and white wheelchair with large gray wheels and a metal frame.",
+        "id": 4,
+        "relations": [
+            "near 3-chair"
+        ]
+    },
+    "5-sidetable": {
+        "class": "sidetable",
+        "caption": "A rectangular table with a white top and gray metal legs, equipped with wheels for mobility.",
+        "id": 5,
+        "relations": [
+            "to the near right of 0-hospitalbed",
+            "to the left, behind of 3-chair"
+        ]
+    },
+    "6-book": {
+        "class": "book",
+        "caption": "A yellow pencil with a black band near the tip and a sharpened graphite point.",
+        "id": 6,
+        "relations": [
+            "supported by 1-desk"
+        ]
+    },
+    "7-trashcan": {
+        "class": "trashcan",
+        "caption": "A black trapezoidal block with smooth surfaces and sharp edges.",
+        "id": 7,
+        "relations": []
+    },
+    "8-booksset": {
+        "class": "booksset",
+        "caption": "A stack of books with beige covers, accented by green, orange, and black spines.",
+        "id": 8,
+        "relations": [
+            "supported by 5-sidetable"
+        ]
+    },
+    "9-bottle": {
+        "class": "bottle",
+        "caption": "A white plastic bottle with a blue label and cap.",
+        "id": 9,
+        "relations": [
+            "supported by 5-sidetable"
+        ]
+    },
+    "global_caption": "Here is a summary of the scene:\n\nThe scene is set in a hospital room, with a hospital bed (0-hospitalbed) placed near a chair (2-chair) and to the left of a desk (1-desk). The hospital bed has wheels and various adjustment mechanisms, suggesting it is designed for patient comfort and mobility. The desk is gray with a black tabletop and metal legs, featuring a side cabinet and open shelves. A trashcan (7-trashcan) is placed to the right of the desk.\n\nNear the hospital bed, a wheelchair (4-wheelchair) is positioned, with a chair (3-chair) nearby. A sidetable (5-sidetable) is placed to the right of the hospital bed, with a book (6-book) supported by the desk and a books set (8-booksset) and a bottle (9-bottle) supported by the sidetable.\n\nThe scene suggests a hospital setting, with medical equipment and furniture arranged to facilitate patient care and comfort. The hospital bed and wheelchair indicate that the room is designed for patients who may require mobility assistance. The presence of a desk and chairs suggests that medical professionals may use the room for administrative tasks or patient consultations.\n\nThe scene can be described as a functional and practical hospital room, with a focus on patient care and comfort. The arrangement of objects suggests a sense of order and organization, with each object serving a specific purpose. The overall atmosphere is calm and professional, with a focus on providing medical care and support.",
+    "sft_qa": null,
+    "brief_caption": null
+}
