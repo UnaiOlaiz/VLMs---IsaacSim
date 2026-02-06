@@ -56,11 +56,11 @@ class VLMServiceIsaac:
 
         # Template structure: few-shot structured learning
         messages = [
-        {
+            {
             "role": "user",
             "content": [
                 {"type": "image"}, 
-                {"type": "text", "text": f"Locate {instruction}. Return the coordinates in [[ymin, xmin, ymax, xmax]] format."}
+                {"type": "text", "text": "Detect the red cube. Output only the bounding box as [ymin, xmin, ymax, xmax] using normalized coordinates 0-1000."}
             ]
         }
         ]
