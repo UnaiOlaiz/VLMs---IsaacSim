@@ -12,6 +12,25 @@ from omni.isaac.core.objects import VisualSphere
 import isaacsim.core.utils.prims as prim_utils
 from omni.physx.scripts import utils
 
+# Import the control function from another script
+import sys
+import os
+
+# Ruta absoluta directa a la carpeta Scripts
+scripts_path = "/home/unaiolaizolaosa/Documents/PFG/Scripts"
+
+if scripts_path not in sys.path:
+    sys.path.insert(0, scripts_path)
+
+try:
+    from Control.franka2 import execute_movement
+    print("PFG: Módulo Control cargado con éxito desde ruta absoluta.")
+except ImportError as e:
+    print(f"PFG ERROR: No se encuentra la carpeta en {scripts_path}")
+    print(f"Contenido de esa carpeta: {os.listdir(scripts_path) if os.path.exists(scripts_path) else 'RUTA NO EXISTE'}")
+    raise e
+
+
 # Code in order to avoid franka collisions
 stage = omni.usd.get_context().get_stage()
 robot_path = "/World/Franka_Robot"
@@ -200,5 +219,8 @@ async def run():
     target_pos = target_data["world_xyz"]
 
     # the movement script will be called here
+    final_coords = [target_pos[0], target_pos[1], .05]
+    print("Initiating Movement Phase!")
+    await execute_movement(final_coords)
 
 asyncio.ensure_future(run())
