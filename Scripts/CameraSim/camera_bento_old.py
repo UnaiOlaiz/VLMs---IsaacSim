@@ -9,16 +9,6 @@ import asyncio
 from omni.isaac.core.utils.xforms import get_world_pose
 from pxr import UsdGeom
 from omni.isaac.core.objects import VisualSphere
-import isaacsim.core.utils.prims as prim_utils
-from omni.physx.scripts import utils
-
-# Code in order to avoid franka collisions
-stage = omni.usd.get_context().get_stage()
-robot_path = "/World/Franka_Robot"
-
-for prim in stage.Traverse():
-    if prim.IsA(UsdGeom.Mesh) and robot_path in str(prim.GetPath()):
-        utils.set_collider_approximation(prim, "convexHull")
 
 # URL where the BentoML service is running
 URL = "http://127.0.0.1:8000/ground"
@@ -82,23 +72,34 @@ def get_3d_target(bbox, depth_map, cam_view_matrix, cam_proj_matrix):
 
     return target_pos_world[:3]
 
-# In your get_3d_target_direct function, ensure these values match your Isaac Camera:
-def get_3d_target_calibrated(u, v, depth_map, cam_matrix):
-    z_depth = depth_map[v, u]
-    
-    # 18.14mm focal length on a 36mm sensor (standard Isaac Sim)
-    # f_pixel = (focal_length * image_width) / horizontal_aperture
-    f_pixel = (18.14 * 1280) / 20.955 # 20.955 is the default Isaac horizontal aperture
-    cx, cy = 640, 360
+def get_3d_target_direct(u, v, depth_map, cam_view_matrix):
+    '''
+    Calculates 3D World coordinates from direct pixel coordinates and depth.
+    '''
+    # 1. Clip coordinates to image boundaries
+    u = np.clip(u, 0, 1279)
+    v = np.clip(v, 0, 719)
 
+    # 2. Get depth (Distance to Camera in meters)
+    z_depth = depth_map[v, u]
+
+    # 3. Calculate Focal Length in pixels
+    # Based on your 18.14mm focal length and assuming a standard 36mm sensor width
+    f_pixel = (18.14 * 1280) / 36.0 
+    cx, cy = 640, 360 # Center of 1280x720 frame
+
+    # 4. Unproject from 2D Pixels to 3D Camera Space
+    # Isaac Sim cameras usually look down the -Z axis
     x_cam = (u - cx) * z_depth / f_pixel
     y_cam = (v - cy) * z_depth / f_pixel
     z_cam = -z_depth 
 
+    # 5. Transform from Camera Space to World Space
     target_pos_local = np.array([x_cam, y_cam, z_cam, 1.0])
-    # Transform to world
-    target_pos_world = np.dot(cam_matrix, target_pos_local)
+    target_pos_world = np.dot(cam_view_matrix, target_pos_local)
+
     return target_pos_world[:3]
+
 
 
 async def main_vision():
@@ -160,7 +161,7 @@ async def main_vision():
 
                     world_transform = UsdGeom.Xformable(camera_prim).ComputeLocalToWorldTransform(0)
                     cam_matrix = np.array(world_transform).reshape(4, 4).T
-                    current_xyz = get_3d_target_calibrated(u_final, v_final, depth_data, cam_matrix)
+                    current_xyz = get_3d_target_direct(u_final, v_final, depth_data, cam_matrix)
 
                     if current_xyz[2] < -0.1 or current_xyz[0] > 2.0:
                         print(f"Skipping hallucination: {current_xyz}")
