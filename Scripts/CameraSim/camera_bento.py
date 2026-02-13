@@ -219,7 +219,8 @@ async def run():
     target_pos = target_data["world_xyz"]
 
     # the movement script will be called here
-    final_coords = [target_pos[0], target_pos[1], .05]
+    #final_coords = [target_pos[0], target_pos[1], target_pos[2]]
+    final_coords = [0.0946, 0.0, 0.05]
     print("Initiating Movement Phase!")
     await execute_movement(final_coords)
 
