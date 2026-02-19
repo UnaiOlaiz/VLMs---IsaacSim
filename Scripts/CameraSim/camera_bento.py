@@ -46,7 +46,8 @@ URL = "http://127.0.0.1:8000/ground"
 RESOLUTION = (1280, 720)
 
 # the instruction will also be declared as variable if needed to be adapted
-INSTRUCTION = "red cube" # in this case, what to be found
+# INSTRUCTION = "red cube" # in this case, what to be found
+INSTRUCTION = "red object"
 
 def get_prediction(instruction, rgb_image):
     '''
@@ -219,8 +220,8 @@ async def run():
     target_pos = target_data["world_xyz"]
 
     # the movement script will be called here
-    #final_coords = [target_pos[0], target_pos[1], target_pos[2]]
-    final_coords = [0.0946, 0.0, 0.05]
+    final_coords = [target_pos[0], target_pos[1], target_pos[2]]
+    #final_coords = [0.0946, 0.0, 0.015]
     print("Initiating Movement Phase!")
     await execute_movement(final_coords)
 
