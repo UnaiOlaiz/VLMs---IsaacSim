@@ -11,23 +11,18 @@ from pxr import UsdGeom
 from omni.isaac.core.objects import VisualSphere
 import isaacsim.core.utils.prims as prim_utils
 from omni.physx.scripts import utils
-
-# Import the control function from another script
 import sys
 import os
-
-# Ruta absoluta directa a la carpeta Scripts
 scripts_path = "/home/unaiolaizolaosa/Documents/PFG/Scripts"
 
 if scripts_path not in sys.path:
     sys.path.insert(0, scripts_path)
 
 try:
-    from Control.franka2 import execute_movement
-    print("PFG: Módulo Control cargado con éxito desde ruta absoluta.")
+    from Control.franka_stop import execute_movement
+    print(f"Movement scripts correctly loaded from path: '{scripts_path}'!")
 except ImportError as e:
-    print(f"PFG ERROR: No se encuentra la carpeta en {scripts_path}")
-    print(f"Contenido de esa carpeta: {os.listdir(scripts_path) if os.path.exists(scripts_path) else 'RUTA NO EXISTE'}")
+    print(f"Error loading scripts from given path: {scripts_path}")
     raise e
 
 
@@ -47,7 +42,7 @@ RESOLUTION = (1280, 720)
 
 # the instruction will also be declared as variable if needed to be adapted
 # INSTRUCTION = "red cube" # in this case, what to be found
-INSTRUCTION = "red object"
+INSTRUCTION = "red cube"
 
 def get_prediction(instruction, rgb_image):
     '''
@@ -221,8 +216,9 @@ async def run():
 
     # the movement script will be called here
     final_coords = [target_pos[0], target_pos[1], target_pos[2]]
-    #final_coords = [0.0946, 0.0, 0.015]
+    #final_coords = [0.0946, 0.0, 0.015] these are the actual coordinates of the red cube
     print("Initiating Movement Phase!")
     await execute_movement(final_coords)
+    print("Arm located at top! Can now proceed to RL task!")
 
 asyncio.ensure_future(run())
