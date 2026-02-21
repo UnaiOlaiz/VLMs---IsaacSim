@@ -16,35 +16,36 @@ class FrankaControl:
         self.robot.initialize() 
 
     def move_to_cube_top(self, target_pos):
+        # 1. Maintain the safe height
         top_pos = np.array(target_pos)
-        # 1. Height: 0.15 is safer for the elbow joint than 0.12
-        top_pos[2] = 0.15 
+        top_pos[2] = 0.20 
         
-        # 2. Use RMPFlow directly to bypass 'stalling' logic
+        # 2. Setup the policy correctly
         if not hasattr(self, "rmp_controller"):
             from omni.isaac.franka.controllers import RMPFlowController
-            self.rmp_controller = RMPFlowController(
-                name="target_follower", 
-                robot_articulation=self.robot
-            )
+            # Use the high-level Franka-specific RMPFlow controller
+            self.rmp_controller = RMPFlowController(name="target_hover", robot_articulation=self.robot)
 
-        # 3. Setting target_orientation=None is the key to breaking local minima;
-        # it lets the robot find the most 'comfortable' joint angles.
+        # 3. Request the action from the controller
+        # We pass target_end_effector_orientation=None to avoid local minima
         actions = self.rmp_controller.forward(
             target_end_effector_position=top_pos,
-            target_end_effector_orientation=None 
+            target_end_effector_orientation=None
         )
-        
-        actions.gripper_positions = np.array([1.0, 1.0]) 
-        self.robot.apply_action(actions)
 
+        # 4. Apply the joint positions to the articulation
+        self.robot.apply_action(actions)
+        
+        # Keep gripper open
+        self.robot.gripper.open()
+
+        # 5. Measure distance
         end_pos, _ = self.robot.end_effector.get_world_pose()
         distance = np.linalg.norm(end_pos - top_pos)
 
-        print(f"RMP Distance: {distance:.4f}m", end="\r")
+        print(f"Current Distance: {distance:.4f}m", end="\r")
 
-        # Keep your 0.02 threshold for high precision
-        return distance < 0.02
+        return distance < 0.0575  
 
     def save_robot_state(self, cube_pos):
         '''
@@ -58,7 +59,7 @@ class FrankaControl:
 
         with open("rl_initial_state.json", "w") as f:
             json.dump(state_data, f)
-        print("End state saved to 'rl_initial_state_json'")
+        print("\nEnd state saved to 'rl_initial_state.json'")
 
 async def execute_movement(final_coords):
     timeline = omni.timeline.get_timeline_interface()
@@ -67,8 +68,6 @@ async def execute_movement(final_coords):
         timeline.play()
         await asyncio.sleep(2.0) 
 
-    world = World()
-    
     try:
         manager = FrankaControl()
         print(f"Franka ready! Moving to {final_coords}")
@@ -78,11 +77,12 @@ async def execute_movement(final_coords):
             await asyncio.sleep(0.01)
             try:
                 done = manager.move_to_cube_top(final_coords)
-            except:
+            except Exception as e:
+                # Catch specific move errors if they occur
                 continue
-        print("Movement phased completed! The arm is located on the top of the target!")
+        print("\nMovement phase completed! The arm is located on the top of the target!")
         
-        # we now save the end state as JSON format to be used later in the RL task
+        # save the end state
         manager.save_robot_state(np.array(final_coords))
         
     except Exception as e:
