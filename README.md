@@ -7,7 +7,7 @@ bentoml serve server_bento:VLMServiceIsaac --port 8000 --reload
 Launch RL Training:
 ```bash
 cd ~/Documents/PFG/Scripts/RL/results
-python3 ../franka_rl.py --num_envs <num_envs>
+/home/unaiolaizolaosa/isaac-sim-5.1.0/python.sh ../franka_rl.py --num_envs <num_envs>
 ``` 
 
 Check RL Training Results in Tensorboard:

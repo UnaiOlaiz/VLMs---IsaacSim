@@ -113,35 +113,44 @@ class FrankaPickRL(gym.Env):
         self.world.step(render=True)
         return self.get_observations(), {}
 
-    def step(self,action):
-        # where the reward function is specified
+    def step(self, action):
         current_joints = self.robots.get_joint_positions()
         new_joints = current_joints.copy()
-        new_joints[:, :7] += action.reshape(1,7)
-        self.robots.apply_action(ArticulationAction(joint_positions=new_joints))
+        
+        action_batch = np.array(action).reshape(-1, 7)
+        new_joints[:, :7] += action_batch
+        
+        self.robots.set_joint_positions(new_joints)
         self.world.step(render=True)
 
+        obs = self.get_observations()
         cube_poses, _ = self.cubes.get_world_poses()
         cube_height = cube_poses[0][2]
 
-        # reward for picking/raising the cube
         reward = 0
-        if cube_height > 0.03: # raise more than threshold
+        if cube_height > 0.03:
             reward += 10.0 + (cube_height * 50)
 
-        # distance penalty
         robot_pos, _ = self.robots.get_world_poses()
-        dist = np.linalg.norm(cube_poses[0] - robot_pos[0]) # euclidean distance
+        dist = np.linalg.norm(cube_poses[0] - robot_pos[0])
         reward -= dist
 
-        done = cube_height > .2 # terminate/success if raised for than threshold
-        return self.get_observations(), reward, done, False, {}
+        done = cube_height > 0.2
+        return obs, reward, bool(done), False, {}
 
 if __name__ == "__main__":
     env = FrankaPickRL(num_envs=args.num_envs)
 
     # Mlpolicy for numbers + verbose + storing the tensorboard logs in the corresponding path
-    model = PPO("MlpPolicy", env, verbose=1, tensorboard_log="/home/unaiolaizolaosa/Documents/PFG/Scripts/RL/results/tensorboard_franka/ppo_franka")
+    model = PPO("MlpPolicy",
+                env,
+                device="cuda",
+                n_steps=1024,
+                n_epochs=10,
+                learning_rate=3e-4,
+                verbose=1,
+                batch_size=512,
+                tensorboard_log="/home/unaiolaizolaosa/Documents/PFG/Scripts/RL/results/tensorboard_franka/ppo_franka")
 
     steps = 100000
     print(f"Starting training for {steps} steps.")
