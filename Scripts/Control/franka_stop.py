@@ -5,6 +5,7 @@ from omni.isaac.franka import Franka
 from omni.isaac.core.world import World
 import omni.timeline
 from omni.isaac.core.utils.prims import is_prim_path_valid
+from omni.isaac.franka.controllers import RMPFlowController
 
 class FrankaControl:
     def __init__(self, prim_path="/World/Franka_Robot", name="franka_pfg"):
@@ -16,36 +17,26 @@ class FrankaControl:
         self.robot.initialize() 
 
     def move_to_cube_top(self, target_pos):
-        # 1. Maintain the safe height
         top_pos = np.array(target_pos)
         top_pos[2] = 0.20 
         
-        # 2. Setup the policy correctly
         if not hasattr(self, "rmp_controller"):
-            from omni.isaac.franka.controllers import RMPFlowController
-            # Use the high-level Franka-specific RMPFlow controller
             self.rmp_controller = RMPFlowController(name="target_hover", robot_articulation=self.robot)
 
-        # 3. Request the action from the controller
-        # We pass target_end_effector_orientation=None to avoid local minima
         actions = self.rmp_controller.forward(
             target_end_effector_position=top_pos,
             target_end_effector_orientation=None
         )
 
-        # 4. Apply the joint positions to the articulation
         self.robot.apply_action(actions)
-        
-        # Keep gripper open
         self.robot.gripper.open()
 
-        # 5. Measure distance
         end_pos, _ = self.robot.end_effector.get_world_pose()
         distance = np.linalg.norm(end_pos - top_pos)
 
         print(f"Current Distance: {distance:.4f}m", end="\r")
 
-        return distance < 0.0575  
+        return distance < 0.0575 # established arbitrary distance record, it works! 
 
     def save_robot_state(self, cube_pos):
         '''
