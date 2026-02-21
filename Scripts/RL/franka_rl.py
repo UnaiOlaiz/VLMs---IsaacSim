@@ -26,79 +26,140 @@ from omni.isaac.core.world import World
 from isaacsim.robot.manipulators.examples.franka import Franka
 from omni.isaac.core.utils.types import ArticulationAction
 from omni.isaac.core.scenes.scene import Scene
+import torch
+import argparse
+from omni.isaac.core.prims import RigidPrimView
+from omni.isaac.cloner import GridCloner
+from omni.isaac.core.utils.stage import add_reference_to_stage
+from omni.isaac.core.objects import DynamicCuboid
+from omni.isaac.core.articulations import ArticulationView
+from omni.isaac.core.prims import RigidPrimView
+from omni.isaac.core.utils.types import ArticulationAction
+
+# In case parallelization is specified from the command, I will add the functionality to spawn multiple environments
+parser = argparse.ArgumentParser()
+parser.add_argument("--num_envs", type=int, default=1)
+args, _ = parser.parse_known_args()
 
 class FrankaPickRL(gym.Env):
     # RL environment creation class
-    def __init__(self):
+    def __init__(self, num_envs):
         super().__init__()
+
+        self.num_envs = num_envs
+        self.world = World(stage_units_in_meters=1.0)
 
         isaac_root = "/home/unaiolaizolaosa/isaac-sim-5.1.0"
         asset_path = "/home/unaiolaizolaosa/isaac-sim-5.1.0/assets/Assets/Isaac/5.1/Isaac/Robots/FrankaRobotics/FrankaPanda/franka.usd"
 
-        # set up the world inside Isaac
-        self.world = World(stage_units_in_meters = 1.0)
-        self.robot = Franka(prim_path="/World/Franka_Robot", name="franka_rl", usd_path = asset_path)
-        self.world.scene.add(self.robot)
-        self.world.scene.add_default_ground_plane()
-
         # load the end state of the previous VLM task (joint positions + obtained coordinates)
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        json_path = os.path.join(current_dir, "..", "..", "rl_initial_state.json")
+        json_path = os.path.join(current_dir, "../Control/", "rl_initial_state.json")
+
         with open(json_path, "r") as f:
             self.vlm_data = json.load(f)
 
-        self.target_pos = np.array(self.vlm_data["cube_target"])
+        # code for parallelization
+        cloner = GridCloner(spacing=2.0)
+        target_paths = [f"/World/Env_{i}" for i in range(self.num_envs)]
+        cloner.define_base_env(base_env_path="/World/Env_0")
 
-        # action space -> 7 joints
-        self.action_space = gym.spaces.Box(low=-.05, high=0.05, shape=(7,), dtype=np.float32)
+        add_reference_to_stage(usd_path=asset_path, prim_path="/World/Env_0/Franka")
+        cube_pos = np.array(self.vlm_data["cube_target"])
+        self.cube_initial_pos = cube_pos
+
+        DynamicCuboid(
+                prim_path = "/World/Env_0/Cube",
+                name="cube_0",
+                position=cube_pos,
+                size=.05,
+                color=np.array([1,0,0]) # red xd
+        )
+
+        cloner.clone(source_prim_path="/World/Env_0", prim_paths=target_paths)
+
+        self.robots = ArticulationView(prim_paths_expr="/World/Env_*/Franka", name="franka_view")
+        self.cubes = RigidPrimView(prim_paths_expr="/World/Env_*/Cube", name="cube_view")
+
+        self.world.scene.add(self.robots)
+        self.world.scene.add(self.cubes)
+        self.world.scene.add_default_ground_plane()
+        
+        # action space
+        self.action_space = gym.spaces.Box(low=-.05, high=.05, shape=(7,), dtype=np.float32)
 
         # observation space
         self.observation_space = gym.spaces.Box(low=-np.inf, high=np.inf, shape=(12,), dtype=np.float32)
 
     def get_observations(self):
-        joints = self.robot.get_joint_positions()
-        end_pos, _ = self.robot.end_effector.get_world_pose()
-        vec = self.target_pos - end_pos
-        return np.concatenate([joints, vec]).astype(np.float32)
+        joints = self.robots.get_joint_positions()[0][:7]
+        cube_pos, _ = self.cubes.get_world_poses()
+        robot_pos, _ = self.robots.get_world_poses()
+        vec = cube_pos[0] - robot_pos[0]
+        return np.concatenate([joints, vec, [0,0]]).astype(np.float32)
 
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
         self.world.reset()
-        self.robot.set_joint_positions(np.array(self.vlm_data["joint_positions"]))
             
         init_pos = np.array(self.vlm_data["joint_positions"])
         if len(init_pos) == 7:
-            init_pos = np.concatenate([init_pos, [0,0]])
-        self.robot.set_joint_positions(init_pos)
-        self.robot.set_joint_velocities(np.zeros(9))
+            init_pos = np.concatenate([init_pos, [0,0]]) # padding if necessary
+
+        all_init_joints=np.tile(init_pos, (self.num_envs, 1))
+        self.robots.set_joint_positions(all_init_joints)
+        self.robots.set_joint_velocities(np.zeros((self.num_envs, 9)))
         self.world.step(render=True)
         return self.get_observations(), {}
 
     def step(self,action):
-        current_joints = self.robot.get_joint_positions()
+        # where the reward function is specified
+        current_joints = self.robots.get_joint_positions()
         new_joints = current_joints.copy()
-        new_joints[:7] += action
-        self.robot.apply_action(ArticulationAction(joint_positions=new_joints))
+        new_joints[:, :7] += action.reshape(1,7)
+        self.robots.apply_action(ArticulationAction(joint_positions=new_joints))
         self.world.step(render=True)
 
-        obs = self.get_observations()
-        end_pos = self.robot.end_effector.get_world_pose()[0]
-        dist = np.linalg.norm(self.target_pos - end_pos)
+        cube_poses, _ = self.cubes.get_world_poses()
+        cube_height = cube_poses[0][2]
 
-        reward = -dist
-        done = dist < 0.02
-        truncated = False
+        # reward for picking/raising the cube
+        reward = 0
+        if cube_height > 0.03: # raise more than threshold
+            reward += 10.0 + (cube_height * 50)
 
-        return obs, reward, done, truncated, {}
+        # distance penalty
+        robot_pos, _ = self.robots.get_world_poses()
+        dist = np.linalg.norm(cube_poses[0] - robot_pos[0]) # euclidean distance
+        reward -= dist
+
+        done = cube_height > .2 # terminate/success if raised for than threshold
+        return self.get_observations(), reward, done, False, {}
 
 if __name__ == "__main__":
-    print(">>> CHECKPOINT 1: Initializing Environment...")
-    env = FrankaPickRL()
+    env = FrankaPickRL(num_envs=args.num_envs)
 
-    print(">>> CHECKPOINT 2: Environment Initialized. Setting up PPO...")
-    model = PPO("MlpPolicy", env, verbose=1, tensorboard_log="./ppo_franka")
+    # Mlpolicy for numbers + verbose + storing the tensorboard logs in the corresponding path
+    model = PPO("MlpPolicy", env, verbose=1, tensorboard_log="/home/unaiolaizolaosa/Documents/PFG/Scripts/RL/results/tensorboard_franka/ppo_franka")
 
     steps = 100000
-    print(f">>> CHECKPOINT 3: Starting training for {steps} steps.")
-    model.learn(total_timesteps=steps)
+    print(f"Starting training for {steps} steps.")
+
+    # If I were to manually stop (interrupt the process) -> save the results anyway
+    try:
+        model.learn(total_timesteps=steps)
+    except KeyboardInterrupt:
+        print("Training process interrupted -> Saving progress anyway")
+
+    # And we now save the model
+    model.save("/home/unaiolaizolaosa/Documents/PFG/Scripts/RL/results/models_franka/model_pick")
+    print("Model saved in the results directory!")
+
+    # I will save the model both in pickle format and in onnx in case there is needed in the future
+    dummy_input = torch.randn(1,12)
+    torch.onnx.export(model.policy, dummy_input, "/home/unaiolaizolaosa/Documents/PFG/Scripts/RL/results/models_franka/model_pick_onnx",
+                      opset_version=11)
+
+    # Finally close the simultion
+    simulation_app.close()
