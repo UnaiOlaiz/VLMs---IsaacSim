@@ -21,7 +21,8 @@ import isaaclab.sim as sim_utils
 from isaaclab.sim import SimulationCfg
 
 # This is the direct path for 5.1 spawners
-import isaaclab.sim.spawners.meshes as mesh_spawners
+# Use 'shapes' instead of 'meshes' for primitives like Cubes
+import isaaclab.sim.spawners.shapes as shape_spawners
 import isaaclab.sim.spawners.materials as mat_spawners
 
 from isaaclab.envs import DirectRLEnv, DirectRLEnvCfg
@@ -52,7 +53,7 @@ class FrankaPickCfg(DirectRLEnvCfg):
 
     cube_cfg: RigidObjectCfg = RigidObjectCfg(
         prim_path="/World/envs/env_.*/Cube",
-        spawn=mesh_spawners.MeshCubeCfg(  # Use the mesh_spawners alias
+        spawn=shape_spawners.CuboidCfg(  # Changed from MeshCubeCfg to CuboidCfg
             size=(0.05, 0.05, 0.05),
             rigid_props=sim_utils.RigidBodyPropertiesCfg(),
             collision_props=sim_utils.CollisionPropertiesCfg(),

@@ -1,36 +1,38 @@
-Start BentoML VLM Service Command:
+### Start BentoML VLM Service Command:
 
 ```bash
 bentoml serve server_bento:VLMServiceIsaac --port 8000 --reload
 ```
 
-Launch RL Training:
+### Launch RL Training with **IsaacLab**:
 ```bash
-cd ~/Documents/PFG/Scripts/RL/results
-/home/unaiolaizolaosa/isaac-sim-5.1.0/python.sh ../franka_rl.py --num_envs <num_envs>
+cd ~/Documents/IsaacLab
+``` 
+#### Headlessly
+```bash
+./isaaclab.sh -p scripts/reinforcement_learning/sb3/train.py --task Isaac-Lift-Cube-Franka-v0 --num_envs 64 --headless log_root_path=~/Documents/PFG/Scripts/RL/results exp_name=vlm_franka_train
 ``` 
 
-Check RL Training Results in Tensorboard:
-
+#### Off-Screen Recording Training
 ```bash
-tensorboard --logdir=/home/unaiolaizolaosa/Documents/PFG/Scripts/RL/results/tensorboard_franka/
+./isaaclab.sh -p scripts/reinforcement_learning/sb3/train.py --task Isaac-Cartpole-v0 --num_envs 64 --headless --video
+```
+
+#### Visual Training 
+```bash
+./isaaclab.sh -p scripts/reinforcement_learning/sb3/train.py --task Isaac-Lift-Cube-Franka-v
+0 --num_envs 64 log_root_path=~/Documents/PFG/Scripts/RL/results exp_name=vlm_fra
+nka_train
+```
+
+#### Check RL Training Results in Tensorboard:
+```bash
+tensorboard --logdir ~/Documents/PFG/Scripts/RL/results 
 ``` 
 
-To check (visually or not) the training results:
+#### To check the training results:
 ```bash
-xhost +local:docker
-
-docker run -it --gpus all --network host \
-  --entrypoint /bin/bash \
-  -e "ACCEPT_EULA=Y" \
-  -e DISPLAY=$DISPLAY \
-  -v /tmp/.X11-unix:/tmp/.X11-unix \
-  -v ~/Documents/PFG:/workspace/isaaclab/pfg_project \
-  isaac-lab-base:latest
-
-cd /project/Scripts/RL
-/isaac-sim/python.sh test_train.py
-``` 
+./isaaclab.sh -p scripts/reinforcement_learning/sb3/play.py --task Isaac-Lift-Cube-Franka-v0 --num_envs 32 --use_last_checkpoint
 
 
 
