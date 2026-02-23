@@ -2,7 +2,7 @@
 # Dependencies
 from omni.isaac.kit import SimulationApp
 
-simulationApp = SimulationApp({"headless": True})
+simulationApp = SimulationApp({"headless": False})
 
 import os
 from stable_baselines3 import PPO
