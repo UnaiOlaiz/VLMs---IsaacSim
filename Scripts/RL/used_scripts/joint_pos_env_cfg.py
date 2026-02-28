@@ -27,6 +27,8 @@ import json
 import torch
 from isaaclab.managers import RewardTermCfg as RewTerm
 from isaaclab.managers import SceneEntityCfg
+from isaaclab.managers import EventTermCfg as EventTerm
+from isaaclab.managers import ObservationTermCfg as ObsTerm
 
 vlm_json_path = os.path.expanduser("~/Documents/PFG/Scripts/Control/rl_initial_state.json")  # path of end coordinates
 
@@ -86,6 +88,76 @@ def object_is_lifted_and_closed(
     return lifted * closed
 
 
+def ee_above_object_reward(
+    env,
+    object_cfg: SceneEntityCfg,
+    ee_frame_cfg: SceneEntityCfg,
+    target_clearance: float = 0.02,
+    std: float = 0.02,
+):
+    obj = env.scene[object_cfg.name]
+    obj_z = obj.data.root_pos_w[:, 2]
+
+    # EE position from frame transformer
+    ee_pos = env.scene[ee_frame_cfg.name].data.target_pos_w[:, 0, :]  # (N,3) first target frame
+    ee_z = ee_pos[:, 2]
+
+    z_err = ee_z - (obj_z + target_clearance)
+    return torch.exp(-0.5 * (z_err / std) ** 2)
+
+
+def close_far_penalty(
+    env,
+    object_cfg: SceneEntityCfg,
+    ee_frame_cfg: SceneEntityCfg,
+    robot_finger_cfg: SceneEntityCfg,
+    std: float = 0.06,
+    closed_thresh: float = 0.01,
+):
+    near = mdp.object_ee_distance(env, std=std, object_cfg=object_cfg, ee_frame_cfg=ee_frame_cfg)
+    closed = _finger_closed_reward(env, robot_finger_cfg, closed_thresh=closed_thresh)
+    # penalty when closed but not near
+    return closed * (1.0 - near)
+
+
+def ee_position_w_obs(env, ee_frame_cfg: SceneEntityCfg):
+    """End-effector position in world frame. Returns (num_envs, 3)."""
+    ee_tf = env.scene[ee_frame_cfg.name]
+    # FrameTransformer stores target frame positions as (N, num_targets, 3)
+    ee_pos = ee_tf.data.target_pos_w[:, 0, :]
+    return ee_pos
+
+
+def ee_to_object_w_obs(env, ee_frame_cfg: SceneEntityCfg, object_cfg: SceneEntityCfg):
+    """Vector from EE -> object in world frame. Returns (num_envs, 3)."""
+    ee_pos = ee_position_w_obs(env, ee_frame_cfg)
+    obj = env.scene[object_cfg.name]
+    obj_pos = obj.data.root_pos_w
+    return obj_pos - ee_pos
+
+
+def ee_height_penalty(env, object_cfg: SceneEntityCfg, ee_frame_cfg: SceneEntityCfg):
+    obj = env.scene[object_cfg.name]
+    obj_z = obj.data.root_pos_w[:, 2]
+
+    ee_pos = env.scene[ee_frame_cfg.name].data.target_pos_w[:, 0, :]
+    ee_z = ee_pos[:, 2]
+
+    # penalize being far above cube
+    return torch.clamp(ee_z - obj_z - 0.02, min=0.0)
+
+
+def xy_alignment_reward(env, object_cfg: SceneEntityCfg, ee_frame_cfg: SceneEntityCfg, std=0.01):
+    obj = env.scene[object_cfg.name]
+    obj_xy = obj.data.root_pos_w[:, :2]
+
+    ee_pos = env.scene[ee_frame_cfg.name].data.target_pos_w[:, 0, :]
+    ee_xy = ee_pos[:, :2]
+
+    dist = torch.norm(obj_xy - ee_xy, dim=1)
+    return torch.exp(-0.5 * (dist / std) ** 2)
+
+
 @configclass
 class FrankaCubeLiftEnvCfg(LiftEnvCfg):
     def __post_init__(self):
@@ -98,10 +170,12 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
         self.sim.physx.gpu_total_pairs_capacity = 1048576
         # Set Franka as robot
         self.scene.robot = FRANKA_PANDA_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
+        self.scene.robot.init_state.pos = (0.0, 0.0, 0.0)
 
         # Initialization of VLM data joint positions
         if vlm_data:
             joint_positions = vlm_data["joint_positions"]
+
             self.scene.robot.init_state.joint_positions = {
                 "panda_joint1": joint_positions[0],
                 "panda_joint2": joint_positions[1],
@@ -110,31 +184,25 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
                 "panda_joint5": joint_positions[4],
                 "panda_joint6": joint_positions[5],
                 "panda_joint7": joint_positions[6],
-                "panda_finger_joint.*": 0.04,
+                "panda_finger_joint1": joint_positions[7],
+                "panda_finger_joint2": joint_positions[8],
             }
+            self.scene.robot.default_joint_pos = self.scene.robot.init_state.joint_positions
+
+        cube_position = [0.4054, 0.0, 0.055]
 
         # Set actions for the specific robot type (franka)
         self.actions.arm_action = mdp.JointPositionActionCfg(
-            asset_name="robot", joint_names=["panda_joint.*"], scale=1.00, use_default_offset=False
+            asset_name="robot", joint_names=["panda_joint.*"], scale=0.25, use_default_offset=False
         )
         self.actions.gripper_action = mdp.BinaryJointPositionActionCfg(
             asset_name="robot",
-            joint_names=["panda_finger.*"],
+            joint_names=["panda_finger_joint.*"],
             open_command_expr={"panda_finger_.*": 0.04},
             close_command_expr={"panda_finger_.*": 0.0},
         )
-        # Set the body name for the end effector
-        self.commands.object_pose.body_name = "panda_hand"
 
         finger_cfg = SceneEntityCfg("robot", joint_names=["panda_finger_joint.*"])
-
-        # Code for cube VLM coordinates initialization
-        cube_position = [0.50, 0.0, 0.055]  # abitrary
-        if vlm_data and "cube_target" in vlm_data:
-            cube_position = vlm_data["cube_target"]
-
-        if cube_position[2] < 0.03:
-            cube_position[2] = 0.055
 
         # Set Cube as object
         self.scene.object = RigidObjectCfg(
@@ -154,12 +222,14 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
             ),
         )
 
+        self.scene.object.init_state.pos = cube_position
+
         # Rewards design
-        self.rewards.reaching_object.weight = 25.0
+        self.rewards.reaching_object.weight = 10.0
 
         self.rewards.close_when_near = RewTerm(
             func=close_when_near,
-            weight=80.0,
+            weight=200.0,
             params={
                 "std": 0.06,
                 "closed_thresh": 0.01,
@@ -193,17 +263,59 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
 
         self.rewards.object_gripping = None
 
+        self.rewards.ee_above_object = RewTerm(
+            func=ee_above_object_reward,
+            weight=30.0,
+            params={
+                "target_clearance": 0.015,
+                "std": 0.02,
+                "object_cfg": SceneEntityCfg("object"),
+                "ee_frame_cfg": SceneEntityCfg("ee_frame"),
+            },
+        )
+
+        self.rewards.close_far_penalty = RewTerm(
+            func=close_far_penalty,
+            weight=-30.0,
+            params={
+                "std": 0.06,
+                "closed_thresh": 0.01,
+                "object_cfg": SceneEntityCfg("object"),
+                "ee_frame_cfg": SceneEntityCfg("ee_frame"),
+                "robot_finger_cfg": finger_cfg,
+            },
+        )
+
+        self.rewards.ee_height_penalty = RewTerm(
+            func=ee_height_penalty,
+            weight=-20.0,
+            params={
+                "object_cfg": SceneEntityCfg("object"),
+                "ee_frame_cfg": SceneEntityCfg("ee_frame"),
+            },
+        )
+
+        self.rewards.xy_alignment = RewTerm(
+            func=xy_alignment_reward,
+            weight=50.0,
+            params={
+                "std": 0.015,
+                "object_cfg": SceneEntityCfg("object"),
+                "ee_frame_cfg": SceneEntityCfg("ee_frame"),
+            },
+        )
+
         marker_cfg = FRAME_MARKER_CFG.copy()
         marker_cfg.markers["frame"].scale = (0.1, 0.1, 0.1)
-        marker_cfg.prim_path = "/Visuals/FrameTransformer"
+        marker_cfg.prim_path = "{ENV_REGEX_NS}/Visuals/FrameTransformer"
         self.scene.ee_frame = FrameTransformerCfg(
             prim_path="{ENV_REGEX_NS}/Robot/panda_link0",
-            debug_vis=True,
+            debug_vis=False,
             visualizer_cfg=marker_cfg,
             target_frames=[
                 FrameTransformerCfg.FrameCfg(
                     prim_path="{ENV_REGEX_NS}/Robot/panda_hand",
-                    name="end_effector",
+                    name="ee_frame",
                     offset=OffsetCfg(
                         pos=[0.0, 0.0, 0.1034],
                     ),
@@ -211,11 +323,65 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
             ],
         )
 
+        self.observations.policy.ee_position = ObsTerm(
+            func=ee_position_w_obs,
+            params={"ee_frame_cfg": SceneEntityCfg("ee_frame")},
+        )
+
+        # self.events.reset_object_position = None
+        # self.events.reset_robot_joints = None
+        # if hasattr(self.events, "randomize_object"):
+        #    self.events.randomize_object = None
+        #
+        self.events.reset_object_position = EventTerm(
+            func=mdp.reset_root_state_uniform,
+            mode="reset",
+            params={
+                "pose_range": {
+                    "x": (0.0, 0.0),
+                    "y": (0.0, 0.0),
+                    "z": (0.0, 0.0),
+                    "roll": (0.0, 0.0),
+                    "pitch": (0.0, 0.0),
+                    "yaw": (0.0, 0.0),
+                },
+                "velocity_range": {
+                    "x": (0.0, 0.0),
+                    "y": (0.0, 0.0),
+                    "z": (0.0, 0.0),
+                    "roll": (0.0, 0.0),
+                    "pitch": (0.0, 0.0),
+                    "yaw": (0.0, 0.0),
+                },
+                "asset_cfg": SceneEntityCfg("object"),
+            },
+        )
+        self.events.reset_robot_joints = EventTerm(
+            func=mdp.reset_joints_by_offset,
+            mode="reset",
+            params={
+                "position_range": (0.0, 0.0),
+                "velocity_range": (0.0, 0.0),
+                "asset_cfg": SceneEntityCfg("robot", joint_names=["panda_joint.*", "panda_finger_joint.*"]),
+            },
+        )
+        if hasattr(self.events, "randomize_object"):
+            self.events.randomize_object = None
+
+        self.commands.object_pose = None
+        if hasattr(self.observations, "policy") and hasattr(self.observations.policy, "target_object_position"):
+            self.observations.policy.target_object_position = None
+        self.rewards.object_goal_tracking = None
+        self.rewards.object_goal_tracking_fine_grained = None
+
+        if hasattr(self.events, "reset_all"):
+            self.events.reset_all = None
+
 
 @configclass
 class FrankaCubeLiftEnvCfg_PLAY(FrankaCubeLiftEnvCfg):
     def __post_init__(self):
         super().__post_init__()
-        self.scene.num_envs = 50
+        self.scene.num_envs = 1
         self.scene.env_spacing = 2.5
         self.observations.policy.enable_corruption = False
