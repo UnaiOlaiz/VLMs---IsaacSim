@@ -52,6 +52,19 @@ def _finger_closed_reward(env, robot_cfg: SceneEntityCfg, closed_thresh: float =
     return closed.float()
 
 
+def ee_height_penalty(env, object_cfg: SceneEntityCfg, ee_frame_cfg: SceneEntityCfg, margin: float = 0.03):
+    obj_z = env.scene[object_cfg.name].data.root_pos_w[:, 2]
+    ee_z = env.scene[ee_frame_cfg.name].data.target_pos_w[:, 0, 2]
+    return torch.clamp(ee_z - obj_z - margin, min=0.0)
+
+
+def xy_alignment_reward(env, object_cfg: SceneEntityCfg, ee_frame_cfg: SceneEntityCfg, std: float = 0.015):
+    obj_xy = env.scene[object_cfg.name].data.root_pos_w[:, :2]
+    ee_xy = env.scene[ee_frame_cfg.name].data.target_pos_w[:, 0, :2]
+    dist = torch.norm(obj_xy - ee_xy, dim=1)
+    return torch.exp(-0.5 * (dist / std) ** 2)
+
+
 def close_when_near(
     env,
     object_cfg: SceneEntityCfg,
@@ -136,26 +149,19 @@ def ee_to_object_w_obs(env, ee_frame_cfg: SceneEntityCfg, object_cfg: SceneEntit
     return obj_pos - ee_pos
 
 
-def ee_height_penalty(env, object_cfg: SceneEntityCfg, ee_frame_cfg: SceneEntityCfg):
+def gripper_opening_obs(env, robot_cfg):
+    robot = env.scene[robot_cfg.name]
+    q = robot.data.joint_pos[:, robot_cfg.joint_ids]
+    return q.sum(dim=1, keepdim=True)
+
+
+def ee_height_error_obs(env, object_cfg: SceneEntityCfg, ee_frame_cfg: SceneEntityCfg, target_clearance: float = 0.01):
     obj = env.scene[object_cfg.name]
     obj_z = obj.data.root_pos_w[:, 2]
-
     ee_pos = env.scene[ee_frame_cfg.name].data.target_pos_w[:, 0, :]
     ee_z = ee_pos[:, 2]
-
-    # penalize being far above cube
-    return torch.clamp(ee_z - obj_z - 0.02, min=0.0)
-
-
-def xy_alignment_reward(env, object_cfg: SceneEntityCfg, ee_frame_cfg: SceneEntityCfg, std=0.01):
-    obj = env.scene[object_cfg.name]
-    obj_xy = obj.data.root_pos_w[:, :2]
-
-    ee_pos = env.scene[ee_frame_cfg.name].data.target_pos_w[:, 0, :]
-    ee_xy = ee_pos[:, :2]
-
-    dist = torch.norm(obj_xy - ee_xy, dim=1)
-    return torch.exp(-0.5 * (dist / std) ** 2)
+    err = (ee_z - (obj_z + target_clearance)).unsqueeze(1)  # (N,1)
+    return err
 
 
 @configclass
@@ -195,11 +201,8 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
         self.actions.arm_action = mdp.JointPositionActionCfg(
             asset_name="robot", joint_names=["panda_joint.*"], scale=0.25, use_default_offset=False
         )
-        self.actions.gripper_action = mdp.BinaryJointPositionActionCfg(
-            asset_name="robot",
-            joint_names=["panda_finger_joint.*"],
-            open_command_expr={"panda_finger_.*": 0.04},
-            close_command_expr={"panda_finger_.*": 0.0},
+        self.actions.gripper_action = mdp.JointPositionActionCfg(
+            asset_name="robot", joint_names=["panda_finger_joint.*"], scale=0.4, use_default_offset=False
         )
 
         finger_cfg = SceneEntityCfg("robot", joint_names=["panda_finger_joint.*"])
@@ -241,7 +244,7 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
 
         self.rewards.low_lift_bonus = RewTerm(
             func=object_is_lifted_and_closed,
-            weight=200.0,
+            weight=300.0,
             params={
                 "minimal_height": 0.01,
                 "closed_thresh": 0.01,
@@ -252,7 +255,7 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
 
         self.rewards.high_lift_bonus = RewTerm(
             func=object_is_lifted_and_closed,
-            weight=600.0,
+            weight=800.0,
             params={
                 "minimal_height": 0.05,
                 "closed_thresh": 0.01,
@@ -288,8 +291,9 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
 
         self.rewards.ee_height_penalty = RewTerm(
             func=ee_height_penalty,
-            weight=-20.0,
+            weight=-15.0,
             params={
+                "margin": 0.03,
                 "object_cfg": SceneEntityCfg("object"),
                 "ee_frame_cfg": SceneEntityCfg("ee_frame"),
             },
@@ -297,7 +301,7 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
 
         self.rewards.xy_alignment = RewTerm(
             func=xy_alignment_reward,
-            weight=50.0,
+            weight=60.0,
             params={
                 "std": 0.015,
                 "object_cfg": SceneEntityCfg("object"),
@@ -323,9 +327,30 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
             ],
         )
 
+        self.observations.policy.gripper_opening = ObsTerm(
+            func=gripper_opening_obs,
+            params={
+                "robot_cfg": SceneEntityCfg("robot", joint_names=["panda_finger_joint.*"]),
+            },
+        )
+
+        self.observations.policy.ee_height_error = ObsTerm(
+            func=ee_height_error_obs,
+            params={
+                "object_cfg": SceneEntityCfg("object"),
+                "ee_frame_cfg": SceneEntityCfg("ee_frame"),
+                "target_clearance": 0.01,
+            },
+        )
+
         self.observations.policy.ee_position = ObsTerm(
             func=ee_position_w_obs,
             params={"ee_frame_cfg": SceneEntityCfg("ee_frame")},
+        )
+
+        self.observations.policy.ee_to_object = ObsTerm(
+            func=ee_to_object_w_obs,
+            params={"ee_frame_cfg": SceneEntityCfg("ee_frame"), "object_cfg": SceneEntityCfg("object")},
         )
 
         # self.events.reset_object_position = None
