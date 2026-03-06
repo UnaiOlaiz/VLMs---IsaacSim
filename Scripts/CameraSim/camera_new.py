@@ -13,6 +13,10 @@ import isaacsim.core.utils.prims as prim_utils
 from omni.physx.scripts import utils
 import sys
 import os
+import json
+from omni.isaac.core.articulations import Articulation
+from omni.isaac.core.utils.prims import get_prim_at_path
+
 
 scripts_path = "/home/unaiolaizolaosa/Documents/PFG/Scripts"
 
@@ -231,25 +235,37 @@ async def main_vision():
 async def run():
     target_data = await main_vision()
     target_pos = target_data["world_xyz"]
+
+    # we get the robot real pos to then place the relative distance in the rl training part
+    robot_pos, _ = get_world_pose("/World/Franka_Robot")
+    relative_cube_pos = target_pos - robot_pos
+
+    # offset we set to place on top
     grasp_height = 0.07
     final_coords = [target_pos[0], target_pos[1], grasp_height]
+
     print(f"Final target locked at: {target_pos}. Moving to position: {final_coords}")
+    print(f"Robot position saved: {robot_pos}, will be used for the RL task.")
     await execute_movement(final_coords)
     print("Arm located at pre-grasp position! Ready for RL task!")
 
-    import json
-    from omni.isaac.core.articulations import Articulation
-
+    # Capture Section!
     franka = Articulation("/World/Franka_Robot")
     franka.initialize()
 
     joint_pos = franka.get_joint_positions().tolist()
+    joint_vel = franka.get_joint_velocities().tolist()
+
+    data_save = {
+        "joint_positions": joint_pos,
+        "get_joint_velocities": joint_vel,
+        "cube_world_pos": relative_cube_pos.tolist(),
+    }
 
     json_folder = os.path.expanduser("~/Documents/PFG/Scripts/Control/")
     json_filename = "rl_start_near_cube_v2.json"
     full_path = os.path.join(json_folder, json_filename)
 
-    data_save = {"joint_positions": joint_pos}
     if not os.path.exists(json_folder):
         os.makedirs(json_folder)
 
