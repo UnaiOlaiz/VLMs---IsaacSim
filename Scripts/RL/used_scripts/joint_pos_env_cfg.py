@@ -29,8 +29,10 @@ from isaaclab.managers import RewardTermCfg as RewTerm
 from isaaclab.managers import SceneEntityCfg
 from isaaclab.managers import EventTermCfg as EventTerm
 from isaaclab.managers import ObservationTermCfg as ObsTerm
+from isaaclab.sensors import ContactSensorCfg
 
-vlm_json_path = os.path.expanduser("~/Documents/PFG/Scripts/Control/rl_initial_state.json")  # path of end coordinates
+# path of the 'old' experiment json vlm_json_path = os.path.expanduser("~/Documents/PFG/Scripts/Control/rl_initial_state.json")  # path of end coordinates
+vlm_json_path = os.path.expanduser("~/Documents/PFG/Scripts/Control/rl_start_near_cube_v2.json")
 
 
 def load_vlm_json(path):
@@ -44,7 +46,7 @@ vlm_data = load_vlm_json(vlm_json_path)
 
 
 # helper functions
-def _finger_closed_reward(env, robot_cfg: SceneEntityCfg, closed_thresh: float = 0.01):
+def _finger_closed_reward(env, robot_cfg: SceneEntityCfg, closed_thresh):
     """1.0 if the gripper is (nearly) closed, else 0.0."""
     robot = env.scene[robot_cfg.name]
     finger_q = robot.data.joint_pos[:, robot_cfg.joint_ids]  # (num_envs, 2) typically
@@ -71,7 +73,7 @@ def close_when_near(
     ee_frame_cfg: SceneEntityCfg,
     robot_finger_cfg: SceneEntityCfg,
     std: float = 0.05,
-    closed_thresh: float = 0.01,
+    closed_thresh: float = 0.02,
 ):
     """
     Reward is high only when:
@@ -87,17 +89,15 @@ def object_is_lifted_and_closed(
     env,
     object_cfg: SceneEntityCfg,
     robot_finger_cfg: SceneEntityCfg,
-    minimal_height: float = 0.05,
-    closed_thresh: float = 0.01,
+    minimal_height: float = 0.04,
+    closed_thresh: float = 0.025,
 ):
-    """
-    1.0 if object z > minimal_height AND gripper is closed, else 0.0
-    (this prevents 'lift reward' being paid when you haven't grasped).
-    """
     obj = env.scene[object_cfg.name]
-    z = obj.data.root_pos_w[:, 2]
-    lifted = (z > minimal_height).float()
-    closed = _finger_closed_reward(env, robot_finger_cfg, closed_thresh=closed_thresh)
+    z_dist = obj.data.root_pos_w[:, 2] - 0.055
+    lifted = (z_dist > minimal_height).float()
+    robot = env.scene[robot_finger_cfg.name]
+    finger_q = robot.data.joint_pos[:, robot_finger_cfg.joint_ids]
+    closed = (finger_q.sum(dim=1) < 0.05).float()
     return lifted * closed
 
 
@@ -125,7 +125,7 @@ def close_far_penalty(
     ee_frame_cfg: SceneEntityCfg,
     robot_finger_cfg: SceneEntityCfg,
     std: float = 0.06,
-    closed_thresh: float = 0.01,
+    closed_thresh: float = 0.02,
 ):
     near = mdp.object_ee_distance(env, std=std, object_cfg=object_cfg, ee_frame_cfg=ee_frame_cfg)
     closed = _finger_closed_reward(env, robot_finger_cfg, closed_thresh=closed_thresh)
@@ -155,13 +155,41 @@ def gripper_opening_obs(env, robot_cfg):
     return q.sum(dim=1, keepdim=True)
 
 
-def ee_height_error_obs(env, object_cfg: SceneEntityCfg, ee_frame_cfg: SceneEntityCfg, target_clearance: float = 0.01):
+def ee_height_error_obs(env, object_cfg: SceneEntityCfg, ee_frame_cfg: SceneEntityCfg, target_clearance: float = 0.0):
     obj = env.scene[object_cfg.name]
-    obj_z = obj.data.root_pos_w[:, 2]
+    obj_z_center = obj.data.root_pos_w[:, 2]
     ee_pos = env.scene[ee_frame_cfg.name].data.target_pos_w[:, 0, :]
     ee_z = ee_pos[:, 2]
-    err = (ee_z - (obj_z + target_clearance)).unsqueeze(1)  # (N,1)
+    err = (ee_z - (obj_z_center + target_clearance)).unsqueeze(1)
     return err
+
+
+def open_after_grasp_penalty(env, object_cfg: SceneEntityCfg, robot_finger_cfg: SceneEntityCfg):
+    obj = env.scene[object_cfg.name]
+    z = obj.data.root_pos_w[:, 2]
+    lifted = z > 0.01
+
+    robot = env.scene[robot_finger_cfg.name]
+    finger_q = robot.data.joint_pos[:, robot_finger_cfg.joint_ids]
+    open_amount = finger_q.mean(dim=1)
+
+    return lifted.float() * open_amount
+
+
+def strong_upward_reward(
+    env, object_cfg: SceneEntityCfg, robot_finger_cfg: SceneEntityCfg, closed_thresh: float = 0.01
+):
+    obj = env.scene[object_cfg.name]
+    vz = obj.data.root_lin_vel_w[:, 2]
+
+    closed = _finger_closed_reward(env, robot_finger_cfg, closed_thresh=closed_thresh)
+    return closed * torch.clamp(vz, min=0.0)
+
+
+def shaped_object_height_reward(env, object_cfg: SceneEntityCfg, table_height: float = 0.055):
+    obj = env.scene[object_cfg.name]
+    z = obj.data.root_pos_w[:, 2]
+    return torch.clamp(z - table_height, min=0.0)
 
 
 @configclass
@@ -177,6 +205,17 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
         # Set Franka as robot
         self.scene.robot = FRANKA_PANDA_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
         self.scene.robot.init_state.pos = (0.0, 0.0, 0.0)
+
+        self.scene.robot.spawn.activate_contact_sensors = True
+
+        self.scene.robot.spawn.rigid_props = RigidBodyPropertiesCfg(
+            disable_gravity=False,
+            max_depenetration_velocity=5.0,
+        )
+
+        self.scene.contact_forces = ContactSensorCfg(
+            prim_path="{ENV_REGEX_NS}/Robot/panda_.*finger", update_period=0.0, history_length=3, debug_vis=False
+        )
 
         # Initialization of VLM data joint positions
         if vlm_data:
@@ -199,10 +238,13 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
 
         # Set actions for the specific robot type (franka)
         self.actions.arm_action = mdp.JointPositionActionCfg(
-            asset_name="robot", joint_names=["panda_joint.*"], scale=0.25, use_default_offset=False
+            asset_name="robot", joint_names=["panda_joint.*"], scale=0.5, use_default_offset=False
         )
-        self.actions.gripper_action = mdp.JointPositionActionCfg(
-            asset_name="robot", joint_names=["panda_finger_joint.*"], scale=0.4, use_default_offset=False
+        self.actions.gripper_action = mdp.BinaryJointPositionActionCfg(
+            asset_name="robot",
+            joint_names=["panda_finger_joint.*"],
+            open_command_expr={"panda_finger_joint.*": 0.04},
+            close_command_expr={"panda_finger_joint.*": 0.0},
         )
 
         finger_cfg = SceneEntityCfg("robot", joint_names=["panda_finger_joint.*"])
@@ -228,14 +270,15 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
         self.scene.object.init_state.pos = cube_position
 
         # Rewards design
-        self.rewards.reaching_object.weight = 10.0
+        self.rewards.reaching_object.weight = 100.0
+        self.rewards.reaching_object.params["std"] = 0.05
 
         self.rewards.close_when_near = RewTerm(
             func=close_when_near,
             weight=200.0,
             params={
-                "std": 0.06,
-                "closed_thresh": 0.01,
+                "std": 0.02,
+                "closed_thresh": 0.02,
                 "object_cfg": SceneEntityCfg("object"),
                 "ee_frame_cfg": SceneEntityCfg("ee_frame"),
                 "robot_finger_cfg": finger_cfg,
@@ -244,10 +287,10 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
 
         self.rewards.low_lift_bonus = RewTerm(
             func=object_is_lifted_and_closed,
-            weight=300.0,
+            weight=500.0,
             params={
                 "minimal_height": 0.01,
-                "closed_thresh": 0.01,
+                "closed_thresh": 0.03,
                 "object_cfg": SceneEntityCfg("object"),
                 "robot_finger_cfg": finger_cfg,
             },
@@ -255,58 +298,96 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
 
         self.rewards.high_lift_bonus = RewTerm(
             func=object_is_lifted_and_closed,
-            weight=800.0,
+            weight=1000.0,
             params={
-                "minimal_height": 0.05,
-                "closed_thresh": 0.01,
+                "minimal_height": 0.08,
+                "closed_thresh": 0.025,
                 "object_cfg": SceneEntityCfg("object"),
                 "robot_finger_cfg": finger_cfg,
             },
         )
 
-        self.rewards.object_gripping = None
+        self.rewards.object_gripping = RewTerm(
+            func=mdp.contact_forces,
+            weight=300.0,
+            params={
+                "sensor_cfg": SceneEntityCfg("contact_forces", body_names=["panda_leftfinger", "panda_rightfinger"]),
+                "threshold": 0.20,
+            },
+        )
 
+        """
         self.rewards.ee_above_object = RewTerm(
             func=ee_above_object_reward,
-            weight=30.0,
+            weight=200.0,
             params={
-                "target_clearance": 0.015,
+                "target_clearance": 0.005,
                 "std": 0.02,
                 "object_cfg": SceneEntityCfg("object"),
                 "ee_frame_cfg": SceneEntityCfg("ee_frame"),
             },
         )
+        """
 
         self.rewards.close_far_penalty = RewTerm(
             func=close_far_penalty,
-            weight=-30.0,
+            weight=-100.0,
             params={
                 "std": 0.06,
-                "closed_thresh": 0.01,
+                "closed_thresh": 0.02,
                 "object_cfg": SceneEntityCfg("object"),
                 "ee_frame_cfg": SceneEntityCfg("ee_frame"),
                 "robot_finger_cfg": finger_cfg,
             },
         )
 
+        self.rewards.open_after_grasp_penalty = RewTerm(
+            func=open_after_grasp_penalty,
+            weight=-200.0,
+            params={
+                "object_cfg": SceneEntityCfg("object"),
+                "robot_finger_cfg": finger_cfg,
+            },
+        )
+
+        self.rewards.strong_upward = RewTerm(
+            func=strong_upward_reward,
+            weight=150.0,
+            params={
+                "object_cfg": SceneEntityCfg("object"),
+                "robot_finger_cfg": finger_cfg,
+                "closed_thresh": 0.02,
+            },
+        )
+
         self.rewards.ee_height_penalty = RewTerm(
             func=ee_height_penalty,
-            weight=-15.0,
+            weight=-5.0,
             params={
-                "margin": 0.03,
+                "margin": 0.022,
                 "object_cfg": SceneEntityCfg("object"),
                 "ee_frame_cfg": SceneEntityCfg("ee_frame"),
             },
         )
 
+        """
         self.rewards.xy_alignment = RewTerm(
             func=xy_alignment_reward,
-            weight=60.0,
+            weight=250.0,
             params={
                 "std": 0.015,
                 "object_cfg": SceneEntityCfg("object"),
                 "ee_frame_cfg": SceneEntityCfg("ee_frame"),
             },
+        )
+        """
+
+        self.rewards.action_rate = RewTerm(func=mdp.action_rate_l2, weight=-0.01)
+
+        self.rewards.shape_lift = RewTerm(
+            func=shaped_object_height_reward,
+            weight=5000.0,
+            params={"object_cfg": SceneEntityCfg("object"), "table_height": 0.055},
         )
 
         marker_cfg = FRAME_MARKER_CFG.copy()
@@ -339,7 +420,7 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
             params={
                 "object_cfg": SceneEntityCfg("object"),
                 "ee_frame_cfg": SceneEntityCfg("ee_frame"),
-                "target_clearance": 0.01,
+                "target_clearance": 0.0,
             },
         )
 
@@ -351,6 +432,10 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
         self.observations.policy.ee_to_object = ObsTerm(
             func=ee_to_object_w_obs,
             params={"ee_frame_cfg": SceneEntityCfg("ee_frame"), "object_cfg": SceneEntityCfg("object")},
+        )
+
+        self.observations.policy.finger_dist = ObsTerm(
+            func=mdp.joint_pos, params={"asset_cfg": SceneEntityCfg("robot", joint_names=["panda_finger_joint.*"])}
         )
 
         # self.events.reset_object_position = None
