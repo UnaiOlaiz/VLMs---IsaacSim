@@ -37,6 +37,13 @@ find logs -type f | grep "Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0" | grep ".zip"
     --num_envs 1 \
     --checkpoint logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0/2026-03-08_12-10-12/model_40960000_steps.zip
 ```
+Hau hobeto: 
+```bash
+# Busca el archivo zip más nuevo en la carpeta de logs de tu tarea
+LATEST_MODEL=$(ls -t logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0/**/*.zip | head -1)
 
+# Lánzalo directamente
+python scripts/reinforcement_learning/sb3/play.py --task Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0 --num_envs 16 --checkpoint $LATEST_MODEL
+``` 
 
 
