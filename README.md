@@ -10,34 +10,33 @@ cd ~/Documents/IsaacLab
 ``` 
 #### Headlessly
 ```bash
-cd ~/Documents/IsaacLab
-./isaaclab.sh -p scripts/reinforcement_learning/sb3/train.py --task Isaac-Lift-Cube-Franka-v0 --num_envs 64 --headless
+./isaaclab.sh -p scripts/reinforcement_learning/sb3/train.py --task Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0 --num_envs 4096 --headless
 ``` 
-
-#### Off-Screen Recording Training
-```bash
-# Cleanest version for your README
-./isaaclab.sh -p scripts/reinforcement_learning/sb3/train.py \
-    --task Isaac-Lift-Cube-Franka-v0 \
-    --num_envs 64 \
-    --headless \
-    --video
-```
 
 #### Visual Training 
 ```bash
-./isaaclab.sh -p scripts/reinforcement_learning/sb3/train.py --task Isaac-Lift-Cube-Franka-v0 --num_envs 64
+./isaaclab.sh -p scripts/reinforcement_learning/sb3/train.py --task Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0 --num_envs 64
 ```
 
 #### Check RL Training Results in Tensorboard:
 ```bash
-tensorboard --logdir ~/Documents/IsaacLab/logs/sb3/Isaac-Lift-Cube-Franka-v0
+tensorboard --logdir ~/Documents/IsaacLab/logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0
 ``` 
 
 #### To check the training results:
 ```bash
-./isaaclab.sh -p scripts/reinforcement_learning/sb3/play.py --task Isaac-Lift-Cube-Franka-v0 --num_envs 16 --use_last_checkpoint
+./isaaclab.sh -p scripts/reinforcement_learning/sb3/play.py --task Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0 --num_envs 16 --use_last_checkpoint
 ``` 
+Or with a specific checkpoint: 
+```bash
+find logs -type f | grep "Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0" | grep ".zip"
+```
+```bash
+./isaaclab.sh -p scripts/reinforcement_learning/sb3/play.py \
+    --task Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0 \
+    --num_envs 1 \
+    --checkpoint logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0/2026-03-08_12-10-12/model_40960000_steps.zip
+```
 
 
 
