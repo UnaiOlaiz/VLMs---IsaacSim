@@ -11,7 +11,14 @@ cd ~/Documents/IsaacLab
 #### Headlessly
 ```bash
 ./isaaclab.sh -p scripts/reinforcement_learning/sb3/train.py --task Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0 --num_envs 4096 --headless
-``` 
+```
+Continue progress with best model as checkpoint: 
+```bash
+./isaaclab.sh -p scripts/reinforcement_learning/sb3/train.py \
+    --task Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0 \
+    --checkpoint logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0/2026-03-09_10-05-30/model.zip \
+    --num_envs 4096 --headless
+```
 
 #### Visual Training 
 ```bash
@@ -25,17 +32,22 @@ tensorboard --logdir ~/Documents/IsaacLab/logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs
 
 #### To check the training results:
 ```bash
-./isaaclab.sh -p scripts/reinforcement_learning/sb3/play.py --task Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0 --num_envs 16 --use_last_checkpoint
+LATEST_MODEL=$(find logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0 -name "*.zip" -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2-)
+
+./isaaclab.sh -p scripts/reinforcement_learning/sb3/play.py \
+    --task Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0 \
+    --num_envs 16 \
+    --checkpoint "$LATEST_MODEL"
 ``` 
 Or with a specific checkpoint: 
 ```bash
-find logs -type f | grep "Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0" | grep ".zip"
+find logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0 -name "*.zip"
 ```
 ```bash
 ./isaaclab.sh -p scripts/reinforcement_learning/sb3/play.py \
     --task Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0 \
-    --num_envs 1 \
-    --checkpoint logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0/2026-03-08_12-10-12/model_40960000_steps.zip
+    --num_envs 16 \
+    --checkpoint logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0/2026-03-08_19-16-10/model.zip
 ```
 Hau hobeto: 
 ```bash
