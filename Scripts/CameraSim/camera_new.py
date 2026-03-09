@@ -241,7 +241,7 @@ async def run():
     relative_cube_pos = target_pos - robot_pos
 
     # offset we set to place on top
-    grasp_height = 0.07
+    grasp_height = 0.045  # THIS IS THE DISTANCE! VERY IMPORTANT
     final_coords = [target_pos[0], target_pos[1], grasp_height]
 
     print(f"Final target locked at: {target_pos}. Moving to position: {final_coords}")
