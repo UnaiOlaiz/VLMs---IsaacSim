@@ -16,8 +16,6 @@ import os
 import json
 from omni.isaac.core.articulations import Articulation
 from omni.isaac.core.utils.prims import get_prim_at_path
-import torch
-from stable_baselines3 import PPO
 
 
 scripts_path = "/home/unaiolaizolaosa/Documents/PFG/Scripts"
@@ -275,35 +273,6 @@ async def run():
         json.dump(data_save, f, indent=4)
 
     print(f"--- SUCCESS: Joint positions stored in {full_path} ---")
-
-    # RL model inference time!
-    model_path = "/home/unaiolaizolaosa/Documents/IsaacLab/logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0/2026-03-09_17-41-27/model.zip"
-    model = PPO.load(model_path)
-
-    obs, _ = env.reset()
-    gripped = False
-    max_grip_steps = 100
-
-    for i in range(max_grip_steps):
-        action, _ = model.predict(obs, deterministic=True)
-        obs, reward, terminated, truncated, info = env.step(action)
-
-        contact_forces = env.unwrapped.scene["contact_forces"].data.net_forces_w
-        grip_force = np.linalg.norm(contact_forces)
-
-        if grip_force > 5.0:
-            print("Gripped: force:{grip_force}")
-            gripped = True
-            break
-        await asyncio.sleep(0.1)
-
-    # Code to lift it with the controller
-    if gripped:
-        lift_coords = [final_coords[0], final_coords[1], 0.20]  # lift offset
-        await execute_movement(lift_coords)
-        print("Cube lifted!!!")
-    else:
-        print("Grip failed...")
 
 
 asyncio.ensure_future(run())
