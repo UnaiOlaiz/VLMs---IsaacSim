@@ -243,12 +243,26 @@ async def run():
     relative_cube_pos = target_pos - robot_pos
 
     # offset we set to place on top
-    grasp_height = 0.045  # THIS IS THE DISTANCE! VERY IMPORTANT
+    grasp_height = 0.015  # THIS IS THE DISTANCE! VERY IMPORTANT
     final_coords = [target_pos[0], target_pos[1], grasp_height]
 
     print(f"Final target locked at: {target_pos}. Moving to position: {final_coords}")
     print(f"Robot position saved: {robot_pos}, will be used for the RL task.")
     await execute_movement(final_coords)
+
+    for i in range(10):  # 10 re-intentos de ajuste fino
+        ee_pos, _ = get_world_pose("/World/Franka_Robot/panda_hand")
+        current_dist = np.linalg.norm(np.array(ee_pos) - np.array(final_coords))
+
+        if current_dist < 0.02:  # Si ya estamos a menos de 2cm, perfecto
+            print(f"Precisión alcanzada: {current_dist:.4f}m")
+            break
+        else:
+            print(f"Ajuste {i + 1}: Distancia todavía {current_dist:.4f}m. Forzando...")
+            # Enviamos el comando de nuevo con un pequeño paso extra
+            await execute_movement(final_coords)
+            await asyncio.sleep(0.2)
+
     print("Arm located at pre-grasp position! Ready for RL task!")
 
     # Capture Section!
@@ -276,6 +290,7 @@ async def run():
 
     print(f"--- SUCCESS: Joint positions stored in {full_path} ---")
 
+    """
     # RL model inference time!
     model_path = "/home/unaiolaizolaosa/Documents/IsaacLab/logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0/2026-03-09_17-41-27/model.zip"
     model = PPO.load(model_path)
@@ -304,6 +319,7 @@ async def run():
         print("Cube lifted!!!")
     else:
         print("Grip failed...")
+    """
 
 
 asyncio.ensure_future(run())
