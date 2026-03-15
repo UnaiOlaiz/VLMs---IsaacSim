@@ -113,7 +113,14 @@ async def spawn_and_drive():
         World.instance().clear_instance()
 
     world = World(stage_units_in_meters=1.0)
+    if world is None:
+        print("Failed to create world")
+        return
+
     await world.initialize_simulation_context_async()
+    if world is None or world.stage is None:
+        print("Failed to initialize simulation context")
+        return
 
     world.scene.add_default_ground_plane()
     add_lights(world.stage)
@@ -144,6 +151,40 @@ async def spawn_and_drive():
             scale=np.array([0.10, 0.10, 0.08]),
             color=np.array([0.9, 0.2, 0.2]),
             mass=0.2,
+        )
+    )
+
+    # Add three colored platforms
+    red_platform = world.scene.add(
+        DynamicCuboid(
+            prim_path="/World/RedPlatform",
+            name="red_platform",
+            position=np.array([2.0, 0.0, 0.01]),
+            scale=np.array([0.3, 0.3, 0.02]),
+            color=np.array([1.0, 0.0, 0.0]),
+            mass=0.0,
+        )
+    )
+
+    green_platform = world.scene.add(
+        DynamicCuboid(
+            prim_path="/World/GreenPlatform",
+            name="green_platform",
+            position=np.array([0.0, 2.0, 0.01]),
+            scale=np.array([0.3, 0.3, 0.02]),
+            color=np.array([0.0, 1.0, 0.0]),
+            mass=0.0,
+        )
+    )
+
+    blue_platform = world.scene.add(
+        DynamicCuboid(
+            prim_path="/World/BluePlatform",
+            name="blue_platform",
+            position=np.array([-2.0, 0.0, 0.01]),
+            scale=np.array([0.3, 0.3, 0.02]),
+            color=np.array([0.0, 0.0, 1.0]),
+            mass=0.0,
         )
     )
 
@@ -190,9 +231,14 @@ async def spawn_and_drive():
         if step % 60 == 0:
             print(f"step={step} pos={pos[:2]} goal={goal_xy} dist={dist:.3f}")
 
-        await world.step_async()
+        step_result = world.step_async()
+        if step_result is not None:
+            await step_result
+        else:
+            print("World step returned None, breaking simulation loop")
+            break
 
     print("Done.")
 
 
-asyncio.ensure_future(spawn_and_drive())
+asyncio.create_task(spawn_and_drive())
