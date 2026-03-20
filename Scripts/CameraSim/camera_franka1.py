@@ -1,3 +1,5 @@
+# Main vision script for Franka_1 cube detection and pre-grasp positioning
+
 # Dependencies needed
 import requests
 import base64
@@ -9,15 +11,12 @@ import asyncio
 from omni.isaac.core.utils.xforms import get_world_pose
 from pxr import UsdGeom
 from omni.isaac.core.objects import VisualSphere
-import isaacsim.core.utils.prims as prim_utils
 from omni.physx.scripts import utils
 import sys
 import os
 import json
 from omni.isaac.core.articulations import Articulation
-from omni.isaac.core.utils.prims import get_prim_at_path
-import torch
-from stable_baselines3 import PPO
+import subprocess
 
 
 scripts_path = "/home/unaiolaizolaosa/Documents/PFG/Scripts"
@@ -27,7 +26,6 @@ if scripts_path not in sys.path:
 
 try:
     from Control.franka_stop import execute_movement
-
     print(f"Movement scripts correctly loaded from path: '{scripts_path}'!")
 except ImportError as e:
     print(f"Error loading scripts from given path: {scripts_path}")
@@ -35,12 +33,16 @@ except ImportError as e:
 
 
 # Code in order to avoid franka collisions
+# Skip fingers — they are already set to convexDecomposition
 stage = omni.usd.get_context().get_stage()
-robot_path = "/World/Franka_Robot"
+robot_path = "/World/Franka_1"
 
 for prim in stage.Traverse():
-    if prim.IsA(UsdGeom.Mesh) and robot_path in str(prim.GetPath()):
-        utils.set_collider_approximation(prim, "convexHull")
+    path_str = str(prim.GetPath())
+    if prim.IsA(UsdGeom.Mesh) and robot_path in path_str:
+        if "finger" in path_str.lower():  # keep convex decomposition for the fingers
+            continue
+        utils.setCollider(prim, approximationShape="convexHull")
 
 # URL where the BentoML service is running
 URL = "http://127.0.0.1:8000/ground"
@@ -48,8 +50,7 @@ URL = "http://127.0.0.1:8000/ground"
 # FIXED RESOLUTION OF THE ENVIRONMENT INSIDE ISAACSIM
 RESOLUTION = (1280, 720)
 
-# the instruction will also be declared as variable if needed to be adapted
-# INSTRUCTION = "red cube" # in this case, what to be found
+# The instruction — change to switch target cube
 INSTRUCTION = "red cube"
 
 
@@ -67,55 +68,22 @@ def get_prediction(instruction, rgb_image):
 
     payload = {
         "instruction": instruction,
-        "image_b64": img_str,  # Changed from image_64
+        "image_b64": img_str,
     }
 
     response = requests.post(URL, json=payload, timeout=10)
     return response.json()
 
 
-def get_3d_target(bbox, depth_map, cam_view_matrix, cam_proj_matrix):
-    """
-    Docstring for get_3d_target
-
-    :param bbox: Description
-    :param depth_map: Description
-    :param cam_view_matrix: Description
-    :param cam_proj_matrix: Description
-    """
-    # bbox is [ymin, xmin, ymax, xmax]
-    ymin, xmin, ymax, xmax = bbox
-
-    # Pixel normalization for the fixed resolution (1280x720)
-    u = int(((xmin + xmax) / 2) * 1280 / 1000)
-    v = int(((ymin + ymax) / 2) * 720 / 1000)
-    # We fix the values into the given ranges to fall into correct values
-    u = np.clip(u, 0, 1279)
-    v = np.clip(v, 0, 719)
-
-    z_depth = depth_map[v, u]
-
-    f_len = 900.0  # focal length of the fixed camera
-    cx, cy = 640, 360
-
-    x_cam = (u - cx) * z_depth / f_len
-    y_cam = (v - cy) * z_depth / f_len
-    z_cam = -z_depth
-
-    target_pos_local = np.array([x_cam, y_cam, z_cam, 1.0])
-    target_pos_world = np.dot(cam_view_matrix, target_pos_local)
-
-    return target_pos_world[:3]
-
-
-# In your get_3d_target_direct function, ensure these values match your Isaac Camera:
 def get_3d_target_calibrated(u, v, depth_map, cam_matrix):
+    """
+    Calibrated unprojection using verified camera convention.
+    """
     z_depth = depth_map[v, u]
 
     if z_depth == 0 or np.isnan(z_depth) or np.isinf(z_depth):
         return np.array([0.0, 0.0, -1.0])
 
-    # 18.14mm focal length on a 36mm sensor (standard Isaac Sim)
     # f_pixel = (focal_length * image_width) / horizontal_aperture
     f_pixel = (18.14 * 1280) / 20.955  # 20.955 is the default Isaac horizontal aperture
     cx, cy = 640, 360
@@ -132,7 +100,8 @@ def get_3d_target_calibrated(u, v, depth_map, cam_matrix):
 
 async def main_vision():
     """
-    This function will serve as a bridge, it will capture what the camera sees in the environment and send it to the service
+    Captures Camera_01 frames, queries the VLM for the target cube,
+    and returns stable world-space XYZ of the detected cube.
     """
     print("-" * 50 + "INITIALIZING RENDERER" + "-" * 50)
 
@@ -158,22 +127,21 @@ async def main_vision():
 
     loop = asyncio.get_event_loop()
 
-    # parameters for coordinate findings
+    # Parameters for coordinate finding
     consecutive_detections = 0
-    stability_count = (
-        3  # we will stop the loop when finding 3 same coordinates in a row
-    )
+    stability_count = 3  # lock after 3 consecutive consistent detections
     last_stable_xyz = np.array([0.0, 0.0, 0.0])
 
-    print("STARTING COORDINATE SEARCHING!")
+    print(f"STARTING COORDINATE SEARCHING for: '{INSTRUCTION}'")
 
     while True:
         await rep.orchestrator.step_async()
         rgb_data = rgb_annot.get_data()
         depth_data = depth_annot.get_data()
 
-        y_start, y_end = 200, 600
-        x_start, x_end = 400, 1000
+        # Crop to cube workspace — left side of camera view, excluding robot arm
+        y_start, y_end = 200, 500
+        x_start, x_end = 0, 550
         cropped_img = rgb_data[y_start:y_end, x_start:x_end]
 
         if cropped_img is not None and cropped_img.size > 0:
@@ -185,11 +153,12 @@ async def main_vision():
                 if result and result.get("target") and result["target"].get("found"):
                     raw_bbox = result["target"]["bbox_xyxy"]
 
+                    # Map bbox from crop space → full image pixel coords
                     crop_h, crop_w = (y_end - y_start), (x_end - x_start)
                     v_crop = (raw_bbox[0] + raw_bbox[2]) / 2 * crop_h / 1000
                     u_crop = (raw_bbox[1] + raw_bbox[3]) / 2 * crop_w / 1000
-                    u_final = int(u_crop + x_start)
-                    v_final = int(v_crop + y_start)
+                    u_final = int(np.clip(u_crop + x_start, 0, RESOLUTION[0] - 1))
+                    v_final = int(np.clip(v_crop + y_start, 0, RESOLUTION[1] - 1))
 
                     world_transform = UsdGeom.Xformable(
                         camera_prim
@@ -199,6 +168,8 @@ async def main_vision():
                         u_final, v_final, depth_data, cam_matrix
                     )
 
+                    # Simple filter — same as working script
+                    # Reject if Z is below floor or too high, or X is out of scene
                     if current_xyz[2] < -0.1 or current_xyz[0] > 2.0:
                         print(f"Skipping hallucination: {current_xyz}")
                         continue
@@ -231,6 +202,7 @@ async def main_vision():
 
             except Exception as e:
                 print(f"Connection error: {e}")
+
         await asyncio.sleep(0.1)
 
 
@@ -238,35 +210,31 @@ async def run():
     target_data = await main_vision()
     target_pos = target_data["world_xyz"]
 
-    # we get the robot real pos to then place the relative distance in the rl training part
-    robot_pos, _ = get_world_pose("/World/Franka_Robot")
+    # I will add this to not crash the GPU
+    # Stop BentoML and free GPU memory before physics movement
+    # Stop BentoML by killing the process on port 8000
+    result = subprocess.run(["lsof", "-t", "-i", ":8000"], capture_output=True, text=True)
+    pid = result.stdout.strip()
+    if pid:
+        subprocess.run(["kill", "-9", pid])
+        print(f"Killed BentoML process {pid}")
+    await asyncio.sleep(8.0)
+
+    # Get robot position to compute relative cube position for RL
+    robot_pos, _ = get_world_pose("/World/Franka_1")
     relative_cube_pos = target_pos - robot_pos
 
-    # offset we set to place on top
-    grasp_height = 0.015  # THIS IS THE DISTANCE! VERY IMPORTANT
+    # Offset to place end effector just above the cube
+    grasp_height = 0.045  # THIS IS THE DISTANCE! VERY IMPORTANT
     final_coords = [target_pos[0], target_pos[1], grasp_height]
 
     print(f"Final target locked at: {target_pos}. Moving to position: {final_coords}")
     print(f"Robot position saved: {robot_pos}, will be used for the RL task.")
     await execute_movement(final_coords)
-
-    for i in range(10):  # 10 re-intentos de ajuste fino
-        ee_pos, _ = get_world_pose("/World/Franka_Robot/panda_hand")
-        current_dist = np.linalg.norm(np.array(ee_pos) - np.array(final_coords))
-
-        if current_dist < 0.02:  # Si ya estamos a menos de 2cm, perfecto
-            print(f"Precisión alcanzada: {current_dist:.4f}m")
-            break
-        else:
-            print(f"Ajuste {i + 1}: Distancia todavía {current_dist:.4f}m. Forzando...")
-            # Enviamos el comando de nuevo con un pequeño paso extra
-            await execute_movement(final_coords)
-            await asyncio.sleep(0.2)
-
     print("Arm located at pre-grasp position! Ready for RL task!")
 
-    # Capture Section!
-    franka = Articulation("/World/Franka_Robot")
+    # Capture Section — save joint state for RL initialization
+    franka = Articulation("/World/Franka_1")
     franka.initialize()
 
     joint_pos = franka.get_joint_positions().tolist()
@@ -279,7 +247,7 @@ async def run():
     }
 
     json_folder = os.path.expanduser("~/Documents/PFG/Scripts/Control/")
-    json_filename = "rl_start_near_cube_v2.json"
+    json_filename = "rl_first_franka.json"
     full_path = os.path.join(json_folder, json_filename)
 
     if not os.path.exists(json_folder):
@@ -289,37 +257,6 @@ async def run():
         json.dump(data_save, f, indent=4)
 
     print(f"--- SUCCESS: Joint positions stored in {full_path} ---")
-
-    """
-    # RL model inference time!
-    model_path = "/home/unaiolaizolaosa/Documents/IsaacLab/logs/sb3/Isaac-Lift-Cube-Franka-IK-Abs-VLM-v0/2026-03-09_17-41-27/model.zip"
-    model = PPO.load(model_path)
-
-    obs, _ = env.reset()
-    gripped = False
-    max_grip_steps = 100
-
-    for i in range(max_grip_steps):
-        action, _ = model.predict(obs, deterministic=True)
-        obs, reward, terminated, truncated, info = env.step(action)
-
-        contact_forces = env.unwrapped.scene["contact_forces"].data.net_forces_w
-        grip_force = np.linalg.norm(contact_forces)
-
-        if grip_force > 5.0:
-            print("Gripped: force:{grip_force}")
-            gripped = True
-            break
-        await asyncio.sleep(0.1)
-
-    # Code to lift it with the controller
-    if gripped:
-        lift_coords = [final_coords[0], final_coords[1], 0.20]  # lift offset
-        await execute_movement(lift_coords)
-        print("Cube lifted!!!")
-    else:
-        print("Grip failed...")
-    """
 
 
 asyncio.ensure_future(run())
