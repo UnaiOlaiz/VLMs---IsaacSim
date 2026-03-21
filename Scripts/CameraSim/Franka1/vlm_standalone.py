@@ -88,7 +88,7 @@ def main():
     for i in range(args.attempts):
         print(f"\nAttempt {i+1}/{args.attempts}...")
         try:
-            result = get_prediction(instruction, crop_path, timeout=30)
+            result = get_prediction(instruction, crop_path, timeout=300)
             print(f"VLM result: {result}")
 
             if result and result.get("target") and result["target"].get("found"):

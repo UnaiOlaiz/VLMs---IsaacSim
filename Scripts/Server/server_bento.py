@@ -11,15 +11,15 @@ import re
 
 MODEL_ID = "Qwen/Qwen2-VL-2B-Instruct" # Model we will use
 
-@bentoml.service(name="VLM_Service_Isaac", resources={"cpu": 4})
+@bentoml.service(name="VLM_Service_Isaac", resources={"gpu": 1})
 class VLMServiceIsaac:
     def __init__(self):
         self.model_id = MODEL_ID
         self.processor = AutoProcessor.from_pretrained(self.model_id)
         self.model = Qwen2VLForConditionalGeneration.from_pretrained(
             self.model_id,
-            torch_dtype=torch.float32,
-            device_map="cpu",
+            torch_dtype=torch.float16,
+            device_map="cuda",
         ).eval()
         print(f"-----MODEL: {self.model_id} LOADED-----")
 
@@ -44,7 +44,7 @@ class VLMServiceIsaac:
         image_inputs, _ = process_vision_info(messages)
         inputs = self.processor(
             text=[text], images=image_inputs, padding=True, return_tensors="pt"
-        ).to("cpu")
+        ).to("cuda")
 
         with torch.no_grad():
             generated_ids = self.model.generate(

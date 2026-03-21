@@ -5,7 +5,7 @@
 
 import os
 import json
-import torch
+import isaaclab.envs.mdp as core_mdp
 from isaaclab.assets import RigidObjectCfg
 from isaaclab.sensors import FrameTransformerCfg
 from isaaclab.sensors.frame_transformer.frame_transformer_cfg import OffsetCfg
@@ -13,19 +13,19 @@ from isaaclab.sim.schemas.schemas_cfg import RigidBodyPropertiesCfg, CollisionPr
 from isaaclab.sim.spawners.from_files.from_files_cfg import UsdFileCfg
 from isaaclab.utils import configclass
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
-from isaaclab.managers import RewardTermCfg as RewTerm
-from isaaclab.managers import SceneEntityCfg
+from isaaclab.managers import ObservationTermCfg as ObsTerm
 
 from isaaclab_tasks.manager_based.manipulation.lift import mdp
 from isaaclab_tasks.manager_based.manipulation.lift.lift_env_cfg import LiftEnvCfg
 
+##
+# Pre-defined configs
+##
 from isaaclab.markers.config import FRAME_MARKER_CFG  # isort: skip
 from isaaclab_assets.robots.franka import FRANKA_PANDA_CFG  # isort: skip
 
 # --- VLM Data Loading ---
-vlm_json_path = os.path.expanduser(
-    "~/Documents/PFG/Scripts/Control/rl_first_franka.json"
-)
+vlm_json_path = os.path.expanduser("~/Documents/PFG/Scripts/Control/rl_start_near_cube_v2.json")
 
 def load_vlm_json(path):
     if os.path.exists(path):
@@ -35,68 +35,10 @@ def load_vlm_json(path):
 
 vlm_data = load_vlm_json(vlm_json_path)
 
-# Hardcoded place target — Jetbot platform XY position (no actual Jetbot spawned yet)
-PLACE_TARGET_POS = (0.8, 0.0, 0.0)
-
-
-# --- Custom Reward Functions ---
-def cube_to_target_reward(
-    env,
-    std: float,
-    object_cfg: SceneEntityCfg = SceneEntityCfg("object"),
-) -> torch.Tensor:
-    """Dense reward for moving the cube toward the place target XY."""
-    obj = env.scene[object_cfg.name]
-    cube_pos_w = obj.data.root_pos_w[:, :2]
-
-    target_xy = torch.tensor(
-        [PLACE_TARGET_POS[0], PLACE_TARGET_POS[1]],
-        device=env.device
-    ).unsqueeze(0).expand(env.num_envs, -1)
-
-    dist = torch.norm(cube_pos_w - target_xy, dim=-1)
-    return 1.0 - torch.tanh(dist / std)
-
-
-def cube_lifted_reward(
-    env,
-    minimal_height: float,
-    object_cfg: SceneEntityCfg = SceneEntityCfg("object"),
-) -> torch.Tensor:
-    """Binary reward for lifting the cube above a minimum height."""
-    obj = env.scene[object_cfg.name]
-    return torch.where(
-        obj.data.root_pos_w[:, 2] > minimal_height,
-        torch.ones(env.num_envs, device=env.device),
-        torch.zeros(env.num_envs, device=env.device),
-    )
-
-
-def cube_placed_reward(
-    env,
-    xy_threshold: float = 0.1,
-    z_min: float = 0.05,
-    object_cfg: SceneEntityCfg = SceneEntityCfg("object"),
-) -> torch.Tensor:
-    """Sparse reward: cube is placed at the target XY position."""
-    obj = env.scene[object_cfg.name]
-    cube_pos = obj.data.root_pos_w
-
-    target_xy = torch.tensor(
-        [PLACE_TARGET_POS[0], PLACE_TARGET_POS[1]],
-        device=env.device
-    ).unsqueeze(0).expand(env.num_envs, -1)
-
-    xy_dist = torch.norm(cube_pos[:, :2] - target_xy, dim=-1)
-    xy_ok = xy_dist < xy_threshold
-    z_ok = cube_pos[:, 2] > z_min
-
-    return (xy_ok & z_ok).float() * 5.0
-
-
 @configclass
-class FrankaCubeLiftPlaceEnvCfg(LiftEnvCfg):
+class FrankaCubeLiftEnvCfg(LiftEnvCfg):
     def __post_init__(self):
+        # 1. Run parent post-init first to load default rewards and observations
         super().__post_init__()
 
         # GPU capacity config
@@ -105,18 +47,15 @@ class FrankaCubeLiftPlaceEnvCfg(LiftEnvCfg):
         self.sim.physx.gpu_found_lost_pairs_capacity = 1048576
         self.sim.physx.gpu_total_pairs_capacity = 1048576
 
-        # Robot
+        # 2. Set Franka as robot
         self.scene.robot = FRANKA_PANDA_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
-        self.scene.robot.spawn.collision_props = CollisionPropertiesCfg(
-            collision_enabled=True
-        )
+        
+        # This enables collisions so your manual Convex Decomposition is used
+        self.scene.robot.spawn.collision_props = CollisionPropertiesCfg(collision_enabled=True)
 
-        # Actions
+        # 3. Set actions
         self.actions.arm_action = mdp.JointPositionActionCfg(
-            asset_name="robot",
-            joint_names=["panda_joint.*"],
-            scale=0.5,
-            use_default_offset=True,
+            asset_name="robot", joint_names=["panda_joint.*"], scale=0.5, use_default_offset=True
         )
         self.actions.gripper_action = mdp.BinaryJointPositionActionCfg(
             asset_name="robot",
@@ -124,15 +63,13 @@ class FrankaCubeLiftPlaceEnvCfg(LiftEnvCfg):
             open_command_expr={"panda_finger_.*": 0.04},
             close_command_expr={"panda_finger_.*": 0.0},
         )
-
+        
         self.commands.object_pose.body_name = "panda_hand"
 
-        # Cube
+        # 4. Set Cube as object
         self.scene.object = RigidObjectCfg(
             prim_path="{ENV_REGEX_NS}/Object",
-            init_state=RigidObjectCfg.InitialStateCfg(
-                pos=[0.5, 0, 0.055], rot=[1, 0, 0, 0]
-            ),
+            init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, 0, 0.055], rot=[1, 0, 0, 0]),
             spawn=UsdFileCfg(
                 usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/DexCube/dex_cube_instanceable.usd",
                 scale=(0.8, 0.8, 0.8),
@@ -145,7 +82,7 @@ class FrankaCubeLiftPlaceEnvCfg(LiftEnvCfg):
             ),
         )
 
-        # End Effector Frame
+        # 5. End Effector Frame
         marker_cfg = FRAME_MARKER_CFG.copy()
         marker_cfg.markers["frame"].scale = (0.1, 0.1, 0.1)
         marker_cfg.prim_path = "/Visuals/FrameTransformer"
@@ -162,46 +99,27 @@ class FrankaCubeLiftPlaceEnvCfg(LiftEnvCfg):
             ],
         )
 
-        # Rewards — lift + place
-        self.rewards.cube_to_target = RewTerm(
-            func=cube_to_target_reward,
-            weight=2.0,
-            params={"std": 0.3},
-        )
-        self.rewards.cube_lifted = RewTerm(
-            func=cube_lifted_reward,
-            weight=1.0,
-            params={"minimal_height": 0.08},
-        )
-        self.rewards.cube_placed = RewTerm(
-            func=cube_placed_reward,
-            weight=5.0,
-            params={"xy_threshold": 0.1, "z_min": 0.05},
-        )
-
-        # VLM initial state
+        # 6. INTEGRATE VLM LOGIC
         if vlm_data:
-            print("[VLM INFO] Loading initialization from JSON")
+            print(f"[VLM INFO] Loading initialization from JSON")
             jp = vlm_data["joint_positions"]
             self.scene.robot.init_state.joint_positions = {
                 f"panda_joint{i+1}": jp[i] for i in range(7)
             }
             self.scene.robot.init_state.joint_positions["panda_finger_joint1"] = jp[7]
             self.scene.robot.init_state.joint_positions["panda_finger_joint2"] = jp[8]
-            self.scene.robot.default_joint_pos = (
-                self.scene.robot.init_state.joint_positions
-            )
+            self.scene.robot.default_joint_pos = self.scene.robot.init_state.joint_positions
 
             if "cube_world_pos" in vlm_data:
                 cp = vlm_data["cube_world_pos"]
                 self.scene.object.init_state.pos = (-cp[0], -cp[1], 0.06)
 
-        # Disable position randomization
+        # Disable randomization for VLM starts
         self.events.reset_object_position = None
 
 
 @configclass
-class FrankaCubeLiftPlaceEnvCfg_PLAY(FrankaCubeLiftPlaceEnvCfg):
+class FrankaCubeLiftEnvCfg_PLAY(FrankaCubeLiftEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         self.scene.num_envs = 50

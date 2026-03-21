@@ -19,7 +19,7 @@ os.makedirs(SAVE_DIR, exist_ok=True)
 
 # Collision setup
 stage = omni.usd.get_context().get_stage()
-robot_path = "/World/Franka_1"
+robot_path = "/World/Franka_Robot"
 for prim in stage.Traverse():
     path_str = str(prim.GetPath())
     if prim.IsA(UsdGeom.Mesh) and robot_path in path_str:
@@ -60,17 +60,17 @@ async def save_data():
     cam_matrix = np.array(world_transform).reshape(4, 4).T
 
     # Get robot position
-    robot_pos, _ = get_world_pose("/World/Franka_1")
+    robot_pos, _ = get_world_pose("/World/Franka_Robot")
 
     # Save full RGB image
     rgb_clean = np.ascontiguousarray(rgb_data[..., :3], dtype=np.uint8)
     full_img = Image.fromarray(rgb_clean)
     full_img.save(os.path.join(SAVE_DIR, "camera01_full.png"))
 
-    # Save cropped image (cube workspace area)
-    y_start, y_end = 200, 500
-    x_start, x_end = 0, 550
-    cropped = rgb_clean[y_start:y_end, x_start:x_end]
+    # Let's try with the full photo
+    y_start, y_end = 0, 720
+    x_start, x_end = 0, 1280
+    cropped = rgb_clean
     crop_img = Image.fromarray(cropped)
     crop_img.save(os.path.join(SAVE_DIR, "camera01_crop.png"))
 
