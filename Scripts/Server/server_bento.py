@@ -9,7 +9,8 @@ from transformers import Qwen2VLForConditionalGeneration, AutoProcessor
 from qwen_vl_utils import process_vision_info
 import re
 
-MODEL_ID = "Qwen/Qwen2-VL-2B-Instruct" # Model we will use
+MODEL_ID = "Qwen/Qwen2-VL-2B-Instruct"  # Model we will use
+
 
 @bentoml.service(name="VLM_Service_Isaac", resources={"gpu": 1})
 class VLMServiceIsaac:
@@ -23,6 +24,7 @@ class VLMServiceIsaac:
         ).eval()
         print(f"-----MODEL: {self.model_id} LOADED-----")
 
+    # end point to find cube coordinates
     @bentoml.api
     async def ground(self, instruction: str, image_b64: str) -> dict:
         img_bytes = base64.b64decode(image_b64)
@@ -33,7 +35,10 @@ class VLMServiceIsaac:
                 "role": "user",
                 "content": [
                     {"type": "image", "image": image},
-                    {"type": "text", "text": f"Locate the {instruction}. Return only the JSON: {{\"target\": {{\"bbox_xyxy\": [ymin, xmin, ymax, xmax]}}}} using normalized coordinates 0-1000."}
+                    {
+                        "type": "text",
+                        "text": f'Locate the {instruction}. Return only the JSON: {{"target": {{"bbox_xyxy": [ymin, xmin, ymax, xmax]}}}} using normalized coordinates 0-1000.',
+                    },
                 ],
             }
         ]
@@ -60,6 +65,48 @@ class VLMServiceIsaac:
 
         return self.extract_coords(out_text)
 
+    # endpoint to find the jetbot coordinates
+    @bentoml.api
+    async def find_jetbot(self, image_b64: str) -> dict:
+        img_bytes = base64.b64decode(image_b64)
+        image = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+        # It's the same function as before just changing the prompt
+        messages = [
+            {
+                "role": "user",
+                "content": [
+                    {"type": "image", "image": image},
+                    {
+                        "type": "text",
+                        "text": 'Locate the small robot vehicle or jetbot on wheels. Return only the JSON: {"target": {"bbox_xyxy": [ymin, xmin, ymax, xmax]}} using normalized coordinates 0-1000.',
+                    },
+                ],
+            }
+        ]
+
+        text = self.processor.apply_chat_template(
+            messages, tokenize=False, add_generation_prompt=True
+        )
+        image_inputs, _ = process_vision_info(messages)
+        inputs = self.processor(
+            text=[text], image=image_inputs, padding=True, return_tensors="pt"
+        ).to("cuda")
+
+        with torch.no_grad():
+            generated_ids = self.model.generate(
+                **inputs, max_new_tokens=128, do_sample=False, temperature=1.0
+            )
+            trimmed_ids = [
+                out_ids[len(in_ids) :]
+                for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+            ]
+            out_text = self.processor.batch_decode(
+                trimmed_ids, skip_special_tokens=True
+            )[0]
+
+        return self.extract_coords(out_text)
+
+    # function to 'translate' the coordinates given by the vlm to real and appliable ones.
     def extract_coords(self, text):
         bracket_match = re.search(
             r"\[\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\]", text
@@ -69,7 +116,7 @@ class VLMServiceIsaac:
             # some hallucination filters:
             if coords[0] < 10 and coords[0] < 10:
                 return {"target": {"found": False}}
-            if (coords[2]- coords[0]) < 20 or (coords[3]-coords[1]) < 20:
+            if (coords[2] - coords[0]) < 20 or (coords[3] - coords[1]) < 20:
                 return {"target": {"found": False}}
             return {"target": {"bbox_xyxy": coords, "found": True}}
         return {"target": {"found": False}}
