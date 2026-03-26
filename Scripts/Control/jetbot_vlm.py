@@ -24,6 +24,7 @@ if scripts_path not in sys.path:
 
 try:
     from Control.jetbot_control import execute_movement as jetbot_move
+
     print(f"Jetbot control loaded from: '{scripts_path}'")
 except ImportError as e:
     print(f"Error loading jetbot control: {e}")
@@ -53,6 +54,7 @@ STOP_DISTANCE = 0.6  # meters
 #  CAMERA HELPERS
 # =============================================================================
 
+
 def setup_camera():
     try:
         rep.orchestrator.stop()
@@ -74,14 +76,14 @@ def unproject(u, v, depth_map, cam_matrix):
     z_depth = depth_map[v, u]
     if z_depth == 0 or np.isnan(z_depth) or np.isinf(z_depth):
         return None
-    
+
     x_cam = (u - CX) * z_depth / F_PIXEL
     y_cam = (v - CY) * z_depth / F_PIXEL
     z_cam = -z_depth
-    
+
     local = np.array([x_cam, y_cam, z_cam, 1.0])
     world = np.dot(cam_matrix, local)
-    
+
     # Apply the calibration offset to the final world position
     return world[:3] + CAM02_OFFSET
 
@@ -89,6 +91,7 @@ def unproject(u, v, depth_map, cam_matrix):
 # =============================================================================
 #  VLM HELPERS
 # =============================================================================
+
 
 def call_vlm(instruction, rgb_image, timeout=30):
     rgb_clean = np.ascontiguousarray(rgb_image[..., :3], dtype=np.uint8)
@@ -130,9 +133,11 @@ async def vlm_detect(
                 v_final = int(np.clip(v_norm * RESOLUTION[1], 0, RESOLUTION[1] - 1))
 
                 # Get Camera Transform
-                world_transform = UsdGeom.Xformable(camera_prim).ComputeLocalToWorldTransform(0)
+                world_transform = UsdGeom.Xformable(
+                    camera_prim
+                ).ComputeLocalToWorldTransform(0)
                 cam_matrix = np.array(world_transform).reshape(4, 4).T
-                
+
                 # Unproject with OFFSET
                 xyz = unproject(u_final, v_final, depth_data, cam_matrix)
 
@@ -153,7 +158,7 @@ async def vlm_detect(
                         name=f"detected_{label.replace(' ', '_')}",
                         position=last_xyz,
                         radius=0.2,
-                        color=np.array([1, 0, 1]), # Magenta
+                        color=np.array([1, 0, 1]),  # Magenta
                     )
                     return last_xyz
             else:
@@ -169,6 +174,7 @@ async def vlm_detect(
 #  MAIN EXECUTION
 # =============================================================================
 
+
 async def run():
     print("\n" + "=" * 60)
     print("  JETBOT NAVIGATION: Camera_02 VLM (Calibrated) → Franka_2")
@@ -181,7 +187,7 @@ async def run():
         return
 
     rgb_annot, depth_annot = setup_camera()
-    
+
     # --- PHASE 1: Target Marker ---
     marker_path = "/World/Franka2_Marker"
     if not stage.GetPrimAtPath(marker_path).IsValid():
@@ -190,11 +196,12 @@ async def run():
             name="franka2_marker",
             position=np.array([5.46, 0.1, 0.15]),
             radius=0.15,
-            color=np.array([1, 0, 0]), # Red
+            color=np.array([1, 0, 0]),  # Red
         )
 
     # Wait for visuals to initialize
-    for _ in range(10): await rep.orchestrator.step_async()
+    for _ in range(10):
+        await rep.orchestrator.step_async()
 
     # --- PHASE 2: Detection ---
     franka2_xyz = await vlm_detect(
@@ -203,7 +210,7 @@ async def run():
 
     # --- PHASE 3: Navigation Planning ---
     jetbot_pos, _ = get_world_pose(JETBOT_PATH)
-    
+
     # Direction vector from Jetbot to detected/calibrated Franka_2
     direction = franka2_xyz[:2] - jetbot_pos[:2]
     dist_total = np.linalg.norm(direction)
@@ -212,7 +219,7 @@ async def run():
     # Calculate stop point STOP_DISTANCE meters before the base
     nav_target_xy = franka2_xyz[:2] - direction_norm * STOP_DISTANCE
     nav_target = [float(nav_target_xy[0]), float(nav_target_xy[1]), 0.0]
-    
+
     print(f"Current Jetbot Pos: {jetbot_pos[:2]}")
     print(f"Navigating to: {nav_target}")
 
@@ -222,5 +229,6 @@ async def run():
     print("\n" + "=" * 60)
     print("  SUCCESS: Jetbot reached Franka_2 docking zone.")
     print("=" * 60)
+
 
 asyncio.ensure_future(run())
