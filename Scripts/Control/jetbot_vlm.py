@@ -33,7 +33,7 @@ except ImportError as e:
 # ── CONSTANTS & CALIBRATION ───────────────────────────────────────────────────
 URL = "http://127.0.0.1:8000/ground"
 RESOLUTION = (1280, 720)
-CAMERA_PATH = "/World/Camera_02"
+CAMERA_PATH = "/World/Cameras/Camera_03"
 JETBOT_PATH = "/World/Jetbot"
 
 # Camera_02 intrinsics
