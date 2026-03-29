@@ -15,20 +15,21 @@ import json
 import sys
 import cv2 
 
-TARGET_TYPE  = "pallet"   # cube / pallet
-TARGET_COLOR = "black"  # red, green, blue, black
+TARGET_TYPE  = "robot"   # cube / pallet / robot
+TARGET_COLOR = "white"   # red, green, blue, black (for pallet) , white (for robots)
 RESOLUTION   = (1280, 720) # screen resolution
 ROBOT_PATH   = "/World/Franka_Robot" # franka name in environment
 URL_MULTI = "http://127.0.0.1:8000/ground_multi" # endpoint of the function we will use inside our bentoml server
 
 # Camera config: Camera_01 for cubes, Camera_02 for pallets
-CAMERA_PATH = "/World/Cameras/Camera_02" if TARGET_TYPE == "pallet" else "/World/Cameras/Camera_01"
+CAMERA_PATH = "/World/Cameras/Camera_02" if TARGET_TYPE == "pallet" else "/World/Cameras/Camera_01" if TARGET_TYPE == "cube" else "/World/Cameras/Camera_03" # if target equals robot
 
 # We load the CV detection scripts
 sys.path.append(os.path.expanduser("~/Documents/PFG/Scripts/CameraSim/CV"))
 try:
     from detect_cubes import detect as detect_cubes
-    from detect_palettes import detect_palette as detect_palettes
+    from detect_palettes import detect_palette 
+    from detect_frankas import detect as detect_frankas
 except ImportError as e:
     print(f"Error loading the CV scripts: {e}")
 
@@ -51,6 +52,10 @@ OFFSETS = {
         "red":   [0.427, -0.295, 0.0],
         "blue":  [0.220,  1.025, 0.0], 
         "black": [-0.084, 0.294, 0.0]
+    },
+    "robot": {
+        "left": [.30, .05, .0],
+        "right": [-.36, -.6, .0]
     }
 }
 
@@ -59,21 +64,26 @@ def apply_calibration(xyz, color, t_type):
     function to callibrate the coordinates depending of the color and material type (cube/pallet)
     """
     corrected = np.array(xyz)
-    if t_type in OFFSETS and color in OFFSETS[t_type]:
-        off = OFFSETS[t_type][color]
-        corrected += np.array(off)
-        print(f"##### APPLIED OFFSET TO {color} {t_type}: {off} #####")
+    if t_type == "robot": 
+        key = "left" if xyz[0] < 2.0 else "right"
+        offset = OFFSETS["robot"][key]
+        corrected += np.array(offset)
+        print(f"##### APPLIED ROBOT OFFSET ({key}): {offset} #####")
+    elif t_type in OFFSETS and color in OFFSETS[t_type]:
+        offset = OFFSETS[t_type][color]
+        corrected += np.array(offset)
+        print(f"##### APPLIED OFFSET TO {color} {t_type}: {offset} #####")
     return corrected
 
 # OPTIONAL
-def spawn_marker(position, color_name):
+def spawn_marker(position, color_name, suffix=""):
     # function (optional) to create a visual sphere to represent the predicted coordinates
-    c_map = {"red": [1,0,0], "green": [0,1,0], "blue": [0,0,1], "black": [0.1,0.1,0.1]}
+    c_map = {"red": [1,0,0], "green": [0,1,0], "blue": [0,0,1], "black": [0.1,0.1,0.1], "white": [.0, 1, .0]} # Verde para robots
     rgb = c_map.get(color_name.lower(), [1,1,0])
     try:
         VisualSphere(
-            prim_path="/World/detection_marker",
-            name="detection_marker",
+            prim_path=f"/World/detection_marker_{suffix}",
+            name=f"detection_marker_{suffix}",
             position=np.array(position, dtype=np.float32),
             radius=0.03 if TARGET_TYPE == "cube" else 0.1,
             color=np.array(rgb),
@@ -86,7 +96,6 @@ def unproject(u, v, depth_map, cam_matrix):
     """
     u, v = int(np.clip(u, 0, RESOLUTION[0]-1)), int(np.clip(v, 0, RESOLUTION[1]-1))
     z_depth = depth_map[v, u]
-    
     if not np.isfinite(z_depth) or z_depth <= 0:
         patch = depth_map[max(0,v-1):v+2, max(0,u-1):u+2]
         valid = patch[np.isfinite(patch) & (patch > 0)]
@@ -115,7 +124,9 @@ async def main_vision():
     # necessary so the camera physics don't explode xd
     for _ in range(20): await rep.orchestrator.step_async()
 
-    last_xyz, consecutive = None, 0
+    # Storage for multiple robot detection
+    final_results = {}
+    tracking_state = {}
 
     while True:
         await rep.orchestrator.step_async()
@@ -123,51 +134,62 @@ async def main_vision():
         dep_data = dep_ann.get_data()
         if rgb_data is None: continue
 
-        # condition to use one CV function or another
         if TARGET_TYPE == "pallet":
-            proc_rgb, found = detect_palettes(rgb_data, TARGET_COLOR)
+            proc_rgb, found = detect_palette(rgb_data, TARGET_COLOR)
+        elif TARGET_TYPE == "robot":
+            proc_rgb, found = detect_frankas(rgb_data, TARGET_COLOR)
         else:
             proc_rgb, found = detect_cubes(rgb_data, TARGET_COLOR)
 
         if not found: continue
 
-        # we send the image to the vlm
         img = PILImage.fromarray(proc_rgb)
         buffered = BytesIO()
         img.save(buffered, format="PNG")
         img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
         
-        # we send the request to the server
         payload = {"color": TARGET_COLOR, "image_b64": img_str, "target_type": TARGET_TYPE}
         try:
             res = await asyncio.get_event_loop().run_in_executor(None, 
                   lambda: requests.post(URL_MULTI, json=payload, timeout=10).json())
             
-            if res and res.get("target", {}).get("found"):
-                bbox = res["target"]["bbox_xyxy"]
-                u_f = int(((bbox[1] + bbox[3]) / 2000.0) * RESOLUTION[0])
-                v_f = int(((bbox[0] + bbox[2]) / 2000.0) * RESOLUTION[1])
+            detections = res.get("targets", [])
+            if not detections and res.get("target"): detections = [res["target"]]
+            
+            for det in detections:
+                if det.get("found"):
+                    bbox = det["bbox_xyxy"]
+                    u_f = int(((bbox[1] + bbox[3]) / 2000.0) * RESOLUTION[0])
+                    v_f = int(((bbox[0] + bbox[2]) / 2000.0) * RESOLUTION[1])
 
-                tf = UsdGeom.Xformable(cam_prim).ComputeLocalToWorldTransform(0)
-                cam_mat = np.array(tf).reshape(4, 4).T
-                xyz_raw = unproject(u_f, v_f, dep_data, cam_mat)
+                    tf = UsdGeom.Xformable(cam_prim).ComputeLocalToWorldTransform(0)
+                    cam_mat = np.array(tf).reshape(4, 4).T
+                    xyz_raw = unproject(u_f, v_f, dep_data, cam_mat)
 
-                if xyz_raw is not None:
-                    if TARGET_TYPE == "cube": xyz_raw[2] = 0.015
-                    
-                    xyz = apply_calibration(xyz_raw, TARGET_COLOR, TARGET_TYPE)
+                    if xyz_raw is not None:
+                        xyz_raw[2] = 0.015 if TARGET_TYPE == "cube" else 0.0
+                        xyz = apply_calibration(xyz_raw, TARGET_COLOR, TARGET_TYPE)
 
-                    # stability logic
-                    if last_xyz is not None and np.linalg.norm(xyz - last_xyz) < STABILITY_THRESHOLD:
-                        consecutive += 1
-                    else:
-                        consecutive = 1
-                        last_xyz = xyz
+                        obj_id = ("left" if xyz[0] < 2.0 else "right") if TARGET_TYPE == "robot" else "default"
 
-                    if consecutive >= STABILITY_COUNT:
-                        print(f"##### TARGET LOCKED! COORDINATES: {xyz} #####")
-                        spawn_marker(xyz, TARGET_COLOR)
-                        return {"world_xyz": xyz}
+                        if obj_id not in tracking_state:
+                            tracking_state[obj_id] = [xyz, 1]
+                        else:
+                            last_xyz, count = tracking_state[obj_id]
+                            if np.linalg.norm(xyz - last_xyz) < STABILITY_THRESHOLD:
+                                tracking_state[obj_id] = [xyz, count + 1]
+                            else:
+                                tracking_state[obj_id] = [xyz, 1]
+
+                        if tracking_state[obj_id][1] >= STABILITY_COUNT and obj_id not in final_results:
+                            print(f"##### {TARGET_TYPE.upper()} {obj_id.upper()} LOCKED! #####")
+                            final_results[obj_id] = xyz
+                            spawn_marker(xyz, TARGET_COLOR, obj_id)
+
+            if TARGET_TYPE == "robot" and len(final_results) >= 2:
+                return final_results
+            elif TARGET_TYPE != "robot" and len(final_results) >= 1:
+                return final_results
 
         except Exception as e:
             print(f"Error: {e}")
@@ -176,27 +198,33 @@ async def main_vision():
 
 async def run():
     # MAIN FUNCTION
-    target_data = await main_vision()
-    if not target_data: return
+    all_targets = await main_vision()
+    if not all_targets: return
 
-    t_pos = np.array(target_data["world_xyz"])
     r_pos, _ = get_world_pose(ROBOT_PATH)
-    
-    # json data we save
-    data_save = {
-        "target_type": TARGET_TYPE,
-        "color": TARGET_COLOR,
-        "relative_pos": (t_pos - np.array(r_pos)).tolist(),
-        "world_pos": t_pos.tolist(),
-        "robot_world_pos": r_pos.tolist(),
-        "status": "calibrated"
-    }
+    results_dir = os.path.expanduser("~/Documents/PFG/Scripts/CameraSim/CV+VLM_results")
+    os.makedirs(results_dir, exist_ok=True)
 
-    path = os.path.expanduser(f"~/Documents/PFG/Scripts/Control/rl_{TARGET_TYPE}_start.json")
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w") as f:
-        json.dump(data_save, f, indent=4)
-    
-    print(f"\##### SUCCESS #####")
+    for obj_id, t_pos in all_targets.items():
+        # Custom filename if multiple robots
+        suffix = f"_{obj_id}" if TARGET_TYPE == "robot" else ""
+        filename = f"detection_{TARGET_TYPE}{suffix}_{TARGET_COLOR}.json"
+        
+        data_save = {
+            "target_type": TARGET_TYPE,
+            "target_color": TARGET_COLOR,
+            "side": obj_id,
+            "world_pos": t_pos.tolist(),
+            "robot_world_pos": r_pos.tolist(),
+            "relative_pos": (t_pos - np.array(r_pos)).tolist(),
+            "camera_used": CAMERA_PATH,
+            "status": "calibrated_success"
+        }
+
+        path = os.path.join(results_dir, filename)
+        with open(path, "w") as f:
+            json.dump(data_save, f, indent=4)
+        
+        print(f"##### SUCCESS: {TARGET_TYPE.upper()} {obj_id.upper()} SAVED AT {path} #####")
 
 asyncio.ensure_future(run())

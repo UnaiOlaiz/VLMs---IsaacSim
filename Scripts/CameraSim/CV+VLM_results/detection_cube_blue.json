@@ -1,0 +1,22 @@
+{
+    "target_type": "cube",
+    "target_color": "blue",
+    "side": "default",
+    "world_pos": [
+        0.14150936385047153,
+        -0.37801828615892924,
+        0.015
+    ],
+    "robot_world_pos": [
+        0.5,
+        0.10000000149011612,
+        0.0
+    ],
+    "relative_pos": [
+        -0.3584906361495285,
+        -0.47801828764904536,
+        0.015
+    ],
+    "camera_used": "/World/Cameras/Camera_01",
+    "status": "calibrated_success"
+}

@@ -1,0 +1,22 @@
+{
+    "target_type": "pallet",
+    "target_color": "blue",
+    "side": "default",
+    "world_pos": [
+        4.144749861161105,
+        0.9936731503271727,
+        0.0
+    ],
+    "robot_world_pos": [
+        0.5,
+        0.10000000149011612,
+        0.0
+    ],
+    "relative_pos": [
+        3.644749861161105,
+        0.8936731488370566,
+        0.0
+    ],
+    "camera_used": "/World/Cameras/Camera_02",
+    "status": "calibrated_success"
+}

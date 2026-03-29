@@ -34,6 +34,14 @@ PALLET_PROMPTS = {
     ],
 }
 
+ROBOT_PROMPTS = {
+    "white": [
+        "white robotic arm with black joints",
+        "franka emika panda robot arm",
+        "mechanical robotic manipulator",
+    ]
+}
+
 
 @bentoml.service(name="VLM_Service_Isaac", resources={"gpu": 1})
 class VLMServiceIsaac:
