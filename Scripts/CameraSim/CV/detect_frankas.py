@@ -31,8 +31,8 @@ def detect(rgb_image, color):
                 cX = int(M["m10"] / M["m00"])
                 cY = int(M["m01"] / M["m00"])
                 x, y, wb, hb = cv2.boundingRect(contour)
-                cv2.rectangle(overlay, (x,y), (x+wb, y+hb), (0,255, 0), 4)
-                cv2.circle(overlay, (cX, cY), 12, (0,255, 0), -1)
+                cv2.rectangle(overlay, (x,y), (x+wb, y+hb), (255), 4)
+                cv2.circle(overlay, (cX, cY), 12, (0,255, 255), -1)
                 found_any = True
 
     return cv2.cvtColor(overlay, cv2.COLOR_BGR2RGB), found_any # and we return back the image from bgr -> rgb

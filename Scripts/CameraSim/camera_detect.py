@@ -54,8 +54,8 @@ OFFSETS = {
         "black": [-0.084, 0.294, 0.0]
     },
     "robot": {
-        "left": [.30, .05, .0],
-        "right": [-.36, -.6, .0]
+        "left":  [0.56, -0.39, 0.0], 
+        "right": [-1.62, -0.93, 0.0]
     }
 }
 
@@ -111,7 +111,7 @@ def unproject(u, v, depth_map, cam_matrix):
     return world_p[:3]
 
 async def main_vision():
-    print(f"##### LOOKING FOR {TARGET_COLOR.upper()} {TARGET_TYPE.upper()} #####")
+    print(f"##### BUSCANDO {TARGET_TYPE.upper()} {TARGET_COLOR.upper()} #####")
     
     rp = rep.create.render_product(CAMERA_PATH, resolution=RESOLUTION)
     rgb_ann = rep.AnnotatorRegistry.get_annotator("rgb")
@@ -121,10 +121,8 @@ async def main_vision():
     stage = omni.usd.get_context().get_stage()
     cam_prim = stage.GetPrimAtPath(CAMERA_PATH)
     
-    # necessary so the camera physics don't explode xd
     for _ in range(20): await rep.orchestrator.step_async()
 
-    # Storage for multiple robot detection
     final_results = {}
     tracking_state = {}
 
@@ -132,29 +130,38 @@ async def main_vision():
         await rep.orchestrator.step_async()
         rgb_data = rgb_ann.get_data()
         dep_data = dep_ann.get_data()
-        if rgb_data is None: continue
+        
+        if rgb_data is None or dep_data is None: 
+            continue
 
         if TARGET_TYPE == "pallet":
             proc_rgb, found = detect_palette(rgb_data, TARGET_COLOR)
         elif TARGET_TYPE == "robot":
-            proc_rgb, found = detect_frankas(rgb_data, TARGET_COLOR)
+            proc_rgb, found = detect_frankas(rgb_data, "white")
         else:
             proc_rgb, found = detect_cubes(rgb_data, TARGET_COLOR)
 
-        if not found: continue
+        if not found: 
+            continue
 
         img = PILImage.fromarray(proc_rgb)
         buffered = BytesIO()
         img.save(buffered, format="PNG")
         img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
         
-        payload = {"color": TARGET_COLOR, "image_b64": img_str, "target_type": TARGET_TYPE}
+        payload = {
+            "color": "white" if TARGET_TYPE == "robot" else TARGET_COLOR, 
+            "image_b64": img_str, 
+            "target_type": TARGET_TYPE
+        }
+
         try:
             res = await asyncio.get_event_loop().run_in_executor(None, 
-                  lambda: requests.post(URL_MULTI, json=payload, timeout=10).json())
+                  lambda: requests.post(URL_MULTI, json=payload, timeout=30).json())
             
             detections = res.get("targets", [])
-            if not detections and res.get("target"): detections = [res["target"]]
+            if not detections and res.get("target"): 
+                detections = [res["target"]]
             
             for det in detections:
                 if det.get("found"):
@@ -167,7 +174,13 @@ async def main_vision():
                     xyz_raw = unproject(u_f, v_f, dep_data, cam_mat)
 
                     if xyz_raw is not None:
+                        if TARGET_TYPE == "robot":
+                            if 1.2 < xyz_raw[0] < 3.2:
+                                print(f"##### DETECTION IGNORED, MAY BE JETBOT: {xyz_raw[0]:.2f} #####")
+                                continue
+                        
                         xyz_raw[2] = 0.015 if TARGET_TYPE == "cube" else 0.0
+                        
                         xyz = apply_calibration(xyz_raw, TARGET_COLOR, TARGET_TYPE)
 
                         obj_id = ("left" if xyz[0] < 2.0 else "right") if TARGET_TYPE == "robot" else "default"
@@ -182,7 +195,7 @@ async def main_vision():
                                 tracking_state[obj_id] = [xyz, 1]
 
                         if tracking_state[obj_id][1] >= STABILITY_COUNT and obj_id not in final_results:
-                            print(f"##### {TARGET_TYPE.upper()} {obj_id.upper()} LOCKED! #####")
+                            print(f"##### {TARGET_TYPE.upper()} {obj_id.upper()} DETECTED #####")
                             final_results[obj_id] = xyz
                             spawn_marker(xyz, TARGET_COLOR, obj_id)
 
@@ -192,7 +205,7 @@ async def main_vision():
                 return final_results
 
         except Exception as e:
-            print(f"Error: {e}")
+            print(f"Vision error: {e}")
         
         await asyncio.sleep(0.05)
 

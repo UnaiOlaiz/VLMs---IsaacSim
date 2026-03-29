@@ -36,9 +36,10 @@ PALLET_PROMPTS = {
 
 ROBOT_PROMPTS = {
     "white": [
-        "white robotic arm with black joints",
-        "franka emika panda robot arm",
-        "mechanical robotic manipulator",
+        "white robotic arm located at the far left edge of the image",
+        "white robotic arm located at the far right edge of the image",
+        "franka emika panda arm near the corners",
+        "robotic manipulator, ignore the mobile platform in the center"
     ]
 }
 
@@ -55,14 +56,18 @@ class VLMServiceIsaac:
         ).eval()
         print(f"########## MODEL: {MODEL_ID.upper()} LOADED ##########")
 
-    def _is_hallucination(self, coords):
+    def _is_hallucination(self, coords, target_type):
         ymin, xmin, ymax, xmax = coords
         width, height = xmax - xmin, ymax - ymin
-        if width > 600 or height > 600 or width < 8 or height < 8:
-            return True
+        if target_type == "robot": # as the robots are larger, the hallucination filter must change
+            if width > 900 or height > 900 or width < 20 or height < 20:
+                return True
+        else: # we keep it normal for the cubes and pallets.
+            if width > 600 or height > 600 or width < 8 or height < 8:
+                return True
         return False
 
-    def _infer(self, image: Image.Image, instruction: str) -> dict:
+    def _infer(self, image: Image.Image, instruction: str, target_type:str) -> dict:
         prompt = (
         f"Locate the {instruction}. I have marked its exact color center with a yellow square. "
         f"Focus ONLY on the center of that yellow square to provide the coordinates. "
@@ -119,41 +124,69 @@ class VLMServiceIsaac:
         )
         if bracket_match:
             coords = [int(x) for x in bracket_match.groups()]
-            if self._is_hallucination(coords):
+            if self._is_hallucination(coords, target_type):
                 return {"target": {"found": False}}
             return {"target": {"bbox_xyxy": coords, "found": True}}
         return {"target": {"found": False}}
 
     @bentoml.api
-    async def ground_multi(
-        self,
-        color: str,
-        image_b64: str,
-        target_type: str = "cube",
-        custom_prompt: str = None,
-    ) -> dict:
+    async def ground_multi(self, color: str, image_b64: str, target_type: str = "cube", custom_prompt: str = None) -> dict:
         img_bytes = base64.b64decode(image_b64)
         image = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+        w, h = image.size
+
+        if target_type == "robot":
+            prompt_dict = ROBOT_PROMPTS
+        elif target_type == "cube":
+            prompt_dict = CUBE_PROMPTS
+        else:
+            prompt_dict = PALLET_PROMPTS
+
+        prompts = prompt_dict.get(color.lower(), [f"small {color} {target_type}"])
 
         if custom_prompt:
-            print(f"\nVLM: using custom prompt: {custom_prompt}")
-            return self._infer(image, custom_prompt)
+            print(f"\n##### VLM: using custom prompt: {custom_prompt} #####")
+            return self._infer(image, custom_prompt, target_type) 
+        
+        if target_type == "robot":
+            detected_targets = []
+            crops = [
+                (image.crop((0, 0, int(w*0.4), h)), "left"),
+                (image.crop((int(w*0.6), 0, w, h)), "right")
+            ]
+            
+            for crop_img, side in crops:
+                p = "the white franka panda robotic arm"
+                res = self._infer(crop_img, p, target_type)
+                
+                if res["target"]["found"]:
+                    bbox = res["target"]["bbox_xyxy"]
+                    if side == "right":
+                        bbox[1] += 600 # xmin (ajustado al offset del crop 0.6*1000)
+                        bbox[3] += 600 # xmax
+                    else:
+                        bbox[1] = int(bbox[1] * 0.4)
+                        bbox[3] = int(bbox[3] * 0.4)
+                    
+                    detected_targets.append({"bbox_xyxy": bbox, "found": True})
+            
+            return {"targets": detected_targets}
 
-        prompts = CUBE_PROMPTS.get(color.lower(), [f"small {color} {target_type}"])
-        valid_bboxes = []
-        for p in prompts:
-            res = self._infer(image, p)
-            if res["target"]["found"]:
-                valid_bboxes.append(res["target"]["bbox_xyxy"])
+        else: 
+            valid_bboxes = []
+            for p in prompts:
+                res = self._infer(image, p, target_type)
+                if res["target"]["found"]:
+                    valid_bboxes.append(res["target"]["bbox_xyxy"])
 
-        if not valid_bboxes:
-            return {"target": {"found": False}}
+            if not valid_bboxes:
+                return {"target": {"found": False}}
 
-        median_bbox = np.median(np.array(valid_bboxes), axis=0).astype(int).tolist()
-        return {
-            "target": {
-                "found": True,
-                "bbox_xyxy": median_bbox,
-                "num_valid": len(valid_bboxes),
+            median_bbox = np.median(np.array(valid_bboxes), axis=0).astype(int).tolist()
+            return {
+                "target": {
+                    "found": True,
+                    "bbox_xyxy": median_bbox,
+                    "num_valid": len(valid_bboxes),
+                }
             }
-        }

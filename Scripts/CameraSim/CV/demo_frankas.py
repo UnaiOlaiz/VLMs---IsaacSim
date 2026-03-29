@@ -55,8 +55,8 @@ def detect_only_frankas(img_path, output_path):
                 cX, cY = int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"])
                 
                 # Dibujamos marcador específico para el Robot
-                cv2.rectangle(overlay, (x, y), (x + wb, y + hb), (0, 255, 0), 3) # Verde para Robots
-                cv2.circle(overlay, (cX, cY), 15, (0, 255, 0), -1)
+                cv2.rectangle(overlay, (x, y), (x + wb, y + hb), (0, 255, 255), 3) # Verde para Robots
+                cv2.circle(overlay, (cX, cY), 15, (0, 255, 255), -1)
                 #cv2.putText(overlay, "FRANKA ROBOT", (x, y-15), 
                             # cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
                 count += 1
