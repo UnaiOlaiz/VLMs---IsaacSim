@@ -29,7 +29,7 @@ if scripts_path not in sys.path:
     sys.path.insert(0, scripts_path)
 
 try:
-    from Control.franka_stop import execute_movement, FrankaControl
+    from Scripts.Control.franka_controller import execute_movement, FrankaControl
 
     print(f"Movement scripts correctly loaded from: '{scripts_path}'")
 except ImportError as e:

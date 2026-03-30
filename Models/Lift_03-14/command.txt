@@ -1,0 +1,1 @@
+/home/unaiolaizolaosa/miniconda3/envs/PFG/bin/python scripts/reinforcement_learning/sb3/train.py --task Isaac-Lift-Cube-Franka-v0 --num_envs 4096 --headless

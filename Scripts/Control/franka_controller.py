@@ -1,3 +1,5 @@
+# Script for the franka 'custom' controller (modifying RMPFlow), this will be called whenever it is needed to manually move the arm
+# Dependencies
 import numpy as np
 import json
 import asyncio
@@ -6,30 +8,34 @@ import omni.timeline
 from omni.isaac.core.utils.prims import is_prim_path_valid
 from omni.isaac.franka.controllers import RMPFlowController
 
-
+# Controller class
 class FrankaControl:
-    def __init__(self, prim_path="/World/Franka_Robot", name="franka_pfg"):
+    def __init__(self, prim_path="/World/Franka_Robot"):
         if not is_prim_path_valid(prim_path):
-            print("Error verifying prim path")
+            print("##### ERROR GETTING THE FRANKA PATH, CHECK BOTH THE PATH AND NAME OF THE ROBOT IN THE STAGE #####")
             prim_path = "/Franka_Robot"
 
-        self.robot = Franka(prim_path=prim_path, name=name)
+        # init of the robot
+        self.robot = Franka(prim_path=prim_path)
         self.robot.initialize()
 
+    # function to move the franka arm to a given position (x,y,z)
     def move_to_cube_top(self, target_pos, keep_gripper_closed=False):
         top_pos = np.array(target_pos)
-        top_pos[2] = 0.20
 
         if not hasattr(self, "rmp_controller"):
+            # use of RMPFlowController (already implemented)
             self.rmp_controller = RMPFlowController(
                 name="target_hover", robot_articulation=self.robot
             )
+        
         actions = self.rmp_controller.forward(
             target_end_effector_position=top_pos,
             target_end_effector_orientation=None,
         )
         self.robot.apply_action(actions)
 
+        # logic to control the grippers
         if keep_gripper_closed:
             self.robot.gripper.close()
         else:
@@ -37,27 +43,20 @@ class FrankaControl:
 
         end_pos, _ = self.robot.end_effector.get_world_pose()
         distance = np.linalg.norm(end_pos - top_pos)
-        print(f"Current Distance: {distance:.4f}m", end="\r")
-        return distance < 0.0575
+        print(f"##### DISTANCE TO DESTINATION: {distance:.4f}m ######", end="\r") # where to stop ("\r") to over-write the line
+        return distance < 0.015 # variable
 
+    # function to open the grippers
     def open_gripper(self):
         self.robot.gripper.open()
 
+    # close it
     def close_gripper(self):
         self.robot.gripper.close()
 
-    def save_robot_state(self, cube_pos):
-        state_data = {
-            "joint_positions": self.robot.get_joint_positions().tolist(),
-            "joint_velocities": self.robot.get_joint_velocities().tolist(),
-            "cube_target": cube_pos.tolist(),
-        }
-        with open("rl_initial_state.json", "w") as f:
-            json.dump(state_data, f)
-        print("\nEnd state saved to 'rl_initial_state.json'")
+# function to start the movement
+async def execute_movement(final_coords, keep_gripper_closed=False, max_steps = 500):
 
-
-async def execute_movement(final_coords, keep_gripper_closed=False):
     timeline = omni.timeline.get_timeline_interface()
 
     if not timeline.is_playing():
@@ -66,20 +65,23 @@ async def execute_movement(final_coords, keep_gripper_closed=False):
 
     try:
         manager = FrankaControl()
-        print(f"Franka ready! Moving to {final_coords}")
-
-        done = False
-        while not done:
+        steps = 0 # I will add steps max limit so it does not get stuck
+        stop = False 
+        while not stop and steps < max_steps:
             await asyncio.sleep(0.01)
+            stop = manager.move_to_cube_top(final_coords)
+            steps += 1
             try:
-                done = manager.move_to_cube_top(
+                stop = manager.move_to_cube_top(
                     final_coords, keep_gripper_closed=keep_gripper_closed
                 )
+                if steps % 100 == 0:
+                    print(f"##### STEPS: {steps/max_steps} #####", end="\r")
             except Exception as e:
                 continue
 
-        print("\nMovement phase completed! The arm is located on the top of the target!")
-        manager.save_robot_state(np.array(final_coords))
+
+        print("##### MOVEMENT COMPLETED ######")
 
     except Exception as e:
         print(f"Execution error: {e}")

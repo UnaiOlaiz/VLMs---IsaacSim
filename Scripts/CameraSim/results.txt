@@ -1,0 +1,63 @@
+-------------------------------------------------- INITIALIZING RENDERER --------------------------------------------------
+2026-03-26T20:40:24Z [167,656ms] [Warning] [omni.replicator.core.scripts.orchestrator] Replicator is in the process of stopping, step skipped.
+No valid detection for 'green' cube
+SEARCHING FOR: GREEN CUBE (multi-prompt, full image)
+2026-03-26T20:40:25Z [168,869ms] [Warning] [carb] Plugin interface for a client: omni.hydratexture.plugin was already released.
+Debug image saved to /home/unaiolaizolaosa/Documents/PFG/Scripts/Control/camera_data/debug_full.png
+No valid detection for 'green' cube
+Agreement: 3/3 | bbox: [533, 875, 557, 908] | all: [[533, 875, 557, 908], [533, 875, 557, 908], [533, 875, 557, 908]]
+Pixel: (1141, 392) | Depth: 2.0441m | XYZ: [-0.78875034 -0.0490114  -0.1185125 ]
+First valid detection: [-0.78875034 -0.0490114  -0.1185125 ]
+No valid detection for 'green' cube
+Agreement: 3/3 | bbox: [533, 875, 566, 925] | all: [[533, 875, 566, 925], [533, 875, 566, 925], [533, 875, 566, 925]]
+Pixel: (1152, 395) | Depth: 2.0495m | XYZ: [-0.81187838 -0.05511994 -0.12096984]
+Stable: 2/3
+No valid detection for 'green' cube
+Agreement: 3/3 | bbox: [533, 875, 557, 908] | all: [[533, 875, 557, 908], [533, 875, 557, 908], [533, 875, 557, 908]]
+Pixel: (1141, 392) | Depth: 2.0441m | XYZ: [-0.78875034 -0.0490114  -0.1185125 ]
+Stable: 3/3
+--- FINAL TARGET LOCKED: [-0.78875034 -0.0490114  -0.1185125 ] ---
+
+Detected green cube at:  [-0.7887503366259899, -0.049011395468840036, -0.11851250004372083]
+Robot position:               [0.5, 0.10000000149011612, 0.0]
+Relative cube pos (for RL):   [-1.28875033662599, -0.14901139695895615, -0.11851250004372083]
+
+--- SUCCESS: Saved to /home/unaiolaizolaosa/Documents/PFG/Scripts/Control/rl_start_default_pose.json ---
+
+SEARCHING FOR: RED CUBE (multi-prompt, full image)
+Debug image saved to /home/unaiolaizolaosa/Documents/PFG/Scripts/Control/camera_data/debug_full.png
+Agreement: 2/3 | bbox: [498, 450, 538, 505] | all: [[498, 450, 538, 510], [498, 450, 538, 500]]
+Pixel: (611, 372) | Depth: 1.8778m | XYZ: [0.18897203 0.00062386 0.01660994]
+First valid detection: [0.18897203 0.00062386 0.01660994]
+Agreement: 3/3 | bbox: [498, 450, 538, 510] | all: [[498, 450, 538, 510], [498, 450, 538, 510], [498, 450, 538, 510]]
+Pixel: (614, 372) | Depth: 1.8777m | XYZ: [0.18389607 0.00096213 0.01672188]
+Stable: 2/3
+Agreement: 3/3 | bbox: [498, 450, 538, 510] | all: [[498, 466, 544, 526], [498, 450, 538, 500], [498, 450, 538, 510]]
+Pixel: (614, 372) | Depth: 1.8777m | XYZ: [0.18389607 0.00096213 0.01672188]
+Stable: 3/3
+--- FINAL TARGET LOCKED: [0.18897203 0.00062386 0.01660994] ---
+
+Detected red cube at:  [0.1889720310551996, 0.0006238560298205131, 0.016609941918083626]
+Robot position:               [0.5, 0.10000000149011612, 0.0]
+Relative cube pos (for RL):   [-0.3110279689448004, -0.0993761454602956, 0.016609941918083626]
+
+--- SUCCESS: Saved to /home/unaiolaizolaosa/Documents/PFG/Scripts/Control/rl_start_default_pose.json ---
+
+SEARCHING FOR: BLUE CUBE (multi-prompt, full image)
+Debug image saved to /home/unaiolaizolaosa/Documents/PFG/Scripts/Control/camera_data/debug_full.png
+Agreement: 3/3 | bbox: [487, 200, 513, 234] | all: [[487, 200, 513, 234], [487, 200, 513, 234], [487, 200, 513, 234]]
+Pixel: (277, 360) | Depth: 1.9847m | XYZ: [ 0.78759663 -0.05909277 -0.08901854]
+First valid detection: [ 0.78759663 -0.05909277 -0.08901854]
+Agreement: 3/3 | bbox: [487, 200, 512, 234] | all: [[487, 200, 512, 230], [487, 200, 513, 234], [487, 250, 512, 300]]
+Pixel: (277, 359) | Depth: 1.9855m | XYZ: [ 0.78793718 -0.0578223  -0.09051038]
+Stable: 2/3
+Agreement: 2/3 | bbox: [488, 200, 511, 225] | all: [[487, 200, 512, 230], [490, 200, 510, 220]]
+Pixel: (272, 359) | Depth: 1.9881m | XYZ: [ 0.79770298 -0.05947957 -0.09293165]
+Stable: 3/3
+--- FINAL TARGET LOCKED: [ 0.78759663 -0.05909277 -0.08901854] ---
+
+Detected blue cube at:  [0.7875966267894864, -0.05909276963786758, -0.08901854226561978]
+Robot position:               [0.5, 0.10000000149011612, 0.0]
+Relative cube pos (for RL):   [0.2875966267894864, -0.1590927711279837, -0.08901854226561978]
+
+--- SUCCESS: Saved to /home/unaiolaizolaosa/Documents/PFG/Scripts/Control/rl_start_default_pose.json ---
