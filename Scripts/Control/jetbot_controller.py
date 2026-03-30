@@ -1,3 +1,5 @@
+# Jetbot script controller, we will use the franka positions obtained by the vlm prediction to travel between them
+# Dependencies
 import asyncio
 import json
 import math
@@ -10,11 +12,14 @@ import omni.timeline
 import omni.usd
 import omni.physx
 from pxr import UsdPhysics
+import os
 
+# path where the results obtained are stored.
+FRANKA_COORDINATES = os.path.expanduser("~/Documents/PFG/Scripts/CameraSim/CV+VLM_results")
 
+# helper functions (pure math)
 def wrap_to_pi(angle):
     return (angle + np.pi) % (2 * np.pi) - np.pi
-
 
 def quat_wxyz_to_yaw(q):
     w, x, y, z = q
@@ -22,7 +27,7 @@ def quat_wxyz_to_yaw(q):
     cosy_cosp = 1.0 - 2.0 * (y * y + z * z)
     return math.atan2(siny_cosp, cosy_cosp)
 
-
+# controller class for the jetbot
 class JetbotControl:
     def __init__(self, prim_path="/World/Jetbot"):
         if not is_prim_path_valid(prim_path):
@@ -94,28 +99,29 @@ class JetbotControl:
         print("End state saved to 'jetbot_state.json'")
 
 
-async def execute_movement(
-    final_coords,
-    turn_speed=300.0,
-    drive_speed=200.0,
-    heading_tolerance=0.05,
-    position_tolerance=0.15,
-):
+async def execute_movement(json_filename: str, turn_speed=300.0, drive_speed=300.0, heading_tolerance=0.05, position_tolerance=0.3): # the parameters can be tweaked
+    # Read the json coordinates
+    json_path = os.path.join(FRANKA_COORDINATES, json_filename) # the filename will be different for left/right
+    if not json_path or not os.path.exists(json_path):
+        print(f"##### Cannot find the JSON file, please check the given path: {json_path} #####")
+    with open(json_path, "r") as f:
+        data = json.load(f)
+        gx, gy, _ = data["world_pos"] # go x, go y (z does not matter)
+        side = data.get("side", "unknown")
+        print(f"##### Loaded objective: Side {side} | in coordinates {gx:.3f}, {gy:.3f} #####")
+    
     timeline = omni.timeline.get_timeline_interface()
     if not timeline.is_playing():
         timeline.play()
-        await asyncio.sleep(2.0)
+        await asyncio.sleep(1.0)
 
     manager = None
-    dist = float("inf")
     try:
         manager = JetbotControl()
-        gx, gy = final_coords[0], final_coords[1]
-
         await asyncio.sleep(0.1)
 
-        # ── PHASE 1: ROTATE to face the goal ─────────────────────────────
-        print(f"Phase 1: Rotating to face ({gx:.3f}, {gy:.3f})")
+        # rotate to goal destination
+        print(f"##### PHASE 1: Rotating to destination #####")
         for step in range(3000):
             await asyncio.sleep(0.01)
             pos, orient = manager.get_pose()
@@ -124,58 +130,51 @@ async def execute_movement(
             yaw = quat_wxyz_to_yaw(orient)
             heading_error = wrap_to_pi(goal_heading - yaw)
 
-            print(
-                f"  [Rotate] yaw={math.degrees(yaw):.1f}° "
-                f"goal={math.degrees(goal_heading):.1f}° "
-                f"err={math.degrees(heading_error):.1f}°"
-            )
-
             if abs(heading_error) < heading_tolerance:
                 manager.stop()
-                print("  Rotation complete.")
+                print("##### ROTATION COMPLETED! #####")
                 break
 
-            if heading_error > 0:
-                manager.set_wheels(-turn_speed, turn_speed)
-            else:
-                manager.set_wheels(turn_speed, -turn_speed)
+            v_turn = turn_speed if heading_error > 0 else -turn_speed
+            manager.set_wheels(-v_turn, v_turn)
 
         manager.stop()
         await asyncio.sleep(0.2)
 
-        # ── PHASE 2: DRIVE FORWARD to the goal ───────────────────────────
-        print(f"Phase 2: Driving forward to ({gx:.3f}, {gy:.3f})")
+        # travel to destination
+        print(f"##### PHASE 2: Driving forward to destination #####")
         for step in range(5000):
             await asyncio.sleep(0.01)
             pos, orient = manager.get_pose()
-            dist = math.sqrt((gx - pos[0]) ** 2 + (gy - pos[1]) ** 2)
+            dist = math.sqrt((gx - pos[0]) ** 2 + (gy - pos[1]) ** 2) # euclidean distance
 
-            print(f"  [Drive] pos=({pos[0]:.3f},{pos[1]:.3f}) dist={dist:.3f}m")
+            # print(f"[Drive] pos=({pos[0]:.3f},{pos[1]:.3f}) dist={dist:.3f}m")
 
             if dist < position_tolerance:
-                print("  Target reached!")
+                print(f"##### DESTINATION REACHED: Final distance: {dist:.3f}m #####")
                 break
 
-            dx, dy = gx - pos[0], gy - pos[1]
-            goal_heading = math.atan2(dy, dx)
+            # orientation correction while going forward
+            goal_heading = math.atan2(gy - pos[1], gx - pos[0])
             yaw = quat_wxyz_to_yaw(orient)
             heading_error = wrap_to_pi(goal_heading - yaw)
 
-            correction = float(
-                np.clip(heading_error * 20.0, -turn_speed * 0.5, turn_speed * 0.5)
-            )
+            if abs(heading_error) > 0.8: # so it does not deviate much
+                v_reorient = 150.0 if heading_error > 0 else -150.0
+                manager.set_wheels(-v_reorient, v_reorient)
+                continue
 
-            manager.set_wheels(drive_speed - correction, drive_speed + correction)
+            if abs(heading_error) < .035:
+                correction = 0
+            else: 
+                correction = np.clip(heading_error * 12.0, -60, 60)
+            
+            v_base = drive_speed * (1.0 - math.exp(-4.0 * dist))
+            manager.set_wheels(v_base - correction, v_base + correction)
 
         manager.stop()
         manager.unsubscribe()
 
-        if dist < position_tolerance:
-            print("Movement complete! Jetbot is at the target.")
-        else:
-            print(f"Movement did NOT complete. Final dist={dist:.3f}m")
-
-        manager.save_robot_state(final_coords)
 
     except Exception as e:
         print(f"Execution error: {e}")
@@ -184,3 +183,25 @@ async def execute_movement(
         traceback.print_exc()
 
     return manager
+
+# Main function to run inside sim
+async def main():
+    print("##### STARTING NAVIGATION #####")
+    
+    # files
+    right_json = os.path.expanduser("~/Documents/PFG/Scripts/CameraSim/CV+VLM_results/detection_robot_right_white.json")
+    left_json = os.path.expanduser("~/Documents/PFG/Scripts/CameraSim/CV+VLM_results/detection_robot_left_white.json")
+
+    # first go to right robot, then left
+    print("##### HEADING TO RIGHT FRANKA ROBOT #####")
+    await execute_movement(right_json)
+
+    # when it gets there, wait for a little to calm down the physics engine
+    await asyncio.sleep(3.0)
+
+    print("##### HEADING TO LEFT FRANKA ROBOT #####")
+    await execute_movement(left_json)
+
+    print("##### MOVEMENT COMPLETED, LET'S GO!!! #####")
+
+asyncio.ensure_future(main())

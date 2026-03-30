@@ -24,7 +24,7 @@ if scripts_path not in sys.path:
 try:
     if "Control.jetbot_control" in sys.modules:
         importlib.reload(sys.modules["Control.jetbot_control"])
-    from Control.jetbot_control import execute_movement
+    from Scripts.Control.jetbot_controller import execute_movement
     print(f"Movement scripts correctly loaded from path: '{scripts_path}'!")
 except ImportError as e:
     print(f"Error loading scripts from given path: {scripts_path}")

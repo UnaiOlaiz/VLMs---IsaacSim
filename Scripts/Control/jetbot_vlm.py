@@ -23,7 +23,7 @@ if scripts_path not in sys.path:
     sys.path.insert(0, scripts_path)
 
 try:
-    from Control.jetbot_control import execute_movement as jetbot_move
+    from Scripts.Control.jetbot_controller import execute_movement as jetbot_move
 
     print(f"Jetbot control loaded from: '{scripts_path}'")
 except ImportError as e:

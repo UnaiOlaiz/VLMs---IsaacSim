@@ -1,0 +1,11 @@
+{
+    "0-jetbot": {
+        "class": "jetbot",
+        "caption": null,
+        "id": 0,
+        "relations": []
+    },
+    "global_caption": null,
+    "sft_qa": null,
+    "brief_caption": null
+}
