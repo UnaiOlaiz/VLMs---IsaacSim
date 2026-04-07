@@ -18,7 +18,7 @@ if SCRIPTS_PATH not in sys.path:
     sys.path.append(SCRIPTS_PATH)
 from Control.franka_controller import execute_movement # function which will used to send the franka to some given coordinates
 FRANKA_PATH = "/World/Franka_Robot" # franka arm at the left
-COLORS = ["red", "green", "blue"] # cube colors
+COLORS = ["red", "green", "blue"] # cube colors used for iteration
 
 async def move_franka_to_cube(target_color):
     """
@@ -33,7 +33,7 @@ async def move_franka_to_cube(target_color):
         print(f"##### VLM TARGETED {target_color.upper()} CUBE AT POSITION: {cube_position}")
 
         # pre-defined height to stop the franka arm movement
-        grasp_height = .065 # variable depending on the needs
+        grasp_height = .095 # variable depending on the needs
         target_pos = [cube_position[0], cube_position[1], grasp_height]
 
         await execute_movement(target_pos) # send franka there

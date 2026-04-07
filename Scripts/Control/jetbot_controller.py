@@ -204,4 +204,4 @@ async def main():
 
     print("##### MOVEMENT COMPLETED, LET'S GO!!! #####")
 
-asyncio.ensure_future(main())
+# asyncio.ensure_future(main())
