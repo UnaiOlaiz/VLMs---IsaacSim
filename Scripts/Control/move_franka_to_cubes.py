@@ -16,7 +16,7 @@ END_POS_DIR = os.path.expanduser("~/Documents/PFG/Scripts/Control/RL_START") # w
 SCRIPTS_PATH = os.path.expanduser("~/Documents/PFG/Scripts/") # directory where the franka controller script will be called from
 if SCRIPTS_PATH not in sys.path:
     sys.path.append(SCRIPTS_PATH)
-from Control.franka_controller import execute_movement # function which will used to send the franka to some given coordinates
+from Scripts.Control.aaaa.franka_controller import execute_movement # function which will used to send the franka to some given coordinates
 FRANKA_PATH = "/World/Franka_Robot" # franka arm at the left
 COLORS = ["red", "green", "blue"] # cube colors used for iteration
 

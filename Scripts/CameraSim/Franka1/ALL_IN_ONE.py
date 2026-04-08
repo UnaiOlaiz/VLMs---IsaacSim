@@ -23,7 +23,7 @@ scripts_path = "/home/unaiolaizolaosa/Documents/PFG/Scripts"
 if scripts_path not in sys.path:
     sys.path.insert(0, scripts_path)
 
-from Scripts.Control.franka_controller import execute_movement
+from Scripts.Control.aaaa.franka_controller import execute_movement
 
 RESOLUTION = (1280, 720)
 URL = "http://127.0.0.1:8000/ground"

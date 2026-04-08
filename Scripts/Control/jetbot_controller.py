@@ -185,12 +185,14 @@ async def execute_movement(json_filename: str, turn_speed=300.0, drive_speed=300
     return manager
 
 # Main function to run inside sim
-async def main():
+async def main(direction):
     print("##### STARTING NAVIGATION #####")
     
+    '''
     # files
     right_json = os.path.expanduser("~/Documents/PFG/Scripts/CameraSim/CV+VLM_results/detection_robot_right_white.json")
     left_json = os.path.expanduser("~/Documents/PFG/Scripts/CameraSim/CV+VLM_results/detection_robot_left_white.json")
+    
 
     # first go to right robot, then left
     print("##### HEADING TO RIGHT FRANKA ROBOT #####")
@@ -201,6 +203,10 @@ async def main():
 
     print("##### HEADING TO LEFT FRANKA ROBOT #####")
     await execute_movement(left_json)
+    '''
+
+    await execute_movement(direction)
+    await asyncio.sleep(2.0)
 
     print("##### MOVEMENT COMPLETED, LET'S GO!!! #####")
 

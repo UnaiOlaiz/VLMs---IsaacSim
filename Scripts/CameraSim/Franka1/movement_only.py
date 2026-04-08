@@ -8,7 +8,7 @@ scripts_path = "/home/unaiolaizolaosa/Documents/PFG/Scripts"
 if scripts_path not in sys.path:
     sys.path.insert(0, scripts_path)
 
-from Scripts.Control.franka_controller import execute_movement
+from Scripts.Control.aaaa.franka_controller import execute_movement
 
 JSON_PATH = os.path.expanduser("~/Documents/PFG/Scripts/Control/rl_first_franka.json")
 GRASP_HEIGHT = 0.045

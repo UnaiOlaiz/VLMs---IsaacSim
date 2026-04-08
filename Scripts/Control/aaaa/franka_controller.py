@@ -35,11 +35,12 @@ class FrankaControl:
         )
         self.robot.apply_action(actions)
 
-        # logic to control the grippers
-        if keep_gripper_closed:
-            self.robot.gripper.close()
-        else:
-            self.robot.gripper.open()
+        # logic to control the grippers - apply multiple times to ensure it sticks
+        for _ in range(3):
+            if keep_gripper_closed:
+                self.robot.gripper.close()
+            else:
+                self.robot.gripper.open()
 
         end_pos, _ = self.robot.end_effector.get_world_pose()
         distance = np.linalg.norm(end_pos - top_pos)
@@ -55,7 +56,7 @@ class FrankaControl:
         self.robot.gripper.close()
 
 # function to start the movement
-async def execute_movement(final_coords, keep_gripper_closed=False, max_steps = 500, franka_path="/World/Franka_Robot"):
+async def execute_movement(final_coords, keep_gripper_closed=False, max_steps = 300, robot_path="/World/Franka_Robot"):
 
     timeline = omni.timeline.get_timeline_interface()
 
@@ -64,24 +65,24 @@ async def execute_movement(final_coords, keep_gripper_closed=False, max_steps = 
         await asyncio.sleep(2.0)
 
     try:
-        manager = FrankaControl(franka_path)
+        manager = FrankaControl(robot_path)
         steps = 0 # I will add steps max limit so it does not get stuck
         stop = False 
         while not stop and steps < max_steps:
             await asyncio.sleep(0.01)
             stop = manager.move_to_cube_top(final_coords)
             steps += 1
-            try:
-                stop = manager.move_to_cube_top(
-                    final_coords, keep_gripper_closed=keep_gripper_closed
-                )
-                if steps % 100 == 0:
-                    print(f"##### STEPS: {steps/max_steps} #####", end="\r")
-            except Exception as e:
-                continue
-
-
+            if steps % 100 == 0:
+                print(f"##### STEPS: {steps/max_steps} #####", end="\r")
         print("##### MOVEMENT COMPLETED ######")
+        
+        # Ensure gripper state is maintained after movement completes
+        for _ in range(300):  # Continue sending gripper commands for 3 more seconds
+            await asyncio.sleep(0.01)
+            if keep_gripper_closed:
+                manager.robot.gripper.close()
+            else:
+                manager.robot.gripper.open()
 
     except Exception as e:
         print(f"Execution error: {e}")
