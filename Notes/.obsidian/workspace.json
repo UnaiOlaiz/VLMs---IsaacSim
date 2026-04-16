@@ -1,0 +1,232 @@
+{
+  "main": {
+    "id": "5135f64d339f9a49",
+    "type": "split",
+    "children": [
+      {
+        "id": "471b5ef0995a0a3b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "36c2c6fcd2fdd0ef",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Pipeline/Pipeline Process.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Pipeline Process"
+            }
+          }
+        ]
+      },
+      {
+        "id": "d434fde8ed161724",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "07e483661acfe355",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Reinforcement Learning/Lift policy.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Lift policy"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "fa72347c83894868",
+    "type": "split",
+    "children": [
+      {
+        "id": "d6edb5de8547ce7f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4cc60d22738511a6",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "88203a1973afe2e3",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "06e5f3f728a57471",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "8f43d857062b3312",
+    "type": "split",
+    "children": [
+      {
+        "id": "adce8bbdc2c35ab0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "005b901d765e7508",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Reinforcement Learning/Lift policy.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Lift policy"
+            }
+          },
+          {
+            "id": "b71621475e01a1ff",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "8257bf3a5df81e7d",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "460e6c8f79dec2d5",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "02ebfe367eaf9277",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "07e483661acfe355",
+  "lastOpenFiles": [
+    "Reinforcement Learning/RL Progress.md",
+    "Reinforcement Learning/Lift policy.md",
+    "2026-04-16.md",
+    "imgs+videos/Franka levanta cubo.gif",
+    "Pipeline/Pipeline Process.md",
+    "Reinforcement Learning",
+    "imgs+videos/FULL_WITH_VARIATION.webm",
+    "imgs+videos/FULL_PIPELINE.webm",
+    "Pipeline/Control.md",
+    "Pipeline/Camera Capture.md",
+    "Pipeline/BentoML Server.md",
+    "Project Structure/Media.md",
+    "imgs+videos/Scenario.png",
+    "Imgs/Frankas_detected.md",
+    "imgs+videos/Pasted image 20260416194318.png",
+    "imgs+videos/Pasted image 20260416194133.png",
+    "imgs+videos/Pasted image 20260416194048.png",
+    "imgs+videos/Pasted image 20260416193928.png",
+    "Pasted image 20260416193846.png",
+    "imgs+videos",
+    "Project Structure",
+    "Pipeline",
+    "Welcome.md",
+    "Project Structure/media",
+    "create a link.md"
+  ]
+}

@@ -8,16 +8,15 @@ import os
 import json
 import sys
 
-# --- CONFIGURACIÓN DE RUTAS ---
 scripts_path = "/home/unaiolaizolaosa/Documents/PFG/Scripts"
 if scripts_path not in sys.path:
     sys.path.insert(0, scripts_path)
 
 try:
     from Control.aaaa.franka_controller import execute_movement
-    print("✅ Script de movimiento cargado.")
+    print("Script de movimiento cargado.")
 except ImportError as e:
-    print(f"❌ Error al cargar execute_movement: {e}")
+    print(f"Error al cargar execute_movement: {e}")
     raise e
 
 # --- COORDENADAS REALES (Ground Truth) ---
@@ -30,20 +29,20 @@ REAL_POSITIONS = {
 # --- PARÁMETROS DE EJECUCIÓN ---
 color = "red"  # CAMBIAR A: "red", "green", "blue"
 ROBOT_PATH   = "/World/Franka_Robot"
-GRASP_HEIGHT = 0.15   # <--- Altura aumentada para evitar bloqueos por colisión
-MAX_WAIT_STEPS = 500  # Pasos máximos para esperar el movimiento
+GRASP_HEIGHT = 0.15   
+MAX_WAIT_STEPS = 500  
 
 async def run_ground_truth_collection(TARGET_COLOR):
     GRASP_HEIGHT = 0.15 if TARGET_COLOR == "blue" else 0.015
     if TARGET_COLOR not in REAL_POSITIONS:
-        print(f"❌ Color {TARGET_COLOR} no reconocido.")
+        print(f"Color {TARGET_COLOR} no reconocido.")
         return
 
     target_xyz = np.array(REAL_POSITIONS[TARGET_COLOR])
     move_to = [target_xyz[0], target_xyz[1], GRASP_HEIGHT]
 
-    print(f"\n🎯 MODO GROUND TRUTH: {TARGET_COLOR.upper()}")
-    print(f"📍 Objetivo Real: {target_xyz} | Aproximación: {move_to}")
+    print(f"\nMODO GROUND TRUTH: {TARGET_COLOR.upper()}")
+    print(f"Objetivo Real: {target_xyz} | Aproximación: {move_to}")
     
     # 1. Marcador Visual
     VisualSphere(
@@ -54,7 +53,7 @@ async def run_ground_truth_collection(TARGET_COLOR):
     )
 
     # 2. Ejecutar movimiento con vigilancia de tiempo
-    print(f"🚀 Moviendo Franka a posición de seguridad...")
+    print(f"Moviendo Franka a posición de seguridad...")
     
     # Lanzamos el movimiento como una tarea asíncrona
     move_task = asyncio.ensure_future(execute_movement(move_to))
@@ -67,14 +66,14 @@ async def run_ground_truth_collection(TARGET_COLOR):
             print(f"   ... esperando movimiento ({steps}/{MAX_WAIT_STEPS})")
 
     if not move_task.done():
-        print("⚠️ Tiempo de espera agotado o brazo bloqueado. Procediendo con captura...")
+        print("Tiempo de espera agotado o brazo bloqueado. Procediendo con captura...")
         move_task.cancel()
 
     # Pequeña pausa para que la física se estabilice
     await asyncio.sleep(1.0)
 
     # 3. Captura de estado del robot
-    print("💾 Capturando joints y pose para el dataset...")
+    print("Capturando joints y pose para el dataset...")
     franka_art = Articulation(ROBOT_PATH)
     franka_art.initialize()
     
@@ -100,7 +99,7 @@ async def run_ground_truth_collection(TARGET_COLOR):
     with open(path, "w") as f:
         json.dump(final_data, f, indent=4)
 
-    print(f"\n✨ DATOS GUARDADOS EN:\n{path}")
+    print(f"\nDATOS GUARDADOS EN:\n{path}")
     print(f"Status: Movimiento completado en {steps} pasos.")
 
 
