@@ -14,7 +14,7 @@ if scripts_path not in sys.path:
     sys.path.insert(0, scripts_path)
 
 try:
-    from Scripts.Control.aaaa.franka_controller import execute_movement
+    from Control.aaaa.franka_controller import execute_movement
     print("✅ Script de movimiento cargado.")
 except ImportError as e:
     print(f"❌ Error al cargar execute_movement: {e}")
@@ -23,17 +23,18 @@ except ImportError as e:
 # --- COORDENADAS REALES (Ground Truth) ---
 REAL_POSITIONS = {
     "red":   [0.094, 0.0, 0.015],
-    "green": [0.094, 0.381, 0.015],
-    "blue":  [0.094, -0.331, 0.015]
+    "green": [0.09460346, 0.16237024, 0.01499997],
+    "blue":  [ 0.06924441, -0.333803,    0.115     ]
 }
 
 # --- PARÁMETROS DE EJECUCIÓN ---
-TARGET_COLOR = "blue"  # CAMBIAR A: "red", "green", "blue"
+color = "red"  # CAMBIAR A: "red", "green", "blue"
 ROBOT_PATH   = "/World/Franka_Robot"
 GRASP_HEIGHT = 0.15   # <--- Altura aumentada para evitar bloqueos por colisión
 MAX_WAIT_STEPS = 500  # Pasos máximos para esperar el movimiento
 
-async def run_ground_truth_collection():
+async def run_ground_truth_collection(TARGET_COLOR):
+    GRASP_HEIGHT = 0.15 if TARGET_COLOR == "blue" else 0.015
     if TARGET_COLOR not in REAL_POSITIONS:
         print(f"❌ Color {TARGET_COLOR} no reconocido.")
         return
@@ -102,5 +103,10 @@ async def run_ground_truth_collection():
     print(f"\n✨ DATOS GUARDADOS EN:\n{path}")
     print(f"Status: Movimiento completado en {steps} pasos.")
 
-# Iniciar proceso
-asyncio.ensure_future(run_ground_truth_collection())
+
+async def run_all_colors():
+    for color in ["red", "green", "blue"]:
+        await run_ground_truth_collection(color)
+
+
+asyncio.ensure_future(run_all_colors())

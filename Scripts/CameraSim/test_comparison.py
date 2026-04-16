@@ -8,3 +8,4 @@ for name in ["/World/Cubes/Red_Cube", "/World/Cubes/Green_Cube", "/World/Cubes/B
     except:
         print(f"{name}: not found")
 
+

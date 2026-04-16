@@ -15,8 +15,8 @@ import json
 import sys
 import cv2 
 
-TARGET_TYPE  = "robot"   # cube / pallet / robot
-TARGET_COLOR = "white"   # red, green, blue, black (for pallet) , white (for robots)
+TARGET_TYPE  = "cube"   # cube / pallet / robot
+TARGET_COLOR = "blue"   # red, green, blue, black (for pallet) , white (for robots)
 RESOLUTION   = (1280, 720) # screen resolution
 ROBOT_PATH   = "/World/Franka_Robot" # franka name in environment
 URL_MULTI = "http://127.0.0.1:8000/ground_multi" # endpoint of the function we will use inside our bentoml server
@@ -45,8 +45,8 @@ STABILITY_THRESHOLD = 0.05
 OFFSETS = {
     "cube": {
         "red":   [0.070, -0.025, 0.0],
-        "green": [0.197,  0.234, 0.0],
-        "blue":  [0.071, -0.372, 0.0]
+        "green": [0.222,  0.133, 0.0], 
+        "blue":  [0.004, -0.005, 0.0]
     },
     "pallet": {
         "red":   [0.427, -0.295, 0.0],
@@ -179,7 +179,11 @@ async def main_vision():
                                 print(f"##### DETECTION IGNORED, MAY BE JETBOT: {xyz_raw[0]:.2f} #####")
                                 continue
                         
-                        xyz_raw[2] = 0.015 if TARGET_TYPE == "cube" else 0.0
+                        if TARGET_TYPE == "cube":
+                            if TARGET_COLOR == "blue":
+                                xyz_raw[2] = 0.315  # La nueva altura de tu cubo azul
+                            else:
+                                xyz_raw[2] = 0.015
                         
                         xyz = apply_calibration(xyz_raw, TARGET_COLOR, TARGET_TYPE)
 
