@@ -1,0 +1,98 @@
+% I will follow the structure of the custom Deusto template, yet modifying it a bit
+
+% Load the custom Deusto template
+\documentclass{templateDeusto}
+\renewcommand{\familydefault}{\rmdefault}
+
+% Custom lines to keep the same font
+\setkomafont{disposition}{\rmfamily\bfseries}
+\setkomafont{chapter}{\rmfamily\bfseries}
+\setkomafont{section}{\rmfamily\bfseries}
+\setkomafont{subsection}{\rmfamily\bfseries}
+\setkomafont{subsubsection}{\rmfamily\bfseries}
+\setkomafont{paragraph}{\rmfamily\bfseries}
+\setkomafont{pagehead}{\rmfamily}
+\setkomafont{pagenumber}{\rmfamily}
+\setkomafont{captionlabel}{\rmfamily\bfseries}
+\setkomafont{caption}{\rmfamily}
+\setkomafont{descriptionlabel}{\rmfamily\bfseries}
+\setkomafont{chapter}{\rmfamily\bfseries\fontsize{16}{18}\selectfont}
+\setkomafont{chapterentry}{\rmfamily}
+\renewcommand*{\contentsname}{\fontsize{16}{18}\selectfont Contents}
+\renewcommand*{\listfigurename}{\fontsize{16}{18}\selectfont List of Figures}
+\renewcommand*{\listtablename}{\fontsize{16}{18}\selectfont List of Tables}
+\renewcommand*{\lstlistlistingname}{\fontsize{16}{18}\selectfont List of Pseudocodes}
+\addtokomafont{chapterentry}{\rmfamily}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% Metadata for the document
+\title{Integration of Vision Language Models (VLMs) in a Multi-Agent Reinforcement Learning (MARL) environment for cooperative robotic tasks in NVIDIA Isaac Sim}
+\authors{Unai Olaizola}{} 
+\degree{Data Science and Artificial Intelligence}
+\supervisor{Iñaki Vázquez Gómez}
+
+% Start of the document
+\begin{document}
+	
+	\input{portada}
+	
+	\selectlanguage{english} % in english
+	
+	\frontmatter % writes down roman letters + other things, compulsory before the index page
+	
+	% Acknowledgements section
+	\section*{Acknowledgments}
+	\addcontentsline{toc}{chapter}{Acknowledgments}
+	
+	% Custom abstract + key words loading
+	\customAbstract{
+		This project proposes the development and implementation of a Multi-Agent Reinforcement Learning (MARL) system integrated with Vision Language Models (VLMs) for the execution of cooperative robotic tasks within a simulated NVIDIA Isaac Sim environment. 
+		
+		One of the major challenges lies in translating commands from a natural language format into precise robotic actions. To address this, the reasoning capabilities of the VLMs will be exploited for complex instruction interpretation and decision-making. A controlled environment where robotic agents must cooperate to manipulate and respond to objects in order to achieve a shared goal will be designed and shaped for Reinforcement Learning training using NVIDIA's Isaac Lab library. The integration of these models will enhance generalization and promote a more cooperative behavior of the agents against variations in the scene. The learning efficiency will be evaluated in addition to metrics such as the stability of the policies and the transferable capacity of the model(s). Additionally, the project will include an in-depth analysis of state-of-the-art (SOTA) models, providing a comprehensive review of the current methodologies and core concepts that form the theoretical foundation of the proposed architecture, presented in the documentation. 
+		
+		The expected outcome is a demonstration and reflection of the empowerment of multi-modal models within robotic environments, which can be applied to real-world problems.
+	}{
+		Vision Language Models (VLMs), Reinforcement Learning (RL), Multi-Agent environment
+	}
+	
+	\tableofcontents % ordinary index
+	\listoffigures % index for images
+	\lstlistoflistings % index for source code
+	
+	% main content
+	\mainmatter
+	
+	% Introduce my structure here
+	% use \input{chapter(.tex)} to introduce the chapters from other .tex files
+	
+	\chapter{Introduction}
+	\input{Chapters/Introduction}
+	
+	\chapter{Theoretical foundations}
+	\input{Chapters/Theoretical_foundations}
+	
+	\chapter{Solution approach}
+	\input{Chapters/Solution_approach}	
+	
+	\chapter{Solution development}
+	\input{Chapters/Solution_development_and_implementation}
+	
+	\chapter{Experimentation and evolution}
+	\input{Chapters/Experimentation_and_evolution.tex}
+	
+	\chapter{Conclusions}
+	\input{Chapters/Conclusions.tex}
+	
+	% end content
+	\bibliography{bibliography.bib} % my blibliography file
+	
+	\chapter{Appendix} %?
+	\input{Chapters/Appendix}
+	
+	% appendix
+	\appendix
+	
+	
+\end{document}

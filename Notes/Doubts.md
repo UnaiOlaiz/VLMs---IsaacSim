@@ -4,3 +4,4 @@
 - Documentation structure? (I want to do it in LaTeX)
 - SOTA.
 - Add anything else to the [[Pipeline Process]]?
+- There is already a VLM section implemented inside *IsaacSim*, cover that in depth in the documentation.

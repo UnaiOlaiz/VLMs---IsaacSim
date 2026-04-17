@@ -1,0 +1,46 @@
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{Acknowledgments}{i}{section*.1}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.5}%
+\contentsline {section}{\numberline {1.1}Problem context}{1}{section.6}%
+\contentsline {section}{\numberline {1.2}Motivation}{1}{section.7}%
+\contentsline {section}{\numberline {1.3}Main objectives and specific objectives}{1}{section.8}%
+\contentsline {section}{\numberline {1.4}Project scope and limitations}{1}{section.9}%
+\contentsline {chapter}{\numberline {2}Theoretical foundations}{2}{chapter.10}%
+\contentsline {section}{\numberline {2.1}Vision Language Models}{2}{section.11}%
+\contentsline {section}{\numberline {2.2}Reinforcement Learning}{2}{section.12}%
+\contentsline {section}{\numberline {2.3}Multi-agent systems}{2}{section.13}%
+\contentsline {section}{\numberline {2.4}State of the Art}{2}{section.14}%
+\contentsline {subsection}{\numberline {2.4.1}VLMs evolution}{2}{subsection.15}%
+\contentsline {subsection}{\numberline {2.4.2}Current models}{2}{subsection.16}%
+\contentsline {subsection}{\numberline {2.4.3}Benchmarks}{2}{subsection.17}%
+\contentsline {subsection}{\numberline {2.4.4}VLMs in robotics}{2}{subsection.18}%
+\contentsline {subsection}{\numberline {2.4.5}Frameworks}{2}{subsection.19}%
+\contentsline {chapter}{\numberline {3}Solution approach}{3}{chapter.20}%
+\contentsline {section}{\numberline {3.1}Solution proposal}{3}{section.21}%
+\contentsline {section}{\numberline {3.2}System architecture}{3}{section.22}%
+\contentsline {section}{\numberline {3.3}Tools used}{3}{section.23}%
+\contentsline {section}{\numberline {3.4}Workflow}{3}{section.24}%
+\contentsline {chapter}{\numberline {4}Solution development}{4}{chapter.25}%
+\contentsline {section}{\numberline {4.1}IsaacSim environment definition}{4}{section.26}%
+\contentsline {subsection}{\numberline {4.1.1}Agents}{4}{subsection.27}%
+\contentsline {subsection}{\numberline {4.1.2}Cameras}{4}{subsection.28}%
+\contentsline {subsection}{\numberline {4.1.3}Physics}{4}{subsection.29}%
+\contentsline {section}{\numberline {4.2}Individual component operation}{4}{section.30}%
+\contentsline {chapter}{\numberline {5}Experimentation and evolution}{5}{chapter.31}%
+\contentsline {section}{\numberline {5.1}First scenarios}{5}{section.32}%
+\contentsline {section}{\numberline {5.2}Last scenario}{5}{section.33}%
+\contentsline {section}{\numberline {5.3}Successful and failure tries}{5}{section.34}%
+\contentsline {section}{\numberline {5.4}Results obtained in each scenario}{5}{section.35}%
+\contentsline {section}{\numberline {5.5}Result discussion}{5}{section.36}%
+\contentsline {chapter}{\numberline {6}Conclusions}{6}{chapter.37}%
+\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{6}{section.38}%
+\contentsline {section}{\numberline {6.2}Limitations found}{6}{section.39}%
+\contentsline {section}{\numberline {6.3}Future work}{6}{section.40}%
+\contentsline {chapter}{\numberline {7}Appendix}{7}{chapter.41}%
+\contentsline {section}{\numberline {7.1}Instalation guide}{7}{section.42}%
+\contentsline {section}{\numberline {7.2}Relevant code}{7}{section.43}%
+\contentsline {section}{\numberline {7.3}Prompts used}{7}{section.44}%
+\contentsline {section}{\numberline {7.4}Result table}{7}{section.45}%
+\contentsline {section}{\numberline {7.5}Tensorboard analysis}{7}{section.46}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
