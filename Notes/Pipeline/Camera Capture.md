@@ -3,8 +3,9 @@ The camera process calls the BentoML *ground_multi* call from the  [[BentoML Ser
 For each detectable object, I have designed a different script with different filters and procedure. However, I had to crop (get rid off certain distractive parts of the image) to help the VLM detect the target. 
 
 These were the results: 
-![/home/unaiolaizolaosa/Documents/PFG/Scripts/CameraSim/CV/CV_results/frankas_clean.png](file:///home/unaiolaizolaosa/Documents/PFG/Scripts/CameraSim/CV/CV_results/frankas_clean.png)![[Pasted image 20260416194133.png]]
-![/home/unaiolaizolaosa/Documents/PFG/Scripts/CameraSim/CV/CV_results/result_clean.png](file:///home/unaiolaizolaosa/Documents/PFG/Scripts/CameraSim/CV/CV_results/result_clean.png)
+![[frankas_clean.png]]
+![[Pasted image 20260416194133.png]]
+![[result_clean.png]]
 
 I decided to keep the basic white area to have just the basic detection, otherwise I would have to deal with texts and shadows (I had specific filters to get rid of the shadows). If I were to keep all the info, this would have been the output: ![[Pasted image 20260416194318.png]]
 

@@ -1,0 +1,6 @@
+- Postpone delivery date, latest submission at April 27th. 
+- Bad [[RL Progress]] performance, if it does not work as intended, study it independently and check its application to the pipeline? 
+- How to get the coordinate positions of the cube when its on top of the jetbot and franka 2 must lift it? Until now hard-coded position. Maybe [[Camera Capture]] with VLM again? 
+- Documentation structure? (I want to do it in LaTeX)
+- SOTA.
+- Add anything else to the [[Pipeline Process]]?

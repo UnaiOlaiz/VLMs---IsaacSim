@@ -1,4 +1,18 @@
 Got the idea to start from a closer position, so I made a control script to get the target cube coordinates and stay on top of the cube (at safe height), reducing error margin in training when starting from a much closer position. 
+
+There are 3 possible files (strategies) to try out the policy:
+1. **joint_pos_env_cfg.py**: the robot sends the commands directly to the robot joints (used the most, but hardest to obtain the best results with). Harder as the agent must learn how to cooperate all the joint angles all at once. 
+2. **ik_abs_env_cfg.py**: uses *inverse kinematics* to translate 3D coordinates to joint movements (might be the best choice for our task). 
+3. **ik_rel_env_cfg.py**: *inverse kinematics* + relative commands to the gurrent position. 
+
+| Feature           | `joint_pos`       | `ik_abs`                      | `ik_rel`                                            |
+| :---------------- | :---------------- | :---------------------------- | :-------------------------------------------------- |
+| **Control Space** | Joint Space       | Task/Cartesian Space          | Task/Cartesian Space                                |
+| **Targeting**     | Angles ($\theta$) | World Coordinates ($x, y, z$) | Change in Position ($\Delta x, \Delta y, \Delta z$) |
+| **Complexity**    | Low (Raw)         | High (Requires IK Solver)     | High (Requires IK Solver)                           |
+| **Intuition**     | Harder for AI     | Easier for reaching           | Easier for fine-tuning                              |
+
+#### Experimentation with **joint_pos_env_cfg.py**:
 Had to experiment with thousands of rewards/observations + hyperparameter configurations, but the best result obtained was with this config (I will just put the important content): 
 
 ```python
@@ -87,3 +101,4 @@ This was the result:
 ![[Franka levanta cubo.gif]]
 
 However, the inference results were terrible. 
+
