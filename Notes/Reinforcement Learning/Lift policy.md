@@ -102,3 +102,5 @@ This was the result:
 
 However, the inference results were terrible. 
 
+#### Teddy Bear lift
+I will also try to develop a lift policy with a deformable objects instead of rigid cubes. The teddy bear train config is already implemented inside IsaacLab, but I need to configure the physics properties in order to not crash. 

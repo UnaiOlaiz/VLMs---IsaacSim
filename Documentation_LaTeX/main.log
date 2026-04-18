@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.17)  17 APR 2026 19:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.17)  18 APR 2026 11:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -772,25 +772,39 @@ Class scrbook Warning: \float@addtolists detected!
 chapter 2.
 (./Chapters/Theoretical_foundations.tex) [2
 
-]
+] [3]
 chapter 3.
-(./Chapters/Solution_approach.tex) [3
+(./Chapters/Solution_approach.tex) [4
 
 ]
 chapter 4.
-(./Chapters/Solution_development_and_implementation.tex) [4
+(./Chapters/Solution_development_and_implementation.tex) [5
 
 ]
 chapter 5.
-(./Chapters/Experimentation_and_evolution.tex) [5
+(./Chapters/Experimentation_and_evolution.tex) [6
 
 ]
 chapter 6.
-(./Chapters/Conclusions.tex) (./main.bbl) [6
+(./Chapters/Conclusions.tex [7
+
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]) (./main.bbl [8]
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 1
+0.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+)
+Underfull \hbox (badness 10000) in paragraph at lines 8--11
+[]\T1/cmr/m/n/10 IBM.  What are vision-language mod-els?  [][]$\T1/cmtt/m/n/10 
+https : / / www . ibm . com / think / topics /
+ []
+
+) [9
 
 ]
 chapter 7.
-(./Chapters/Appendix.tex) [7
+(./Chapters/Appendix.tex) [10
 
 ] (./main.aux)
  ***********
@@ -804,11 +818,11 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 18947 strings out of 474222
- 349199 string characters out of 5748733
+ 19003 strings out of 474222
+ 350663 string characters out of 5748733
  1938975 words of memory out of 5000000
- 40882 multiletter control sequences out of 15000+600000
- 569097 words of font info for 56 fonts, out of 8000000 for 9000
+ 40922 multiletter control sequences out of 15000+600000
+ 570431 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  122i,20n,121p,10941b,661s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/
@@ -817,11 +831,13 @@ m-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb
 ></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/f
 onts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm
 -super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsl1095.pfb>
-</usr/share/texmf/fonts/type1/public/cm-super/sfti0800.pfb>
-Output written on main.pdf (14 pages, 182391 bytes).
+</usr/share/texmf/fonts/type1/public/cm-super/sfti0800.pfb></usr/share/texmf/fo
+nts/type1/public/cm-super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-
+super/sftt1000.pfb>
+Output written on main.pdf (17 pages, 242943 bytes).
 PDF statistics:
- 385 PDF objects out of 1000 (max. 8388607)
- 346 compressed objects within 4 object streams
- 61 named destinations out of 1000 (max. 500000)
- 350 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 444 PDF objects out of 1000 (max. 8388607)
+ 397 compressed objects within 4 object streams
+ 70 named destinations out of 1000 (max. 500000)
+ 374 words of extra memory for PDF output out of 10000 (max. 10000000)
 

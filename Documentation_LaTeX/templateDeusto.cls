@@ -211,7 +211,7 @@ includefoot
 	#1 
 	\vspace{2cm}
 	
-	{\bfseries\Large Keywords\par}
+	{\bfseries\Large Index terms\par}
 	\vspace{0.5cm}
 	#2 
 	\cleardoublepage
