@@ -5,45 +5,45 @@ The style file: plain.bst
 Database file #1: bibliography.bib
 Warning--entry type for "bolcato_vlm_2024" isn't style-file defined
 --line 9 of file bibliography.bib
-You've used 2 entries,
+You've used 6 entries,
             2118 wiz_defined-function locations,
-            506 strings with 4205 characters,
-and the built_in function-call counts, 425 in all, are:
-= -- 37
-> -- 14
+            528 strings with 4965 characters,
+and the built_in function-call counts, 1277 in all, are:
+= -- 120
+> -- 42
 < -- 0
-+ -- 6
-- -- 4
-* -- 14
-:= -- 76
-add.period$ -- 5
-call.type$ -- 2
-change.case$ -- 8
++ -- 18
+- -- 12
+* -- 42
+:= -- 219
+add.period$ -- 19
+call.type$ -- 6
+change.case$ -- 24
 chr.to.int$ -- 0
-cite$ -- 2
-duplicate$ -- 14
-empty$ -- 45
-format.name$ -- 4
-if$ -- 90
+cite$ -- 6
+duplicate$ -- 42
+empty$ -- 133
+format.name$ -- 12
+if$ -- 277
 int.to.chr$ -- 0
-int.to.str$ -- 2
+int.to.str$ -- 6
 missing$ -- 0
-newline$ -- 12
-num.names$ -- 4
-pop$ -- 17
+newline$ -- 34
+num.names$ -- 12
+pop$ -- 50
 preamble$ -- 1
-purify$ -- 6
+purify$ -- 18
 quote$ -- 0
-skip$ -- 15
+skip$ -- 41
 stack$ -- 0
-substring$ -- 10
-swap$ -- 2
+substring$ -- 30
+swap$ -- 6
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 8
+type$ -- 24
 warning$ -- 0
-while$ -- 4
-width$ -- 3
-write$ -- 20
+while$ -- 12
+width$ -- 7
+write$ -- 64
 (There was 1 warning)

@@ -40,7 +40,8 @@ hypertexnames=false,
 bookmarks=true]{hyperref}
 \RequirePackage{bookmark}          % PDF Improvements
 \RequirePackage{xcolor} 
-
+\RequirePackage{amsmath}
+\RequirePackage{float}
 
 %% ------------------------------
 %% Listings Configuration (Code)

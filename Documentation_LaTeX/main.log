@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.17)  18 APR 2026 11:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.17)  19 APR 2026 14:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -503,24 +503,100 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1371.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
 )
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2023/05/13 v2.17o AMS math features
+\@mathmargin=\skip69
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks29
+\ex@=\dimen160
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen161
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count296
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count297
+\leftroot@=\count298
+LaTeX Info: Redefining \overline on input line 399.
+LaTeX Info: Redefining \colon on input line 410.
+\classnum@=\count299
+\DOTSCASE@=\count300
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box60
+\strutbox@=\box61
+LaTeX Info: Redefining \big on input line 722.
+LaTeX Info: Redefining \Big on input line 723.
+LaTeX Info: Redefining \bigg on input line 724.
+LaTeX Info: Redefining \Bigg on input line 725.
+\big@size=\dimen162
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count301
+LaTeX Info: Redefining \bmod on input line 905.
+LaTeX Info: Redefining \pmod on input line 910.
+LaTeX Info: Redefining \smash on input line 940.
+LaTeX Info: Redefining \relbar on input line 970.
+LaTeX Info: Redefining \Relbar on input line 971.
+\c@MaxMatrixCols=\count302
+\dotsspace@=\muskip17
+\c@parentequation=\count303
+\dspbrk@lvl=\count304
+\tag@help=\toks30
+\row@=\count305
+\column@=\count306
+\maxfields@=\count307
+\andhelp@=\toks31
+\eqnshift@=\dimen163
+\alignsep@=\dimen164
+\tagshift@=\dimen165
+\tagwidth@=\dimen166
+\totwidth@=\dimen167
+\lineht@=\dimen168
+\@envbody=\toks32
+\multlinegap=\skip70
+\multlinetaggap=\skip71
+\mathdisplay@stack=\toks33
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count308
+\float@exts=\toks34
+\float@box=\box62
+\@float@everytoks=\toks35
+\@floatcapt=\box63
+)
 (/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 
 (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count296
-\Gm@cntv=\count297
-\c@Gm@tempcnt=\count298
-\Gm@bindingoffset=\dimen160
-\Gm@wd@mp=\dimen161
-\Gm@odd@mp=\dimen162
-\Gm@even@mp=\dimen163
-\Gm@layoutwidth=\dimen164
-\Gm@layoutheight=\dimen165
-\Gm@layouthoffset=\dimen166
-\Gm@layoutvoffset=\dimen167
-\Gm@dimlist=\toks29
+\Gm@cnth=\count309
+\Gm@cntv=\count310
+\c@Gm@tempcnt=\count311
+\Gm@bindingoffset=\dimen169
+\Gm@wd@mp=\dimen170
+\Gm@odd@mp=\dimen171
+\Gm@even@mp=\dimen172
+\Gm@layoutwidth=\dimen173
+\Gm@layoutheight=\dimen174
+\Gm@layouthoffset=\dimen175
+\Gm@layoutvoffset=\dimen176
+\Gm@dimlist=\toks36
 )
 \@auxoutothers=\write5
  (./others.aux)
@@ -529,18 +605,18 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
-\col@sep=\dimen168
-\ar@mcellbox=\box60
-\extrarowheight=\dimen169
-\NC@list=\toks30
-\extratabsurround=\skip69
-\backup@length=\skip70
-\ar@cellbox=\box61
+\col@sep=\dimen177
+\ar@mcellbox=\box64
+\extrarowheight=\dimen178
+\NC@list=\toks37
+\extratabsurround=\skip72
+\backup@length=\skip73
+\ar@cellbox=\box65
 )
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count299
-\l__pdf_internal_box=\box62
+\l__color_backend_stack_int=\count312
+\l__pdf_internal_box=\box66
 )
 (./main.aux)
 \openout1 = `main.aux'.
@@ -586,17 +662,17 @@ Package scrlayer-scrpage Warning: Very small head height detected!
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count300
-\scratchdimen=\dimen170
-\scratchbox=\box63
-\nofMPsegments=\count301
-\nofMParguments=\count302
-\everyMPshowfont=\toks31
-\MPscratchCnt=\count303
-\MPscratchDim=\dimen171
-\MPnumerator=\count304
-\makeMPintoPDFobject=\count305
-\everyMPtoPDFconversion=\toks32
+\scratchcounter=\count313
+\scratchdimen=\dimen179
+\scratchbox=\box67
+\nofMPsegments=\count314
+\nofMParguments=\count315
+\everyMPshowfont=\toks38
+\MPscratchCnt=\count316
+\MPscratchDim=\dimen180
+\MPnumerator=\count317
+\makeMPintoPDFobject=\count318
+\everyMPtoPDFconversion=\toks39
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -606,7 +682,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count306
+\c@lstlisting=\count319
 
 (/usr/share/texlive/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
@@ -770,41 +846,65 @@ Class scrbook Warning: \float@addtolists detected!
 
 ]
 chapter 2.
-(./Chapters/Theoretical_foundations.tex) [2
+(./Chapters/Theoretical_foundations.tex [2
 
-] [3]
+]
+<imgs/phrase_grounding.jpg, id=205, 978.65625pt x 851.18pt>
+File: imgs/phrase_grounding.jpg Graphic file (type jpg)
+<use imgs/phrase_grounding.jpg>
+Package pdftex.def Info: imgs/phrase_grounding.jpg  used on input line 47.
+(pdftex.def)             Requested size: 227.62206pt x 197.97522pt.
+ [3{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [4 <./imgs/phr
+ase_grounding.jpg>] [5]) [6]
 chapter 3.
-(./Chapters/Solution_approach.tex) [4
+(./Chapters/Solution_approach.tex) [7
 
 ]
 chapter 4.
-(./Chapters/Solution_development_and_implementation.tex) [5
+(./Chapters/Solution_development_and_implementation.tex) [8
 
 ]
 chapter 5.
-(./Chapters/Experimentation_and_evolution.tex) [6
+(./Chapters/Experimentation_and_evolution.tex) [9
 
 ]
 chapter 6.
-(./Chapters/Conclusions.tex [7
+(./Chapters/Conclusions.tex [10
 
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]) (./main.bbl [8]
+]) (./main.bbl [11]
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 1
-0.
+2.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
-Underfull \hbox (badness 10000) in paragraph at lines 8--11
+Underfull \hbox (badness 10000) in paragraph at lines 8--15
+[]\T1/cmr/m/n/10 Gravio Team.  Vision-language mod-els (VLM) vs vi-sual ques-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--15
+\T1/cmr/m/n/10 tion an-swer-ing (VQA) in 2025?  [][]$\T1/cmtt/m/n/10 https : / 
+/ www . gravio . com / en-[]blog /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 17--20
 []\T1/cmr/m/n/10 IBM.  What are vision-language mod-els?  [][]$\T1/cmtt/m/n/10 
 https : / / www . ibm . com / think / topics /
  []
 
-) [9
+
+Underfull \hbox (badness 10000) in paragraph at lines 22--26
+[]\T1/cmr/m/n/10 M. Tim-o-thy.  What is phrase ground-ing?  [][]$\T1/cmtt/m/n/1
+0 https : / / blog . roboflow . com /
+ []
+
+) [12
 
 ]
 chapter 7.
-(./Chapters/Appendix.tex) [10
+(./Chapters/Appendix.tex) [13
 
 ] (./main.aux)
  ***********
@@ -818,26 +918,34 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 19003 strings out of 474222
- 350663 string characters out of 5748733
+ 19801 strings out of 474222
+ 361407 string characters out of 5748733
  1938975 words of memory out of 5000000
- 40922 multiletter control sequences out of 15000+600000
- 570431 words of font info for 59 fonts, out of 8000000 for 9000
+ 41677 multiletter control sequences out of 15000+600000
+ 571358 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 122i,20n,121p,10941b,661s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texmf/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/
-fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/c
-m-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb
-></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/f
-onts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm
--super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsl1095.pfb>
-</usr/share/texmf/fonts/type1/public/cm-super/sfti0800.pfb></usr/share/texmf/fo
-nts/type1/public/cm-super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-
-super/sftt1000.pfb>
-Output written on main.pdf (17 pages, 242943 bytes).
+ 122i,21n,121p,10941b,677s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmsy7.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1000.pfb
+></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/f
+onts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm
+-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb>
+</usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fo
+nts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-
+super/sfsl1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti0800.pfb><
+/usr/share/texmf/fonts/type1/public/cm-super/sfti1000.pfb></usr/share/texmf/fon
+ts/type1/public/cm-super/sftt1000.pfb>
+Output written on main.pdf (20 pages, 412549 bytes).
 PDF statistics:
- 444 PDF objects out of 1000 (max. 8388607)
- 397 compressed objects within 4 object streams
- 70 named destinations out of 1000 (max. 500000)
- 374 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 555 PDF objects out of 1000 (max. 8388607)
+ 485 compressed objects within 5 object streams
+ 90 named destinations out of 1000 (max. 500000)
+ 427 words of extra memory for PDF output out of 10000 (max. 10000000)
 
