@@ -11,45 +11,46 @@
 \contentsline {subsection}{\numberline {2.1.1}History of VLMs}{2}{subsection.12}%
 \contentsline {subsubsection}{\numberline {2.1.1.1}Earliest models}{2}{subsubsection.13}%
 \contentsline {subsubsection}{\numberline {2.1.1.2}Deep learning based models}{3}{subsubsection.14}%
-\contentsline {subsubsection}{\numberline {2.1.1.3}Advancements in 2020s - CLIP}{4}{subsubsection.17}%
-\contentsline {subsection}{\numberline {2.1.2}Elements of a VLMs}{5}{subsection.20}%
-\contentsline {subsubsection}{\numberline {2.1.2.1}Transformers}{5}{subsubsection.21}%
-\contentsline {subsubsection}{\numberline {2.1.2.2}Language encoder}{6}{subsubsection.25}%
-\contentsline {subsubsection}{\numberline {2.1.2.3}Vision encoder}{6}{subsubsection.26}%
-\contentsline {subsubsection}{\numberline {2.1.2.4}Visual transformer (ViT)}{6}{subsubsection.27}%
-\contentsline {section}{\numberline {2.2}Reinforcement Learning}{6}{section.28}%
-\contentsline {section}{\numberline {2.3}Multi-agent systems}{6}{section.29}%
-\contentsline {section}{\numberline {2.4}State of the Art}{6}{section.30}%
-\contentsline {subsection}{\numberline {2.4.1}VLMs evolution}{6}{subsection.31}%
-\contentsline {subsection}{\numberline {2.4.2}Current models}{6}{subsection.32}%
-\contentsline {subsection}{\numberline {2.4.3}Benchmarks}{6}{subsection.33}%
-\contentsline {subsection}{\numberline {2.4.4}VLMs in robotics}{6}{subsection.34}%
-\contentsline {subsection}{\numberline {2.4.5}Frameworks}{6}{subsection.35}%
-\contentsline {chapter}{\numberline {3}Solution approach}{7}{chapter.36}%
-\contentsline {section}{\numberline {3.1}Solution proposal}{7}{section.37}%
-\contentsline {section}{\numberline {3.2}System architecture}{7}{section.38}%
-\contentsline {section}{\numberline {3.3}Tools used}{7}{section.39}%
-\contentsline {section}{\numberline {3.4}Workflow}{7}{section.40}%
-\contentsline {chapter}{\numberline {4}Solution development}{8}{chapter.41}%
-\contentsline {section}{\numberline {4.1}IsaacSim environment definition}{8}{section.42}%
-\contentsline {subsection}{\numberline {4.1.1}Agents}{8}{subsection.43}%
-\contentsline {subsection}{\numberline {4.1.2}Cameras}{8}{subsection.44}%
-\contentsline {subsection}{\numberline {4.1.3}Physics}{8}{subsection.45}%
-\contentsline {section}{\numberline {4.2}Individual component operation}{8}{section.46}%
-\contentsline {chapter}{\numberline {5}Experimentation and evolution}{9}{chapter.47}%
-\contentsline {section}{\numberline {5.1}First scenarios}{9}{section.48}%
-\contentsline {section}{\numberline {5.2}Last scenario}{9}{section.49}%
-\contentsline {section}{\numberline {5.3}Successful and failure tries}{9}{section.50}%
-\contentsline {section}{\numberline {5.4}Results obtained in each scenario}{9}{section.51}%
-\contentsline {section}{\numberline {5.5}Result discussion}{9}{section.52}%
-\contentsline {chapter}{\numberline {6}Conclusions}{10}{chapter.53}%
-\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{10}{section.54}%
-\contentsline {section}{\numberline {6.2}Limitations found}{10}{section.55}%
-\contentsline {section}{\numberline {6.3}Future work}{11}{section.56}%
-\contentsline {chapter}{\numberline {7}Appendix}{13}{chapter.58}%
-\contentsline {section}{\numberline {7.1}Instalation guide}{13}{section.59}%
-\contentsline {section}{\numberline {7.2}Relevant code}{13}{section.60}%
-\contentsline {section}{\numberline {7.3}Prompts used}{13}{section.61}%
-\contentsline {section}{\numberline {7.4}Result table}{13}{section.62}%
-\contentsline {section}{\numberline {7.5}Tensorboard analysis}{13}{section.63}%
+\contentsline {subsubsection}{\numberline {2.1.1.3}2021 - Release of CLIP}{4}{subsubsection.17}%
+\contentsline {subsubsection}{\numberline {2.1.1.4}Models released in the last years}{7}{subsubsection.26}%
+\contentsline {subsection}{\numberline {2.1.2}Elements of a VLMs}{7}{subsection.27}%
+\contentsline {subsubsection}{\numberline {2.1.2.1}Transformers}{7}{subsubsection.28}%
+\contentsline {subsubsection}{\numberline {2.1.2.2}Language encoder}{8}{subsubsection.32}%
+\contentsline {subsubsection}{\numberline {2.1.2.3}Vision encoder}{8}{subsubsection.33}%
+\contentsline {subsubsection}{\numberline {2.1.2.4}Visual transformer (ViT)}{8}{subsubsection.34}%
+\contentsline {section}{\numberline {2.2}Reinforcement Learning}{10}{section.37}%
+\contentsline {section}{\numberline {2.3}Multi-agent systems}{10}{section.38}%
+\contentsline {section}{\numberline {2.4}State of the Art}{10}{section.39}%
+\contentsline {subsection}{\numberline {2.4.1}VLMs evolution}{10}{subsection.40}%
+\contentsline {subsection}{\numberline {2.4.2}Current models}{10}{subsection.41}%
+\contentsline {subsection}{\numberline {2.4.3}Benchmarks}{10}{subsection.42}%
+\contentsline {subsection}{\numberline {2.4.4}VLMs in robotics}{10}{subsection.43}%
+\contentsline {subsection}{\numberline {2.4.5}Frameworks}{10}{subsection.44}%
+\contentsline {chapter}{\numberline {3}Solution approach}{11}{chapter.45}%
+\contentsline {section}{\numberline {3.1}Solution proposal}{11}{section.46}%
+\contentsline {section}{\numberline {3.2}System architecture}{11}{section.47}%
+\contentsline {section}{\numberline {3.3}Tools used}{11}{section.48}%
+\contentsline {section}{\numberline {3.4}Workflow}{11}{section.49}%
+\contentsline {chapter}{\numberline {4}Solution development}{12}{chapter.50}%
+\contentsline {section}{\numberline {4.1}IsaacSim environment definition}{12}{section.51}%
+\contentsline {subsection}{\numberline {4.1.1}Agents}{12}{subsection.52}%
+\contentsline {subsection}{\numberline {4.1.2}Cameras}{12}{subsection.53}%
+\contentsline {subsection}{\numberline {4.1.3}Physics}{12}{subsection.54}%
+\contentsline {section}{\numberline {4.2}Individual component operation}{12}{section.55}%
+\contentsline {chapter}{\numberline {5}Experimentation and evolution}{13}{chapter.56}%
+\contentsline {section}{\numberline {5.1}First scenarios}{13}{section.57}%
+\contentsline {section}{\numberline {5.2}Last scenario}{13}{section.58}%
+\contentsline {section}{\numberline {5.3}Successful and failure tries}{13}{section.59}%
+\contentsline {section}{\numberline {5.4}Results obtained in each scenario}{13}{section.60}%
+\contentsline {section}{\numberline {5.5}Result discussion}{13}{section.61}%
+\contentsline {chapter}{\numberline {6}Conclusions}{14}{chapter.62}%
+\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{14}{section.63}%
+\contentsline {section}{\numberline {6.2}Limitations found}{14}{section.64}%
+\contentsline {section}{\numberline {6.3}Future work}{15}{section.65}%
+\contentsline {chapter}{\numberline {7}Appendix}{17}{chapter.67}%
+\contentsline {section}{\numberline {7.1}Instalation guide}{17}{section.68}%
+\contentsline {section}{\numberline {7.2}Relevant code}{17}{section.69}%
+\contentsline {section}{\numberline {7.3}Prompts used}{17}{section.70}%
+\contentsline {section}{\numberline {7.4}Result table}{17}{section.71}%
+\contentsline {section}{\numberline {7.5}Tensorboard analysis}{17}{section.72}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

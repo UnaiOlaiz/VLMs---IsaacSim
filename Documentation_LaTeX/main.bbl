@@ -18,11 +18,24 @@ Pietro Bolcato.
 \newblock What are vision-language models?
 \newblock \url{https://www.ibm.com/think/topics/vision-language-models}, 2024.
 
+\bibitem{radford2021learningtransferablevisualmodels}
+Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
+  Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark,
+  Gretchen Krueger, and Ilya Sutskever.
+\newblock Learning transferable visual models from natural language
+  supervision, 2021.
+
 \bibitem{timothy2024phrasegrounding}
 M.~Timothy.
 \newblock What is phrase grounding?
 \newblock \url{https://blog.roboflow.com/what-is-phrase-grounding/}, Nov 2024.
 \newblock Roboflow Blog, Accessed: [Insert Date Here].
+
+\bibitem{wiki:bicubic_interpolation}
+{Wikipedia contributors}.
+\newblock Bicubic interpolation --- {W}ikipedia{,} the free encyclopedia.
+\newblock \url{https://en.wikipedia.org/wiki/Bicubic_interpolation}, 2024.
+\newblock [Online; accessed 19-April-2026].
 
 \bibitem{wiki:clip}
 {Wikipedia contributors}.
