@@ -4,7 +4,8 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Graphical example of phrase grounding}}{4}{figure.16}%
 \contentsline {figure}{\numberline {2.2}{\ignorespaces CLIP workflow}}{6}{figure.25}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Vision transformer architecture}}{9}{figure.36}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Vision transformer architecture}}{10}{figure.39}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Masked autoencoder architecture}}{11}{figure.41}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

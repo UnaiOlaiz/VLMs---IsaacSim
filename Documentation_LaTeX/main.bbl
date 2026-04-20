@@ -1,8 +1,15 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{bolcato_vlm_2024}
 Pietro Bolcato.
 \newblock Understanding vision-language models (vlms): A practical guide, 2024.
+
+\bibitem{dosovitskiy2021imageworth16x16words}
+Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
+  Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, Matthias Minderer, Georg
+  Heigold, Sylvain Gelly, Jakob Uszkoreit, and Neil Houlsby.
+\newblock An image is worth 16x16 words: Transformers for image recognition at
+  scale, 2021.
 
 \bibitem{gravio2025vlmvqa}
 {Gravio Team}.
@@ -31,6 +38,11 @@ M.~Timothy.
 \newblock \url{https://blog.roboflow.com/what-is-phrase-grounding/}, Nov 2024.
 \newblock Roboflow Blog, Accessed: [Insert Date Here].
 
+\bibitem{vaswani2023attentionneed}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N. Gomez, Lukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need, 2023.
+
 \bibitem{wiki:bicubic_interpolation}
 {Wikipedia contributors}.
 \newblock Bicubic interpolation --- {W}ikipedia{,} the free encyclopedia.
@@ -45,6 +57,12 @@ M.~Timothy.
   \url{https://en.wikipedia.org/wiki/Contrastive_Language-Image_Pre-training},
   2024.
 \newblock [Online; accessed 19-April-2026].
+
+\bibitem{wiki:knowledge_distillation}
+{Wikipedia contributors}.
+\newblock Knowledge distillation --- {W}ikipedia{,} the free encyclopedia.
+\newblock \url{https://en.wikipedia.org/wiki/Knowledge_distillation}, 2024.
+\newblock [Online; accessed 20-April-2026].
 
 \bibitem{wiki:Vision-language_model}
 {Wikipedia contributors}.
