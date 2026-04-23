@@ -1,8 +1,9 @@
 \begin{thebibliography}{10}
 
-\bibitem{bolcato_vlm_2024}
-Pietro Bolcato.
-\newblock Understanding vision-language models (vlms): A practical guide, 2024.
+\bibitem{multimodal_learning_wiki}
+Multimodal learning.
+\newblock \url{https://en.wikipedia.org/wiki/Multimodal_learning}.
+\newblock Accessed: April 23, 2026.
 
 \bibitem{dosovitskiy2021imageworth16x16words}
 Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
@@ -20,10 +21,10 @@ Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
   Mar 2025.
 \newblock Gravio Blog, Accessed: [Insert Date Here].
 
-\bibitem{ibm_vlm_2024}
-{IBM}.
-\newblock What are vision-language models?
-\newblock \url{https://www.ibm.com/think/topics/vision-language-models}, 2024.
+\bibitem{jaegle2021perceivergeneralperceptioniterative}
+Andrew Jaegle, Felix Gimeno, Andrew Brock, Andrew Zisserman, Oriol Vinyals, and
+  Joao Carreira.
+\newblock Perceiver: General perception with iterative attention, 2021.
 
 \bibitem{radford2021learningtransferablevisualmodels}
 Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
@@ -31,6 +32,16 @@ Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
   Gretchen Krueger, and Ilya Sutskever.
 \newblock Learning transferable visual models from natural language
   supervision, 2021.
+
+\bibitem{rethmeier2021primercontrastivepretraininglanguage}
+Nils Rethmeier and Isabelle Augenstein.
+\newblock A primer on contrastive pretraining in language processing: Methods,
+  lessons learned and perspectives, 2021.
+
+\bibitem{tan2022sentenceworth128pseudo}
+Haochen Tan, Wei Shao, Han Wu, Ke~Yang, and Linqi Song.
+\newblock A sentence is worth 128 pseudo tokens: A semantic-aware contrastive
+  learning framework for sentence embeddings, 2022.
 
 \bibitem{timothy2024phrasegrounding}
 M.~Timothy.
@@ -42,6 +53,17 @@ M.~Timothy.
 Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
   Aidan~N. Gomez, Lukasz Kaiser, and Illia Polosukhin.
 \newblock Attention is all you need, 2023.
+
+\bibitem{wang2022simvlmsimplevisuallanguage}
+Zirui Wang, Jiahui Yu, Adams~Wei Yu, Zihang Dai, Yulia Tsvetkov, and Yuan Cao.
+\newblock Simvlm: Simple visual language model pretraining with weak
+  supervision, 2022.
+
+\bibitem{cross_modal_retrieval}
+{Wikipedia}.
+\newblock Cross-modal retrieval.
+\newblock \url{https://en.wikipedia.org/wiki/Cross-modal_retrieval}, 2026.
+\newblock Accessed: 2026-04-23.
 
 \bibitem{wiki:bicubic_interpolation}
 {Wikipedia contributors}.
@@ -63,6 +85,11 @@ Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
 \newblock Knowledge distillation --- {W}ikipedia{,} the free encyclopedia.
 \newblock \url{https://en.wikipedia.org/wiki/Knowledge_distillation}, 2024.
 \newblock [Online; accessed 20-April-2026].
+
+\bibitem{wiki:manifold_alignment}
+{Wikipedia contributors}.
+\newblock Manifold alignment --- {Wikipedia}{,} the free encyclopedia, 2024.
+\newblock [Online; accessed 22-April-2026].
 
 \bibitem{wiki:Vision-language_model}
 {Wikipedia contributors}.

@@ -2,10 +2,13 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Graphical example of phrase grounding}}{4}{figure.16}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces CLIP workflow}}{6}{figure.25}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Vision transformer architecture}}{10}{figure.39}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Masked autoencoder architecture}}{11}{figure.41}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Deep Boltzmann machine. Its units are divided into visible and hidden units, units which represent neurons with a binary output indicating whether they are activated or not.}}{2}{figure.14}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Perceiver architecture from the referenced paper}}{3}{figure.18}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Original Transformers architecture published in \textit {"Attention is all you need"}}}{8}{figure.29}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Graphical example of phrase grounding.}}{9}{figure.32}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Vision transformer architecture}}{12}{figure.42}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Masked autoencoder architecture}}{13}{figure.44}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces CLIP workflow}}{17}{figure.56}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

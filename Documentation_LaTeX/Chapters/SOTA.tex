@@ -1,0 +1,330 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Evolutions of Multimodal Learning}
+Multimodal learning is a type of \textit{deep learning} that processes multiple types of data referred as modalities \cite{multimodal_learning_wiki}. That data may belong to different domain such as text, audio, images or video. Multimodal learning was proposed at the beginning of the DL period, around year 2011, whilst have raised their popularity when they were mixed with large multimodal languages in the recent years. 
+
+\subsection{Multimodal deep Boltzmann machines}
+Boltzmann machines are known to be the multimodal data dealing algorithm ancestors. Invented in 1985 and named after the \textit{Boltzmann distribution}, these machines can be seen as stochastic neural networks. Multimodal deep Boltzmann machines can process and learn from different types of information simultaneously, having a separate machine for each modality.  
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{imgs/boltzmann.png}
+	\caption{Deep Boltzmann machine. Its units are divided into visible and hidden units, units which represent neurons with a binary output indicating whether they are activated or not.}
+	\label{fig:boltzmann_machine}
+\end{figure}
+
+However, learning is impractical using these machines because of the exponential computational time and not optimized architecture. Successor \textit{restricted Boltzmann machine} alternative was designed to deal with efficiency by just allowing connections between hidden units and visible units. Lowering the computational power and making training more efficient.
+
+\subsection{Multimodal Transformers}
+Transformers can also be adapter for modalities, usually finding a way to \textit{tokenize} the data domain. Even if multimodal transformers can be trained from scratch, a 2022 \textit{transfer learning} study showed that fine-tuned transformers originally pretrained with natural language data can show competitiveness in logical and visual tasks. 
+
+\subsubsection{The Perceiver}
+Perceivers, are a variant of the transformer architecture exclusively adapted for processing multimodal data. The Perceiver is designed as a general architecture that can learn simultaneously from large amounts of heterogeneous data, implementing \textit{asymmetric attention} mechanisms. Asymmetric attention consists of architectural modifications that break the "standard symmetry" to address specific domain constraints. This approach leads to outperforming specialized models on classification tasks. It iteratively alternates cross-attention and latent self-attention blocks to project a high-dimensional input byte array to a fixed-dimensional latent bottleneck before processing it using a deep stack of transformer-style self-attention blocks in the latent space \cite{jaegle2021perceivergeneralperceptioniterative}. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{imgs/Perceiver.png}
+	\caption{Perceiver architecture from the referenced paper}
+	\label{fig:perceiver_architecture}
+\end{figure}
+
+\subsubsection{Image generation Transformer models}
+\begin{itemize}
+	\item \textbf{DALL-E 1} (2021): When it comes to image generation models, \textit{DALL-E 1} is not a \textit{difussion model} (latent variable generative models). It uses a decoder-only transformer which autoregressively generates a text followed by the token representation of an image, which is ten converted by a variational autoencoder to an image. 
+	
+	\item \textbf{Parti} (2022): On the other hand, models like \textit{Parti} use an encoder-decoder schema. Where the encoder processes a text prompt and the decoder generates the token representation of an image.
+	
+	\item \textbf{Muse} (2023): uses an encoder-only architecture trained to predict the masked image tokens from unmasked image tokens. In training, all input tokens are masked, and the highest confidence predictions are revealed 
+		
+	\item \textbf{Phenaki} (2023): is a text-to-video-model which uses a bidirectional masked transformer conditioned on pre-computed text tokens. Then, the tokens are decoded to a video. 
+\end{itemize} 
+
+\subsection{Applications of Multimodal Learning}
+The integration of data from different domains has allowed a deeper understanding of models for different type of tasks requiring multimodality:
+
+\begin{itemize}
+	\item \textbf{Cross-modal retrieval}: is a subfield of information retrieval which enables users to search and retrieve information across different data modalities \cite{cross_modal_retrieval}. Differing from the traditional retrieval systems, cross-modal retrieval bridges different types of media to facilitate flexible information access. There are several combinations of retrieval depending on both the input and output data domain, e.g. \textit{audio-to-video, video-to-text, ...}
+	
+	\item \textbf{Content generation}: models such as \textit{DALL-E} generate images from textual descriptions. 
+	
+	\item \textbf{Classification and missing data retrieval}: multimodal \textit{Deep Boltzmann Machines} outperform traditional shallow machine learning algorithms like the \textit{support vector machines} in classification tasks and are able to predict missing instances in multimodal datasets. 
+	
+	\item \textbf{Robotics and human-computer interaction}: multimodal learning has improved the interaction in robotics and AI by integrating sensory inputs like speech, vision and touch, aiding autonomous systems and human-computer interaction.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+\section{Advancements of Vision Language Models}
+While the multimodal models mentioned before established the standard workflow for processing heterogeneous data, they often treated modalities independently to be combined or translated. The next step in the evolution are the \textit{Vision Language Models}, representing a shift towards a more reasoning approach rather than bare multimodal output goals. Instead of just generating an image from text or retrieving text from a video, VLMs think across all the domains simultaneously, implementing the reasoning capabilities from \textit{large language models} to interpret visual scenes. 
+
+VLMs are the result of the evolution to earlier image captioning systems, systems which were designed primarily to take isolated images and produce descriptions. However, this systems just received the image as input, not an image-text pair input as the vision language models do now \cite{wiki:Vision-language_model}.
+
+\subsection{Earliest models}
+The early image captioning systems from around year 2010 used the \textit{encoder-decoder} architecture, which will be described later on. These models would encode the patched images and vectorize them into feature vectors, which were then fed to the decoder part in order to generate the associated output description. When it comes to the strategies implemented by this earliest models include combination of handcrafted \textit{visual features} to encode the image patches and \textit{n-gram} templates to generate the description. 
+
+Those visual features can refer to any visual property like points, edges or even objects in the image. % explain a little bit more?
+
+On the other hand, n-grams are statistical language models that calculate the probability of the next word in a sequence from a fixed size window of previous words. Depending on the number of previous words considered, we can get bigram models if just one previous word is considered, if it's two is a trigram model, ... up to \textit{n} - 1 considered as \textit{n-gram} models and finally an unigram if no previous context is considered. 
+
+The general approximation for a sequence of words $w_1, \dots, w_m$ is:
+\[
+P(w_1, \dots, w_m) \approx \prod_{i=1}^{m} P(w_i \mid w_{i-(n-1)}, \dots, w_{i-1})
+\]
+
+\begin{itemize}
+	\item Unigram Model ($n=1$): No context, independent probabilities.
+	\[
+	P(w_1, \dots, w_m) \approx \prod_{i=1}^{m} P(w_i)
+	\]
+	
+	\item Bigram Model ($n=2$): Depends on the single previous word.
+	\[
+	P(w_1, \dots, w_m) \approx \prod_{i=1}^{m} P(w_i \mid w_{i-1})
+	\]
+	
+	\item Trigram Model ($n=3$): Depends on the two previous words.
+	\[
+	P(w_1, \dots, w_m) \approx \prod_{i=1}^{m} P(w_i \mid w_{i-2}, w_{i-1})
+	\]
+\end{itemize}
+
+\subsection{Deep learning based models}
+When the deep learning neural networks arose and became dominant near year 2015, newer models and strategies also emerged. Convolutional neural networks (CNNs) started to being used for image encoding and recurrent neural networks (RNNs) to generate the captions. 
+
+Despite their respective success in independent tasks, the combination of both models hit a plateau when dealing with VLM scenarios due to their infrastructure limitations. Convolutional neural networks work great when capturing local spatial patterns but they struggle with global long-term dependencies of the whole image without a large number of layers. On the other hand these \textit{seq2seq} models performed poorly with long-term dependencies due to their hard-coded sequentiality. Often leading to the model forgetting the processes carried in the first layers of the architecture. 
+
+% Explain CNNs and RNNs?
+
+\subsection{The Transformers architecture Standard}
+The transition from sequential models combined with convolutional neural networks to \textit{Transformers} solved the long-term dependency capturing issues and lack of global visual feature captioning. Still using these models, VLMs are able to attend to the whole input prompt simultaneously thanks to parallelization and attention mechanisms and also due to the specific vision transformer architectures. 
+
+% necessary to explain the transformers architecture?
+% Before going in detail of the components, I will go over the basic architecture most of the VLMs are based on: \textit{transformers}. Its functionality can be summarized in three stages:
+
+The functionality of the basic Transformers architecture can be wrapped into three main stages: 
+
+\begin{enumerate}
+	\item The encoders transform the input sequence into high-dimensional numerical representations called \textit{embeddings} which capture all the semantic and positional meaning of the tokens belonging to the input. In order to deal with those high-dimensional embeddings in the next steps of the architecture where the order of the input sentence words cannot be distinguished as the transformer processes all tokens in parallel, the \textit{positional encoding} was implemented. These encodings typically use sine and cosine functions of different frequencies to provide a unique signature for each position:
+	\[
+	PE_{(pos, 2i)} = \sin(pos / 10000^{2i/d_{model}})
+	\]
+	\[
+	PE_{(pos, 2i+1)} = \cos(pos / 10000^{2i/d_{model}})
+	\]
+	This ensures that the model captures the structural context (e.g., distinguishing between "dog bites man" and "man bites dog") before any attention is calculated.
+	
+	\item Then they use a mechanism called \textit{self-attention} which allows the encoder to focus on the most relevant tokens of the sequence independent of their position. This is where the magic of the transformers actually happens. The implementation of the attention mechanism replaced the use of previous \textit{seq2seq} models which relied on recurrence. The original paper also introduced the concept of \textit{scaled dot-product attention}: 
+	
+	$$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
+	
+	where respectively $Q, K, V$ are the query, key and value matrices, and $d_{k}$ the dimensionality value. This approach eliminates the need for RNNs, ensuring parallelizability for the architecture. In the self-attention mechanism, those matrices are dynamically generated for each input sequence, allowing the model to focus on the different parts of the input sequence at different timesteps. \textit{Multi-head attention} enhances the process by introducing several parallel attention heads simultaneously, enabling each head to learn different Q, K and V matrix linear projections and focusing on multiple aspects instead of a single one. MHA ensures that the input embeddings are updated from a more varied and diverse set of perspectives, and after the attention outputs are calculated, they are concatenated and passed through a linear layer transformation to generate the output. 
+	
+	\item Finally the decoders of the transformers take both the output of the self-attention mechanism and the encoder generated embeddings to generate the most statistically likely output sequence. In the case of VLMs, it can also use those attention-weighted embeddings to output the most loyal visual representation compression.
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{imgs/The-Transformer-model-architecture.png}
+	\caption{Original Transformers architecture published in \textit{"Attention is all you need"}}
+	\label{fig:transformer_architecture}
+\end{figure}
+
+\subsubsection{VLM tasks with Transformers} 
+The transformer architecture replaced the sequential recurrent neural networks in the role as decoders. In parallel, the network parameter training started relying on image-text pair datasets, and the scope of VLMs widened until reaching other tasks. 
+
+\begin{itemize}
+	\item \textbf{Phrase grounding}: Among those tasks, \textit{phrase grounding} could be mentioned. Task involving both natural language processing and computer vision where words or phrases within a sentence are associated to corresponding patches in an image \cite{timothy2024phrasegrounding}. Consists of identifying the spatial location within an image that aligns with the meaning of a given phrase, enabling models to map visual and textual data. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{imgs/phrase_grounding.jpg}
+		\caption{Graphical example of phrase grounding.}
+		\label{fig:phrase_grounding_example}
+	\end{figure}
+	
+	\item \textbf{Visual Question Answering} (VQA): Another task which still remains as perhaps the most relevant one is \textit{visual question answering}. Specific task where the model is provided with an image and a specific related question, and it must generate an accurate response to it based on the visual content. Being its core pillars the object detection duty for identifying the objects in the image, then scene understanding to map the relations between objects and then finally text comprehension for embedded text interpretation within an image \cite{gravio2025vlmvqa}. 
+	
+\end{itemize}
+
+However, modern VLMs do not follow the conventional 2017 paper \cite{vaswani2023attentionneed} workflow, they typically use different transformers configuration. Some models use only the encoder part of the architecture for both modalities, completely ignoring the traditional encoder component. While other recent models use the encoder for feature extraction and use an independent encoder for language modeling. Different approaches that will be explained in the following sections. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{From Encoders to Generative LLMs}
+\subsection{Language encoder} 
+In traditional multimodal systems, the language encoder functioned as a bidirectional processor, having the role of generating contextualized latent representation of the input where each token could attend to its surrounding tokens in both directions. However, in modern VLM architectures, the encoder has been linked to the LLM engine. Functioning as a preparation of the linguistic information to interact with the visual tokens within a shared vectorial space.  
+
+\subsection{The LLM transition: from encoders to decoder-only architectures}
+
+The most significant paradigm shift in VLM evolution is the transition from symmetric \textit{encoder-decoder} systems to \textit{decoder-only} architectures. This move toward "generative backbones" is driven by three fundamental technical advantages:
+
+\begin{itemize}
+	\item \textbf{Causal Attention vs. Bidirectional Attention}: Unlike encoders that allow tokens to see the entire sequence at once, decoders implement a \textit{causal mask}. This ensures that during training and inference, each token can only attend to itself and preceding tokens. This directional dependency is what enables autoregressive generation, the ability to reason and predict the next word in a conversation.The causal mask $M$ is typically a lower triangular matrix, where the attention score between position $i$ and $j$ is set to $-\infty$ if $j > i$:
+	\[ M_{ij} = \begin{cases} 0 & \text{if } i \geq j \\ -\infty & \text{if } i < j \end{cases} \]
+	After applying the \textit{softmax} activation function, these $-\infty$ values become zero probability, effectively blocking information flow from future tokens.
+	
+	\item \textbf{In-Context Learning and Reasoning}: By utilizing a decoder-only backbone, the VLM treats the input image as a visual prefix. The model does not just classify the image, rather it predicts the logical continuation of a sequence $[Image, Instruction, Response]$. This allows the model to influence \textit{Chain-of-Thought} (CoT) reasoning, where it can articulate its thought process before arriving at a final answer.
+	
+	\item \textbf{Scalability and Unified Training}: Decoder-only models are simpler to scale because they consolidate the entire reasoning process into a single set of weights. In a model like \textit{LLaVA}, the LLM receives a unified sequence of tokens: $\mathcal{S} = [v_1, \dots, v_n, t_1, \dots, t_m]$, where $v$ represents aligned visual pseudo-tokens and $t$ represents text tokens. The model treats these two modalities as a single language, significantly reducing the architectural bottleneck between "seeing" and "speaking."
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Vision Transformers}
+\subsection{Vision encoder \& Vision Transformers (ViT)} 
+Compared to earlier VLMs which used \textit{convolutional neural networks} (CNNs) for feature extraction such as the colors, shapes and textures from the input, modern ones employ an architecture called \textit{visual transformer} (ViT). 
+
+Visual transformers process images into smaller patches (rather than text tokens) and treats them as sequences, implementing also the self-attention mechanism across the patches to create a transformer-based representation of the input message.
+
+ViTs were designed as \textit{convolutional neural network} alternatives in computer vision applications, having different biases, training stability and data efficiency. Compared to CNNs, vision transformers are less efficient yet they have higher capacity. 
+
+The image available below \ref{fig:vit_architecture} references the original architecture published in the 2020 paper \cite{dosovitskiy2021imageworth16x16words}, being basically a \textit{BERT}-like encoder-only transformer. It also uses special token \texttt{<CLS>} in the input side to refer to the start of the sentence token, and the output vector is used as the input of the final MLP head. Transformers, including the ViTs, measure the relationship between pairs of input tokens with the attention mechanism. In the case of images, the basic unit of analysis is the pixel. Vision transformers compute relationships between small regions of pixels (patches) and they maintain the spatial order with the positional embeddings computation. Each section of the architecture is passed through a linear sequence and multiplied by the embedding matrix, being the result with the position embedding fed to the transformer. Let's overview its functionality:
+
+\begin{enumerate}
+	\item The input image is of type $\mathbb{R}^{H \times W \times C}$, where $H, W, C$ are height, width, and channel (RGB). It is then split into square-shaped patches of type $\mathbb{R}^{P \times P \times C}$. For each of the patches, the respective "patch embedding" is obtained by pushing the patch through a linear operator and transformed through the \textit{positional encoding} layer. Both embeddings are added and pushed to the various transformer encoder layers. 
+	
+	\item Inside those encoder layers, the attention mechanism incorporates more and more semantic relations to the image patch embeddings. 
+	
+	\item Depending on the end task desired, one could add different layers in the end steps. For instance, for a classification task like the one performed in the image, a shallow \textit{multi-layer perceptron} (MLP) layer is added on top to output the probability distribution over the classes. As fact, the original paper goes for a linear-GeLU linear softmax network for classification. 
+	
+\end{enumerate}
+
+% geroko
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{imgs/Vision_Transformer.png}
+	\caption{Vision transformer architecture}
+	\label{fig:vit_architecture}
+\end{figure}
+
+There are other ViT variants which have been published and reported having used different techniques to deal with image manipulation. The following are some of the architectural improvements:
+
+\begin{itemize}
+	\item \textbf{Global average pooling (GAP)}: unlike the original paper where the \texttt{[CLS]} token is used to represent the beginning of the sequence emulating BERT, this approach does not use it. It simply takes the average of all output tokens as the final classification token. In the original report, it was mentioned to be equally efficient to the original approach. 
+	
+	\item \textbf{Multi-head attention pooling (MAP)}: it applies a new \textit{multi-head attention} block to pooling. It takes the output of the ViT this being the list of vectors $x_1, x_2, \dots, x_n$, whereas its output is $\text{MultiheadedAttention}(Q, V, V)$. Where \textit{Q} is the trainable query vector and \textit{V} the matrix with the rows being the input vectors. More recent papers state that both GAP and MAP show a better performance than the basic BERT-like pooling. 
+	
+	\item \textbf{Masked Autoencoder}: this architecture involves two vision transformers put end-to-end. The first one takes the input image patches with positional encoding and output the vectors representing each patch (same encoder procedure seen until now). This is where the second component being the decoder (even if it still an encoder-only transformer) takes the first encoder's output with positional encoding too and outputs the image patches again. See the architecture in the image below \ref{fig:masked_autoencoder_architecture}.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.6\textwidth]{imgs/Masked_Autoencoder..png}
+		\caption{Masked autoencoder architecture}
+		\label{fig:masked_autoencoder_architecture}
+	\end{figure}
+	
+	During the training process, a percentage of the splitted patches is masked by special mask tokens, while leaving others untouched (the sweet spot has been said is around 75\% mask ratio). The whole network's task is to reconstruct the whole image with the missing "puzzle pieces" (being the masked patches). Masked patches are added back to the output of the encoder block as mask tokens and both are fed into the "decoder". A reconstruction loss is computed for the masked patches to assess network performance. In the prediction stage, the decoder is left over, the input image patches are processed and the resulting vector representation is fed to the encoder. 
+	
+	\item \textbf{DINO (self-DIstillation with NO labels)}: like the masked autoencoder procedure, DINO is a self-supervised way to train a vision transformer. Acting as a "teacher-student" method, the student being the model itself and the teacher, an exponential average of the student's past states, must be able to transfer its knowledge to the smaller model \cite{wiki:knowledge_distillation}. The loss function it uses is the \textit{cross-entropy loss} between the output of the teacher network and the output of the student version. The inputs of the networks are two different crops of the same image, represented as $T(x)$ and $T'(x)$, where $x$ is the original image. And as mentioned before, the network of the teacher represents the exponential decay average of the student's past parameters: 
+	
+	\begin{equation}
+		\theta_{t'} = \alpha \theta_t + \alpha(1 - \alpha) \theta_{t-1} + \dots
+	\end{equation}
+	
+	All put together, the loss function stands as followed:
+	\begin{equation}
+		\mathcal{L}(f_{\theta_{t'}}(T(x)), f_{\theta_{t}}(T'(x)))
+	\end{equation}
+	
+	
+\end{itemize}
+
+In order to finish the ViT research subsection, I would like to make a little comparison with their "ancestor" model, the \textit{convolutional neural networks} (CNNs).
+
+The fundamental distinction between Vision Transformers and the convolutional neural networks lies in their inductive biases. CNNs are built on the principles of locality and translation invariance, using sliding kernels that assume pixels close to each other are more related than those far apart. This bias allows CNNs to be highly efficient with smaller datasets and provides a natural robustness to local perturbations and noise. In contrast, ViTs discard these spatial assumptions. By treating an image as a sequence of patches and applying a global self-attention mechanism, a ViT can capture long-range dependencies between distant parts of an image from the very first layer. This flexibility allows ViTs to surpass CNN performance on massive datasets where the model can "learn" the spatial relationships from scratch, rather than having them hard-coded into the architecture.
+
+However, this architectural freedom comes with a significant trade-off in terms of optimization and data requirements. Because ViTs lack the "shortcuts" provided by the convolutional structure, they are notoriously sensitive to hyperparameter choices and the selection of optimizers, often requiring advanced strategie and specific learning rate schedules to achieve stability. While a CNN's computational complexity scales linearly with the number of pixels, the self-attention in ViTs is quadratically complex $O(N^2)$ relative to the number of patches $N$, making high-resolution processing more resource-intensive. Consequently, while CNNs remain the more time-efficient and stable choice for many standard applications, ViTs have become the preferred backbone for large-scale Vision-Language Models due to their superior ability to scale and their capacity for modeling the complex, global context required for multimodal understanding.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Multimodal Alignment: CLIP}
+\subsection{2021 - Release of CLIP}
+In the year 2021, OpenAI launched the approach that would totally revolution the evolution of vision language models, they released the method of \textit{contrastive language-image pretraining} also known as \textit{CLIP}. Technique for training an image-text pair into neural network models, having an exclusive neural network for image and text understanding purposes, adopting a contrastive objective. 
+
+When it comes to the algorithm itself, each neural network receives the input in the corresponding format and returns a single semantic/visual representative vector \cite{wiki:clip}. The objective to maximize by both models is the best alignment between both output vectors in the shared vector space, mapping the similar text-image pairs as close as possible while putting apart the most dissimilar ones. The training relies on a huge dataset with image-text pairs as and the two output vectors are considered similar depending on the \textit{dot product} value. 
+
+% dot prodcut formula
+\begin{equation}
+	s_{i,j} = \mathbf{v}_i \cdot \mathbf{w}_j = \sum_{k=1}^{d} v_{i,k} w_{j,k}
+\end{equation}
+where $\mathbf{v}_i$ and $\mathbf{w}_j$ represent the embedding vectors generated by the text and image encoders respectively, and $d$ denotes the dimensionality of the vector space. The loss function used is the multi-class N-pair loss, which is a symmetric \textit{cross-entropy loss} over the similarity scores. The function fosters the dot product between the matching image and text vectors to be as high as possible, while discouraging high dot products between mismatching pairs. 
+
+% loss function formula
+\begin{equation}
+	\mathcal{L} = -\frac{1}{N} \sum_{i} \ln \frac{e^{v_i \cdot w_i / \tau}}{\sum_{j} e^{v_i \cdot w_j / \tau}} - \frac{1}{N} \sum_{j} \ln \frac{e^{v_j \cdot w_j / \tau}}{\sum_{i} e^{v_i \cdot w_j / \tau}}
+\end{equation}
+being parameter \textit{T} the temperature parameter (\textit{T}>0) which is parametrized and learned during the training. Other loss functions are possible, such as the \textit{Sigmoid CLIP} function.
+
+Once gone over the algorithm's properties, let's dive deep into the architecture:
+
+\begin{itemize}
+	\item Image model: when it comes to the image encoder used in most of the CLIP versions, they all usually are some kind of \textit{vision transformers} (ViT). Vision transformers often vary on the patch size, being that size the \textit{n}x\textit{n} dimensions of the patch the image was divided into. Alternatively, \textit{convolutional neural networks} (CNNs) can be used as well (such as \textit{ResNet}), the essential thing is to ensure the sizes of the image and text model output vectors are the same size. 
+	
+	\item Text model: the text encoding models are usually \textit{transformers}. Even if it is heavily inspired by the transformers report published by OpenAI \cite{radford2021learningtransferablevisualmodels} and shares similarities with the \textit{GPT} architecture (decoder-only), the text model serves as a text encoder. Furthermore, its functionality is inspired by encoder only models such as \textit{BERT}, while sharing the dimensionality and number of parameters with decoder-only models as mentioned before. 
+\end{itemize}
+
+After going over the properties of both encoders that make the whole CLIP model, I will detail the model's workflow inspired on the image below \ref{fig:clip_architecture}. 
+
+\begin{enumerate}
+	\item The image of the image-text pair input is first splitted into smaller sized images named patches and then	fed into the vision encoder, which as mentioned earlier, can be any kind of architecture such as a vision transformer (ViT) or convolutional neural network (CNN). The output of the vision encoder will in fact be a vector representation of all the features that have been captured: shapes, texture, colors, objects, spatial relations, ... etc. 
+	
+	\item Now it's time the model turns those embeddings into real semantic representations, nevertheless, the model still does not know how to label concepts directly. So the model must know combine the embeddings obtained in the image model with the ones from the text model output, aligning them into a shared vector space establishing the real relations and links between the pairs. This bridging mechanism between the image and text pair (which will be described deeper in the corresponding section) is where the CLIP model's magic really shines. CLIP uses a contrastive alignment strategy in order to put correct pairs closer and dissimilar pairs further in the vector space.
+	
+	\item In the standard CLIP workflow, the model does not generate new text; instead, it performs \textit{zero-shot prediction} by calculating the similarity between the image embedding and a set of candidate text embeddings. It identifies which text snippet has the highest dot product with the image, effectively "selecting" the best label.
+	
+	\item In more advanced generative extensions, these aligned visual features are passed to an LLM. The LLM treats the image embeddings as part of its input sequence, allowing it to generate complex descriptions or provide answers to specific questions in a task known as \textit{Visual Question Answering} (VQA).
+\end{enumerate}
+
+% image of the CLIP architecture[H], dataset, preprocessing and other things later on.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{imgs/CLIP.png}
+	\caption{CLIP workflow}
+	\label{fig:clip_architecture}
+\end{figure}
+
+The reason why these models work so well is because of the millions of image-text pair instances used for training and due to the model's ability to learn and deal with statistical spatial correlations that are shown both in the images and texts.
+
+The dataset the model was trained on is a \textit{WebImageText} (WIT) containing more than 400 million pair instances scraped from the internet, almost half a million text queries and more than 20,000 image-text pairs as query. All of those queries were generated by the most frequent words of the english Wikipedia and then extended using bigrams. The dataset remains private and has never been released. 
+
+Last but not least, images are preprocessed by dividing them into the RGB (reed, green and blue) channels and normalizing the values so they fall between range 0 to 1. Finally those values are merged with the mean and standard deviation of the images from the training dataset. In case the input image does not have the desired resolution (224x224 usually) the image is scaled by \textit{bicubic interpolation} \cite{wiki:bicubic_interpolation} to the shorter sides is the same as the native resolution, and then the central square of the image is cropped out.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\section{Modality Bridging and Pseudo-Tokens}
+\subsection{Modality bridging mechanism}
+The bridge briefly mentioned in previous sections, serves as the "mathematical handshake" between the visual and linguistic domains. Because the vision encoder and the LLM are often trained independently, their output dimensions and feature spaces rarely match. It's in those scenarios where the \textit{dimensionality alignment} technique is applied. For example, an encoder such as ViT-L/14 may produce embeddings in a 1024-dimensional space (1024 embedding size), whereas a Llama-based LLM requires 4096-dimensional inputs.
+
+To deal with different size embeddings, several algorithms have been developed, being the \textit{Manifold alignment} \cite{wiki:manifold_alignment} one of them. This algorithm assumes that both the image and textual data sets exist in different high-dimensional spaces, still they share an underlying common semantic structure, also called \textit{manifold}. The bridge's true purpose is to find a mapping that preserves the local geometric relationships of the two disparate sets. By minimizing the distance between related points while preserving the intrinsic structure of each domain. A great result would indicate the ability of the model to surpass the modality gap and project the same token close to each other across all modality spaces. 
+
+Once the different embeddings are aligned, tokens are referred as \textit{pseudo-tokens} or \textit{visual tokens}. There is an interesting paper where this kind of tokens are analyzed more in depth, I am talking about the \textit{A Sentence is Worth 128 Pseudo Tokens: A Semantic-Aware Contrastive Learning Framework for Sentence Embeddings
+} paper \cite{tan2022sentenceworth128pseudo}. The study argues that a single sentence embedding is still not enough to capture visual complex meaning, it states that is necessary to use a fixed number of these new generated pseudo-tokens to actually represent a concept or image. In the context of VLMs, pseudo-tokens ensure that the LLM is able to look for different parts of the visual manifold as if they were a structure sequence of words, making easier to align between high-dimensional visual and semantic features. 
+
+When it comes to practical cases, this alignment is implemented through varying levels of architectural complexity. The simplest and most common approach, seen in models like LLaVA, utilizes a \textit{linear projection} or a shallow \textit{multi-layer perceptron} (MLP) to perform the manifold mapping. On the other hand, more advanced architectures like Flamingo or BLIP-2 use bottleneck structures such as the \textit{perceiver resampler} or the \textit{q-former}. These use a set of learned queries to attend to the encoder's output, effectively summarizing the visual space into a fixed, manageable number of pseudo-tokens. This prevents the LLM from being overwhelmed by the high-resolution raw output of the vision encoder, especially when dealing with high-resolution images or video sequences.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Training Strategies in VLMs}
+Vision language models are trained not only in a single step process, but in a multi-stage training workflow, starting from the alignment of two disparate data modalities going to refining the model's ability to deal with natural instructions. The strategies can be categorized into three paradigms:
+
+\begin{enumerate}
+	\item \textbf{Contrastive pre-training}: the core of contrastive methods is the idea  of learning how to contrast between pairs of similar and dissimilar data points \cite{rethmeier2021primercontrastivepretraininglanguage}. A pair of similar data points is called positive sample if both points are different representations of the same data instance, in our case multimodal representations of the same instance. Whereas the negative samples are those pairs in which the data points belong to different examples. While computer vision methods learn from input-input (image-image) pairs and natural language processing methods deal with input-output (text, label) pairs, vision language models receive input-input (text, image) pairs. Previously mentioned models such as \textit{CLIP} \cite{radford2021learningtransferablevisualmodels}, apply this learning approach to maximize the \textit{cosine similarity} distance metric between matching image-text pairs in a shared embedding space, aiming to maximize the metric for the positive samples while minimizing the negative ones. The loss function used is the \textit{cross-entropy} function.
+	
+	\item \textbf{Generative pre-training}: while contrastive learning focuses on aligning data points from different modalities in a shared single embedding space, generative pre-training shapes that task as a sequence-to-sequence problem. Using thie \textit{Prefix Language Modeling} (PrefixLM) approach \cite{wang2022simvlmsimplevisuallanguage}, the model receives a prefix consisting of a pair of image patches and a text sequence. The goal of the model is to predict the continuation of that textual sequence, just like \textit{seq2seq} models like \textit{RNNs} and \textit{LSTMs} try to predict. The loss function used is the negative log-likelihood loss, identical to the ones used in large language models like \textit{GPT}:
+	% loss function formula
+	$$\mathcal{L}_{PrefixLM} = -\sum_{t=1}^{|y|} \log P(y_t \mid y_{<t}, x_{prefix})$$
+	where $x_{prefix}$ represents the combined image and text prefix and $y_{t}$ is the text token at time $t$. 
+	
+	\item \textbf{Visual instruction tuning}: this strategy involves fine tuning the model with smaller datasets of higher quality, usually being (instruction-following) pairs where humans ask questions and the model replies. Supervised fine-tuning and parameter-efficient fine tuning methods are the most used ones, where only a small subset of the parameters is updated to avoid the LLM to forget its original knowledge. 
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{RL and MARL Robotics}
+
+%PPO y SAC: Menciona que son los estándares para control continuo en robótica.Multi-Agent Coordination: Habla de arquitecturas como MAPPO (Multi-Agent PPO) o QMIX, que son las que se usan para que los agentes cooperen en entornos como Isaac Sim. Sim-to-Real: Una mención breve a cómo Isaac Sim ayuda a que lo aprendido en simulación pase al mundo real.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Current SOTA VLMs}
+% LLaVA (v1.5/v1.6): El referente "open-source" que usa una proyección lineal simple (MLP) entre el Vision Tower y el LLM. CogVLM: Menciona su arquitectura de "Visual Expert", donde añaden capas específicas para procesar imagen dentro del propio LLM, no solo como un prefijo. GPT-4o / Gemini 1.5 Pro: Como referentes de modelos propietarios con capacidades nativas multimodales.
