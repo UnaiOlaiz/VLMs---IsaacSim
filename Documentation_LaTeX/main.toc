@@ -32,35 +32,39 @@
 \contentsline {subsection}{\numberline {2.7.1}Contrastive Pre-Training}{19}{subsection.61}%
 \contentsline {subsection}{\numberline {2.7.2}Generative Pre-Training}{19}{subsection.62}%
 \contentsline {subsection}{\numberline {2.7.3}Visual Instruction Tuning}{20}{subsection.63}%
-\contentsline {section}{\numberline {2.8}RL and MARL in Robotics}{20}{section.64}%
-\contentsline {subsection}{\numberline {2.8.1}Reinforcement Learning in robotic environments}{20}{subsection.67}%
-\contentsline {subsection}{\numberline {2.8.2}Multi Agent Reinforcement Learning}{21}{subsection.68}%
-\contentsline {section}{\numberline {2.9}Current SOTA VLMs}{21}{section.69}%
-\contentsline {chapter}{\numberline {3}Solution approach}{22}{chapter.70}%
-\contentsline {section}{\numberline {3.1}Solution proposal}{22}{section.71}%
-\contentsline {section}{\numberline {3.2}System architecture}{22}{section.72}%
-\contentsline {section}{\numberline {3.3}Tools used}{22}{section.73}%
-\contentsline {section}{\numberline {3.4}Workflow}{22}{section.74}%
-\contentsline {chapter}{\numberline {4}Solution development}{23}{chapter.75}%
-\contentsline {section}{\numberline {4.1}IsaacSim environment definition}{23}{section.76}%
-\contentsline {subsection}{\numberline {4.1.1}Agents}{23}{subsection.77}%
-\contentsline {subsection}{\numberline {4.1.2}Cameras}{23}{subsection.78}%
-\contentsline {subsection}{\numberline {4.1.3}Physics}{23}{subsection.79}%
-\contentsline {section}{\numberline {4.2}Individual component operation}{23}{section.80}%
-\contentsline {chapter}{\numberline {5}Experimentation and evolution}{24}{chapter.81}%
-\contentsline {section}{\numberline {5.1}First scenarios}{24}{section.82}%
-\contentsline {section}{\numberline {5.2}Last scenario}{24}{section.83}%
-\contentsline {section}{\numberline {5.3}Successful and failure tries}{24}{section.84}%
-\contentsline {section}{\numberline {5.4}Results obtained in each scenario}{24}{section.85}%
-\contentsline {section}{\numberline {5.5}Result discussion}{24}{section.86}%
-\contentsline {chapter}{\numberline {6}Conclusions}{25}{chapter.87}%
-\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{25}{section.88}%
-\contentsline {section}{\numberline {6.2}Limitations found}{25}{section.89}%
-\contentsline {section}{\numberline {6.3}Future work}{26}{section.90}%
-\contentsline {chapter}{\numberline {7}Appendix}{29}{chapter.92}%
-\contentsline {section}{\numberline {7.1}Instalation guide}{29}{section.93}%
-\contentsline {section}{\numberline {7.2}Relevant code}{29}{section.94}%
-\contentsline {section}{\numberline {7.3}Prompts used}{29}{section.95}%
-\contentsline {section}{\numberline {7.4}Result table}{29}{section.96}%
-\contentsline {section}{\numberline {7.5}Tensorboard analysis}{29}{section.97}%
+\contentsline {section}{\numberline {2.8}RL and MARL in Robotics}{20}{section.66}%
+\contentsline {subsection}{\numberline {2.8.1}Reinforcement Learning in robotic environments}{21}{subsection.69}%
+\contentsline {subsection}{\numberline {2.8.2}Multi Agent Reinforcement Learning}{21}{subsection.70}%
+\contentsline {section}{\numberline {2.9}Current SOTA VLMs}{21}{section.71}%
+\contentsline {subsection}{\numberline {2.9.1}State of the Art Models}{22}{subsection.72}%
+\contentsline {subsection}{\numberline {2.9.2}Benchmarks}{24}{subsection.80}%
+\contentsline {subsubsection}{\numberline {2.9.2.1}Benchmark Data Collection}{24}{subsubsection.83}%
+\contentsline {subsubsection}{\numberline {2.9.2.2}Evaluation Metrics}{25}{subsubsection.87}%
+\contentsline {chapter}{\numberline {3}Solution approach}{28}{chapter.90}%
+\contentsline {section}{\numberline {3.1}Solution proposal}{28}{section.91}%
+\contentsline {section}{\numberline {3.2}System architecture}{28}{section.92}%
+\contentsline {section}{\numberline {3.3}Tools used}{28}{section.93}%
+\contentsline {section}{\numberline {3.4}Workflow}{28}{section.94}%
+\contentsline {chapter}{\numberline {4}Solution development}{29}{chapter.95}%
+\contentsline {section}{\numberline {4.1}IsaacSim environment definition}{29}{section.96}%
+\contentsline {subsection}{\numberline {4.1.1}Agents}{29}{subsection.97}%
+\contentsline {subsection}{\numberline {4.1.2}Cameras}{29}{subsection.98}%
+\contentsline {subsection}{\numberline {4.1.3}Physics}{29}{subsection.99}%
+\contentsline {section}{\numberline {4.2}Individual component operation}{29}{section.100}%
+\contentsline {chapter}{\numberline {5}Experimentation and validation}{30}{chapter.101}%
+\contentsline {section}{\numberline {5.1}First scenarios}{30}{section.102}%
+\contentsline {section}{\numberline {5.2}Last scenario}{30}{section.103}%
+\contentsline {section}{\numberline {5.3}Successful and failure tries}{30}{section.104}%
+\contentsline {section}{\numberline {5.4}Results obtained in each scenario}{30}{section.105}%
+\contentsline {section}{\numberline {5.5}Result discussion}{30}{section.106}%
+\contentsline {chapter}{\numberline {6}Conclusions}{31}{chapter.107}%
+\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{31}{section.108}%
+\contentsline {section}{\numberline {6.2}Limitations found}{31}{section.109}%
+\contentsline {section}{\numberline {6.3}Future work}{32}{section.110}%
+\contentsline {chapter}{\numberline {7}Appendix}{35}{chapter.112}%
+\contentsline {section}{\numberline {7.1}Instalation guide}{35}{section.113}%
+\contentsline {section}{\numberline {7.2}Relevant code}{35}{section.114}%
+\contentsline {section}{\numberline {7.3}Prompts used}{35}{section.115}%
+\contentsline {section}{\numberline {7.4}Result table}{35}{section.116}%
+\contentsline {section}{\numberline {7.5}Tensorboard analysis}{35}{section.117}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

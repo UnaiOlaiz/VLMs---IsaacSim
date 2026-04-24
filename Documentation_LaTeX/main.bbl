@@ -12,6 +12,14 @@ Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
 \newblock An image is worth 16x16 words: Transformers for image recognition at
   scale, 2021.
 
+\bibitem{llava_medium_2023}
+EleventhHourEnthusiast.
+\newblock Llava and llava-1.5: Visual instruction tuning.
+\newblock
+  \url{https://medium.com/@EleventhHourEnthusiast/llava-and-llava-1-5-1cf8be377245},
+  2023.
+\newblock Accessed: 2026-04-24.
+
 \bibitem{gravio2025vlmvqa}
 {Gravio Team}.
 \newblock Vision-language models ({VLM}) vs visual question answering ({VQA})
@@ -21,10 +29,20 @@ Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
   Mar 2025.
 \newblock Gravio Blog, Accessed: [Insert Date Here].
 
+\bibitem{hessel2022clipscorereferencefreeevaluationmetric}
+Jack Hessel, Ari Holtzman, Maxwell Forbes, Ronan~Le Bras, and Yejin Choi.
+\newblock Clipscore: A reference-free evaluation metric for image captioning,
+  2022.
+
 \bibitem{jaegle2021perceivergeneralperceptioniterative}
 Andrew Jaegle, Felix Gimeno, Andrew Brock, Andrew Zisserman, Oriol Vinyals, and
   Joao Carreira.
 \newblock Perceiver: General perception with iterative attention, 2021.
+
+\bibitem{li2025surveystateartlarge}
+Zongxia Li, Xiyang Wu, Hongyang Du, Fuxiao Liu, Huy Nghiem, and Guangyao Shi.
+\newblock A survey of state of the art large vision language models: Alignment,
+  benchmark, evaluations and challenges, 2025.
 
 \bibitem{radford2021learningtransferablevisualmodels}
 Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
@@ -100,5 +118,13 @@ Zirui Wang, Jiahui Yu, Adams~Wei Yu, Zihang Dai, Yulia Tsvetkov, and Yuan Cao.
 \bibitem{wiki:Vision-language_model}
 {Wikipedia contributors}.
 \newblock Vision-language model --- {W}ikipedia{,} the free encyclopedia, 2026.
+
+\bibitem{yue2024mmmumassivemultidisciplinemultimodal}
+Xiang Yue, Yuansheng Ni, Kai Zhang, Tianyu Zheng, Ruoqi Liu, Ge~Zhang, Samuel
+  Stevens, Dongfu Jiang, Weiming Ren, Yuxuan Sun, Cong Wei, Botao Yu, Ruibin
+  Yuan, Renliang Sun, Ming Yin, Boyuan Zheng, Zhenzhu Yang, Yibo Liu, Wenhao
+  Huang, Huan Sun, Yu~Su, and Wenhu Chen.
+\newblock Mmmu: A massive multi-discipline multimodal understanding and
+  reasoning benchmark for expert agi, 2024.
 
 \end{thebibliography}

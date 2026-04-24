@@ -28,7 +28,7 @@
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 % Metadata for the document
-\title{Integration of Vision Language Models (VLMs) in a Multi-Agent Reinforcement Learning (MARL) environment for cooperative robotic tasks in NVIDIA Isaac Sim}
+\title{Integration of Vision Language Models (VLMs) in a Multi-Agent environment for cooperative robotic tasks in NVIDIA Isaac Sim}
 \authors{Unai Olaizola}{} 
 \degree{Data Science and Artificial Intelligence}
 \supervisor{Iñaki Vázquez Gómez}
@@ -48,13 +48,13 @@
 	
 	% Custom abstract + key words loading
 	\customAbstract{
-		This project proposes the development and implementation of a Multi-Agent Reinforcement Learning (MARL) system integrated with Vision Language Models (VLMs) for the execution of cooperative robotic tasks within a simulated NVIDIA Isaac Sim environment. 
+		This project proposes the development and implementation of a Multi-Agent system integrated with Vision Language Models (VLMs) for the execution of cooperative robotic tasks within a simulated NVIDIA Isaac Sim environment. 
 		
-		One of the major challenges lies in translating commands from a natural language format into precise robotic actions. To address this, the reasoning capabilities of the VLMs have been exploited for complex instruction interpretation and decision-making. A controlled environment where robotic agents must cooperate to manipulate and respond to objects in order to achieve a shared goal has been designed and shaped for Reinforcement Learning training using NVIDIA's Isaac Lab framework. The integration of these models has enhanced generalization and promote a more cooperative behavior of the agents against variations in the scene. The learning efficiency has been evaluated in addition to metrics such as the stability of the policies and the transferable capacity of the model(s). Additionally, the project includes an in-depth analysis of state-of-the-art (SOTA) models, providing a comprehensive review of the current methodologies and core concepts that form the theoretical foundation of the proposed architecture, presented in the documentation. 
+		One of the major challenges lies in translating commands from a natural language format into precise robotic actions. To address this, the reasoning capabilities of the VLMs have been exploited for complex instruction interpretation and decision-making. A controlled environment where robotic agents must cooperate to manipulate and respond to objects in order to achieve a shared goal has been designed using NVIDIA's Isaac Sim framework. The integration of vision language models has enhanced generalization and promoted a more cooperative behavior of the agents against variations in the scene. The performance and learning efficiency has been evaluated in addition to metrics such as the transferable capacities of the models. Additionally, the project includes an in-depth analysis of state-of-the-art (SOTA) models, providing a comprehensive review of the current methodologies and core concepts that form the theoretical foundation of the proposed architecture, presented in the documentation. 
 		
 		The expected outcome is a demonstration and reflection of the empowerment of multi-modal models within robotic environments, which can be applied to real-world problems.
 	}{
-		Vision language models, multi-agent reinforcement learning system, computer vision
+		Vision language models, multi-agent system, computer vision
 	}
 	
 	\tableofcontents % ordinary index
@@ -80,7 +80,7 @@
 	\chapter{Solution development}
 	\input{Chapters/Solution_development_and_implementation}
 	
-	\chapter{Experimentation and evolution}
+	\chapter{Experimentation and validation}
 	\input{Chapters/Experimentation_and_evolution.tex}
 	
 	\chapter{Conclusions}

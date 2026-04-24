@@ -328,6 +328,14 @@ where $x_{prefix}$ represents the combined image and text prefix and $y_{t}$ is 
 \subsection{Visual Instruction Tuning}: 
 This strategy involves fine tuning the model with smaller datasets of higher quality, usually being (instruction-following) pairs where humans ask questions and the model replies. Supervised fine-tuning and parameter-efficient fine tuning methods are the most used ones, where only a small subset of the parameters is updated to avoid the LLM to forget its original knowledge. 
 
+% argazkia azaldu scratch vs llm_backbones
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{imgs/train_scratch_vs_llm_backbone.png}
+	\caption{VLM trained from scratch vs training strategy using a pre-trained LLM as backbone}
+	\label{fig:scratch_vs_llm_backbone}
+\end{figure}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{RL and MARL in Robotics}
@@ -360,4 +368,112 @@ world in simulation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Current SOTA VLMs}
-% LLaVA (v1.5/v1.6): El referente "open-source" que usa una proyección lineal simple (MLP) entre el Vision Tower y el LLM. CogVLM: Menciona su arquitectura de "Visual Expert", donde añaden capas específicas para procesar imagen dentro del propio LLM, no solo como un prefijo. GPT-4o / Gemini 1.5 Pro: Como referentes de modelos propietarios con capacidades nativas multimodales.
+The current vision language models are not judged exclusively by their ability to align image-text pairs, but by their system level efficiency, long context reasoning and architecture. This section will analyze the leading \textit{SOTA} models of the last years, models which represent the various approaches to the modality gap. Furthermore, these models have started to be implemented in chatbots to support multimodality user interaction. 
+
+\subsection{State of the Art Models}
+
+Following the same structure redacted in paper \textit{A Survey of State of the Art Large Vision Language Models: Alignment, Benchmark, Evaluations and Challenges} \cite{li2025surveystateartlarge}, some of the key models will be listed in a table form, alongside the metrics used to compare the models used in the paper.  
+
+% table for vlm sota models comparison
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabular}{|>{\centering\arraybackslash}p{2.1cm}|c|>{\centering\arraybackslash}p{2.1cm}|>{\centering\arraybackslash}p{2.1cm}|c|>{\centering\arraybackslash}p{2.4cm}|>{\centering\arraybackslash}p{1.9cm}|}
+		\hline
+		\textbf{Model} & \textbf{Year} & \textbf{Architecture} & \textbf{Training Data} & \textbf{Params} & \textbf{Vision Encoder} & \textbf{Backbone} \\ \hline
+		LLaVA-1.5 & 2023 & Decoder-only & COCO & 13B & ViT-L/14 & Vicuna \\ \hline
+		CogVLM & 2023 & Encoder-decoder & LAION-2B, COYO-700M & 18B & CLIP ViT-L/14 & Vicuna \\ \hline
+		Qwen2-VL & 2024 & Decoder-only & Undisclosed & 7B-14B & EVA-CLIP ViT-L & Qwen-2 \\ \hline
+		Gemini & 2023 & Decoder-only & Undisclosed & Undisclosed & Undisclosed & Undisclosed \\ \hline
+		GPT-4V & 2023 & Decoder-only & Undisclosed & Undisclosed & Undisclosed & Undisclosed \\ \hline
+	\end{tabular}
+	\caption{Architectural comparison of representative SOTA Vision-Language Models extracted from referenced paper, including some of the key models.}
+	\label{tab:vlm_comparison_main}
+\end{table}
+
+These are the models I have wanted to highlight, let's dive a little bit deeper into their interesting features:
+
+\begin{enumerate}
+	\item \textbf{LLaVa-1.5}: building upon the success of LLaVA, authors introduced the 1.5 version which incorporated several architectural and scaling techniques that enhance the performance. Compared to its predecessor, incorporated a broader and more diverse dataset and introduced more than 158k multimodal instruction-following pair examples for fine-tuning. Furthermore, it scaled images up to 336x336 pixel resolutions, enabling it to handle detailed visual content and capture finer aspects of images \cite{llava_medium_2023}. It stands as a baseline for open-source VLMs by utilizing a simple linear projection layer as the bridging layer. 
+	
+	\item \textbf{CogVLM}: introduced the \textit{Visual experts} architecture, able to reason complex spacial scenarios. Specially for robotic environments, it handles task of identifying relative position superb due to the layers in its transformers architecture destined for image processing. 
+	
+	\item \textbf{Qwen2-VL}: latest version of the Qwen family, stands as one if not the most powerful open-source vision language models out there. Apart from supporting multilingualism, stands out understanding long duration videos and images of different resolutions, it has been the model I have been experimenting with in the practical area of the work, due to its versatility and lightweight sub variants which preserve the overall performance. 
+	
+	\item \textbf{Gemini}: developed by Google, this model's defining feature is its massive context window, reaching up to 2 million tokens. This long-context capability enables the model to perform sophisticated temporal reasoning, identifying long-term patterns in agent behavior that models with smaller memory buffers would overlook. However, it's close source policy restricts the insight to its deep infrastructure. 
+	
+	\item \textbf{GPT-4V}: its strength lies in its world-grounding and common-sense reasoning, capable of interpreting high-level human instructions and translating them into logical sub-tasks. While its architecture remains undisclosed as the model mentioned beforehand, it serves as the primary benchmark for zero-shot performance in robotic task planning and complex scene description.
+\end{enumerate}
+
+Looking at the models collected at table \ref{tab:vlm_comparison_main}, there are some properties that show the evolution and shift from some tendencies to others. Among those trends, there are some that could be highlighted:
+
+\begin{itemize}
+	\item \textbf{Connection paradigm shift}: there is a clear transition from alignment using \textit{multi-layer perceptrons} (MLPs) to a deeper integration. In earlier models like \textit{LLaVA-1.5}, the input images were treated as a set of tokens, whereas models like \textit{CogVLM} introduce approaches such as the 	\textit{Visual Experts} architecture. This architecture involves specialized visual encoders such as CLIP that provide distinct perception capabilities, enhancing the model's overall multimodal understanding. 
+	
+	\item \textbf{Closed and open source gap}: proprietary code models like \textit{GPT-4V} and \textit{Gemini} lead the multimodal reasoning leader boards, however, their black box nature limits their reproducibility and fine-tuning. Even if we know they follow a decoder-only architecture, there is no available information of the training data, number of parameters and their infrastructure. On the other hand, open source models offer a valuable insight of their properties such as the training data and number of parameters with total transparency. 
+	
+	\item \textbf{Efficiency and scalability}: the most recent tendencies lead to \textit{Mixture of Experts} (MoE) architectures. This technique allows to activate a portion of the total parameters during inference, achieving SOTA reasoning benchmarks while minimizing the computational cost. 
+\end{itemize}
+
+\subsection{Benchmarks}
+The amount of VLM benchmarks has grown rapidly since 2022, moving from basic visual question answering to include a wider range of tests that better evaluate the model's multimodal capacities from more aspects.
+
+% benchmark category-description table
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabular}{|>{\centering\arraybackslash}p{4.5cm}|>{\centering\arraybackslash}p{8.5cm}|}
+		\hline
+		\textbf{Category} & \textbf{Description} \\ \hline
+		Visual text understanding & Model's ability o extract and understand texts within visual components. \\ \hline
+		Visual math reasoning & Tests the model's skills to sole math problems in image forms \\ \hline
+		Text-to-Image generation & Evaluates the image generation ability of the model \\ \hline 
+		Hallucination & Evaluates the likelihood of models hallucinating on certain visual and textual inputs \\ \hline 
+		Video understanding & Evaluates the VLM's ability to understand videos or sequence of images. \\ \hline 
+		Visual reasoning, understanding, recognition and question answering & Evaluates the model's ability to recognize objects, answer questions and reason through both visual ant textual information \\ \hline
+	\end{tabular}
+	\caption{Categorization of standard benchmarks used to evaluate SOTA VLMs.}
+	\label{tab:benchmarks}
+\end{table}
+
+Those are some of the 95 benchmarks covered in 13 categories for VLM evaluation collected in the mentioned study. Nevertheless, most of those VLM testing categories are still pretty far from the practical evaluation in the real world applications, such as scene understanding and autonomous driving. 
+
+\subsubsection{Benchmark Data Collection} 
+Those benchmarks are collected from a ton of datasets, the datasets used for vision language model benchmark evaluations are typically created using one of three data collection pipelines:
+
+\begin{enumerate}
+	\item \textbf{Fully human-annotated datasets}: are created thanks to having humans collecting or generating adversarial test questions sourced from diverse subjects and fields. For some studies such as \textit{Massive Multi-discipline Multimodal Understanding} (MMMU) \cite{yue2024mmmumassivemultidisciplinemultimodal}, more than 50 college students belonging to different disciplines were gathered to extract questions from textbooks and reading material. The issue with this method of data extraction is the scalability and time consume problem. 
+	
+	\item \textbf{Partially human-annotated datasets scaled up with synthetic data generation and partially validated by humans}: Synthetic data usage has become handy to quickly scale up the dataset sizes. Workflows often consist on using human written examples to be fed to a LLM to generate more adversarial question and answer examples. In the case of VLMs, image and video data are
+	often paired with captions, which are used by authors as context to prompt LLMs to extract answers and generate questions. However, LLMs are not always accurate and may produce unfaithful content or hallucinations without human supervision. To tackle this low-fidelity issues automatic filtering pipelines were developed and crowd worker validation was used. 
+	
+	\item \textbf{Interaction in the Simulator}: mainly targeted at VLM benchmarks in robotics, it gathers data for training and evaluation by assessing the VLM-powered agents online. Such a data generation method is applicable for the scenarios in which human-labeled datasets or synthetic ones are not feasible to acquire, and the data follows some common rules like physical laws. The outputs tend to the most robust, nevertheless, the potential \textit{sim2real} gap might exist when transplanting the terminal VLM into real world-applications. 
+\end{enumerate}
+
+\subsubsection{Evaluation Metrics}
+After collecting the data for benchmark evaluation, it's benchmark evaluation time. VLM benchmark evaluation metrics tend to be automatic to support repeated use at scale, and often influence the question formats used in the benchmark. The following are the most relevant metrics used for vision language benchmark evaluation. 
+
+\begin{itemize}
+	\item \textbf{Answer matching}: widely used for both open and close-ended question types. In order to evaluate the "perfect match" in practice, articles and unnecessary spaces are removed from both sentences and check if the normalized predicted answer is contained in the normalized "gold answer". Natural language evaluation metrics such as \textit{ROUGE, $F_{1}$} and \textit{BLEU} started being used, still their performance decayed when the generative LLMs started producing larger and more complex correct answers.
+	
+	\item \textbf{Multiple choice}: this metric involves selecting an answer from a set of possible correct options, options where often distractive answers are injected to confuse the model and enhance its reasoning capability towards these little tricks. Nevertheless, the evolution of the large language models have led to not necessarily needing to have the set of possible options in order to get the correct answer. 
+	
+	\item \textbf{Image/Text similarity score}: score to evaluate the alignment across the generated image and their corresponding textual description, commonly used in the image generation benchmark. Using \textit{CLIPScore} \cite{hessel2022clipscorereferencefreeevaluationmetric} for image-text alignment evaluation or \textit{ROUGE} for caption matching. I want to stop on CLIPScore, being a cross-modal retrieval model trained on (image-text) pairs for evaluation purposes, the evaluation formula it uses is the following one: 
+	$$CLIP-S(\mathbf{c}, \mathbf{v}) = w \cdot \max(\cos(\mathbf{v}, \mathbf{c}), 0)$$
+	where $\mathbf{c}$ and $\mathbf{v}$ are the text and image embeddings straight out from their respective encoders. Then the cosine similarity is applied to measure the distance between the two vectors and passed through an activation function to discard the negative similarity pairs and substitute them by value 0. Lastly, $w$ is a scaling factor.
+	
+	There is even a more advanced formula if dealing with references named \textit{RefCLIPScore}. After passing the embedding of each reference through CLIP, the result is a set of reference embeddings $R$. Then, the score is computed by taking the \textit{harmonic mean} of \textit{CLIPScore} and taking the maximal reference cosine-similarity.
+	
+	$$RefCLIP\text{-}S(\mathbf{c}, \mathbf{R}, \mathbf{v}) = \text{H-Mean}\left(CLIP\text{-}S(\mathbf{c}, \mathbf{v}), \max_{r \in R} (\max(\cos(c\mathbf{c}, \mathbf{r}), 0))\right)$$
+	
+	Being the harmonic mean formula a kind of average used for ratios and rates: 
+	$$H\text{-}Mean(x_1, x_2, \dots, x_n) = \frac{n}{\sum_{i=1}^{n} \frac{1}{x_i}} = n \left( \sum_{i=1}^{n} x_i^{-1} \right)^{-1}$$
+\end{itemize}
+
+% figure of benchmark metrics
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{imgs/benchmark_metrics.png}
+	\caption{Most common benchmark evaluation metrics illustrated visually; showing \textit{answer matching, multiple choice} and \textit{image-caption similarity} graphical examples.}
+	\label{fig:benchmark_metrics}
+\end{figure}

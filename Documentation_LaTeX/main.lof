@@ -9,7 +9,9 @@
 \contentsline {figure}{\numberline {2.5}{\ignorespaces Vision transformer architecture}}{12}{figure.42}%
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Masked autoencoder architecture}}{13}{figure.44}%
 \contentsline {figure}{\numberline {2.7}{\ignorespaces CLIP workflow}}{17}{figure.56}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Basic RL worfklow schema: the agent iteratively maps states to actions by maximizing a cumulative reward signal through trial and error interaction.}}{20}{figure.66}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces VLM trained from scratch vs training strategy using a pre-trained LLM as backbone}}{20}{figure.65}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Basic RL worfklow schema: the agent iteratively maps states to actions by maximizing a cumulative reward signal through trial and error interaction.}}{21}{figure.68}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Most common benchmark evaluation metrics illustrated visually; showing \textit {answer matching, multiple choice} and \textit {image-caption similarity} graphical examples.}}{27}{figure.89}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

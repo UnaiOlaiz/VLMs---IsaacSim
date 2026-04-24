@@ -42,6 +42,7 @@ bookmarks=true]{hyperref}
 \RequirePackage{xcolor} 
 \RequirePackage{amsmath}
 \RequirePackage{float}
+\RequirePackage{array}
 
 %% ------------------------------
 %% Listings Configuration (Code)
