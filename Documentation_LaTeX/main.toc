@@ -7,7 +7,7 @@
 \contentsline {section}{\numberline {1.3}Main objectives and specific objectives}{1}{section.8}%
 \contentsline {section}{\numberline {1.4}Project scope}{1}{section.9}%
 \contentsline {chapter}{\numberline {2}State of the Art}{2}{chapter.10}%
-\contentsline {section}{\numberline {2.1}Evolutions of Multimodal Learning}{2}{section.11}%
+\contentsline {section}{\numberline {2.1}Evolution of Multimodal Learning}{2}{section.11}%
 \contentsline {subsection}{\numberline {2.1.1}Multimodal deep Boltzmann machines}{2}{subsection.12}%
 \contentsline {subsection}{\numberline {2.1.2}Multimodal Transformers}{3}{subsection.15}%
 \contentsline {subsubsection}{\numberline {2.1.2.1}The Perceiver}{3}{subsubsection.16}%
@@ -16,45 +16,51 @@
 \contentsline {section}{\numberline {2.2}Advancements of Vision Language Models}{4}{section.21}%
 \contentsline {subsection}{\numberline {2.2.1}Earliest models}{5}{subsection.22}%
 \contentsline {subsection}{\numberline {2.2.2}Deep learning based models}{6}{subsection.23}%
-\contentsline {subsection}{\numberline {2.2.3}The Transformers architecture Standard}{6}{subsection.24}%
+\contentsline {subsection}{\numberline {2.2.3}The Transformers architecture Standard}{7}{subsection.24}%
 \contentsline {subsubsection}{\numberline {2.2.3.1}VLM tasks with Transformers}{8}{subsubsection.30}%
-\contentsline {section}{\numberline {2.3}From Encoders to Generative LLMs}{9}{section.33}%
-\contentsline {subsection}{\numberline {2.3.1}Language encoder}{9}{subsection.34}%
+\contentsline {section}{\numberline {2.3}From Encoders to Generative LLMs}{10}{section.33}%
+\contentsline {subsection}{\numberline {2.3.1}Language encoder}{10}{subsection.34}%
 \contentsline {subsection}{\numberline {2.3.2}The LLM transition: from encoders to decoder-only architectures}{10}{subsection.35}%
 \contentsline {section}{\numberline {2.4}Vision Transformers}{11}{section.36}%
 \contentsline {subsection}{\numberline {2.4.1}Vision encoder \& Vision Transformers (ViT)}{11}{subsection.37}%
 \contentsline {section}{\numberline {2.5}Multimodal Alignment: CLIP}{15}{section.47}%
-\contentsline {subsection}{\numberline {2.5.1}2021 - Release of CLIP}{15}{subsection.48}%
-\contentsline {section}{\numberline {2.6}Modality Bridging and Pseudo-Tokens}{17}{section.57}%
-\contentsline {subsection}{\numberline {2.6.1}Modality bridging mechanism}{17}{subsection.58}%
-\contentsline {section}{\numberline {2.7}Training Strategies in VLMs}{18}{section.59}%
-\contentsline {section}{\numberline {2.8}Reinforcement Learning for Robotics}{19}{section.63}%
-\contentsline {section}{\numberline {2.9}Current Models and SOTA}{19}{section.64}%
-\contentsline {chapter}{\numberline {3}Solution approach}{20}{chapter.65}%
-\contentsline {section}{\numberline {3.1}Solution proposal}{20}{section.66}%
-\contentsline {section}{\numberline {3.2}System architecture}{20}{section.67}%
-\contentsline {section}{\numberline {3.3}Tools used}{20}{section.68}%
-\contentsline {section}{\numberline {3.4}Workflow}{20}{section.69}%
-\contentsline {chapter}{\numberline {4}Solution development}{21}{chapter.70}%
-\contentsline {section}{\numberline {4.1}IsaacSim environment definition}{21}{section.71}%
-\contentsline {subsection}{\numberline {4.1.1}Agents}{21}{subsection.72}%
-\contentsline {subsection}{\numberline {4.1.2}Cameras}{21}{subsection.73}%
-\contentsline {subsection}{\numberline {4.1.3}Physics}{21}{subsection.74}%
-\contentsline {section}{\numberline {4.2}Individual component operation}{21}{section.75}%
-\contentsline {chapter}{\numberline {5}Experimentation and evolution}{22}{chapter.76}%
-\contentsline {section}{\numberline {5.1}First scenarios}{22}{section.77}%
-\contentsline {section}{\numberline {5.2}Last scenario}{22}{section.78}%
-\contentsline {section}{\numberline {5.3}Successful and failure tries}{22}{section.79}%
-\contentsline {section}{\numberline {5.4}Results obtained in each scenario}{22}{section.80}%
-\contentsline {section}{\numberline {5.5}Result discussion}{22}{section.81}%
-\contentsline {chapter}{\numberline {6}Conclusions}{23}{chapter.82}%
-\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{23}{section.83}%
-\contentsline {section}{\numberline {6.2}Limitations found}{23}{section.84}%
-\contentsline {section}{\numberline {6.3}Future work}{24}{section.85}%
-\contentsline {chapter}{\numberline {7}Appendix}{27}{chapter.87}%
-\contentsline {section}{\numberline {7.1}Instalation guide}{27}{section.88}%
-\contentsline {section}{\numberline {7.2}Relevant code}{27}{section.89}%
-\contentsline {section}{\numberline {7.3}Prompts used}{27}{section.90}%
-\contentsline {section}{\numberline {7.4}Result table}{27}{section.91}%
-\contentsline {section}{\numberline {7.5}Tensorboard analysis}{27}{section.92}%
+\contentsline {subsection}{\numberline {2.5.1}CLIP: Contrastive Language-Image Pretraining}{15}{subsection.48}%
+\contentsline {section}{\numberline {2.6}Modality Bridging and Pseudo-Tokens}{18}{section.57}%
+\contentsline {subsection}{\numberline {2.6.1}Modality bridging mechanism}{18}{subsection.58}%
+\contentsline {subsection}{\numberline {2.6.2}Pseudo-Tokens}{18}{subsection.59}%
+\contentsline {section}{\numberline {2.7}Training Strategies in VLMs}{19}{section.60}%
+\contentsline {subsection}{\numberline {2.7.1}Contrastive Pre-Training}{19}{subsection.61}%
+\contentsline {subsection}{\numberline {2.7.2}Generative Pre-Training}{19}{subsection.62}%
+\contentsline {subsection}{\numberline {2.7.3}Visual Instruction Tuning}{20}{subsection.63}%
+\contentsline {section}{\numberline {2.8}RL and MARL in Robotics}{20}{section.64}%
+\contentsline {subsection}{\numberline {2.8.1}Reinforcement Learning in robotic environments}{20}{subsection.67}%
+\contentsline {subsection}{\numberline {2.8.2}Multi Agent Reinforcement Learning}{21}{subsection.68}%
+\contentsline {section}{\numberline {2.9}Current SOTA VLMs}{21}{section.69}%
+\contentsline {chapter}{\numberline {3}Solution approach}{22}{chapter.70}%
+\contentsline {section}{\numberline {3.1}Solution proposal}{22}{section.71}%
+\contentsline {section}{\numberline {3.2}System architecture}{22}{section.72}%
+\contentsline {section}{\numberline {3.3}Tools used}{22}{section.73}%
+\contentsline {section}{\numberline {3.4}Workflow}{22}{section.74}%
+\contentsline {chapter}{\numberline {4}Solution development}{23}{chapter.75}%
+\contentsline {section}{\numberline {4.1}IsaacSim environment definition}{23}{section.76}%
+\contentsline {subsection}{\numberline {4.1.1}Agents}{23}{subsection.77}%
+\contentsline {subsection}{\numberline {4.1.2}Cameras}{23}{subsection.78}%
+\contentsline {subsection}{\numberline {4.1.3}Physics}{23}{subsection.79}%
+\contentsline {section}{\numberline {4.2}Individual component operation}{23}{section.80}%
+\contentsline {chapter}{\numberline {5}Experimentation and evolution}{24}{chapter.81}%
+\contentsline {section}{\numberline {5.1}First scenarios}{24}{section.82}%
+\contentsline {section}{\numberline {5.2}Last scenario}{24}{section.83}%
+\contentsline {section}{\numberline {5.3}Successful and failure tries}{24}{section.84}%
+\contentsline {section}{\numberline {5.4}Results obtained in each scenario}{24}{section.85}%
+\contentsline {section}{\numberline {5.5}Result discussion}{24}{section.86}%
+\contentsline {chapter}{\numberline {6}Conclusions}{25}{chapter.87}%
+\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{25}{section.88}%
+\contentsline {section}{\numberline {6.2}Limitations found}{25}{section.89}%
+\contentsline {section}{\numberline {6.3}Future work}{26}{section.90}%
+\contentsline {chapter}{\numberline {7}Appendix}{29}{chapter.92}%
+\contentsline {section}{\numberline {7.1}Instalation guide}{29}{section.93}%
+\contentsline {section}{\numberline {7.2}Relevant code}{29}{section.94}%
+\contentsline {section}{\numberline {7.3}Prompts used}{29}{section.95}%
+\contentsline {section}{\numberline {7.4}Result table}{29}{section.96}%
+\contentsline {section}{\numberline {7.5}Tensorboard analysis}{29}{section.97}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

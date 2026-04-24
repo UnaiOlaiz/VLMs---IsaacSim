@@ -43,6 +43,12 @@ Haochen Tan, Wei Shao, Han Wu, Ke~Yang, and Linqi Song.
 \newblock A sentence is worth 128 pseudo tokens: A semantic-aware contrastive
   learning framework for sentence embeddings, 2022.
 
+\bibitem{tang2024deepreinforcementlearningrobotics}
+Chen Tang, Ben Abbatematteo, Jiaheng Hu, Rohan Chandra, Roberto
+  Martín-Martín, and Peter Stone.
+\newblock Deep reinforcement learning for robotics: A survey of real-world
+  successes, 2024.
+
 \bibitem{timothy2024phrasegrounding}
 M.~Timothy.
 \newblock What is phrase grounding?
