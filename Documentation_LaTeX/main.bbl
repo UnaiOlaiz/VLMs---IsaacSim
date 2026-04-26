@@ -1,5 +1,8 @@
 \begin{thebibliography}{10}
 
+\bibitem{li2025surveystateartlarge}
+
+
 \bibitem{multimodal_learning_wiki}
 Multimodal learning.
 \newblock \url{https://en.wikipedia.org/wiki/Multimodal_learning}.
@@ -39,10 +42,12 @@ Andrew Jaegle, Felix Gimeno, Andrew Brock, Andrew Zisserman, Oriol Vinyals, and
   Joao Carreira.
 \newblock Perceiver: General perception with iterative attention, 2021.
 
-\bibitem{li2025surveystateartlarge}
-Zongxia Li, Xiyang Wu, Hongyang Du, Fuxiao Liu, Huy Nghiem, and Guangyao Shi.
-\newblock A survey of state of the art large vision language models: Alignment,
-  benchmark, evaluations and challenges, 2025.
+\bibitem{kim2024openvlaopensourcevisionlanguageactionmodel}
+Moo~Jin Kim, Karl Pertsch, Siddharth Karamcheti, Ted Xiao, Ashwin Balakrishna,
+  Suraj Nair, Rafael Rafailov, Ethan Foster, Grace Lam, Pannag Sanketi, Quan
+  Vuong, Thomas Kollar, Benjamin Burchfiel, Russ Tedrake, Dorsa Sadigh, Sergey
+  Levine, Percy Liang, and Chelsea Finn.
+\newblock Openvla: An open-source vision-language-action model, 2024.
 
 \bibitem{radford2021learningtransferablevisualmodels}
 Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
@@ -115,9 +120,22 @@ Zirui Wang, Jiahui Yu, Adams~Wei Yu, Zihang Dai, Yulia Tsvetkov, and Yuan Cao.
 \newblock Manifold alignment --- {Wikipedia}{,} the free encyclopedia, 2024.
 \newblock [Online; accessed 22-April-2026].
 
+\bibitem{wiki_vla_2026}
+{Wikipedia contributors}.
+\newblock Vision-language-action model --- {Wikipedia}{,} the free
+  encyclopedia.
+\newblock \url{https://en.wikipedia.org/wiki/Vision-language-action_model},
+  2026.
+\newblock [Online; accessed 24-April-2026].
+
 \bibitem{wiki:Vision-language_model}
 {Wikipedia contributors}.
 \newblock Vision-language model --- {W}ikipedia{,} the free encyclopedia, 2026.
+
+\bibitem{wu2025teachingrlagentsact}
+Xiefeng Wu, Jing Zhao, Shu Zhang, and Mingyu Hu.
+\newblock Teaching rl agents to act better: Vlm as action advisor for online
+  reinforcement learning, 2025.
 
 \bibitem{yue2024mmmumassivemultidisciplinemultimodal}
 Xiang Yue, Yuansheng Ni, Kai Zhang, Tianyu Zheng, Ruoqi Liu, Ge~Zhang, Samuel

@@ -266,9 +266,9 @@ being parameter \textit{T} the temperature parameter (\textit{T}>0) which is par
 Once gone over the algorithm's properties, let's dive deep into the architecture:
 
 \begin{itemize}
-	\item Image model: when it comes to the image encoder used in most of the CLIP versions, they all usually are some kind of \textit{vision transformers} (ViT). Vision transformers often vary on the patch size, being that size the \textit{n}x\textit{n} dimensions of the patch the image was divided into. Alternatively, \textit{convolutional neural networks} (CNNs) can be used as well (such as \textit{ResNet}), the essential thing is to ensure the sizes of the image and text model output vectors are the same size. 
+	\item \textbf{Image model}: when it comes to the image encoder used in most of the CLIP versions, they all usually are some kind of \textit{vision transformers} (ViT). Vision transformers often vary on the patch size, being that size the \textit{n}x\textit{n} dimensions of the patch the image was divided into. Alternatively, \textit{convolutional neural networks} (CNNs) can be used as well (such as \textit{ResNet}), the essential thing is to ensure the sizes of the image and text model output vectors are the same size. 
 	
-	\item Text model: the text encoding models are usually \textit{transformers}. Even if it is heavily inspired by the transformers report published by OpenAI \cite{radford2021learningtransferablevisualmodels} and shares similarities with the \textit{GPT} architecture (decoder-only), the text model serves as a text encoder. Furthermore, its functionality is inspired by encoder only models such as \textit{BERT}, while sharing the dimensionality and number of parameters with decoder-only models as mentioned before. 
+	\item  \textbf{Text model}: the text encoding models are usually \textit{transformers}. Even if it is heavily inspired by the transformers report published by OpenAI \cite{radford2021learningtransferablevisualmodels} and shares similarities with the \textit{GPT} architecture (decoder-only), the text model serves as a text encoder. Furthermore, its functionality is inspired by encoder only models such as \textit{BERT}, while sharing the dimensionality and number of parameters with decoder-only models as mentioned before. 
 \end{itemize}
 
 After going over the properties of both encoders that make the whole CLIP model, I will detail the model's workflow inspired on the image below \ref{fig:clip_architecture}. 
@@ -314,7 +314,7 @@ When it comes to practical cases, this alignment is implemented through varying 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Training Strategies in VLMs}
-Vision language models are trained not only in a single step process, but in a multi-stage training workflow, starting from the alignment of two disparate data modalities going to refining the model's ability to deal with natural instructions. The strategies can be categorized into three paradigms:
+Vision language models are trained not only in a single step process, but in a multi-stage training workflow, starting from the alignment of two disparate data modalities going to refining the model's ability to deal with natural instructions. The methodologies can be categorized into paradigms:
 
 \subsection{Contrastive Pre-Training}:
 The core of contrastive methods is the idea  of learning how to contrast between pairs of similar and dissimilar data points \cite{rethmeier2021primercontrastivepretraininglanguage}. A pair of similar data points is called positive sample if both points are different representations of the same data instance, in our case multimodal representations of the same instance. Whereas the negative samples are those pairs in which the data points belong to different examples. While computer vision methods learn from input-input (image-image) pairs and natural language processing methods deal with input-output (text, label) pairs, vision language models receive input-input (text, image) pairs. Previously mentioned models such as \textit{CLIP} \cite{radford2021learningtransferablevisualmodels}, apply this learning approach to maximize the \textit{cosine similarity} distance metric between matching image-text pairs in a shared embedding space, aiming to maximize the metric for the positive samples while minimizing the negative ones. The loss function used is the \textit{cross-entropy} function.
@@ -325,45 +325,31 @@ While contrastive learning focuses on aligning data points from different modali
 $$\mathcal{L}_{PrefixLM} = -\sum_{t=1}^{|y|} \log P(y_t \mid y_{<t}, x_{prefix})$$
 where $x_{prefix}$ represents the combined image and text prefix and $y_{t}$ is the text token at time $t$.
 
-\subsection{Visual Instruction Tuning}: 
+\subsection{Visual Instruction Tuning}
 This strategy involves fine tuning the model with smaller datasets of higher quality, usually being (instruction-following) pairs where humans ask questions and the model replies. Supervised fine-tuning and parameter-efficient fine tuning methods are the most used ones, where only a small subset of the parameters is updated to avoid the LLM to forget its original knowledge. 
+
+\subsection{Vision Language Models Training Paradigm}
+When it comes to the training process of VLMs there are two main strategies to be adopted, strategies which will be discussed and which are visible in the referenced image below \ref{fig:scratch_vs_llm_backbone}. Those paradigms are no other than training a vision language from scratch versus starting from the base point of a pre-trained large language model as a frozen backbone. In the following section the procedures, differences and when to use each case will be studied.
+
+\subsubsection{Training a VLM from Scratch}
+Training the whole vision vision language model from zero differs significantly from starting from the base of having a pre-trained LLM. Usually a different training procedure and methodologies are applied, methodologies as the ones mentioned still \textit{contrastive pre-training} is the most used approach combined with \textit{self-supervised learning} techniques \cite{li2025surveystateartlarge}. The training procedure would be the ordinary one, showed in the upper side of schema on the referenced image. Consisting on training both encoders, getting the respective vectors and applying contrastive alignment to form the final shared vector space. 
+
+\subsubsection{Starting from a pre-trained LLM}
+On the other hand, starting from the checkpoint of already having a pre-trained large language model reduces or at least modifies the conventional training workflow. The text embeddings taken from the text encoding would be directly fed into the LLM without any previous alignment, however, there are two different alternatives to tackle the alignment task in for this training workflow variant: 
+
+\begin{enumerate}
+	\item \textbf{The Projector}: maps visual features extracted from the vision encoder with the text embeddings returned from the large language model, mapping which usually consists of multilayer perceptron (MLP) layers responsible for transforming high-dimensional visual representations into compact embedding tokens to be aligned with textual modality. The projector can be trained alongside the rest of the model or freezing the LLM in order to preserve the pre-trained knowledge. Among the modern models which follow this paradigm we have \textit{LLaVa, Qwen-VL} and \textit{Nvidia VLM}. 
+	
+	\item \textbf{Optimization Strategies (Joint vs Freeze Training)}: the second task involves updating a portion of the weights while freezing the others. \textit{Joint training} refers to updating the weights of all components of the model in parallel without freezing any (including the weights of the LLM and projector layers), approach taken by models such as \textit{Flamingo}. \textit{Freeze training} on the other hand, selectively freezes some components of the model during training, with the aim of preserving knowledge obtained prior to the training to be adapted to new tasks. The most common strategies are freezing the pre-trained vision encoders while fine-tuning the projector layers, gradually "unfreezing" the frozen parameters. 
+\end{enumerate}
 
 % argazkia azaldu scratch vs llm_backbones
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{imgs/train_scratch_vs_llm_backbone.png}
+	\includegraphics[width=.8\textwidth]{imgs/train_scratch_vs_llm_backbone.png}
 	\caption{VLM trained from scratch vs training strategy using a pre-trained LLM as backbone}
 	\label{fig:scratch_vs_llm_backbone}
 \end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{RL and MARL in Robotics}
-In the context of machine learning, RL is concerned with how an intelligent agent should take actions in a dynamic environment in order to maximize a reward signal. The agent must make decisions between trying new actions to learn more about the environment or using current knowledge of the environment to take the best action, balancing the exploration/exploitation trade.  
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.5\textwidth]{imgs/reinforcement-learning-fig1-700.jpg}
-	\caption{Basic RL worfklow schema: the agent iteratively maps states to actions by maximizing a cumulative reward signal through trial and error interaction.}
-	\label{fig:rl_schema}
-\end{figure}
-
-Particularly their combination with deep neural networks, referred to as \textit{deep reinforcement learning} (DRL) have shown remarkable capabilities in solving the most complex decision-making problems even with the high-dimensional observations in domains such as board games, video games, healthcare and recommendation systems \cite{tang2024deepreinforcementlearningrobotics}.  
-
-\subsection{Reinforcement Learning in robotic environments}
-Reinforcement learning offers to robotics a framework and set of tools for the design of sophisticated and hard-to-engineer behaviors. The successes of combining deep neural networks for reinforcement learning policy training underscore the potential of DRL for controlling robotic systems with
-high-dimensional state or observation space and highly nonlinear dynamics to perform challenging tasks that conventional decision-making, planning, and control approaches (e.g.,
-classical control, optimal control, sampling-based planning) cannot handle effectively. Furthermore, robots need
-to complete tasks in the physical world, which presents additional challenges. It is often
-inefficient and/or unsafe for the RL agents to collect trial-and-error samples directly in the
-physical world, and it is usually impossible to create an exact replica of the complex real
-world in simulation.
-
-
-
-\subsection{Multi Agent Reinforcement Learning}
-
-%PPO y SAC: Menciona que son los estándares para control continuo en robótica.Multi-Agent Coordination: Habla de arquitecturas como MAPPO (Multi-Agent PPO) o QMIX, que son las que se usan para que los agentes cooperen en entornos como Isaac Sim. Sim-to-Real: Una mención breve a cómo Isaac Sim ayuda a que lo aprendido en simulación pase al mundo real.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -477,3 +463,94 @@ After collecting the data for benchmark evaluation, it's benchmark evaluation ti
 	\caption{Most common benchmark evaluation metrics illustrated visually; showing \textit{answer matching, multiple choice} and \textit{image-caption similarity} graphical examples.}
 	\label{fig:benchmark_metrics}
 \end{figure}
+
+\subsection{Vision Language Action (VLA) Models}
+As the latest step of VLM evolutions, a new sub variant arised with the name of vision-language-action (VLA) models. Multimodal foundational models which include all the prior work of the VLMs, adding the actions space to the vision and language ones. With these models, given an input image or video of the robot's surroundings alongside a text instruction, the VLA directly outputs low-level robot action instructions to be executed to accomplish the task \cite{wiki_vla_2026}. 
+
+The architecture of the VLA would stand as the standard VLM architecture just changing the decoder to an \textit{action decoder} which translates the latent VLM representation into continuous output actions to be directly applied on the robot. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.6\textwidth]{imgs/VLA.png}
+	\caption{Standard vision language action model architecture.}
+	\label{fig:vla_architecture}
+\end{figure}
+
+\subsubsection{OpenVLA}
+Among the most popular vision language action models, there is model \textit{OpenVLA}, a 7B parameter VLA model trained on almost a million robot demonstration instances \cite{kim2024openvlaopensourcevisionlanguageactionmodel}.
+
+When it comes to the training of the model, a pre-trained VLM was used as a backbone and fine-tuned for robot action prediction. The input replicates the same (image-text) pair procedure seen in VLMs but the output now consists of a string containing the robot action to take. In order to get prediction by the VLM backbone, the robot actions are represented in the output space of the LLM by mapping continuous actions to discrete tokens used by the language model's tokenizer. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.8\textwidth]{imgs/OpenVLA_architecture.png}
+	\caption{Given an image observation and a language instruction, the model
+		predicts 7-dimensional robot control actions. The architecture consists of three key components: a vision encoder, a projector that maps visual features to
+		the language embedding space, and the LLM backbone, in this case, a Llama 2 7B-parameter large language model.}
+	\label{fig:open_vla_architecture}
+\end{figure}
+
+However, current VLA models still face significant challenges regarding high-frequency control and multi-agent coordination. Most VLAs are trained for single-arm manipulation and struggle with the low-latency requirements of complex dynamic environments. In the context of this project, while these new vision language action architectures represent the SOTA in embodied AI, the integration of a vision language models into multi-agent robotic systems represent a more robust combination, reason why I decided to stick to VLMs for the part of complex reasoning due to their stability over these newer models. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Reinforcement Learning and Multi-Agent Systems in Robotics}
+%Para las secciones 2.8.1 y 2.8.2 que te faltan, te sugiero estos puntos clave que están muy "trending" en 2025:VLM como "High-level Planner": Menciona que la tendencia actual es el Hierarchical RL (HRL), donde el VLM es el "cerebro" que descompone una orden compleja (ej. "Limpia la mesa de forma cooperativa") en sub-metas que los agentes de RL ejecutan a bajo nivel.VLM-based Reward Shaping: Esta es una idea potente para tu tesis. Explica cómo se están usando VLMs para generar recompensas densas (dense rewards). Si el robot se acerca al objetivo, el VLM lo "ve" y le da una señal positiva, solucionando el problema de las recompensas escasas (sparse rewards) en RL.Multi-Agent Coordination (Communication): En MARL, cita arquitecturas de comunicación mediante lenguaje natural. En lugar de pasarse vectores numéricos, los agentes de SOTA se pasan mensajes de texto que otros VLMs interpretan para colaborar.
+
+In the context of machine learning, RL is concerned with how an intelligent agent should take actions in a dynamic environment in order to maximize a reward signal. The agent must make decisions between trying new actions to learn more about the environment or using current knowledge of the environment to take the best action, balancing the exploration/exploitation trade.  
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{imgs/reinforcement-learning-fig1-700.jpg}
+	\caption{Basic RL worfklow schema: the agent iteratively maps states to actions by maximizing a cumulative reward signal through trial and error interaction.}
+	\label{fig:rl_schema}
+\end{figure}
+
+Particularly their combination with deep neural networks, referred to as \textit{deep reinforcement learning} (DRL) have shown remarkable capabilities in solving the most complex decision-making problems even with the high-dimensional observations in domains such as board games, video games, healthcare and recommendation systems \cite{tang2024deepreinforcementlearningrobotics}.  
+
+\subsection{Reinforcement Learning in robotic environments}
+Reinforcement learning offers to robotics a framework and set of tools for the design of sophisticated and hard-to-engineer behaviors. The successes of combining deep neural networks for reinforcement learning policy training underscore the potential of DRL for controlling robotic systems with
+high-dimensional state or observation space and highly nonlinear dynamics to perform challenging tasks that conventional decision-making, planning, and control approaches (e.g.,
+classical control, optimal control, sampling-based planning) cannot handle effectively. Furthermore, robots need
+to complete tasks in the physical world, which presents additional challenges. It is often
+inefficient and/or unsafe for the RL agents to collect trial-and-error samples directly in the
+physical world, and it is usually impossible to create an exact replica of the complex real
+world in simulation.
+
+\subsection{RL and VLM Combination}
+Reinforcement learning in complex scenarios is time consuming and as massive interaction steps are needed to learn optimal policies, and even if VLA seem promising to reduce time complexity, they still are immature and don't perform well on low-level control scenarios \cite{wu2025teachingrlagentsact}. That is the reason why vision language models remain on the edge of helping models for reinforcement learning. Combining the reinforcement learning machine learning subfield with the architecture reviewed throughout the document, there has been an increasing trend towards combining both in order to form a more compact learning system. However, VLMs do not tend to control the agent's engine directly, rather they serve as an "orchestrator" which transfer their reasoning knowledge obtained from the environment to the agent. Vision language models can be applied into reinforcement learning as several approaches.
+
+\subsubsection{Vision Language Models as Action Advisors}
+In many studies vision languages models are proposed as action advisors for online reinforcement learning, leveraging the knowledge of VLMs to provide action suggestions for RL agents. Unlike previous methods, actions are proposed rather than designing heuristic rewards. 
+
+As illustrated in the comparison image below \ref{fig:VARL_comparison} for a robotic-arm grasp policy, zero-shot vision-language-action models tend to produce biased still inaccurate actions which partially approach task success. When it comes to the policy obtained in the early stages of a RL, often reflect near-random behaviors. In contrast to the previous two approaches, VLM as action advisor for online reinforcement learning (VARL) achieves the most accurate grasping with just a few interactions and converges efficiently. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.8\textwidth]{imgs/VARL.png}
+	 \label{fig:VARL_comparison}
+	 \caption{Different RL training approach comparison}
+\end{figure}
+
+\subsubsection{VLM-based Reward Shaping}
+Another promising approach is to employ VLMs and LLMs as reward designers. Rather than suggesting direct actions, these models are used to shape or generate reward signals that guide reinforcement learning agents. Typically those rewards are generated by letting large language models read the task descriptions. \textit{Eureka} and \textit{Text2Reward} are some of the models which take that approach. 
+
+\subsection{Multi Agent Robotic Systems}
+Multi-agent robotic systems (MARS) are distributed autonomous systems where multiple robotic agents cooperate, compete, or interact to solve complex tasks that are too large, dynamic, or unpredictable for a single robot.  Unlike centralized AI, MARS distributes intelligence across the whole network, allowing each agent to make decisions based on local information, which enhances scalability, adaptability, and fault tolerance.
+
+The core challenge in MARS lies in the overall coordination among agents, ensuring that individual actions contribute to a global objective without causing collisions or redundant efforts. In cooperative tasks, agents must share a common goal while managing their own sensory inputs and actuators.
+
+To address these challenges, modern MARS often adopt the \textbf{Centralized Training, Decentralized Execution (CTDE)} framework. During the training phase in simulation, the system has access to the global state of the environment and the actions of all agents, allowing for efficient learning of joint strategies. However, during execution (inference), each robotic agent operates autonomously, relying only on its local observations and the high-level guidance provided by the VLM. This approach effectively bridges the gap between collective intelligence and individual autonomy.
+
+Furthermore, the integration of MARS in high-fidelity simulators allows for the exploration of \textit{emergent behaviors}, where complex cooperative strategies arise from simple local rules and reward signals. This is particularly relevant for tasks requiring physical manipulation, where agents must synchronize their movements in space and time to achieve success.
+
+
+
+\subsection{Sim to Real Frameworks}
+Dado que usas Isaac Sim, es fundamental dedicar un par de párrafos a por qué esta herramienta es el SOTA:
+
+Photorealistic \& Physics Simulation: Explica que Isaac Sim utiliza NVIDIA PhysX y RTX para que la imagen que ve el VLM sea lo más parecida posible a la realidad.
+
+Parallelization: Menciona que Isaac Sim permite entrenar miles de agentes en paralelo en una sola GPU, lo que reduce el tiempo de entrenamiento de semanas a horas.
+
+Domain Randomization: Explica que al variar luces, colores y texturas en el simulador, preparas al VLM y al agente de RL para ser robustos ante cambios en el mundo real.
