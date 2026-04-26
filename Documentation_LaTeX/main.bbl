@@ -8,6 +8,11 @@ Multimodal learning.
 \newblock \url{https://en.wikipedia.org/wiki/Multimodal_learning}.
 \newblock Accessed: April 23, 2026.
 
+\bibitem{eagerx2023}
+EAGERx Contributors.
+\newblock Eagerx: Engine agnostic graph-based robotic experience.
+\newblock \url{https://github.com/eager-dev/eagerx}, 2023.
+
 \bibitem{dosovitskiy2021imageworth16x16words}
 Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
   Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, Matthias Minderer, Georg
@@ -37,6 +42,12 @@ Jack Hessel, Ari Holtzman, Maxwell Forbes, Ronan~Le Bras, and Yejin Choi.
 \newblock Clipscore: A reference-free evaluation metric for image captioning,
   2022.
 
+\bibitem{huang2026sim2realadmodularsimtorealframework}
+Zilin Huang, Zhengyang Wan, Zihao Sheng, Boyue Wang, Junwei You, Yue Leng, and
+  Sikai Chen.
+\newblock Sim2real-ad: A modular sim-to-real framework for deploying vlm-guided
+  reinforcement learning in real-world autonomous driving, 2026.
+
 \bibitem{jaegle2021perceivergeneralperceptioniterative}
 Andrew Jaegle, Felix Gimeno, Andrew Brock, Andrew Zisserman, Oriol Vinyals, and
   Joao Carreira.
@@ -48,6 +59,13 @@ Moo~Jin Kim, Karl Pertsch, Siddharth Karamcheti, Ted Xiao, Ashwin Balakrishna,
   Vuong, Thomas Kollar, Benjamin Burchfiel, Russ Tedrake, Dorsa Sadigh, Sergey
   Levine, Percy Liang, and Chelsea Finn.
 \newblock Openvla: An open-source vision-language-action model, 2024.
+
+\bibitem{li2023blip2}
+Junnan Li, Dongxu Li, Silvio Savarese, and Steven Hoi.
+\newblock Blip-2: Bootstrapping language-image pre-training with frozen image
+  encoders and large language models.
+\newblock In {\em International Conference on Machine Learning (ICML)}. PMLR,
+  2023.
 
 \bibitem{radford2021learningtransferablevisualmodels}
 Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
@@ -137,6 +155,12 @@ Xiefeng Wu, Jing Zhao, Shu Zhang, and Mingyu Hu.
 \newblock Teaching rl agents to act better: Vlm as action advisor for online
   reinforcement learning, 2025.
 
+\bibitem{yu2022surprisingeffectivenessppocooperative}
+Chao Yu, Akash Velu, Eugene Vinitsky, Jiaxuan Gao, Yu~Wang, Alexandre Bayen,
+  and Yi~Wu.
+\newblock The surprising effectiveness of ppo in cooperative, multi-agent
+  games, 2022.
+
 \bibitem{yue2024mmmumassivemultidisciplinemultimodal}
 Xiang Yue, Yuansheng Ni, Kai Zhang, Tianyu Zheng, Ruoqi Liu, Ge~Zhang, Samuel
   Stevens, Dongfu Jiang, Weiming Ren, Yuxuan Sun, Cong Wei, Botao Yu, Ruibin
@@ -144,5 +168,10 @@ Xiang Yue, Yuansheng Ni, Kai Zhang, Tianyu Zheng, Ruoqi Liu, Ge~Zhang, Samuel
   Huang, Huan Sun, Yu~Su, and Wenhu Chen.
 \newblock Mmmu: A massive multi-discipline multimodal understanding and
   reasoning benchmark for expert agi, 2024.
+
+\bibitem{zhang2021multiagentreinforcementlearningselective}
+Kaiqing Zhang, Zhuoran Yang, and Tamer Başar.
+\newblock Multi-agent reinforcement learning: A selective overview of theories
+  and algorithms, 2021.
 
 \end{thebibliography}

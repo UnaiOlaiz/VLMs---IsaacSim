@@ -19,6 +19,7 @@ However, learning is impractical using these machines because of the exponential
 Transformers can also be adapter for modalities, usually finding a way to \textit{tokenize} the data domain. Even if multimodal transformers can be trained from scratch, a 2022 \textit{transfer learning} study showed that fine-tuned transformers originally pretrained with natural language data can show competitiveness in logical and visual tasks. 
 
 \subsubsection{The Perceiver}
+\label{sec:perceiver}
 Perceivers, are a variant of the transformer architecture exclusively adapted for processing multimodal data. The Perceiver is designed as a general architecture that can learn simultaneously from large amounts of heterogeneous data, implementing \textit{asymmetric attention} mechanisms. Asymmetric attention consists of architectural modifications that break the "standard symmetry" to address specific domain constraints. This approach leads to outperforming specialized models on classification tasks. It iteratively alternates cross-attention and latent self-attention blocks to project a high-dimensional input byte array to a fixed-dimensional latent bottleneck before processing it using a deep stack of transformer-style self-attention blocks in the latent space \cite{jaegle2021perceivergeneralperceptioniterative}. 
 
 \begin{figure}[H]
@@ -367,11 +368,13 @@ Following the same structure redacted in paper \textit{A Survey of State of the 
 	\begin{tabular}{|>{\centering\arraybackslash}p{2.1cm}|c|>{\centering\arraybackslash}p{2.1cm}|>{\centering\arraybackslash}p{2.1cm}|c|>{\centering\arraybackslash}p{2.4cm}|>{\centering\arraybackslash}p{1.9cm}|}
 		\hline
 		\textbf{Model} & \textbf{Year} & \textbf{Architecture} & \textbf{Training Data} & \textbf{Params} & \textbf{Vision Encoder} & \textbf{Backbone} \\ \hline
+		Flamingo & 2022 & Encoder-decoder & M3W, ALIGN & 80B & Custom & Chinchilla \\ \hline 
+		BLIP/2 & 2022/23 & Encoder-decoder & COCO, Visual Genome & 223M-400M & ViT-B/L/g & Pretrained from scratch \\ \hline 
 		LLaVA-1.5 & 2023 & Decoder-only & COCO & 13B & ViT-L/14 & Vicuna \\ \hline
 		CogVLM & 2023 & Encoder-decoder & LAION-2B, COYO-700M & 18B & CLIP ViT-L/14 & Vicuna \\ \hline
-		Qwen2-VL & 2024 & Decoder-only & Undisclosed & 7B-14B & EVA-CLIP ViT-L & Qwen-2 \\ \hline
 		Gemini & 2023 & Decoder-only & Undisclosed & Undisclosed & Undisclosed & Undisclosed \\ \hline
 		GPT-4V & 2023 & Decoder-only & Undisclosed & Undisclosed & Undisclosed & Undisclosed \\ \hline
+		Qwen2-VL & 2024 & Decoder-only & Undisclosed & 7B-14B & EVA-CLIP ViT-L & Qwen-2 \\ \hline
 	\end{tabular}
 	\caption{Architectural comparison of representative SOTA Vision-Language Models extracted from referenced paper, including some of the key models.}
 	\label{tab:vlm_comparison_main}
@@ -380,15 +383,19 @@ Following the same structure redacted in paper \textit{A Survey of State of the 
 These are the models I have wanted to highlight, let's dive a little bit deeper into their interesting features:
 
 \begin{enumerate}
+	\item \textbf{Flamingo}: represents a foundational step in the transition towards generative VLMs built on top of frozen LLMs. Its key contribution was the \textit{Perceiver} architecture covered in section \ref{sec:perceiver}. This design, as mentioned, allows the pre-training knowledge to remain intact while the model learns visual context properties. 
+	
+	\item \textbf{BLIP-2}: introduced the \textit{querying transformer} (Q-Former) as a bridging module between a frozen image encoder and a frozen LLM. The Q-Former designs often purposely structure tokens, manipulate query sparsity or introduce language or structure-guided query selection \cite{li2023blip2}. This training strategy involving first aligning vision and language representations and then connecting the Q-Former output to the LLM makes BLIP-2 one if not the most parameter-efficient models, as the majority of weights keeps frozen during training.
+	
 	\item \textbf{LLaVa-1.5}: building upon the success of LLaVA, authors introduced the 1.5 version which incorporated several architectural and scaling techniques that enhance the performance. Compared to its predecessor, incorporated a broader and more diverse dataset and introduced more than 158k multimodal instruction-following pair examples for fine-tuning. Furthermore, it scaled images up to 336x336 pixel resolutions, enabling it to handle detailed visual content and capture finer aspects of images \cite{llava_medium_2023}. It stands as a baseline for open-source VLMs by utilizing a simple linear projection layer as the bridging layer. 
 	
 	\item \textbf{CogVLM}: introduced the \textit{Visual experts} architecture, able to reason complex spacial scenarios. Specially for robotic environments, it handles task of identifying relative position superb due to the layers in its transformers architecture destined for image processing. 
 	
-	\item \textbf{Qwen2-VL}: latest version of the Qwen family, stands as one if not the most powerful open-source vision language models out there. Apart from supporting multilingualism, stands out understanding long duration videos and images of different resolutions, it has been the model I have been experimenting with in the practical area of the work, due to its versatility and lightweight sub variants which preserve the overall performance. 
-	
 	\item \textbf{Gemini}: developed by Google, this model's defining feature is its massive context window, reaching up to 2 million tokens. This long-context capability enables the model to perform sophisticated temporal reasoning, identifying long-term patterns in agent behavior that models with smaller memory buffers would overlook. However, it's close source policy restricts the insight to its deep infrastructure. 
 	
 	\item \textbf{GPT-4V}: its strength lies in its world-grounding and common-sense reasoning, capable of interpreting high-level human instructions and translating them into logical sub-tasks. While its architecture remains undisclosed as the model mentioned beforehand, it serves as the primary benchmark for zero-shot performance in robotic task planning and complex scene description.
+	
+	\item \textbf{Qwen2-VL}: latest version of the Qwen family, stands as one if not the most powerful open-source vision language models out there. Apart from supporting multilingualism, stands out understanding long duration videos and images of different resolutions, it has been the model I have been experimenting with in the practical area of the work, due to its versatility and lightweight sub variants which preserve the overall performance.
 \end{enumerate}
 
 Looking at the models collected at table \ref{tab:vlm_comparison_main}, there are some properties that show the evolution and shift from some tendencies to others. Among those trends, there are some that could be highlighted:
@@ -465,7 +472,7 @@ After collecting the data for benchmark evaluation, it's benchmark evaluation ti
 \end{figure}
 
 \subsection{Vision Language Action (VLA) Models}
-As the latest step of VLM evolutions, a new sub variant arised with the name of vision-language-action (VLA) models. Multimodal foundational models which include all the prior work of the VLMs, adding the actions space to the vision and language ones. With these models, given an input image or video of the robot's surroundings alongside a text instruction, the VLA directly outputs low-level robot action instructions to be executed to accomplish the task \cite{wiki_vla_2026}. 
+As the latest step of VLM evolutions, a new sub variant arose with the name of vision-language-action (VLA) models. Multimodal foundational models which include all the prior work of the VLMs, adding the actions space to the vision and language ones. With these models, given an input image or video of the robot's surroundings alongside a text instruction, the VLA directly outputs low-level robot action instructions to be executed to accomplish the task \cite{wiki_vla_2026}. 
 
 The architecture of the VLA would stand as the standard VLM architecture just changing the decoder to an \textit{action decoder} which translates the latent VLM representation into continuous output actions to be directly applied on the robot. 
 
@@ -495,8 +502,6 @@ However, current VLA models still face significant challenges regarding high-fre
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Reinforcement Learning and Multi-Agent Systems in Robotics}
-%Para las secciones 2.8.1 y 2.8.2 que te faltan, te sugiero estos puntos clave que están muy "trending" en 2025:VLM como "High-level Planner": Menciona que la tendencia actual es el Hierarchical RL (HRL), donde el VLM es el "cerebro" que descompone una orden compleja (ej. "Limpia la mesa de forma cooperativa") en sub-metas que los agentes de RL ejecutan a bajo nivel.VLM-based Reward Shaping: Esta es una idea potente para tu tesis. Explica cómo se están usando VLMs para generar recompensas densas (dense rewards). Si el robot se acerca al objetivo, el VLM lo "ve" y le da una señal positiva, solucionando el problema de las recompensas escasas (sparse rewards) en RL.Multi-Agent Coordination (Communication): En MARL, cita arquitecturas de comunicación mediante lenguaje natural. En lugar de pasarse vectores numéricos, los agentes de SOTA se pasan mensajes de texto que otros VLMs interpretan para colaborar.
-
 In the context of machine learning, RL is concerned with how an intelligent agent should take actions in a dynamic environment in order to maximize a reward signal. The agent must make decisions between trying new actions to learn more about the environment or using current knowledge of the environment to take the best action, balancing the exploration/exploitation trade.  
 
 \begin{figure}[H]
@@ -535,22 +540,39 @@ As illustrated in the comparison image below \ref{fig:VARL_comparison} for a rob
 \subsubsection{VLM-based Reward Shaping}
 Another promising approach is to employ VLMs and LLMs as reward designers. Rather than suggesting direct actions, these models are used to shape or generate reward signals that guide reinforcement learning agents. Typically those rewards are generated by letting large language models read the task descriptions. \textit{Eureka} and \textit{Text2Reward} are some of the models which take that approach. 
 
-\subsection{Multi Agent Robotic Systems}
+\subsection{Multi Agent Robotic Systems (MARS)}
 Multi-agent robotic systems (MARS) are distributed autonomous systems where multiple robotic agents cooperate, compete, or interact to solve complex tasks that are too large, dynamic, or unpredictable for a single robot.  Unlike centralized AI, MARS distributes intelligence across the whole network, allowing each agent to make decisions based on local information, which enhances scalability, adaptability, and fault tolerance.
 
-The core challenge in MARS lies in the overall coordination among agents, ensuring that individual actions contribute to a global objective without causing collisions or redundant efforts. In cooperative tasks, agents must share a common goal while managing their own sensory inputs and actuators.
+Where the core challenge of MARS actually lies is in the coordination among agents, to address this modern multi-agent frameworks often go for one of two algorithm approaches: centralized and decentralized learning \cite{yu2022surprisingeffectivenessppocooperative}. Centralized methods directly learn a single policy to produce the joint actions of all agents, whereas in decentralized learning each agent optimizes its rewards independently. \textit{Centralized training and decentralized execution} (CTDE) algorithms fall in between these two approaches. This approach enables the agent to learn global information during the training phase in simulation while maintaining autonomy during execution. By using a centralized critic that observes the global state and the actions taken by the agents during training, the learning process becomes more stable. Nevertheless, the actors being the robots only have access to their local actions, enabling them to not rely on the critic once deployed on inference. 
 
-To address these challenges, modern MARS often adopt the \textbf{Centralized Training, Decentralized Execution (CTDE)} framework. During the training phase in simulation, the system has access to the global state of the environment and the actions of all agents, allowing for efficient learning of joint strategies. However, during execution (inference), each robotic agent operates autonomously, relying only on its local observations and the high-level guidance provided by the VLM. This approach effectively bridges the gap between collective intelligence and individual autonomy.
+\subsubsection{Multi Agent Reinforcement Learning (MARL)}
+MARL addresses the sequential decision-making problem of multiple autonomous agents which operate in a common shared environment, each of which aims to optimize its own long-term reward by interacting with the environment and the other agents \cite{zhang2021multiagentreinforcementlearningselective}. There are two different but closely related theoretical frameworks for MARL:
 
-Furthermore, the integration of MARS in high-fidelity simulators allows for the exploration of \textit{emergent behaviors}, where complex cooperative strategies arise from simple local rules and reward signals. This is particularly relevant for tasks requiring physical manipulation, where agents must synchronize their movements in space and time to achieve success.
+\begin{enumerate}
+	\item \textbf{Markov/Stochastic Games}: MDP generalization that captures the interconnection of multiple agents. In a Stochastic Game, the environment transitions between states based on the joint actions of all agents. Each agent receives a reward that depends not only on its own action and the current state but also on the actions of the others'. This model is particularly useful for representing continuous or long-term interactions in dynamic environments where the state is fully or partially observable at each discrete time step.
+	
+	\item \textbf{Extensive-Form Games}: This framework represents the interaction as a tree structure, capturing the sequential nature of decision-making. Unlike Stochastic Games, Extensive-Form Games are ideal for modeling scenarios where agents move in a specific order or where there is imperfect information. For instance when some agents do not know the previous moves of others. 
+\end{enumerate}
 
-
+Multi-agent RL suffers from several theoretical challenges in addition to those raised in single-agent reinforcement learning. Being those the non-unique learning goals of the agents in the environment, the non-stationarity of the environment caused by multiple agents learning concurrently, scalability issues and structural information issues.
 
 \subsection{Sim to Real Frameworks}
-Dado que usas Isaac Sim, es fundamental dedicar un par de párrafos a por qué esta herramienta es el SOTA:
+Sim2Real frameworks are computational systems designed to transfer control policies and models trained in simulated environments to real world applications. Generally implementing reinforcement learning in virtual environments, these frameworks seek model transferability of the knowledge obtained by the agents into the real world, trying to break that \textit{reality gap} consisting of physical, visual and dynamic discrepancies between the simulator and the real world. Among the state of art frameworks, there are several advanced options to choose from. 
 
-Photorealistic \& Physics Simulation: Explica que Isaac Sim utiliza NVIDIA PhysX y RTX para que la imagen que ve el VLM sea lo más parecida posible a la realidad.
+\begin{itemize}
+	\item \textbf{Sim2Real-AD}: is a modular framework specially designed for autonomous driving that enables zero-shot deployment of vision language model guided reinforcement learning policies \cite{huang2026sim2realadmodularsimtorealframework}. The framework is known for implementing SOTA technology such as a \textit{geometric observation bridge} (GOB) for converting monocular camera images into the simulator's \textit{bird eye view} (BEV) representation and a \textit{physics-aware action mapping} (PAM) to translate policy outputs into physical commands.
+	
+%	\begin{figure}[H]
+%		\centering
+%		\includegraphics[height=.5\textwidth]{imgs/sim2realAD.png}
+%		\label{fig:sim2realAD}
+%		\caption{In order to tackle sim-to-real challenges}
+%	\end{figure}
+	
+	\item \textbf{EAGERx}: provides a unified software pipeline for robot learning that supports multiple simulation engines and integrates state, action, and time-scale abstractions. The open source project available in GitHub \cite{eagerx2023}, enables the user to define environments as graph nodes visualized in a GUI. Policies are trained in simulation and zero-shot evaluated on real systems and EAGERx's design allows users to create complex environments using modular compositions. 
+	
+	\item \textbf{NVIDIA IsaacSim}: NVIDIA's physics simulation platform built on top of \textit{NVIDIA Omniverse}, which will in fact be the selected framework for the practical field of the project. IsaacSim enables zero-shot sim2real transfer offering accurate physics simulation for realistic robot dynamics, synthetic data generation with domain randomization to train more robust models and it also supports reinforcement and imitation learning. On top of that it is integrated with \textit{Isaac ROS} and \textit{Isaac Lab} for real time deployment. Furthermore, Isaac Sim leverages NVIDIA RTX technology for ray-traced rendering, providing the photorealistic visual inputs essential for the effective reasoning of VLMs. The platform is built on the \textit{Universal Scene Description} (USD) framework, which facilitates seamless asset interoperability and scene management. Crucially for multi-agent research, Isaac Sim enables massively parallel simulation by executing physics and perception pipelines entirely on the GPU, allowing for the simultaneous training of large robotic fleets in complex, shared environments. As a quick note, I have preferred to keep the overview of the framework simple in this section in order to deepen in the corresponding chapter due to its importance and links to the practical environment development. 
+\end{itemize}
 
-Parallelization: Menciona que Isaac Sim permite entrenar miles de agentes en paralelo en una sola GPU, lo que reduce el tiempo de entrenamiento de semanas a horas.
-
-Domain Randomization: Explica que al variar luces, colores y texturas en el simulador, preparas al VLM y al agente de RL para ser robustos ante cambios en el mundo real.
+% Finally, a conclusion paragraph for the SOTA chapter
+In conclusion, this chapter has reviewed the transition from static vision-language reasoning to the embodied robot action. While current vision-language-action models seem promising, the complexity of multi-agent cooperation in critical environments requires a modular approach. The following chapters will detail how the reasoning capabilities of the selected VLM are integrated in multi-agent environments within NVIDIA IsaacSim to achieve coordinated robotic tasks.

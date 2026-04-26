@@ -10,11 +10,11 @@
 \contentsline {figure}{\numberline {2.6}{\ignorespaces Masked autoencoder architecture}}{13}{figure.44}%
 \contentsline {figure}{\numberline {2.7}{\ignorespaces CLIP workflow}}{17}{figure.56}%
 \contentsline {figure}{\numberline {2.8}{\ignorespaces VLM trained from scratch vs training strategy using a pre-trained LLM as backbone}}{21}{figure.70}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Most common benchmark evaluation metrics illustrated visually; showing \textit {answer matching, multiple choice} and \textit {image-caption similarity} graphical examples.}}{27}{figure.89}%
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Standard vision language action model architecture.}}{28}{figure.92}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Given an image observation and a language instruction, the model predicts 7-dimensional robot control actions. The architecture consists of three key components: a vision encoder, a projector that maps visual features to the language embedding space, and the LLM backbone, in this case, a Llama 2 7B-parameter large language model.}}{28}{figure.95}%
-\contentsline {figure}{\numberline {2.12}{\ignorespaces Basic RL worfklow schema: the agent iteratively maps states to actions by maximizing a cumulative reward signal through trial and error interaction.}}{29}{figure.98}%
-\contentsline {figure}{\numberline {2.13}{\ignorespaces Different RL training approach comparison}}{31}{figure.103}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Most common benchmark evaluation metrics illustrated visually; showing \textit {answer matching, multiple choice} and \textit {image-caption similarity} graphical examples.}}{28}{figure.91}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Standard vision language action model architecture.}}{29}{figure.94}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Given an image observation and a language instruction, the model predicts 7-dimensional robot control actions. The architecture consists of three key components: a vision encoder, a projector that maps visual features to the language embedding space, and the LLM backbone, in this case, a Llama 2 7B-parameter large language model.}}{29}{figure.97}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Basic RL worfklow schema: the agent iteratively maps states to actions by maximizing a cumulative reward signal through trial and error interaction.}}{30}{figure.100}%
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Different RL training approach comparison}}{32}{figure.105}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
