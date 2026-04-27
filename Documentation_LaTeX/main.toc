@@ -19,64 +19,69 @@
 \contentsline {subsection}{\numberline {2.2.1}Earliest models}{6}{subsection.24}%
 \contentsline {subsection}{\numberline {2.2.2}Deep learning based models}{7}{subsection.25}%
 \contentsline {subsection}{\numberline {2.2.3}The Transformers architecture Standard}{8}{subsection.26}%
-\contentsline {subsubsection}{\numberline {2.2.3.1}VLM tasks with Transformers}{9}{subsubsection.32}%
-\contentsline {section}{\numberline {2.3}From Encoders to Generative LLMs}{11}{section.35}%
-\contentsline {subsection}{\numberline {2.3.1}Language encoder}{11}{subsection.36}%
-\contentsline {subsection}{\numberline {2.3.2}The LLM transition: from encoders to decoder-only architectures}{11}{subsection.37}%
-\contentsline {section}{\numberline {2.4}Vision Transformers}{12}{section.38}%
-\contentsline {subsection}{\numberline {2.4.1}Vision encoder \& Vision Transformers (ViT)}{12}{subsection.39}%
-\contentsline {section}{\numberline {2.5}Multimodal Alignment: CLIP}{16}{section.49}%
-\contentsline {subsection}{\numberline {2.5.1}CLIP: Contrastive Language-Image Pretraining}{16}{subsection.50}%
-\contentsline {section}{\numberline {2.6}Modality Bridging and Pseudo-Tokens}{19}{section.59}%
-\contentsline {subsection}{\numberline {2.6.1}Modality bridging mechanism}{19}{subsection.60}%
-\contentsline {subsection}{\numberline {2.6.2}Pseudo-Tokens}{19}{subsection.61}%
-\contentsline {section}{\numberline {2.7}Training Strategies in VLMs}{20}{section.62}%
-\contentsline {subsection}{\numberline {2.7.1}Contrastive Pre-Training}{20}{subsection.63}%
-\contentsline {subsection}{\numberline {2.7.2}Generative Pre-Training}{20}{subsection.64}%
-\contentsline {subsection}{\numberline {2.7.3}Visual Instruction Tuning}{21}{subsection.65}%
-\contentsline {subsection}{\numberline {2.7.4}Vision Language Models Training Paradigm}{21}{subsection.66}%
-\contentsline {subsubsection}{\numberline {2.7.4.1}Training a VLM from Scratch}{21}{subsubsection.67}%
-\contentsline {subsubsection}{\numberline {2.7.4.2}Starting from a pre-trained LLM}{21}{subsubsection.68}%
-\contentsline {section}{\numberline {2.8}Current SOTA VLMs}{22}{section.73}%
-\contentsline {subsection}{\numberline {2.8.1}State of the Art Models}{23}{subsection.74}%
-\contentsline {subsection}{\numberline {2.8.2}Benchmarks}{25}{subsection.84}%
-\contentsline {subsubsection}{\numberline {2.8.2.1}Benchmark Data Collection}{26}{subsubsection.87}%
-\contentsline {subsubsection}{\numberline {2.8.2.2}Evaluation Metrics}{27}{subsubsection.91}%
-\contentsline {subsection}{\numberline {2.8.3}Vision Language Action (VLA) Models}{29}{subsection.94}%
-\contentsline {subsubsection}{\numberline {2.8.3.1}OpenVLA}{30}{subsubsection.97}%
-\contentsline {section}{\numberline {2.9}Reinforcement Learning and Multi-Agent Systems in Robotics}{31}{section.100}%
-\contentsline {subsection}{\numberline {2.9.1}Reinforcement Learning in robotic environments}{31}{subsection.103}%
-\contentsline {subsection}{\numberline {2.9.2}RL and VLM Combination}{32}{subsection.104}%
-\contentsline {subsubsection}{\numberline {2.9.2.1}Vision Language Models as Action Advisors}{32}{subsubsection.105}%
-\contentsline {subsubsection}{\numberline {2.9.2.2}VLM-based Reward Shaping}{33}{subsubsection.108}%
-\contentsline {subsection}{\numberline {2.9.3}Multi Agent Robotic Systems (MARS)}{33}{subsection.109}%
-\contentsline {subsubsection}{\numberline {2.9.3.1}Multi Agent Reinforcement Learning (MARL)}{34}{subsubsection.110}%
-\contentsline {subsection}{\numberline {2.9.4}Sim to Real Frameworks}{34}{subsection.113}%
-\contentsline {chapter}{\numberline {3}Solution approach}{36}{chapter.114}%
-\contentsline {section}{\numberline {3.1}Solution proposal}{36}{section.115}%
-\contentsline {section}{\numberline {3.2}System architecture}{36}{section.116}%
-\contentsline {section}{\numberline {3.3}Tools used}{36}{section.117}%
-\contentsline {section}{\numberline {3.4}Workflow}{36}{section.118}%
-\contentsline {chapter}{\numberline {4}Solution development}{37}{chapter.119}%
-\contentsline {section}{\numberline {4.1}IsaacSim environment definition}{37}{section.120}%
-\contentsline {subsection}{\numberline {4.1.1}Agents}{37}{subsection.121}%
-\contentsline {subsection}{\numberline {4.1.2}Cameras}{37}{subsection.122}%
-\contentsline {subsection}{\numberline {4.1.3}Physics}{37}{subsection.123}%
-\contentsline {section}{\numberline {4.2}Individual component operation}{37}{section.124}%
-\contentsline {chapter}{\numberline {5}Experimentation and validation}{38}{chapter.125}%
-\contentsline {section}{\numberline {5.1}First scenarios}{38}{section.126}%
-\contentsline {section}{\numberline {5.2}Last scenario}{38}{section.127}%
-\contentsline {section}{\numberline {5.3}Successful and failure tries}{38}{section.128}%
-\contentsline {section}{\numberline {5.4}Results obtained in each scenario}{38}{section.129}%
-\contentsline {section}{\numberline {5.5}Result discussion}{38}{section.130}%
-\contentsline {chapter}{\numberline {6}Conclusions}{39}{chapter.131}%
-\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{39}{section.132}%
-\contentsline {section}{\numberline {6.2}Limitations found}{39}{section.133}%
-\contentsline {section}{\numberline {6.3}Future work}{40}{section.134}%
-\contentsline {chapter}{\numberline {7}Appendix}{44}{chapter.136}%
-\contentsline {section}{\numberline {7.1}Instalation guide}{44}{section.137}%
-\contentsline {section}{\numberline {7.2}Relevant code}{44}{section.138}%
-\contentsline {section}{\numberline {7.3}Prompts used}{44}{section.139}%
-\contentsline {section}{\numberline {7.4}Result table}{44}{section.140}%
-\contentsline {section}{\numberline {7.5}Tensorboard analysis}{44}{section.141}%
+\contentsline {subsubsection}{\numberline {2.2.3.1}VLM tasks with Transformers}{9}{subsubsection.30}%
+\contentsline {section}{\numberline {2.3}From Encoders to Generative LLMs}{10}{section.33}%
+\contentsline {subsection}{\numberline {2.3.1}Language encoder}{10}{subsection.34}%
+\contentsline {subsection}{\numberline {2.3.2}The LLM transition: from encoders to decoder-only architectures}{10}{subsection.35}%
+\contentsline {section}{\numberline {2.4}Vision Transformers}{11}{section.36}%
+\contentsline {subsection}{\numberline {2.4.1}Vision encoder \& Vision Transformers (ViT)}{11}{subsection.37}%
+\contentsline {section}{\numberline {2.5}Multimodal Alignment: CLIP}{15}{section.47}%
+\contentsline {subsection}{\numberline {2.5.1}CLIP: Contrastive Language-Image Pretraining}{15}{subsection.48}%
+\contentsline {section}{\numberline {2.6}Modality Bridging and Pseudo-Tokens}{18}{section.57}%
+\contentsline {subsection}{\numberline {2.6.1}Modality bridging mechanism}{18}{subsection.58}%
+\contentsline {subsection}{\numberline {2.6.2}Pseudo-Tokens}{19}{subsection.59}%
+\contentsline {section}{\numberline {2.7}Training Strategies in VLMs}{19}{section.60}%
+\contentsline {subsection}{\numberline {2.7.1}Contrastive Pre-Training}{20}{subsection.61}%
+\contentsline {subsection}{\numberline {2.7.2}Generative Pre-Training}{20}{subsection.62}%
+\contentsline {subsection}{\numberline {2.7.3}Visual Instruction Tuning}{20}{subsection.63}%
+\contentsline {subsection}{\numberline {2.7.4}Vision Language Models Training Paradigm}{21}{subsection.64}%
+\contentsline {subsubsection}{\numberline {2.7.4.1}Training a VLM from Scratch}{21}{subsubsection.65}%
+\contentsline {subsubsection}{\numberline {2.7.4.2}Starting from a pre-trained LLM}{21}{subsubsection.66}%
+\contentsline {section}{\numberline {2.8}Current SOTA VLMs}{22}{section.71}%
+\contentsline {subsection}{\numberline {2.8.1}State of the Art Models}{22}{subsection.72}%
+\contentsline {subsection}{\numberline {2.8.2}Benchmarks}{25}{subsection.82}%
+\contentsline {subsubsection}{\numberline {2.8.2.1}Benchmark Data Collection}{26}{subsubsection.85}%
+\contentsline {subsubsection}{\numberline {2.8.2.2}Evaluation Metrics}{26}{subsubsection.89}%
+\contentsline {subsection}{\numberline {2.8.3}Vision Language Action (VLA) Models}{28}{subsection.92}%
+\contentsline {subsubsection}{\numberline {2.8.3.1}OpenVLA}{29}{subsubsection.95}%
+\contentsline {section}{\numberline {2.9}Reinforcement Learning and Multi-Agent Systems in Robotics}{30}{section.98}%
+\contentsline {subsection}{\numberline {2.9.1}Reinforcement Learning in robotic environments}{30}{subsection.101}%
+\contentsline {subsection}{\numberline {2.9.2}RL and VLM Combination}{31}{subsection.102}%
+\contentsline {subsubsection}{\numberline {2.9.2.1}Vision Language Models as Action Advisors}{31}{subsubsection.103}%
+\contentsline {subsubsection}{\numberline {2.9.2.2}VLM-based Reward Shaping}{32}{subsubsection.106}%
+\contentsline {subsection}{\numberline {2.9.3}Multi Agent Robotic Systems (MARS)}{32}{subsection.107}%
+\contentsline {subsubsection}{\numberline {2.9.3.1}Multi Agent Reinforcement Learning (MARL)}{33}{subsubsection.108}%
+\contentsline {subsection}{\numberline {2.9.4}Sim to Real Frameworks}{33}{subsection.111}%
+\contentsline {chapter}{\numberline {3}Solution approach}{35}{chapter.112}%
+\contentsline {section}{\numberline {3.1}Solution proposal}{35}{section.113}%
+\contentsline {section}{\numberline {3.2}System architecture}{35}{section.114}%
+\contentsline {section}{\numberline {3.3}Workflow}{35}{section.115}%
+\contentsline {section}{\numberline {3.4}Tools used}{36}{section.123}%
+\contentsline {chapter}{\numberline {4}Design and Implementation}{37}{chapter.124}%
+\contentsline {section}{\numberline {4.1}Initial dummy experimentation}{37}{section.125}%
+\contentsline {subsection}{\numberline {4.1.1}CLIP Demo Analysis}{37}{subsection.126}%
+\contentsline {subsubsection}{\numberline {4.1.1.1}Simple Classification}{37}{subsubsection.127}%
+\contentsline {subsubsection}{\numberline {4.1.1.2}Zero-Shot Classification with CLIP}{38}{subsubsection.130}%
+\contentsline {subsubsection}{\numberline {4.1.1.3}Image Captioning with BLIP}{38}{subsubsection.131}%
+\contentsline {subsubsection}{\numberline {4.1.1.4}Visual Question Answering}{39}{subsubsection.132}%
+\contentsline {section}{\numberline {4.2}IsaacSim environment design}{39}{section.133}%
+\contentsline {subsection}{\numberline {4.2.1}First scenarios}{39}{subsection.134}%
+\contentsline {subsection}{\numberline {4.2.2}Last scenario}{39}{subsection.135}%
+\contentsline {section}{\numberline {4.3}VLM integration}{39}{section.136}%
+\contentsline {section}{\numberline {4.4}Agent Control}{39}{section.137}%
+\contentsline {section}{\numberline {4.5}Communication layer}{39}{section.138}%
+\contentsline {chapter}{\numberline {5}Results and Evaluation}{40}{chapter.139}%
+\contentsline {section}{\numberline {5.1}Successful and failure tries}{40}{section.140}%
+\contentsline {section}{\numberline {5.2}Results obtained in each scenario}{40}{section.141}%
+\contentsline {section}{\numberline {5.3}Result discussion}{40}{section.142}%
+\contentsline {chapter}{\numberline {6}Conclusions}{41}{chapter.143}%
+\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{41}{section.144}%
+\contentsline {section}{\numberline {6.2}Limitations found}{41}{section.145}%
+\contentsline {section}{\numberline {6.3}Future work}{42}{section.146}%
+\contentsline {chapter}{\numberline {7}Appendix}{46}{chapter.148}%
+\contentsline {section}{\numberline {7.1}Instalation guide}{46}{section.149}%
+\contentsline {section}{\numberline {7.2}Relevant code}{46}{section.150}%
+\contentsline {section}{\numberline {7.3}Prompts used}{46}{section.151}%
+\contentsline {section}{\numberline {7.4}Result table}{46}{section.152}%
+\contentsline {section}{\numberline {7.5}Tensorboard analysis}{46}{section.153}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

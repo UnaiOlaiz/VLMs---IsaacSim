@@ -43,6 +43,7 @@ bookmarks=true]{hyperref}
 \RequirePackage{amsmath}
 \RequirePackage{float}
 \RequirePackage{array}
+\RequirePackage{tikz}
 
 %% ------------------------------
 %% Listings Configuration (Code)

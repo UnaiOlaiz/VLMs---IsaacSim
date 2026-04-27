@@ -67,6 +67,12 @@ Junnan Li, Dongxu Li, Silvio Savarese, and Steven Hoi.
 \newblock In {\em International Conference on Machine Learning (ICML)}. PMLR,
   2023.
 
+\bibitem{openai_clip_2021}
+OpenAI.
+\newblock Clip: Contrastive language-image pre-training.
+\newblock \url{https://github.com/openai/CLIP}, 2021.
+\newblock Original implementation of the CLIP model.
+
 \bibitem{radford2021learningtransferablevisualmodels}
 Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
   Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark,

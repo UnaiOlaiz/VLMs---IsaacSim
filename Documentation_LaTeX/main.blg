@@ -5,45 +5,45 @@ The style file: plain.bst
 Database file #1: bibliography.bib
 Warning--to sort, need author or key in multimodal_learning_wiki
 Warning--to sort, need author or key in li2025surveystateartlarge
-You've used 29 entries,
+You've used 30 entries,
             2118 wiz_defined-function locations,
-            608 strings with 9995 characters,
-and the built_in function-call counts, 9412 in all, are:
-= -- 775
-> -- 762
+            613 strings with 10139 characters,
+and the built_in function-call counts, 9629 in all, are:
+= -- 797
+> -- 769
 < -- 0
-+ -- 309
-- -- 276
-* -- 641
-:= -- 1626
-add.period$ -- 78
-call.type$ -- 29
-change.case$ -- 224
++ -- 312
+- -- 278
+* -- 647
+:= -- 1663
+add.period$ -- 82
+call.type$ -- 30
+change.case$ -- 228
 chr.to.int$ -- 0
-cite$ -- 31
-duplicate$ -- 210
-empty$ -- 647
-format.name$ -- 276
-if$ -- 1883
+cite$ -- 32
+duplicate$ -- 217
+empty$ -- 669
+format.name$ -- 278
+if$ -- 1931
 int.to.chr$ -- 0
-int.to.str$ -- 29
+int.to.str$ -- 30
 missing$ -- 1
-newline$ -- 138
-num.names$ -- 54
-pop$ -- 362
+newline$ -- 144
+num.names$ -- 56
+pop$ -- 370
 preamble$ -- 1
-purify$ -- 196
+purify$ -- 199
 quote$ -- 0
-skip$ -- 212
+skip$ -- 218
 stack$ -- 0
-substring$ -- 149
-swap$ -- 30
+substring$ -- 154
+swap$ -- 31
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 116
+type$ -- 120
 warning$ -- 2
-while$ -- 54
-width$ -- 31
-write$ -- 270
+while$ -- 56
+width$ -- 32
+write$ -- 282
 (There were 2 warnings)
