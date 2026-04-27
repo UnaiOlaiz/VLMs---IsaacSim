@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.17)  26 APR 2026 19:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.17)  27 APR 2026 10:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -840,128 +840,127 @@ Class scrbook Warning: \float@addtolists detected!
 (scrbook)              a package that still implements the
 (scrbook)              deprecated \float@addtolist interface.
 
-(./Chapters/Introduction.tex) [1
+(./Chapters/Introduction.tex [1
 
 
 
-]
+]) [2{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
 chapter 2.
 (./Chapters/SOTA.tex
-<imgs/boltzmann.png, id=303, 250.9375pt x 237.88875pt>
+<imgs/boltzmann.png, id=314, 250.9375pt x 237.88875pt>
 File: imgs/boltzmann.png Graphic file (type png)
 <use imgs/boltzmann.png>
 Package pdftex.def Info: imgs/boltzmann.png  used on input line 11.
 (pdftex.def)             Requested size: 136.57462pt x 129.478pt.
- [2
+ [3
 
  <./imgs/boltzmann.png>]
-<imgs/Perceiver.png, id=311, 673.51625pt x 222.8325pt>
+<imgs/Perceiver.png, id=322, 673.51625pt x 222.8325pt>
 File: imgs/Perceiver.png Graphic file (type png)
 <use imgs/Perceiver.png>
 Package pdftex.def Info: imgs/Perceiver.png  used on input line 27.
 (pdftex.def)             Requested size: 409.71692pt x 135.557pt.
- [3{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./imgs/Perceiv
-er.png>] [4] [5] [6] [7]
-<imgs/The-Transformer-model-architecture.png, id=354, 250.9375pt x 225.84375pt>
+ [4 <./imgs/Perceiver.png>]
+[5] [6] [7] [8]
+<imgs/The-Transformer-model-architecture.png, id=364, 250.9375pt x 225.84375pt>
 
 File: imgs/The-Transformer-model-architecture.png Graphic file (type png)
 <use imgs/The-Transformer-model-architecture.png>
 Package pdftex.def Info: imgs/The-Transformer-model-architecture.png  used on i
 nput line 136.
 (pdftex.def)             Requested size: 273.14923pt x 245.86154pt.
-
-[8 <./imgs/The-Transformer-model-architecture.png>]
-<imgs/phrase_grounding.jpg, id=363, 978.65625pt x 851.18pt>
+ [9 <./imgs/The-Transformer-model-architecture.png>]
+<imgs/phrase_grounding.jpg, id=373, 978.65625pt x 851.18pt>
 File: imgs/phrase_grounding.jpg Graphic file (type jpg)
 <use imgs/phrase_grounding.jpg>
 Package pdftex.def Info: imgs/phrase_grounding.jpg  used on input line 149.
 (pdftex.def)             Requested size: 227.62206pt x 197.97522pt.
- [9 <./imgs/phrase_grounding.jpg>] [10]
+ [10 <./imgs/phrase_grounding.jpg>] [11]
 LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 1
 90.
- (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
-) [11]
-<imgs/Vision_Transformer.png, id=389, 963.6pt x 914.41624pt>
+) [12]
+<imgs/Vision_Transformer.png, id=399, 963.6pt x 914.41624pt>
 File: imgs/Vision_Transformer.png Graphic file (type png)
 <use imgs/Vision_Transformer.png>
 Package pdftex.def Info: imgs/Vision_Transformer.png  used on input line 204.
 (pdftex.def)             Requested size: 318.66948pt x 302.40012pt.
-
-[12 <./imgs/Vision_Transformer.png>]
-<imgs/Masked_Autoencoder..png, id=399, 250.9375pt x 139.52126pt>
+ [13 <./imgs/Vision_Transformer.png>]
+<imgs/Masked_Autoencoder..png, id=409, 250.9375pt x 139.52126pt>
 File: imgs/Masked_Autoencoder..png Graphic file (type png)
 <use imgs/Masked_Autoencoder..png>
 Package pdftex.def Info: imgs/Masked_Autoencoder..png  used on input line 220.
 (pdftex.def)             Requested size: 273.14923pt x 151.88779pt.
- [13 <./imgs/Masked_Autoencoder..png>]
-[14] [15] [16]
-<imgs/CLIP.png, id=435, 2170.1075pt x 764.8575pt>
+ [14 <./imgs/Masked_Autoencoder..png>] [15] [16] [17]
+<imgs/CLIP.png, id=446, 2170.1075pt x 764.8575pt>
 File: imgs/CLIP.png Graphic file (type png)
 <use imgs/CLIP.png>
 Package pdftex.def Info: imgs/CLIP.png  used on input line 290.
 (pdftex.def)             Requested size: 364.19667pt x 128.35513pt.
- [17 <./imgs/CLIP.png>] [18] [19] [20]
-<imgs/train_scratch_vs_llm_backbone.png, id=473, 574.145pt x 339.2675pt>
+
+[18 <./imgs/CLIP.png>] [19] [20] [21]
+<imgs/train_scratch_vs_llm_backbone.png, id=483, 574.145pt x 339.2675pt>
 File: imgs/train_scratch_vs_llm_backbone.png Graphic file (type png)
 <use imgs/train_scratch_vs_llm_backbone.png>
 Package pdftex.def Info: imgs/train_scratch_vs_llm_backbone.png  used on input 
 line 350.
 (pdftex.def)             Requested size: 364.19667pt x 215.20985pt.
- [21 <./imgs/train_scratch_vs_llm_backbone.png>]
+ [22 <./imgs/train_scratch_vs_llm_backbone.png>]
 Overfull \hbox (13.69952pt too wide) in paragraph at lines 368--379
  [][] 
  []
 
-[22] [23] [24] [25] [26]
-<imgs/benchmark_metrics.png, id=531, 648.4225pt x 361.35pt>
+[23] [24] [25] [26] [27]
+<imgs/benchmark_metrics.png, id=541, 648.4225pt x 361.35pt>
 File: imgs/benchmark_metrics.png Graphic file (type png)
 <use imgs/benchmark_metrics.png>
 Package pdftex.def Info: imgs/benchmark_metrics.png  used on input line 469.
 (pdftex.def)             Requested size: 455.24411pt x 253.69865pt.
- [27]
-<imgs/VLA.png, id=537, 376.40625pt x 79.04532pt>
+ [28]
+<imgs/VLA.png, id=547, 376.40625pt x 79.04532pt>
 File: imgs/VLA.png Graphic file (type png)
 <use imgs/VLA.png>
 Package pdftex.def Info: imgs/VLA.png  used on input line 481.
 (pdftex.def)             Requested size: 273.14923pt x 57.36487pt.
- [28 <./imgs/benchmark_metrics.png>]
-<imgs/OpenVLA_architecture.png, id=546, 957.5775pt x 368.87813pt>
+ [29 <./imgs/benchmark_metrics.png>]
+<imgs/OpenVLA_architecture.png, id=558, 957.5775pt x 368.87813pt>
 File: imgs/OpenVLA_architecture.png Graphic file (type png)
 <use imgs/OpenVLA_architecture.png>
 Package pdftex.def Info: imgs/OpenVLA_architecture.png  used on input line 493.
 
 (pdftex.def)             Requested size: 364.19667pt x 140.29333pt.
- [29 <./imgs/VLA.png> <./imgs/OpenVLA_architecture.png>]
-<imgs/reinforcement-learning-fig1-700.jpg, id=558, 421.575pt x 162.6075pt>
+ [30 <./imgs/VLA.png> <./imgs/OpenVLA_architecture.png>]
+<imgs/reinforcement-learning-fig1-700.jpg, id=568, 421.575pt x 162.6075pt>
 File: imgs/reinforcement-learning-fig1-700.jpg Graphic file (type jpg)
 <use imgs/reinforcement-learning-fig1-700.jpg>
 Package pdftex.def Info: imgs/reinforcement-learning-fig1-700.jpg  used on inpu
 t line 509.
 (pdftex.def)             Requested size: 227.62206pt x 87.79929pt.
- [30 <./imgs/reinforcement-learning-fig1-700.jpg>]
-<imgs/VARL.png, id=568, 1137.4997pt x 381.67593pt>
+ [31 <./imgs/reinforcement-learning-fig1-700.jpg>]
+<imgs/VARL.png, id=578, 1137.4997pt x 381.67593pt>
 File: imgs/VARL.png Graphic file (type png)
 <use imgs/VARL.png>
 Package pdftex.def Info: imgs/VARL.png  used on input line 535.
 (pdftex.def)             Requested size: 364.19667pt x 122.20285pt.
- [31] [32 <./imgs/VARL.png>] [33]) [34]
+ [32] [33 <./imgs/VARL.png>] [34]) [35]
 chapter 3.
-(./Chapters/Solution_approach.tex) [35
+(./Chapters/Solution_approach.tex) [36
 
 ]
 chapter 4.
-(./Chapters/Solution_development_and_implementation.tex) [36
+(./Chapters/Solution_development_and_implementation.tex) [37
 
 ]
 chapter 5.
-(./Chapters/Experimentation_and_evolution.tex) [37
+(./Chapters/Experimentation_and_evolution.tex) [38
 
 ]
 chapter 6.
-(./Chapters/Conclusions.tex [38
+(./Chapters/Conclusions.tex [39
 
-]) (./main.bbl [39]
+]) (./main.bbl [40]
 Underfull \hbox (badness 10000) in paragraph at lines 32--39
 []\T1/cmr/m/n/10 Gravio Team.  Vision-language mod-els (VLM) vs vi-sual ques-
  []
@@ -978,7 +977,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 32--39
 wering-[]vqa-[]in-[]2025$[][]\T1/cmr/m/n/10 , Mar 2025.
  []
 
-[40
+[41
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 94--98
@@ -986,9 +985,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 94--98
 0 https : / / blog . roboflow . com /
  []
 
-[41]) [42]
+[42]) [43]
 chapter 7.
-(./Chapters/Appendix.tex) [43
+(./Chapters/Appendix.tex) [44
 
 ] (./main.aux)
  ***********
@@ -1002,10 +1001,10 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 20116 strings out of 474222
- 367615 string characters out of 5748733
+ 20121 strings out of 474222
+ 367662 string characters out of 5748733
  1944975 words of memory out of 5000000
- 41849 multiletter control sequences out of 15000+600000
+ 41851 multiletter control sequences out of 15000+600000
  578155 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  122i,21n,121p,10941b,677s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1029,10 +1028,10 @@ rm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/sha
 re/texmf/fonts/type1/public/cm-super/sfsl1095.pfb></usr/share/texmf/fonts/type1
 /public/cm-super/sfti0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sft
 i1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on main.pdf (51 pages, 1630834 bytes).
+Output written on main.pdf (52 pages, 1634385 bytes).
 PDF statistics:
- 1047 PDF objects out of 1200 (max. 8388607)
- 913 compressed objects within 10 object streams
- 220 named destinations out of 1000 (max. 500000)
- 687 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1064 PDF objects out of 1200 (max. 8388607)
+ 929 compressed objects within 10 object streams
+ 223 named destinations out of 1000 (max. 500000)
+ 703 words of extra memory for PDF output out of 10000 (max. 10000000)
 
