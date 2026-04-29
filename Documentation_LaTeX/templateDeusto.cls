@@ -45,6 +45,27 @@ bookmarks=true]{hyperref}
 \RequirePackage{array}
 \RequirePackage{tikz}
 
+% TO NOT RAISE CHINESE ERRORS
+\DeclareUnicodeCharacter{5347}{\relax}
+\DeclareUnicodeCharacter{7EA7}{\relax}
+\DeclareUnicodeCharacter{4E4B}{\relax}
+\DeclareUnicodeCharacter{8DEF}{\relax}
+\DeclareUnicodeCharacter{FF1A}{\relax}
+\DeclareUnicodeCharacter{3001}{\relax}
+\DeclareUnicodeCharacter{4E8C}{\relax}
+\DeclareUnicodeCharacter{95F4}{\relax}
+\DeclareUnicodeCharacter{7A7A}{\relax}
+\DeclareUnicodeCharacter{79D1}{\relax}
+\DeclareUnicodeCharacter{5B66}{\relax}
+\DeclareUnicodeCharacter{7801}{\relax}
+\DeclareUnicodeCharacter{7F16}{\relax}
+\DeclareUnicodeCharacter{7F6E}{\relax}
+\DeclareUnicodeCharacter{4F4D}{\relax}
+\DeclareUnicodeCharacter{5F0F}{\relax}
+\DeclareUnicodeCharacter{8F6C}{\relax}
+\DeclareUnicodeCharacter{65CB}{\relax}
+\DeclareUnicodeCharacter{7684}{\relax}
+\DeclareUnicodeCharacter{7EF4}{\relax}
 %% ------------------------------
 %% Listings Configuration (Code)
 %% ------------------------------

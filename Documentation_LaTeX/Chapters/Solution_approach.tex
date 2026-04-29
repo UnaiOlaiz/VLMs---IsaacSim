@@ -47,19 +47,85 @@ Depending on the task, there could be just one target object detection and movem
 		\node (p4) [state, below=of p3] {4. Target position prediction};
 		\node (p5) [state, left=of p4] {5. Movement execution};
 		
-		% Arrows
+		% Arrows (Main Flow)
 		\draw [-Stealth, line width=0.8pt] (p1) -- (p2);
 		\draw [-Stealth, line width=0.8pt] (p2) -- (p3);
 		\draw [-Stealth, line width=0.8pt] (p3) -- (p4);
 		\draw [-Stealth, line width=0.8pt] (p4) -- (p5);
 		
+		% Non-continuous Line (Cycle Repeat)
+		% We use "dashed" for the non-continuous line.
+		% [yshift] is used to separate the line from the main text and arrows.
+		\draw [-Stealth, line width=0.8pt, dashed, gray] (p5.north) -- ++(0,1cm) -| (p1.south);
+		
+		% Alternative slightly cleaner return line (routing outside):
+		% \draw [-Stealth, line width=0.8pt, dashed, gray] (p5.west) -- ++(-1cm,0) |- ++(0,3cm) -| (p1.north);
+		
 	\end{tikzpicture}
-	\caption{Standard workflow of the solution, going from the visual captioning stage up to the physical agent movement execution.}
-	\label{fig:minimalist_workflow}
+	\caption{Standard workflow of the solution, going from the visual captioning stage up to the physical agent movement execution. The dashed line indicates a non-continuous feedback loop allowing for cycle repetition, especially in multi-agent tasks.}
+	\label{fig:minimalist_workflow_cycle}
 \end{figure}
 
 \section{Tools used}
-Nvidia IsaacSim, Omniverse, IsaacLab, ... VLM, ... BentoML
+There are several technologies I have used in order to consolidate the final solution of the project. Nevertheless, some have evolved changing its versions or have been modified throughout the experimentation to include additional functionalities to seek better performance. Those tool's brief definition and implementation will be explained now, however, the different tweaks applied through the progression will be mentioned in the corresponding design experimentation section \ref{chapter:design_implementation}. 
 
-Justificación técnica de por qué elegiste Qwen2-VL, Isaac Sim y EAGERx frente a otras alternativas.
+\subsection{Vision Language Model choice}
+The VLM used in the final workflow was not the one I started experimenting with, there was actually a progressively evolution which led me from starting with the smallest models to scale up in the number of parameters. 
+
+\subsubsection{SmolVLM-256M - the initial pick}
+I actually started from the very smallest of the models, being the first model \textit{SmolVLM-256M-Instruct}. Extracted from \textit{HuggingFace}, the model is a tiny multimodal one, the smallest of the family. Originally designed for efficiency, its lightweight architecture makes it suitable for small applications just taking about 1.23GB of GPU RAM, reason why I decided to go for this model at first.
+
+Nevertheless, its performance in the robotic simulator is what really pulled me back. While it would do great in simple classification or QA tasks such as the ones seen in section \ref{sec:dummy_experimentation}, it actually struggled in the task of accurately identifying the position of the target objects in the screenshot of the environment. Its performance when dealing with relative positioning of multiple objects in the environment was actually poor, so I decided to scale the power of the VLM just a little bit more, still not so much so it fit my hardware requirements. Being the next pick its big brother, \textit{SmolVLM-500M} better performance and double parameters but still not good enough. After trying with these two models and their performance configurations, I decided to go with the final model: \textit{Qwen2-VL-2B}.
+
+\subsubsection{Used Vision Language Model: Qwen2-VL}
+Already covered in the SOTA VLM models table \ref{tab:vlm_comparison_main}, shows great performance as an open-source alternative. Furthermore, its different size alternatives suited perfect for my needs. As the biggest model sizes would not fit in my GPU's VRAM I have had to settle with the smallest one, being the \textit{Qwen2-VL-2B-Instruct}. Some of the stages of the workflow pipeline were strictly run in the GPU and I had to find the balance of all the processes running simultaneously, meaning that I had to reduce the number of parameters of the model to its smallest in order to fit it all in the VRAM. 
+
+As shown in table \ref{tab:qwen_variants} there are 3 size variants of the model itself, however, the number of parameters used in the vision encoder training remains constant and is just the LLM which scales up in number of parameters. This approach ensures the power of the ViT remains constant regardless of the LLM scale, meaning that there should be little to no more visual reasoning performance difference across the models. 
+
+% Explain its properties
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabular}{|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{7.5cm}|}
+		\hline
+		\textbf{Model Name} & \textbf{Vision Encoder} & \textbf{LLM Model} & \textbf{Description} \\ \hline
+		Qwen2-VL-2B & 675M & 1.5B & The most efficient model, designed to run on-device. It delivers adequate performance for most scenarios with limited resources. \\ \hline
+		Qwen2-VL-7B & 675M & 7.6B & The performance-optimized model in terms of cost, significantly upgraded for text recognition and video understanding. It delivers significant performance across a broad range of visual tasks. \\ \hline
+		Qwen2-VL-72B & 675M & 72B & The most capable model, with further improvements in visual reasoning, instruction-following, decision-making, and agent capabilities. It delivers optimal performance on most complex tasks. \\ \hline
+	\end{tabular}
+	\caption{Specifications and intended use cases for the different Qwen2-VL model scales, table extracted from original paper \cite{wang2024qwen2vlenhancingvisionlanguagemodels}.}
+	\label{tab:qwen_variants}
+\end{table}
+
+When it comes the architecture of the model and as that \textit{2} indicates in the name, it was actually trained starting from the base point of its predecessor. In order to deal with scalability and performance issues they upgraded some of the components. They implemented a ViT able to deal with both image and video data formats and strengthened the LLM backbone. Several upgrades were implemented to strengthen the video analysis performance of the ViT.
+
+\begin{itemize}
+	\item \textbf{Naive Dynamic Resolution}: this implementation enables the processing of images of any kind of resolution, dynamically converted into visual tokens. This was a result of removing the positional encoding layer from the vision transformer and introducing \textit{2D-RoPE}, approach which replaces the traditional positional encoding by embedding absolute positions via dimension-wise rotations which allow naturally captured spatial relationships \cite{su2021rope2d}. Technique used also in computer vision to capture the two-dimensional positional information of images. As statement, rotatory embeddings are made with rotation matrices and work by capturing both global and relative position information \cite{su2023roformerenhancedtransformerrotary}. 
+	
+	\item \textbf{Multimodal Rotary Position Embedding (M-RoPE)}: it uses a similar variant to method \textit{2D-RoPE} mentioned in the previous paragraph in order to successfully model the positional information of multimodal inputs. It works by decomposing the rotatory embeddings into new latent features such as height and width, so it can model explicitly the positional information of text, images and videos in LLMs.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.9\textwidth]{imgs/MROPE.png}
+		\label{fig:MROPE}
+		\caption{Demonstration of M-RoPE}
+	\end{figure}
+	
+
+\end{itemize}
+
+
+% list upgrades
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=.8\textwidth]{imgs/qwen2vl_architecture.png}
+%	\label{fig:qwen2vl_architecture}
+%	\caption{Architecture of Qwen2-VL}
+%\end{figure}
+
+
+%Nvidia IsaacSim, Omniverse, IsaacLab, ... VLM, ... BentoML
+%
+%Justificación técnica de por qué elegiste Qwen2-VL, Isaac Sim y EAGERx frente a otras alternativas.
 

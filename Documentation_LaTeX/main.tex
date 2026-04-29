@@ -36,7 +36,10 @@
 % Start of the document
 \begin{document}
 	
-	\input{portada}
+	% Portada
+	\includepdf[pages=1]{portada.pdf}          % Portada delantera (opcional)
+	%\includepdf[pages=1]{../portada_firmada.pdf}  % Portada firmada (opcional)
+	%\input{portada}
 	
 	\selectlanguage{english} % in english
 	
@@ -60,7 +63,7 @@
 	\tableofcontents % ordinary index
 	\listoffigures % index for images
 	\lstlistoflistings % index for source code
-	
+	\listoftables
 	% main content
 	\mainmatter
 	
@@ -76,6 +79,7 @@
 	\input{Chapters/Solution_approach}	
 	
 	\chapter{Design and Implementation}
+	\label{chapter:design_implementation}
 	\input{Chapters/Solution_development_and_implementation}
 	
 	\chapter{Results and Evaluation}

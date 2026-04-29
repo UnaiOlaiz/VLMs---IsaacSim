@@ -85,6 +85,15 @@ Nils Rethmeier and Isabelle Augenstein.
 \newblock A primer on contrastive pretraining in language processing: Methods,
   lessons learned and perspectives, 2021.
 
+\bibitem{su2021rope2d}
+Jianlin Su.
+\newblock Rope 2d: Rotary position embedding for 2d, May 2021.
+\newblock Scientific Spaces.
+
+\bibitem{su2023roformerenhancedtransformerrotary}
+Jianlin Su, Yu~Lu, Shengfeng Pan, Ahmed Murtadha, Bo~Wen, and Yunfeng Liu.
+\newblock Roformer: Enhanced transformer with rotary position embedding, 2023.
+
 \bibitem{tan2022sentenceworth128pseudo}
 Haochen Tan, Wei Shao, Han Wu, Ke~Yang, and Linqi Song.
 \newblock A sentence is worth 128 pseudo tokens: A semantic-aware contrastive
@@ -106,6 +115,14 @@ M.~Timothy.
 Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
   Aidan~N. Gomez, Lukasz Kaiser, and Illia Polosukhin.
 \newblock Attention is all you need, 2023.
+
+\bibitem{wang2024qwen2vlenhancingvisionlanguagemodels}
+Peng Wang, Shuai Bai, Sinan Tan, Shijie Wang, Zhihao Fan, Jinze Bai, Keqin
+  Chen, Xuejing Liu, Jialin Wang, Wenbin Ge, Yang Fan, Kai Dang, Mengfei Du,
+  Xuancheng Ren, Rui Men, Dayiheng Liu, Chang Zhou, Jingren Zhou, and Junyang
+  Lin.
+\newblock Qwen2-vl: Enhancing vision-language model's perception of the world
+  at any resolution, 2024.
 
 \bibitem{wang2022simvlmsimplevisuallanguage}
 Zirui Wang, Jiahui Yu, Adams~Wei Yu, Zihang Dai, Yulia Tsvetkov, and Yuan Cao.

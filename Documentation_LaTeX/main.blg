@@ -1,49 +1,51 @@
-This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2025/dev/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: plain.bst
 Database file #1: bibliography.bib
+Warning--entry type for "su2021rope2d" isn't style-file defined
+--line 337 of file bibliography.bib
 Warning--to sort, need author or key in multimodal_learning_wiki
 Warning--to sort, need author or key in li2025surveystateartlarge
-You've used 30 entries,
+You've used 33 entries,
             2118 wiz_defined-function locations,
-            613 strings with 10139 characters,
-and the built_in function-call counts, 9629 in all, are:
-= -- 797
-> -- 769
+            623 strings with 10811 characters,
+and the built_in function-call counts, 10954 in all, are:
+= -- 898
+> -- 907
 < -- 0
-+ -- 312
-- -- 278
-* -- 647
-:= -- 1663
-add.period$ -- 82
-call.type$ -- 30
-change.case$ -- 228
++ -- 367
+- -- 330
+* -- 761
+:= -- 1899
+add.period$ -- 89
+call.type$ -- 33
+change.case$ -- 263
 chr.to.int$ -- 0
-cite$ -- 32
-duplicate$ -- 217
-empty$ -- 669
-format.name$ -- 278
-if$ -- 1931
+cite$ -- 35
+duplicate$ -- 238
+empty$ -- 735
+format.name$ -- 330
+if$ -- 2181
 int.to.chr$ -- 0
-int.to.str$ -- 30
+int.to.str$ -- 33
 missing$ -- 1
-newline$ -- 144
-num.names$ -- 56
-pop$ -- 370
+newline$ -- 157
+num.names$ -- 62
+pop$ -- 420
 preamble$ -- 1
-purify$ -- 199
+purify$ -- 231
 quote$ -- 0
-skip$ -- 218
+skip$ -- 241
 stack$ -- 0
-substring$ -- 154
-swap$ -- 31
+substring$ -- 169
+swap$ -- 34
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 120
+type$ -- 132
 warning$ -- 2
-while$ -- 56
-width$ -- 32
-write$ -- 282
-(There were 2 warnings)
+while$ -- 62
+width$ -- 35
+write$ -- 308
+(There were 3 warnings)

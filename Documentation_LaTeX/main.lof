@@ -2,22 +2,23 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Deep Boltzmann machine.}}{3}{figure.16}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Perceiver architecture from the referenced paper}}{4}{figure.20}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Graphical example of phrase grounding.}}{9}{figure.32}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Vision transformer architecture}}{13}{figure.42}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Masked autoencoder architecture}}{14}{figure.44}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces CLIP workflow}}{18}{figure.56}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces VLM trained from scratch vs training strategy using a pre-trained LLM as backbone}}{22}{figure.70}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Most common benchmark evaluation metrics illustrated visually; showing \textit {answer matching, multiple choice} and \textit {image-caption similarity} graphical examples.}}{28}{figure.91}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Standard vision language action model architecture.}}{29}{figure.94}%
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Given an image observation and a language instruction, the model predicts 7-dimensional robot control actions. The architecture consists of three key components: a vision encoder, a projector that maps visual features to the language embedding space, and the LLM backbone, in this case, a Llama 2 7B-parameter large language model.}}{29}{figure.97}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Basic RL worfklow schema: the agent iteratively maps states to actions by maximizing a cumulative reward signal through trial and error interaction.}}{30}{figure.100}%
-\contentsline {figure}{\numberline {2.12}{\ignorespaces Different RL training approach comparison}}{32}{figure.105}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Deep Boltzmann machine.}}{3}{figure.17}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Perceiver architecture from the referenced paper}}{4}{figure.21}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Graphical example of phrase grounding.}}{9}{figure.33}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Vision transformer architecture}}{13}{figure.43}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Masked autoencoder architecture}}{14}{figure.45}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces CLIP workflow}}{18}{figure.57}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces VLM trained from scratch vs training strategy using a pre-trained LLM as backbone}}{22}{figure.71}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Most common benchmark evaluation metrics illustrated visually; showing \textit {answer matching, multiple choice} and \textit {image-caption similarity} graphical examples.}}{28}{figure.92}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Standard vision language action model architecture.}}{29}{figure.95}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Given an image observation and a language instruction, the model predicts 7-dimensional robot control actions. The architecture consists of three key components: a vision encoder, a projector that maps visual features to the language embedding space, and the LLM backbone, in this case, a Llama 2 7B-parameter large language model.}}{29}{figure.98}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Basic RL worfklow schema: the agent iteratively maps states to actions by maximizing a cumulative reward signal through trial and error interaction.}}{30}{figure.101}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Different RL training approach comparison}}{32}{figure.106}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Standard workflow of the solution, going from the visual captioning stage up to the physical agent movement execution.}}{36}{figure.122}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Standard workflow of the solution, going from the visual captioning stage up to the physical agent movement execution. The dashed line indicates a non-continuous feedback loop allowing for cycle repetition, especially in multi-agent tasks.}}{36}{figure.123}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Demonstration of M-RoPE}}{39}{figure.131}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Image to classify used in the CLIP features demonstration notebook, showing a surfer.}}{37}{figure.129}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Image to classify used in the CLIP features demonstration notebook, showing a surfer.}}{40}{figure.137}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
