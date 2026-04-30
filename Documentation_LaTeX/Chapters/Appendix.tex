@@ -1,6 +1,27 @@
 \section{Instalation guide}
 IsaacSim/Lab
+
 \section{Relevant code}
+\begin{lstlisting}[
+	language=Python, 
+	caption={Calibration offsets used, ($x, y, z$) triplets where for all cases $z$=0 (objects standing on top of the ground)},
+	label={code:offsets},
+	morekeywords={role, content, type, image, text}]
+	OFFSETS = {
+		"cube": {
+			"red": [0.070, -0.025, 0.0],
+			"green": [0.222, 0.133, 0.0],
+			"blue": [0.004, -0.005, 0.0],
+		},
+		"pallet": {
+			"red": [0.427, -0.295, 0.0],
+			"blue": [0.220, 1.025, 0.0],
+			"black": [-0.084, 0.294, 0.0],
+		},
+		"robot": {"left": [0.56, -0.39, 0.0], "right": [-1.62, -0.93, 0.0]},
+	}
+\end{lstlisting}
+
 
 \section{Prompts used}
 \begin{lstlisting}[

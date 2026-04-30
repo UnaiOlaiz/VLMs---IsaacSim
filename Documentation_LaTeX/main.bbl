@@ -8,6 +8,16 @@ Multimodal learning.
 \newblock \url{https://en.wikipedia.org/wiki/Multimodal_learning}.
 \newblock Accessed: April 23, 2026.
 
+\bibitem{EdgeAIVision2015}
+Edge AI and Vision Alliance.
+\newblock Vision as a service: Democratization of vision for consumers and
+  businesses (a presentation from tend), September 2015.
+\newblock Accessed: 2024-05-22.
+
+\bibitem{BentoML_2024}
+{BentoML Team}.
+\newblock Bentoml: The unified model serving framework.
+
 \bibitem{eagerx2023}
 EAGERx Contributors.
 \newblock Eagerx: Engine agnostic graph-based robotic experience.
@@ -88,6 +98,12 @@ Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
 Nils Rethmeier and Isabelle Augenstein.
 \newblock A primer on contrastive pretraining in language processing: Methods,
   lessons learned and perspectives, 2021.
+
+\bibitem{Simek2012Extrinsic}
+Kyle Simek.
+\newblock Dissecting the camera matrix, part 2: The extrinsic matrix, August
+  2012.
+\newblock Accessed: 2024-05-22.
 
 \bibitem{su2021rope2d}
 Jianlin Su.

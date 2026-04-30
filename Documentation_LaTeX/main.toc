@@ -61,39 +61,41 @@
 \contentsline {subsubsection}{\numberline {3.4.1.1}SmolVLM-256M - the initial pick}{37}{subsubsection.126}%
 \contentsline {subsubsection}{\numberline {3.4.1.2}Used Vision Language Model: Qwen2-VL}{37}{subsubsection.127}%
 \contentsline {subsection}{\numberline {3.4.2}VLM hosted on BentoML server}{39}{subsection.132}%
-\contentsline {subsubsection}{\numberline {3.4.2.1}The service class - VLMServiceIsaac}{39}{subsubsection.133}%
-\contentsline {subsubsection}{\numberline {3.4.2.2}Evolution of detection functions}{41}{subsubsection.148}%
-\contentsline {subsection}{\numberline {3.4.3}Target detection}{42}{subsection.151}%
-\contentsline {subsubsection}{\numberline {3.4.3.1}Target detection procedure}{42}{subsubsection.154}%
-\contentsline {subsubsection}{\numberline {3.4.3.2}Computer Vision for performance enhancement}{43}{subsubsection.160}%
-\contentsline {subsubsection}{\numberline {3.4.3.3}Helping offsets}{46}{subsubsection.171}%
-\contentsline {subsection}{\numberline {3.4.4}IsaacSim as physics simulator}{46}{subsection.172}%
-\contentsline {subsection}{\numberline {3.4.5}IsaacLab for RL experimentation}{46}{subsection.173}%
-\contentsline {chapter}{\numberline {4}Design and Implementation}{47}{chapter.174}%
-\contentsline {section}{\numberline {4.1}Initial dummy experimentation}{47}{section.175}%
-\contentsline {subsection}{\numberline {4.1.1}CLIP Demo Analysis}{47}{subsection.176}%
-\contentsline {subsubsection}{\numberline {4.1.1.1}Simple Classification}{47}{subsubsection.177}%
-\contentsline {subsubsection}{\numberline {4.1.1.2}Zero-Shot Classification with CLIP}{48}{subsubsection.180}%
-\contentsline {subsubsection}{\numberline {4.1.1.3}Image Captioning with BLIP}{48}{subsubsection.181}%
-\contentsline {subsubsection}{\numberline {4.1.1.4}Visual Question Answering}{49}{subsubsection.182}%
-\contentsline {section}{\numberline {4.2}IsaacSim environment design}{49}{section.183}%
-\contentsline {subsection}{\numberline {4.2.1}First scenarios}{49}{subsection.184}%
-\contentsline {subsection}{\numberline {4.2.2}Last scenario}{49}{subsection.185}%
-\contentsline {section}{\numberline {4.3}VLM integration}{49}{section.186}%
-\contentsline {section}{\numberline {4.4}Agent Control}{49}{section.187}%
-\contentsline {section}{\numberline {4.5}Communication layer}{49}{section.188}%
-\contentsline {chapter}{\numberline {5}Results and Evaluation}{50}{chapter.189}%
-\contentsline {section}{\numberline {5.1}Successful and failure tries}{50}{section.190}%
-\contentsline {section}{\numberline {5.2}Results obtained in each scenario}{50}{section.191}%
-\contentsline {section}{\numberline {5.3}Result discussion}{50}{section.192}%
-\contentsline {chapter}{\numberline {6}Conclusions}{51}{chapter.193}%
-\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{51}{section.194}%
-\contentsline {section}{\numberline {6.2}Limitations found}{51}{section.195}%
-\contentsline {section}{\numberline {6.3}Future work}{52}{section.196}%
-\contentsline {chapter}{\numberline {7}Appendix}{57}{chapter.198}%
-\contentsline {section}{\numberline {7.1}Instalation guide}{57}{section.199}%
-\contentsline {section}{\numberline {7.2}Relevant code}{57}{section.200}%
-\contentsline {section}{\numberline {7.3}Prompts used}{57}{section.201}%
-\contentsline {section}{\numberline {7.4}Result table}{58}{section.235}%
-\contentsline {section}{\numberline {7.5}Tensorboard analysis}{58}{section.236}%
+\contentsline {subsubsection}{\numberline {3.4.2.1}Vision as a Service (VaaS)}{40}{subsubsection.133}%
+\contentsline {subsection}{\numberline {3.4.3}IsaacSim as physics simulator}{40}{subsection.134}%
+\contentsline {subsection}{\numberline {3.4.4}IsaacLab for RL experimentation}{40}{subsection.135}%
+\contentsline {chapter}{\numberline {4}Design and Implementation}{41}{chapter.136}%
+\contentsline {section}{\numberline {4.1}Initial dummy experimentation}{41}{section.137}%
+\contentsline {subsection}{\numberline {4.1.1}CLIP Demo Analysis}{41}{subsection.138}%
+\contentsline {subsubsection}{\numberline {4.1.1.1}Simple Classification}{41}{subsubsection.139}%
+\contentsline {subsubsection}{\numberline {4.1.1.2}Zero-Shot Classification with CLIP}{42}{subsubsection.142}%
+\contentsline {subsubsection}{\numberline {4.1.1.3}Image Captioning with BLIP}{42}{subsubsection.143}%
+\contentsline {subsubsection}{\numberline {4.1.1.4}Visual Question Answering}{43}{subsubsection.144}%
+\contentsline {section}{\numberline {4.2}Target detection task}{43}{section.145}%
+\contentsline {subsection}{\numberline {4.2.1}BentoML service class - VLMServiceIsaac}{43}{subsection.146}%
+\contentsline {subsection}{\numberline {4.2.2}Evolution of detection functions}{45}{subsection.161}%
+\contentsline {subsection}{\numberline {4.2.3}Task definition}{45}{subsection.164}%
+\contentsline {subsubsection}{\numberline {4.2.3.1}Procedure}{46}{subsubsection.167}%
+\contentsline {subsection}{\numberline {4.2.4}Computer Vision for performance enhancement}{48}{subsection.173}%
+\contentsline {subsection}{\numberline {4.2.5}Helping offsets}{52}{subsection.192}%
+\contentsline {section}{\numberline {4.3}IsaacSim environment design}{53}{section.193}%
+\contentsline {subsection}{\numberline {4.3.1}First scenarios}{53}{subsection.194}%
+\contentsline {subsection}{\numberline {4.3.2}Last scenario}{53}{subsection.195}%
+\contentsline {section}{\numberline {4.4}VLM integration}{53}{section.196}%
+\contentsline {section}{\numberline {4.5}Agent Control}{53}{section.197}%
+\contentsline {section}{\numberline {4.6}Communication layer}{53}{section.198}%
+\contentsline {chapter}{\numberline {5}Results and Evaluation}{54}{chapter.199}%
+\contentsline {section}{\numberline {5.1}Successful and failure tries}{54}{section.200}%
+\contentsline {section}{\numberline {5.2}Results obtained in each scenario}{54}{section.201}%
+\contentsline {section}{\numberline {5.3}Result discussion}{54}{section.202}%
+\contentsline {chapter}{\numberline {6}Conclusions}{55}{chapter.203}%
+\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{55}{section.204}%
+\contentsline {section}{\numberline {6.2}Limitations found}{55}{section.205}%
+\contentsline {section}{\numberline {6.3}Future work}{56}{section.206}%
+\contentsline {chapter}{\numberline {7}Appendix}{61}{chapter.208}%
+\contentsline {section}{\numberline {7.1}Instalation guide}{61}{section.209}%
+\contentsline {section}{\numberline {7.2}Relevant code}{61}{section.210}%
+\contentsline {section}{\numberline {7.3}Prompts used}{61}{section.225}%
+\contentsline {section}{\numberline {7.4}Result table}{62}{section.259}%
+\contentsline {section}{\numberline {7.5}Tensorboard analysis}{62}{section.260}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

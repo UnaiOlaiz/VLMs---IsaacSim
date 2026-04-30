@@ -17,14 +17,18 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Standard workflow of the solution, going from the visual captioning stage up to the physical agent movement execution. The dashed line indicates a non-continuous feedback loop allowing for cycle repetition, especially in multi-agent tasks.}}{36}{figure.123}%
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Demonstration of M-RoPE}}{39}{figure.131}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Focal length of the camera, relation between the object distance and image distance.}}{42}{figure.153}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Raw image sent to VLM for cube analysis}}{44}{figure.162}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces First CV applied iteration}}{44}{figure.164}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Final CV application iteration}}{45}{figure.166}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Raw image of palette detection}}{45}{figure.168}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Raw image of robotic arm detection}}{46}{figure.170}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Image to classify used in the CLIP features demonstration notebook, showing a surfer.}}{47}{figure.179}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Image to classify used in the CLIP features demonstration notebook, showing a surfer.}}{41}{figure.141}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Focal length of the camera, relation between the object distance and image distance.}}{46}{figure.166}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Raw image sent to VLM for cube analysis}}{48}{figure.175}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces First CV applied iteration}}{49}{figure.177}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Final CV application iteration}}{49}{figure.179}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Raw image of palette detection}}{50}{figure.181}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Result of masking the palettes}}{50}{figure.183}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Palette detection results with CV application}}{51}{figure.185}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Raw image of robotic arm detection}}{51}{figure.187}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Mask filtering for the robotic arms image}}{52}{figure.189}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Final result of the CV algorithm application to the last target detection case.}}{52}{figure.191}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
