@@ -67,6 +67,10 @@ Junnan Li, Dongxu Li, Silvio Savarese, and Steven Hoi.
 \newblock In {\em International Conference on Machine Learning (ICML)}. PMLR,
   2023.
 
+\bibitem{nikonFocalLength}
+{Nikon USA}.
+\newblock Understanding focal length, 2024.
+
 \bibitem{openai_clip_2021}
 OpenAI.
 \newblock Clip: Contrastive language-image pre-training.

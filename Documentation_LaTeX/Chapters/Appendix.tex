@@ -1,7 +1,48 @@
 \section{Instalation guide}
 IsaacSim/Lab
 \section{Relevant code}
+
 \section{Prompts used}
-Prompts used for the VLM
+\begin{lstlisting}[
+	language=Python, 
+	caption={Custom prompts used for ground\_multi detection function to try out different target names and then take the median of the predicted coordinates. },
+	label={code:customprompts},
+	morekeywords={role, content, type, image, text}]
+	CUBE_PROMPTS = {
+		"red": ["red cube in the center", "small red block near robot"],
+		"green": ["small green cube on the right side", "green block on the right"],
+		"blue": ["small blue cube on the left side", "blue block on the left"],
+	}
+	
+	PALLET_PROMPTS = {
+		"red": [
+		"red plastic pallet on the floor",
+		"top view of a red cargo pallet near the robot",
+		"the center of the red rectangular grid structure",
+		],
+		"blue": [
+		"blue plastic pallet located to the left",
+		"blue industrial pallet on the grey surface",
+		"top-down view of a blue rectangular pallet",
+		],
+		"black": [
+		"black plastic pallet on the right side",
+		"dark grey cargo pallet on the floor",
+		"rectangular black grid structure",
+		],
+	}
+	
+	ROBOT_PROMPTS = {
+		"white": [
+		"white robotic arm located at the far left edge of the image",
+		"white robotic arm located at the far right edge of the image",
+		"franka emika panda arm near the corners",
+		"robotic manipulator, ignore the mobile platform in the center",
+		]
+	}
+\end{lstlisting}
+
+
+
 \section{Result table}
 \section{Tensorboard analysis}

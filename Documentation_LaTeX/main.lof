@@ -17,8 +17,14 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Standard workflow of the solution, going from the visual captioning stage up to the physical agent movement execution. The dashed line indicates a non-continuous feedback loop allowing for cycle repetition, especially in multi-agent tasks.}}{36}{figure.123}%
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Demonstration of M-RoPE}}{39}{figure.131}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Focal length of the camera, relation between the object distance and image distance.}}{42}{figure.153}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Raw image sent to VLM for cube analysis}}{44}{figure.162}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces First CV applied iteration}}{44}{figure.164}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Final CV application iteration}}{45}{figure.166}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Raw image of palette detection}}{45}{figure.168}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Raw image of robotic arm detection}}{46}{figure.170}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Image to classify used in the CLIP features demonstration notebook, showing a surfer.}}{40}{figure.137}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Image to classify used in the CLIP features demonstration notebook, showing a surfer.}}{47}{figure.179}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

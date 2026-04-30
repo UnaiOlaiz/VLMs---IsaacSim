@@ -100,7 +100,7 @@ As shown in table \ref{tab:qwen_variants} there are 3 size variants of the model
 When it comes the architecture of the model and as that \textit{2} indicates in the name, it was actually trained starting from the base point of its predecessor. In order to deal with scalability and performance issues they upgraded some of the components. They implemented a ViT able to deal with both image and video data formats and strengthened the LLM backbone. Several upgrades were implemented to strengthen the video analysis performance of the ViT.
 
 \begin{itemize}
-	\item \textbf{Naive Dynamic Resolution}: this implementation enables the processing of images of any kind of resolution, dynamically converted into visual tokens. This was a result of removing the positional encoding layer from the vision transformer and introducing \textit{2D-RoPE}, approach which replaces the traditional positional encoding by embedding absolute positions via dimension-wise rotations which allow naturally captured spatial relationships \cite{su2021rope2d}. Technique used also in computer vision to capture the two-dimensional positional information of images. As statement, rotatory embeddings are made with rotation matrices and work by capturing both global and relative position information \cite{su2023roformerenhancedtransformerrotary}. 
+	\item \textbf{Naive Dynamic Resolution}: this implementation enables the processing of images of any kind of resolution, dynamically converted into visual tokens. This was a result of removing the positional encoding layer from the vision transformer and introducing \textit{2D-RoPE}, approach which replaces the traditional positional encoding by embedding absolute positions via dimension-wise rotations which allow naturally captured spatial relationships \cite{su2021rope2d}. Technique used also in computer vision to capture the two-dimensional positional information of images. As statement, rotatory embeddings are made with rotation matrices and work by capturing both global and relative position information \cite{su2023roformerenhancedtransformerrotary}. And rotation matrices are matrices are those which represent an angle rotation in the euclidean space. 
 	
 	\item \textbf{Multimodal Rotary Position Embedding (M-RoPE)}: it uses a similar variant to method \textit{2D-RoPE} mentioned in the previous paragraph in order to successfully model the positional information of multimodal inputs. It works by decomposing the rotatory embeddings into new latent features such as height and width, so it can model explicitly the positional information of text, images and videos in LLMs.
 	
@@ -111,11 +111,7 @@ When it comes the architecture of the model and as that \textit{2} indicates in 
 		\caption{Demonstration of M-RoPE}
 	\end{figure}
 	
-
 \end{itemize}
-
-
-% list upgrades
 
 %\begin{figure}[H]
 %	\centering
@@ -123,6 +119,166 @@ When it comes the architecture of the model and as that \textit{2} indicates in 
 %	\label{fig:qwen2vl_architecture}
 %	\caption{Architecture of Qwen2-VL}
 %\end{figure}
+
+% end section with telling how the VLM will perform -> coordinate finder
+
+\subsection{VLM hosted on BentoML server}
+Taking advantage of the material seen throughout the different subjects of the grade, I think it was suitable to host Qwen2 in a \textit{BentoML} server and communicate with it via API calls. BentoML, is an open-source project implemented in a Python library for building online server systems mainly optimized for AI apps and model inference, being this second option where the VLM will really stand out. The inference will be controlled with REST API server lines, and will also be run in the GPU. As mentioned in previous sections, I have had to make my way through GPU space balancing, and did have to try out different parameters that make up the service to optimize performance, nevertheless all this configurations will be mentioned in the respective place. 
+
+I also went through progressively changing and modifying parts of the server script to achieve better performance. This is what the server is made of and its functionality progressions over time. 
+
+\subsubsection{The service class - VLMServiceIsaac}
+Responsible for loading the VLM pre-trained instance and specific processor, running in the GPU, I decided to deal with \textit{torch.float16 dtype} to balance performance and stability. I also experimented with sending the API calls to the CPU and setting the \textit{dtype} to \textit{torch.float32}, but due to the optimization of Bento in the GPU, the result were always time-outs even if float32 promised better results.
+
+This class also has some functions for filtering the VLM hallucinations, as the small size model often fails and returns disparate values. Depending on the desired target type's size, it will consider some dimension limits to discard hallucinations. This hallucination filters takes the \textit{bounding box} of the object and compare its viability, that bounding box consists of a rectangular region which embodies the object. Consisting of coordinate points $y_{min}$, $y_{max}$, $x_{min}$ and $x_{max}$.
+
+Then there is the main function \textit{infer} which as as the bridging between the robotic environment and the VLM. The function receives the environment cropped image, the instruction it must follow and the target type, and returns the coordinates of the desired target if found. It works with the usual template VLMs receive, being the same image-text pair discussed throughout the whole documentation see pseudocode \ref{code:vlmtemplate}. 
+
+\begin{lstlisting}[
+	language=Python, 
+	caption={Structure template Qwen receives, consisting of the screenshot of the desired part of the environment and prompt. Similar to a JSON format.}, 
+	label={code:vlmtemplate},
+	morekeywords={role, content, type, image, text}]
+		"role": "user",
+		"content": [
+			{"type": "image", "image": image},
+			{"type": "text", "text": prompt}
+		]
+\end{lstlisting}
+
+The prompt the service receives has been changes several times, each time to the overall target detection logic. This has been the end result: 
+
+\begin{lstlisting}[
+	language=Python, 
+	caption={Custom prompt the VLM receives, indicating what to detect, what to return and the format of the returned data},
+	morekeywords={role, content, type, image, text}]
+	prompt = (
+	f"Locate the {instruction}. I have marked its exact color center with a yellow square. "
+	f"Focus ONLY on the center of that yellow square to provide the coordinates. "
+	f"Ignore all black shadows or robot parts. "
+	f"Return only JSON: {{\"target\": {{\"bbox_xyxy\": [ymin, xmin, ymax, xmax]}}}} "
+	f"using normalized coordinates 0-1000."
+	)
+\end{lstlisting}
+
+The instruction is the target object to detect in the image, and the yellow square helping technique is highly related to the computer vision section \ref{sec:cv} next seen in the documentation. The other lines of the prompt consist of helping lines to ensure the VLM focuses on the desired target and the format it must return the target coordinates. Normalized \textit{bounding boxes} to be filtered with the previous hallucination method. The next lines of the function are dedicated to the call preparation and output parsing to clean the noise.
+
+\subsubsection{Evolution of detection functions}
+The second part of the script consists of the detection function that will be called in order to perform the target detection, and it's the part where there have been the most changes depending on the approach I have followed. 
+
+\begin{itemize}
+	\item \textbf{ground}: function used in the first server scripts for the very basic environments. The main difference between this function and its successor is that this simpler approach just detects a single target in the given image, while the following detects all of the possible objects and then filters to get the target. I used this function for the environments from the beginning where there was not so much difficulty, but I decided to change it for the more complex environments where it showed a catastrophic performance when dealing with more objects because it always returned hallucinations or mismatched the target object. 
+	
+	\item \textbf{multi\_ground}: this second and definitive detection function uses more sophisticated techniques and was used for the final multi-agents scenarios, showing much better performance than the previous. Depending of the target type, it uses additional helping prompts and uses them to test different coordinate predictions to then get the median of those coordinates as final prediction. Those custom prompts help changing the 'subject' of the prompt (basically being the target described with different names) so the model can have a broader idea of what he might be asked to detect. Those custom prompts will be found in the appendix \ref{code:customprompts}. 
+\end{itemize}
+
+The BentoML created service will be run and interacted with inside the robotic environment simulator for the target detection tasks. In order to mount the service just need to run the following command \ref{code:runbento}: 
+
+\begin{lstlisting}[
+	language=Python, 
+	caption={Command to start the created VLM service}, 
+	label={code:runbento},
+	morekeywords={role, content, type, image, text}]
+	bentoml serve server_bento:VLMServiceIsaac --port 8000 --reload
+\end{lstlisting}
+
+\subsection{Target detection}
+The target detection task, reduced to the basic, consists of calling the VLM service with API calls selecting the target to be the detected and wait for its response to get the target coordinates approximation in a JSON format. I decided to store the coordinates in a file for re-usability and modularity for other scripts/tasks. Although it is the VLM the one getting the coordinates predictions, it is run inside the IsaacSim simulator, so I had to adapt the capturing logic to the camera properties of the framework. Among the properties I had to take into account:
+
+\begin{itemize}
+	\item \textbf{Display resolution}: display dimensions of the screen I work with, necessary to calculate projection and unprojection functions, \texttt{(1280, 720)}.
+	
+	\item \textbf{Focal length}: \texttt{(18.14764 * 1280) / 20.955} hard-coded camera property which servers for defining the camera zoom movement. The higher it is the narrower view the camera will have, while the lower the wider \cite{nikonFocalLength}.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.5\textwidth]{imgs/focal_length.jpg}
+		\label{fig:focallength}
+		\caption{Focal length of the camera, relation between the object distance and image distance.}
+	\end{figure}  
+	
+	\item \textbf{Principal point ($C_{x}, C_{y}$)}: \texttt{CX, CY = 640, 360}. Refer to the optical center of the image, acting as a (0,0) origin point.
+	
+\end{itemize}
+
+
+\subsubsection{Target detection procedure}
+%The target detection process goes over these steps:
+
+\begin{enumerate}
+	\item Capture the scene screenshot in the given resolution and RGB channels and  camera metadata. Data such as the relative distance between each pixel to the camera inside the environment, these distances then must be transformed to real ones to don't mismatch units.
+	
+	\item Then the image is sent to the VLM opened service, and choose the desired corresponding detection function (ground/multi\_ground) endpoint URL. Next receive the bounding box response.
+	
+	\item The received coordinates do not share the same dimension to the real scenario, so it is essential to convert them from 2D to 3D coordinates, often called \textit{unprojection}.
+	
+	\item Depending on the target being larger/smaller, I have set a stability counter to make sure the final result is a consolidation and not a random disparate value. For smaller targets such as the cubes, I have set more strict thresholds to ensure getting right the coordinates of such tiny targets while for larger objects like the platforms I have been more flexible. 
+	
+	\item Save the desired metadata in JSON format. Consisting of information about the target type, the color, the position in the scenario, the relative position to the other targets and the camera used. 
+\end{enumerate}
+
+While this approach seemed correct and feasible, the results were a little bit disappointing. Perhaps due to the VLM's lack of power, the predicted coordinates visualized in the environment with a custom marker spawning function, usually were too far from convincing or were simply disparate. This was were I thought of implementing helping techniques to boost detection performance. 
+
+% enter image of the results.
+
+\subsubsection{Computer Vision for performance enhancement}
+\label{sec:cv}
+CV algorithms were the first idea that came up to me, so I decided to make a separate detection script for each target type. In the procedure, I had to deal with the other components that were part of the scenario such as the shadows of other objects and the lightning produced by the configured light source. These were the steps followed for each target case and available at its respective file:
+
+\begin{itemize}
+	\item \textbf{Cubes}: due to the tiny size of the cubes I defined a range of threshold for each color to be distinguishable from the other components of the scenario. I also converted the image to \textit{HSV} for better segmentation performance. In the case of finding the target(s), I defined the contour yellow rectangle surrounding each target, same yellow rectangle specified at the prompt the VLM receives. The initial screenshot of the cubes analysis can be found in the following image. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.75\textwidth]{imgs/vlm_input_debug.png}
+		\label{fig:cubesraw}
+		\caption{Raw image sent to VLM for cube analysis}
+	\end{figure}
+	
+	After the initial CV filter application, the result is the following:
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.75\textwidth]{imgs/result.png}
+		\label{fig:cubeswnoise}
+		\caption{First CV applied iteration}
+	\end{figure}
+	
+	As seen in in figure \ref{fig:cubeswnoise}, there are so many things that can distract the VLM as this is the image itself sent to the server in the image-text prompt. So I needed to apply further cleaning to get a simpler result without confusing text and shadows. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.75\textwidth]{imgs/result_clean.png}
+		\label{fig:cubesgreat}
+		\caption{Final CV application iteration}
+	\end{figure}
+	
+	This approach returns a much cleaner analysis where there are no distractive shadows nor cube names, just the image with the yellow rectangle surroundings. 
+	
+	\item \textbf{Palettes}: the platforms were much simpler to detect due to their much bigger size
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.75\textwidth]{imgs/Pasted image.png}
+		\label{fig:palettesraw}
+		\caption{Raw image of palette detection}
+	\end{figure}
+	
+	\item \textbf{Robotic agents}:
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.75\textwidth]{imgs/Pasted image (2).png}
+		\label{fig:frankasraw}
+		\caption{Raw image of robotic arm detection}
+	\end{figure}
+\end{itemize}
+
+\subsubsection{Helping offsets}
+
+\subsection{IsaacSim as physics simulator}
+
+\subsection{IsaacLab for RL experimentation}
 
 
 %Nvidia IsaacSim, Omniverse, IsaacLab, ... VLM, ... BentoML

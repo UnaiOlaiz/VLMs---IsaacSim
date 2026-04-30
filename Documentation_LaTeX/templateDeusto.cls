@@ -77,9 +77,9 @@ bookmarks=true]{hyperref}
 \lstset{
 	backgroundcolor=\color{graybg},
 	basicstyle=\ttfamily\small,
-	keywordstyle=\color{deustoBlue}\bfseries,
+	keywordstyle=\color{gray}\bfseries, %deustoBlue
 	commentstyle=\color{commentgray}\itshape,
-	stringstyle=\color{stringorange},
+	stringstyle=\color{black}, %stringorange
 	numberstyle=\tiny\color{gray},
 	numbers=left,
 	numbersep=10pt,
