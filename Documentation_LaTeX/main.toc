@@ -78,24 +78,26 @@
 \contentsline {subsubsection}{\numberline {4.2.3.1}Procedure}{46}{subsubsection.167}%
 \contentsline {subsection}{\numberline {4.2.4}Computer Vision for performance enhancement}{48}{subsection.173}%
 \contentsline {subsection}{\numberline {4.2.5}Helping offsets}{52}{subsection.192}%
-\contentsline {section}{\numberline {4.3}IsaacSim environment design}{53}{section.193}%
-\contentsline {subsection}{\numberline {4.3.1}First scenarios}{53}{subsection.194}%
-\contentsline {subsection}{\numberline {4.3.2}Last scenario}{53}{subsection.195}%
-\contentsline {section}{\numberline {4.4}VLM integration}{53}{section.196}%
-\contentsline {section}{\numberline {4.5}Agent Control}{53}{section.197}%
-\contentsline {section}{\numberline {4.6}Communication layer}{53}{section.198}%
-\contentsline {chapter}{\numberline {5}Results and Evaluation}{54}{chapter.199}%
-\contentsline {section}{\numberline {5.1}Successful and failure tries}{54}{section.200}%
-\contentsline {section}{\numberline {5.2}Results obtained in each scenario}{54}{section.201}%
-\contentsline {section}{\numberline {5.3}Result discussion}{54}{section.202}%
-\contentsline {chapter}{\numberline {6}Conclusions}{55}{chapter.203}%
-\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{55}{section.204}%
-\contentsline {section}{\numberline {6.2}Limitations found}{55}{section.205}%
-\contentsline {section}{\numberline {6.3}Future work}{56}{section.206}%
-\contentsline {chapter}{\numberline {7}Appendix}{61}{chapter.208}%
-\contentsline {section}{\numberline {7.1}Instalation guide}{61}{section.209}%
-\contentsline {section}{\numberline {7.2}Relevant code}{61}{section.210}%
-\contentsline {section}{\numberline {7.3}Prompts used}{61}{section.225}%
-\contentsline {section}{\numberline {7.4}Result table}{62}{section.259}%
-\contentsline {section}{\numberline {7.5}Tensorboard analysis}{62}{section.260}%
+\contentsline {section}{\numberline {4.3}Agent Control}{53}{section.193}%
+\contentsline {subsection}{\numberline {4.3.1}RMPFlowController: the Franka Controller}{53}{subsection.194}%
+\contentsline {subsection}{\numberline {4.3.2}Custom Jetbot controller class}{54}{subsection.195}%
+\contentsline {section}{\numberline {4.4}IsaacSim environment design}{55}{section.196}%
+\contentsline {subsection}{\numberline {4.4.1}First scenarios}{55}{subsection.197}%
+\contentsline {subsection}{\numberline {4.4.2}Last scenario}{55}{subsection.198}%
+\contentsline {section}{\numberline {4.5}VLM integration}{55}{section.199}%
+\contentsline {section}{\numberline {4.6}Communication layer}{55}{section.200}%
+\contentsline {chapter}{\numberline {5}Results and Evaluation}{56}{chapter.201}%
+\contentsline {section}{\numberline {5.1}Successful and failure tries}{56}{section.202}%
+\contentsline {section}{\numberline {5.2}Results obtained in each scenario}{56}{section.203}%
+\contentsline {section}{\numberline {5.3}Result discussion}{56}{section.204}%
+\contentsline {chapter}{\numberline {6}Conclusions}{57}{chapter.205}%
+\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{57}{section.206}%
+\contentsline {section}{\numberline {6.2}Limitations found}{57}{section.207}%
+\contentsline {section}{\numberline {6.3}Future work}{58}{section.208}%
+\contentsline {chapter}{\numberline {7}Appendix}{63}{chapter.210}%
+\contentsline {section}{\numberline {7.1}Instalation guide}{63}{section.211}%
+\contentsline {section}{\numberline {7.2}Relevant code}{63}{section.212}%
+\contentsline {section}{\numberline {7.3}Prompts used}{63}{section.227}%
+\contentsline {section}{\numberline {7.4}Result table}{64}{section.261}%
+\contentsline {section}{\numberline {7.5}Tensorboard analysis}{64}{section.262}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

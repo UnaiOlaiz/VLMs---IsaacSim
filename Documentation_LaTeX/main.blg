@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2025/dev/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: plain.bst
@@ -15,45 +15,45 @@ You're missing a field name---line 370 of file bibliography.bib
 I'm skipping whatever remains of this entry
 Warning--to sort, need author or key in multimodal_learning_wiki
 Warning--to sort, need author or key in li2025surveystateartlarge
-You've used 37 entries,
+You've used 38 entries,
             2118 wiz_defined-function locations,
-            642 strings with 11255 characters,
-and the built_in function-call counts, 11796 in all, are:
-= -- 972
-> -- 941
+            647 strings with 11394 characters,
+and the built_in function-call counts, 12004 in all, are:
+= -- 994
+> -- 948
 < -- 0
-+ -- 381
-- -- 340
-* -- 792
-:= -- 2036
-add.period$ -- 99
-call.type$ -- 37
-change.case$ -- 280
++ -- 384
+- -- 342
+* -- 800
+:= -- 2074
+add.period$ -- 103
+call.type$ -- 38
+change.case$ -- 283
 chr.to.int$ -- 0
-cite$ -- 39
-duplicate$ -- 266
-empty$ -- 823
-format.name$ -- 340
-if$ -- 2363
+cite$ -- 40
+duplicate$ -- 275
+empty$ -- 841
+format.name$ -- 342
+if$ -- 2406
 int.to.chr$ -- 0
-int.to.str$ -- 37
+int.to.str$ -- 38
 missing$ -- 1
-newline$ -- 175
-num.names$ -- 70
-pop$ -- 456
+newline$ -- 181
+num.names$ -- 72
+pop$ -- 460
 preamble$ -- 1
-purify$ -- 244
+purify$ -- 247
 quote$ -- 0
-skip$ -- 274
+skip$ -- 279
 stack$ -- 0
-substring$ -- 189
-swap$ -- 38
+substring$ -- 194
+swap$ -- 40
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 148
+type$ -- 152
 warning$ -- 2
-while$ -- 70
-width$ -- 39
-write$ -- 343
+while$ -- 72
+width$ -- 40
+write$ -- 355
 (There was 1 error message)

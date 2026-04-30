@@ -129,7 +129,6 @@ The target detection task, reduced to the basic, consists of calling the VLM ser
 
 
 \subsubsection{Procedure}
-%The target detection process goes over these steps:
 
 \begin{enumerate}
 	\item Capture the scene screenshot in the given resolution and RGB channels and  camera metadata. Data such as the relative distance between each pixel to the camera inside the environment, these distances then must be transformed to real ones to don't mismatch units.
@@ -168,8 +167,6 @@ The target detection task, reduced to the basic, consists of calling the VLM ser
 \end{enumerate}
 
 While this approach seemed correct and feasible, the results were a little bit disappointing. Perhaps due to the VLM's lack of power, the predicted coordinates visualized in the environment with a custom marker spawning function, usually were too far from convincing or were simply disparate. This was were I thought of implementing helping techniques to boost detection performance. 
-
-% enter image of the results.
 
 \subsection{Computer Vision for performance enhancement}
 \label{sec:cv}
@@ -269,6 +266,41 @@ $$\begin{bmatrix} x \\ y \\ z \end{bmatrix}_{final} = \begin{bmatrix} x \\ y \\ 
 
 This simple trick enhanced the performance of the target detection alongside the computer vision algorithms to the definitive version, reaching the best performance and most accurate detections. The offsets were found by comparing the predictions to the ground truth several times and taking the ones which generalized better, they are available a the appendix at section \ref{code:offsets}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Agent Control}
+The robotic agents used throughout the development needed to have movement functionalities. Controllers with which they could use their joints to move somewhere, close their grips or do any other physical actions. In my case the robots used were the \textit{Franka arm} and the \textit{Jetbot}, one used for lifting and object manipulation purposes while the second being primarily optimized for navigation tasks (will be explained deeper in the corresponding section). For the first robot I used a pre-defined controller which worked flawlessly, but for the \textit{Jetbot} I had to manually craft one controller class as I did not find any convincing ones. Both controllers follow the same principle, having a primary function which receives ($x, y, z$) coordinates and somehow travels there. In this section of the documentation I will go over the steps and progress I made to successfully develop the control managers of both robots. 
+
+
+\subsection{RMPFlowController: the Franka Controller}
+\textit{RMPFlowController} implements the \textit{BaseController} interface from the motion generation API library in python \cite{IsaacSimRMPFlow2024}. And it is the best controller choice for reaching specific targets while automatically adjusting the position and orientation of their joints and avoiding obstacles. It uses a pre-defined interface to access obstacle information for avoiding collisions. Furthermore, this interface will avoid Franka to crash its hand against the other component of the robotic arm, automatically avoiding collisions and finding the best way through. 
+
+After importing the necessary libraries to form the controller class, I developed the essential functions that every controller must dispose of.
+
+\begin{itemize}
+	\item \textbf{move\_to\_cube\_top}: function which receives the target ($x,y,z$) position and brings its "end-effector" (its "hand") there with the desired top orientation and keeping the grippers closed. In order to stay just on the top, I configured a safe distance which can be arbitrarily modified so it does not crash with the object found at the given coordinates. 
+	
+	\item \textbf{open/close\_gripper}: luckily, this controller library offers a binary function to open/close the end effector's grippers. I will call the respective function when needed. 
+\end{itemize}
+
+
+\subsection{Custom Jetbot controller class}
+Whereas the simple import of the predefined controller initialized all the existing joints of the Franka arm, I needed to manually set the joints to their specific locations. Being the wheels and chassis. There is a function that also receives the target coordinates and travels there, however, the movement logic follows the principle of first rotating to the correct angle facing the target and then moving forward. It first calculates the difference between the error between the robot's current position and the goal coordinates ($g{x}, g{y}$), and depending on the error it spins the left or right wheel to face the goal target direction in a straight line. This is where I developed the following functions: 
+
+\begin{itemize}
+	\item \textbf{quat\_wxyz\_to\_yaw}: IsaacSim uses \textit{quaternions} ($w,x,y,z$) to represent orientations, but are hard to represent and use for programming tasks. This functions converts quaternions to angles in radians [$-\pi$, $\pi$]. I use the term \textit{yaw} to represent the rotation around the vertical Z axis). 
+	
+	$$((\theta + \pi) \pmod{2\pi}) - \pi$$ 
+	
+	where $\theta$ is the angle received by the function.
+	
+	\item \textbf{wrap\_to\_pi}: used for calculating the orientation error between current and target vectors and update the corresponding wheel velocity to face the target. 
+\end{itemize}
+
+Once orienting correctly and facing the target, it is time to go forward. For this, each time step the euclidean distance is calculated and a proportional speed is adapted. Meaning that the further it is from the target the faster it will go, while the closer it is to reaching the destination the slower it will go, gradually decreasing the velocity. This functionality will come handy as in some tasks the \textit{Jetbot} must carry objects on top of it, and a high velocity will lead to the objects falling. Furthermore it will stop once reached a safe distance to the destination, as depending on the task it will have to stop far enough so Frankas can manipulate the objects the robot carries. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{IsaacSim environment design}
 agents, cameras, physics, ...
 
@@ -279,7 +311,7 @@ agents, cameras, physics, ...
 \section{VLM integration}
 Mention the already implemented VLM part in IsaacSim
 
-\section{Agent Control}
+
 
 
 \section{Communication layer} % ?

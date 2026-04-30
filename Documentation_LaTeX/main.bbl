@@ -81,6 +81,12 @@ Junnan Li, Dongxu Li, Silvio Savarese, and Steven Hoi.
 {Nikon USA}.
 \newblock Understanding focal length, 2024.
 
+\bibitem{IsaacSimRMPFlow2024}
+{NVIDIA Corporation}.
+\newblock {\em RMPflow: Reactive Motion Policies for Robot Control}.
+\newblock NVIDIA Isaac Sim Documentation, 2024.
+\newblock Accessed: 2024-05-22.
+
 \bibitem{openai_clip_2021}
 OpenAI.
 \newblock Clip: Contrastive language-image pre-training.
