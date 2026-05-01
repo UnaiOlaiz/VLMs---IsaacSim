@@ -1,15 +1,71 @@
 \section{Solution proposal}
 In order to reflect the power of vision language models as high-level instruction orchestrators inside a robotic environment, I worked inside \textit{NVIDIA IsaacSim}. An open source SOTA framework for robotics simulation and synthetic data generation in physically based virtual environments built on top of \textit{NVIDIA Omniverse}. My final solution proposes a simulated robotic multi-agent environment where the vision language clearly dominates the high-level decision making, and orchestrates the whole workflow pipeline with the information received and sent to the other agents in the scenario. 
 
-
-
 \section{System architecture}
-Un esquema general de cómo se conectan el VLM, el simulador y los agentes (el "big picture"). 
+Figure \ref{fig:arch_clean} illustrates the architecture of the project, divided into two main sides: the components that run on local and those running in the server. There are several reasons why I decided to not run everything locally, as running things remotely allows better VLM inference performance takins considerably much less time and also opens the gate for modularity if I decide to change the model or the server architecture. 
 
-% VLM will act as object identificator -> distinguishing them -> predicted coordinates
+\subsection{Run locally}
+Everything that is run locally is located on the left side of the diagram. Basically consisting of all the physics, rendering and controller tasks. 
+
+\subsection{Run remotely}
+While the things run in a server correspond to the nodes of the right side of the graph, encapsulating all the VLM inference processes. The VLM is run on the server because BentoML manages the VRAM resources more efficiently than if I were to run it locally.
+
+\subsection{Communication bridge}
+To connect both local and remote sections, I use HTTP protocols to communicate with a REST API. The local side of the architecture will send POST requests and the remote side will answer returning JSON files containing everything needed to carry on with the workflow. 
+
+\begin{figure}[ht]
+	\centering
+	\begin{tikzpicture}[
+		block/.style={rectangle, draw, minimum width=3.2cm, minimum height=0.9cm,
+			text centered, line width=0.8pt, fill=white},
+		api/.style={rectangle, draw, minimum width=1.8cm, minimum height=0.8cm,
+			text centered, line width=0.8pt, fill=white, rounded corners=10pt}
+		]
+		
+		\node (sim)     [block] at (0,    0)   {IsaacSim};
+		\node (camera)  [block] at (0,  -1.6)  {Camera screenshot};
+		\node (cv)      [block] at (0,  -3.2)  {CV processing};
+		\node (control) [block] at (0,  -4.8)  {Robot controllers};
+		
+		\node (api) [api] at (3.0, -3.2) {REST API};
+		
+		\node (bento) [block] at (6.2, -2.4) {BentoML server};
+		\node (model) [block] at (6.2, -4.0) {Qwen2-VL};
+		
+		\draw [-stealth] (sim)    -- (camera);
+		\draw [-stealth] (camera) -- (cv);
+		\draw [-stealth] (cv)     -- (api);
+		
+		\draw [stealth-stealth] (api) -- (bento);
+		
+		\draw [-stealth] (bento) -- (model);
+		
+		\draw [-stealth, dashed]
+		(api.south)
+		-- (3.0, -5.6)
+		-- (0,   -5.6)
+		-- (control.south);
+		\node[font=\footnotesize, anchor=north]
+		at (1.5, -5.6) {coords};
+
+		\draw [-stealth, dashed]
+		(control.west) -- ++(-1.4, 0)
+		coordinate (spine)
+		-- (spine |- sim.west)
+		-- (sim.west);
+		\node[font=\footnotesize, anchor=east]
+		at ($(spine |- sim.west) + (0, -2.4)$) {execute};
+		
+		\node[font=\bfseries\small] at (0,    0.9) {LOCAL};
+		\node[font=\bfseries\small] at (6.2, -1.4) {REMOTE};
+		
+	\end{tikzpicture}
+	\caption{System architecture diagram.}
+	\label{fig:arch_clean}
+\end{figure}
 
 \section{Workflow}
-The workflow used for the final scenarios inside \textit{IsaacSim} could be reduced to this basic pipeline, illustrated below. The following workflow stands for the "standard" pipeline, however, depending on the desired task components of the pipeline will follow different procedures or repeat their selves more than one time. 
+The workflow used for the final scenarios inside \textit{IsaacSim} could be reduced to this basic pipeline, illustrated below \ref{fig:minimalist_workflow_cycle}. The following workflow stands for the "standard" pipeline, however, depending on the desired task components of the pipeline will follow different procedures or repeat their selves more than one time. 
 
 \begin{enumerate}
 	\item \textbf{Visual captioning}: there will be cameras distributed throughout the scenario, pointing towards the key interest points where the VLM must put into action its reasoning capabilities. A screenshot of the area will be taken and sent to the next step.
@@ -139,11 +195,28 @@ This approach of deploying a vision language model in a cloud system has already
 Applied to the project, makes possible the interaction between the VLM and the robotic environment via HTTP requests and JSON responses and ensures scalability of the system for more complex environments. 
 
 \subsection{IsaacSim as physics simulator}
+All there was to mention why I chose this framework was covered in section \ref{sec:sim2realframeworks}, so I will not repeat myself in this part. I just wanted to highlight this has been the robotic environment simulator I chose to develop the robotic scenarios.
 
 \subsection{IsaacLab for RL experimentation}
+\textit{IsaacLab} is an open-source framework built on top of \textit{IsaacSim} and \textit{Omniverse} to inherit the high-fidelity physics simulation, aimed for unifying and simplifying robotic research workflows such as reinforcement learning, imitation learning and motion planning \cite{mittal2025isaaclab}. Also built to be run on the GPU, it is the ideal choice for sim-to-real transfer tasks in robotics. This framework is also modular and easy to customize, agile, open-sourced and includes various trial environments, sensors and tasks ready to be used from the very start. Furthermore, it has been the best choice for training RL policies inside IsaacSim. Offering the freedom to create custom training environments or train tasks that are already included. I must state I have used the \texttt{main} branch version of the repository according to the IsaacSim version I have been using. 
 
+The reason why I chose this framework among other options such as \textit{OpenAI Gym} or \textit{PyBullet} is not just because of its direct integration inside IsaacSim, but also because of the following points:
 
-%Nvidia IsaacSim, Omniverse, IsaacLab, ... VLM, ... BentoML
-%
-%Justificación técnica de por qué elegiste Qwen2-VL, Isaac Sim y EAGERx frente a otras alternativas.
+\begin{itemize}
+	\item \textbf{Parallelization}: the fact of IsaacLab running on GPU allows optimized training techniques such as parallel training several environments simultaneously. Moreover, this frameworks also allows running inference in the GPU, discarding any CPU bottleneck issues I have.
+	
+	\item \textbf{Available examples}: not all robots have training examples available at the repository, but Franka does. Fact which reduced what would cost a lot of time designing observation and action spaces and specific rewards. 
+	
+	\item \textbf{Modular design via managers}: the framework is designed as a manager-based API which organizes environments into reusable and composable components, enabling consistent workflows across diverse tasks. There are manager classes for the scene, observation, reward and termination components of the environment, allowing modular swaps, changes and class inheritance. 
+	
+	\item \textbf{Integration of USD with PhysX in OmniPhysics}: This mixture provides a representation of the objects and robots in a hierarchical manner in the scene. The scene, represented in a graph is then parsed into \textit{PhysX} allocating all the internal representation of the environment as tensors to the GPU. PhysX being a physics engine developed by NVIDIA originally used for video games. Once the representation is in a tensor manner inside the GPU, IsaacLab interacts with that info through View APIs, allowing reading or writing objects of the scene while managing data efficiently and improving usability. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.6\textwidth]{imgs/lab_workflow.png}
+		\label{fig:labworkflow}
+		\caption{Procedure of how IsaacLab reads the environment. First converting to tensors the hierarchical representation of the environment, sending them to the GPU and manipulating those tensors via Views API calls.}
+	\end{figure}
+\end{itemize}
 
+Finally, I will be using \textit{stable-baselines3} (SB3) framework for all the trainings due to its support inside IsaacLab and compatibility with visualization tools such as \textit{Tensorboard}.

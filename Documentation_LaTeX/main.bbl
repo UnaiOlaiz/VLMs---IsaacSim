@@ -77,9 +77,39 @@ Junnan Li, Dongxu Li, Silvio Savarese, and Steven Hoi.
 \newblock In {\em International Conference on Machine Learning (ICML)}. PMLR,
   2023.
 
+\bibitem{mittal2025isaaclab}
+Mayank Mittal, Pascal Roth, James Tigue, Antoine Richard, Octi Zhang, Peter Du,
+  Antonio Serrano-Muñoz, Xinjie Yao, René Zurbrügg, Nikita Rudin, Lukasz
+  Wawrzyniak, Milad Rakhsha, Alain Denzler, Eric Heiden, Ales Borovicka, Ossama
+  Ahmed, Iretiayo Akinola, Abrar Anwar, Mark~T. Carlson, Ji~Yuan Feng, Animesh
+  Garg, Renato Gasoto, Lionel Gulich, Yijie Guo, M.~Gussert, Alex Hansen, Mihir
+  Kulkarni, Chenran Li, Wei Liu, Viktor Makoviychuk, Grzegorz Malczyk, Hammad
+  Mazhar, Masoud Moghani, Adithyavairavan Murali, Michael Noseworthy, Alexander
+  Poddubny, Nathan Ratliff, Welf Rehberg, Clemens Schwarke, Ritvik Singh,
+  James~Latham Smith, Bingjie Tang, Ruchik Thaker, Matthew Trepte, Karl~Van
+  Wyk, Fangzhou Yu, Alex Millane, Vikram Ramasamy, Remo Steiner, Sangeeta
+  Subramanian, Clemens Volk, CY~Chen, Neel Jawale, Ashwin~Varghese
+  Kuruttukulam, Michael~A. Lin, Ajay Mandlekar, Karsten Patzwaldt, John Welsh,
+  Huihua Zhao, Fatima Anes, Jean-Francois Lafleche, Nicolas Moënne-Loccoz,
+  Soowan Park, Rob Stepinski, Dirk~Van Gelder, Chris Amevor, Jan Carius,
+  Jumyung Chang, Anka~He Chen, Pablo de~Heras~Ciechomski, Gilles Daviet,
+  Mohammad Mohajerani, Julia von Muralt, Viktor Reutskyy, Michael Sauter, Simon
+  Schirm, Eric~L. Shi, Pierre Terdiman, Kenny Vilella, Tobias Widmer, Gordon
+  Yeoman, Tiffany Chen, Sergey Grizan, Cathy Li, Lotus Li, Connor Smith, Rafael
+  Wiltz, Kostas Alexis, Yan Chang, David Chu, Linxi~"Jim" Fan, Farbod
+  Farshidian, Ankur Handa, Spencer Huang, Marco Hutter, Yashraj Narang, Soha
+  Pouya, Shiwei Sheng, Yuke Zhu, Miles Macklin, Adam Moravanszky, Philipp
+  Reist, Yunrong Guo, David Hoeller, and Gavriel State.
+\newblock Isaac lab: A gpu-accelerated simulation framework for multi-modal
+  robot learning.
+\newblock {\em arXiv preprint arXiv:2511.04831}, 2025.
+
 \bibitem{nikonFocalLength}
 {Nikon USA}.
 \newblock Understanding focal length, 2024.
+
+\bibitem{SceneCaptioning}
+NVIDIA.
 
 \bibitem{IsaacSimRMPFlow2024}
 {NVIDIA Corporation}.

@@ -50,6 +50,89 @@ The question of what is the color of the surfboard seems easier than what it act
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{VLM Scene Captioning in IsaacSim}
+Even if the project's goal is to implement an end to end VLM integration pipeline into a robotic environment, IsaacSim already offers some kind of vision language model integration inside the framework \cite{SceneCaptioning}. In this section, I will go over the capabilities of this functionality and argue why I still chose to develop my own pipeline. 
+
+The VLM integration the framework offers includes detailed descriptions including object relationships and spatial reasoning of an environment returned in a graph format. Being able to translate complex three dimensional spatial relationships into a compact graph while maintaining all the relevant information. In order to download and start using this add-on, I recommend installing it in the extensions panel by the name \texttt{Isaacsim.Replicator.CaptionCore}.
+
+\subsection{Workflow of scene captioning}
+Similar to my workflow developed, this process is also pretty straightforward and lineal. The workflow flows as follows:
+
+\begin{enumerate}
+	\item Environment initialization.
+	\item Scene capturing by a virtual camera inside the environment.
+	\item VLM processing. The image is fed to a VLM to understand the object relations.
+	\item The model generates a brief phrase describing the environment. Being the result a description string.
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.9\textwidth]{imgs/isim_5.0_full_ext-isaacsim.replicator.caption-5.0.0_gui_IRC_workflow.png}
+	\label{fig:scenecaptioningworkflow}
+	\caption{Workflow of the VLM scene captioning add on available at the IsaacSim documentation.}
+\end{figure}
+
+\subsection{Scene representation using graphs}
+As mentioned earlier, all the information of the scene is captured in a single graph, which is returned after each running iteration.  In the graph, the nodes represent the objects and the edges stand for the spatial relationships among them. Besides that, the graphs also capture data such as relative positions and even orientations, making them extremely useful for scene capturing returning an organized graph. Let's put it into practice, for this demonstration I will load an environment which came pre-installed alongside the framework.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{imgs/World_Cameras_Camera.png}
+	\label{fig:hospitalscene}
+	\caption{Environment used for the VLM scene capturing. Consisting of a hospital room containing objects we could find in an hospital. Such as the patient's bed and the doctor's table.}
+\end{figure}
+
+After applying the scene captioning technique to the environment seen in figure \ref{fig:hospitalscene}, we should get a number corresponding to each object in the picture representing a node in the graph. And links representing the graph edges which stand for the spatial relations among them.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{imgs/viz_camera_scene_graph.jpg}
+	\label{fig:hospitalgraph}
+	\caption{VLM scene captioning result applied to the hospital room scene, with numbers representing object nodes and lines standing for the graph edges.}
+\end{figure}
+
+\subsubsection{Returned results}
+All of the information captured in the scene graph is returned in three different JSONs, alongside the \ref{fig:hospitalgraph} image.
+
+\begin{enumerate}
+	\item \textbf{full\_scene\_graph}: this JSON includes the complete information captured by the VLM. Includes the 2D and 3D automatically extracted bounding boxes of the objects plus identifiers and other metadata. 
+	
+	\item \textbf{pruned\_scene\_graph}: the second file prunes the irrelevant relations captured and present in the first JSON. Simplifying the content and maintaining the essential things. While this one still maintains the bounding box data is a greater option for analysis as it presents a much cleaner structure rather than the pure chaos the first JSON has. 
+	
+	\item \textbf{scene\_graph\_caption}: for each object identified in the scene, it returns a caption with a detailed description of the object and a list of the objects it is related to. These related objects tend to be the closest in the scene. For instance this is the example for the hospital bed:
+	
+	\begin{lstlisting}[
+		language=Python, 
+		caption={Scene graph caption result for the patient bed in the hospital scene.},
+		morekeywords={role, content, type, image, text}]
+		"0-hospitalbed": {
+			"class": "hospitalbed",
+			"caption": "A hospital bed with white frame, blue mattress, and multicolored control buttons. The bed has wheels for mobility and various adjustment mechanisms.",
+			"id": 0,
+			"relations": [
+			"near 2-chair",
+			"to the near left of 1-desk"
+			]
+		},
+	\end{lstlisting}
+	
+	As we can see, the VLM made an outstanding description detailing the material colors and the structure of the bed. And the related objects stand for the link lines seen in figure \ref{fig:hospitalgraph} being the chair and the desk.
+\end{enumerate}
+
+\subsection{Comparison with my developed workflow}
+Although both workflows share similarities in their procedure and results returned, there are several differences which led me to develop my own system. The following are the main reasons that helped me decide on the best alternative for the project: 
+
+\begin{itemize}
+	\item \textbf{Extraction results}: while NVIDIA's scene captioning returns all the information of all the objects included in the environment, has no additional idea of what to do with their descriptions and relations. On the other hand, my pipeline includes the additional task which helps the model know what to do with the extraction data. That additional information is provided by the target prompt i.e. "locate the red cube...". Additionally my model must filter all the distractive noise of the environment to focus on the target, while IsaacSim's captures it all, and I think that when working with models with limited capacity is a smarter choice to filter the unnecessary to optimize performance. 
+	
+	\item \textbf{Modular and independent architecture}: IsaacSim's scene captioning plugin is directly integrated into the simulator, and it cannot be modified. Whereas my architecture establishes the VLM in a server, making it more portable, lighter and more independent. Furthermore, I am able to tweak any parameter of the model or even change it, while NVIDIA's comes pre-established and is not open for any changes. In these situations I always prefer to go for the modularity choice. Hosting my own model also introduces the opportunity of enhancing its performance as I have with computer vision, however that is not an option for the replicator choice.
+	
+	%lama 3.1
+	\item \textbf{Model choice}: nevertheless, not everything have been advantages. The models used in the official replicator pipeline \ref{fig:scenecaptioningworkflow} are much more powerful than the one I have used, leading to greater performance. The model used by NVIDIA is actually \textit{GPT-4o}, and even if the number of parameters has not been officially published it could be around 200 billion parameters, almost 100 times more than the open-source alternatives I have used, and in addition, \textit{Llama 3.1} is another possible alternative which can scale up to 80B. It is evident the previous models will considerably outperform my alternative, nevertheless, I am not able to run that computation power to host the models locally. Reason why I went for a more humble open-source model with much less parameters. Which, even if its performance does not catch up, with some configuration can get considerable results as it has done. Moreover, I think it was a better choice to go for the pure VLM model and discard any "black box" alternatives. 
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Target detection task}
 The target detection went through progressively changing and modifying parts of the BentoML server script to achieve better performance. Reason why it is vital to mention the structure of the service, this is what the server is made of and its functionality progressions over time. 
 
@@ -302,14 +385,15 @@ Once orienting correctly and facing the target, it is time to go forward. For th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{IsaacSim environment design}
-agents, cameras, physics, ...
+Once collected all the necessary components, it was time to put them all together inside a controlled simulation environment. As I had no previous experience with the framework, being \textit{Unity} the most similar experience I have had, I decided to progressively develop more and more sophisticated environments to try out my VLM integration pipeline, starting from the very simplest. The following subsections will relate my progression and evolution while adapting to the challenging learning curve IsaacSim has, detailing how I made my first scenarios, what they were made of and what techniques I applied in each. 
+
+%agents, cameras, physics, ...
 
 \subsection{First scenarios}
 
 \subsection{Last scenario}
 
-\section{VLM integration}
-Mention the already implemented VLM part in IsaacSim
+
 
 
 

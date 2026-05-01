@@ -18,7 +18,7 @@
 \contentsline {section}{\numberline {2.2}Advancements of Vision Language Models}{5}{section.24}%
 \contentsline {subsection}{\numberline {2.2.1}Earliest models}{6}{subsection.25}%
 \contentsline {subsection}{\numberline {2.2.2}Deep learning based models}{7}{subsection.26}%
-\contentsline {subsection}{\numberline {2.2.3}The Transformers architecture Standard}{8}{subsection.27}%
+\contentsline {subsection}{\numberline {2.2.3}The Transformers architecture standard}{8}{subsection.27}%
 \contentsline {subsubsection}{\numberline {2.2.3.1}VLM tasks with Transformers}{9}{subsubsection.31}%
 \contentsline {section}{\numberline {2.3}From Encoders to Generative LLMs}{10}{section.34}%
 \contentsline {subsection}{\numberline {2.3.1}Language encoder}{10}{subsection.35}%
@@ -55,49 +55,56 @@
 \contentsline {chapter}{\numberline {3}Solution approach}{35}{chapter.113}%
 \contentsline {section}{\numberline {3.1}Solution proposal}{35}{section.114}%
 \contentsline {section}{\numberline {3.2}System architecture}{35}{section.115}%
-\contentsline {section}{\numberline {3.3}Workflow}{35}{section.116}%
-\contentsline {section}{\numberline {3.4}Tools used}{36}{section.124}%
-\contentsline {subsection}{\numberline {3.4.1}Vision Language Model choice}{37}{subsection.125}%
-\contentsline {subsubsection}{\numberline {3.4.1.1}SmolVLM-256M - the initial pick}{37}{subsubsection.126}%
-\contentsline {subsubsection}{\numberline {3.4.1.2}Used Vision Language Model: Qwen2-VL}{37}{subsubsection.127}%
-\contentsline {subsection}{\numberline {3.4.2}VLM hosted on BentoML server}{39}{subsection.132}%
-\contentsline {subsubsection}{\numberline {3.4.2.1}Vision as a Service (VaaS)}{40}{subsubsection.133}%
-\contentsline {subsection}{\numberline {3.4.3}IsaacSim as physics simulator}{40}{subsection.134}%
-\contentsline {subsection}{\numberline {3.4.4}IsaacLab for RL experimentation}{40}{subsection.135}%
-\contentsline {chapter}{\numberline {4}Design and Implementation}{41}{chapter.136}%
-\contentsline {section}{\numberline {4.1}Initial dummy experimentation}{41}{section.137}%
-\contentsline {subsection}{\numberline {4.1.1}CLIP Demo Analysis}{41}{subsection.138}%
-\contentsline {subsubsection}{\numberline {4.1.1.1}Simple Classification}{41}{subsubsection.139}%
-\contentsline {subsubsection}{\numberline {4.1.1.2}Zero-Shot Classification with CLIP}{42}{subsubsection.142}%
-\contentsline {subsubsection}{\numberline {4.1.1.3}Image Captioning with BLIP}{42}{subsubsection.143}%
-\contentsline {subsubsection}{\numberline {4.1.1.4}Visual Question Answering}{43}{subsubsection.144}%
-\contentsline {section}{\numberline {4.2}Target detection task}{43}{section.145}%
-\contentsline {subsection}{\numberline {4.2.1}BentoML service class - VLMServiceIsaac}{43}{subsection.146}%
-\contentsline {subsection}{\numberline {4.2.2}Evolution of detection functions}{45}{subsection.161}%
-\contentsline {subsection}{\numberline {4.2.3}Task definition}{45}{subsection.164}%
-\contentsline {subsubsection}{\numberline {4.2.3.1}Procedure}{46}{subsubsection.167}%
-\contentsline {subsection}{\numberline {4.2.4}Computer Vision for performance enhancement}{48}{subsection.173}%
-\contentsline {subsection}{\numberline {4.2.5}Helping offsets}{52}{subsection.192}%
-\contentsline {section}{\numberline {4.3}Agent Control}{53}{section.193}%
-\contentsline {subsection}{\numberline {4.3.1}RMPFlowController: the Franka Controller}{53}{subsection.194}%
-\contentsline {subsection}{\numberline {4.3.2}Custom Jetbot controller class}{54}{subsection.195}%
-\contentsline {section}{\numberline {4.4}IsaacSim environment design}{55}{section.196}%
-\contentsline {subsection}{\numberline {4.4.1}First scenarios}{55}{subsection.197}%
-\contentsline {subsection}{\numberline {4.4.2}Last scenario}{55}{subsection.198}%
-\contentsline {section}{\numberline {4.5}VLM integration}{55}{section.199}%
-\contentsline {section}{\numberline {4.6}Communication layer}{55}{section.200}%
-\contentsline {chapter}{\numberline {5}Results and Evaluation}{56}{chapter.201}%
-\contentsline {section}{\numberline {5.1}Successful and failure tries}{56}{section.202}%
-\contentsline {section}{\numberline {5.2}Results obtained in each scenario}{56}{section.203}%
-\contentsline {section}{\numberline {5.3}Result discussion}{56}{section.204}%
-\contentsline {chapter}{\numberline {6}Conclusions}{57}{chapter.205}%
-\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{57}{section.206}%
-\contentsline {section}{\numberline {6.2}Limitations found}{57}{section.207}%
-\contentsline {section}{\numberline {6.3}Future work}{58}{section.208}%
-\contentsline {chapter}{\numberline {7}Appendix}{63}{chapter.210}%
-\contentsline {section}{\numberline {7.1}Instalation guide}{63}{section.211}%
-\contentsline {section}{\numberline {7.2}Relevant code}{63}{section.212}%
-\contentsline {section}{\numberline {7.3}Prompts used}{63}{section.227}%
-\contentsline {section}{\numberline {7.4}Result table}{64}{section.261}%
-\contentsline {section}{\numberline {7.5}Tensorboard analysis}{64}{section.262}%
+\contentsline {subsection}{\numberline {3.2.1}Run locally}{35}{subsection.116}%
+\contentsline {subsection}{\numberline {3.2.2}Run remotely}{35}{subsection.117}%
+\contentsline {subsection}{\numberline {3.2.3}Communication bridge}{35}{subsection.118}%
+\contentsline {section}{\numberline {3.3}Workflow}{36}{section.121}%
+\contentsline {section}{\numberline {3.4}Tools used}{37}{section.129}%
+\contentsline {subsection}{\numberline {3.4.1}Vision Language Model choice}{37}{subsection.130}%
+\contentsline {subsubsection}{\numberline {3.4.1.1}SmolVLM-256M - the initial pick}{38}{subsubsection.131}%
+\contentsline {subsubsection}{\numberline {3.4.1.2}Used Vision Language Model: Qwen2-VL}{38}{subsubsection.132}%
+\contentsline {subsection}{\numberline {3.4.2}VLM hosted on BentoML server}{40}{subsection.137}%
+\contentsline {subsubsection}{\numberline {3.4.2.1}Vision as a Service (VaaS)}{41}{subsubsection.138}%
+\contentsline {subsection}{\numberline {3.4.3}IsaacSim as physics simulator}{41}{subsection.139}%
+\contentsline {subsection}{\numberline {3.4.4}IsaacLab for RL experimentation}{41}{subsection.140}%
+\contentsline {chapter}{\numberline {4}Design and Implementation}{43}{chapter.143}%
+\contentsline {section}{\numberline {4.1}Initial dummy experimentation}{43}{section.144}%
+\contentsline {subsection}{\numberline {4.1.1}CLIP Demo Analysis}{43}{subsection.145}%
+\contentsline {subsubsection}{\numberline {4.1.1.1}Simple Classification}{43}{subsubsection.146}%
+\contentsline {subsubsection}{\numberline {4.1.1.2}Zero-Shot Classification with CLIP}{44}{subsubsection.149}%
+\contentsline {subsubsection}{\numberline {4.1.1.3}Image Captioning with BLIP}{44}{subsubsection.150}%
+\contentsline {subsubsection}{\numberline {4.1.1.4}Visual Question Answering}{45}{subsubsection.151}%
+\contentsline {section}{\numberline {4.2}VLM Scene Captioning in IsaacSim}{45}{section.152}%
+\contentsline {subsection}{\numberline {4.2.1}Workflow of scene captioning}{45}{subsection.153}%
+\contentsline {subsection}{\numberline {4.2.2}Scene representation using graphs}{46}{subsection.160}%
+\contentsline {subsubsection}{\numberline {4.2.2.1}Returned results}{47}{subsubsection.165}%
+\contentsline {subsection}{\numberline {4.2.3}Comparison with my developed workflow}{48}{subsection.179}%
+\contentsline {section}{\numberline {4.3}Target detection task}{49}{section.180}%
+\contentsline {subsection}{\numberline {4.3.1}BentoML service class - VLMServiceIsaac}{49}{subsection.181}%
+\contentsline {subsection}{\numberline {4.3.2}Evolution of detection functions}{51}{subsection.196}%
+\contentsline {subsection}{\numberline {4.3.3}Task definition}{52}{subsection.199}%
+\contentsline {subsubsection}{\numberline {4.3.3.1}Procedure}{52}{subsubsection.202}%
+\contentsline {subsection}{\numberline {4.3.4}Computer Vision for performance enhancement}{54}{subsection.208}%
+\contentsline {subsection}{\numberline {4.3.5}Helping offsets}{59}{subsection.227}%
+\contentsline {section}{\numberline {4.4}Agent Control}{59}{section.228}%
+\contentsline {subsection}{\numberline {4.4.1}RMPFlowController: the Franka Controller}{60}{subsection.229}%
+\contentsline {subsection}{\numberline {4.4.2}Custom Jetbot controller class}{60}{subsection.230}%
+\contentsline {section}{\numberline {4.5}IsaacSim environment design}{61}{section.231}%
+\contentsline {subsection}{\numberline {4.5.1}First scenarios}{62}{subsection.232}%
+\contentsline {subsection}{\numberline {4.5.2}Last scenario}{62}{subsection.233}%
+\contentsline {section}{\numberline {4.6}Communication layer}{62}{section.234}%
+\contentsline {chapter}{\numberline {5}Results and Evaluation}{63}{chapter.235}%
+\contentsline {section}{\numberline {5.1}Successful and failure tries}{63}{section.236}%
+\contentsline {section}{\numberline {5.2}Results obtained in each scenario}{63}{section.237}%
+\contentsline {section}{\numberline {5.3}Result discussion}{63}{section.238}%
+\contentsline {chapter}{\numberline {6}Conclusions}{64}{chapter.239}%
+\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{64}{section.240}%
+\contentsline {section}{\numberline {6.2}Limitations found}{64}{section.241}%
+\contentsline {section}{\numberline {6.3}Future work}{65}{section.242}%
+\contentsline {chapter}{\numberline {7}Appendix}{70}{chapter.244}%
+\contentsline {section}{\numberline {7.1}Instalation guide}{70}{section.245}%
+\contentsline {section}{\numberline {7.2}Relevant code}{70}{section.246}%
+\contentsline {section}{\numberline {7.3}Prompts used}{70}{section.261}%
+\contentsline {section}{\numberline {7.4}Result table}{71}{section.295}%
+\contentsline {section}{\numberline {7.5}Tensorboard analysis}{71}{section.296}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

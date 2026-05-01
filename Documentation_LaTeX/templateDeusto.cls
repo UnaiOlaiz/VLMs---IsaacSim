@@ -74,6 +74,9 @@ bookmarks=true]{hyperref}
 \definecolor{commentgray}{gray}{0.4}
 \definecolor{stringorange}{rgb}{0.8,0.4,0.1}
 
+\usepackage{tikz}
+\usetikzlibrary{positioning, fit, backgrounds, calc}
+
 \lstset{
 	backgroundcolor=\color{graybg},
 	basicstyle=\ttfamily\small,

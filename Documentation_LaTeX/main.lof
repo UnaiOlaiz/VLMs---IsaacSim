@@ -15,20 +15,25 @@
 \contentsline {figure}{\numberline {2.11}{\ignorespaces Basic RL worfklow schema: the agent iteratively maps states to actions by maximizing a cumulative reward signal through trial and error interaction.}}{30}{figure.101}%
 \contentsline {figure}{\numberline {2.12}{\ignorespaces Different RL training approach comparison}}{32}{figure.106}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Standard workflow of the solution, going from the visual captioning stage up to the physical agent movement execution. The dashed line indicates a non-continuous feedback loop allowing for cycle repetition, especially in multi-agent tasks.}}{36}{figure.123}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Demonstration of M-RoPE}}{39}{figure.131}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces System architecture diagram.}}{36}{figure.120}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Standard workflow of the solution, going from the visual captioning stage up to the physical agent movement execution. The dashed line indicates a non-continuous feedback loop allowing for cycle repetition, especially in multi-agent tasks.}}{37}{figure.128}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Demonstration of M-RoPE}}{40}{figure.136}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Procedure of how IsaacLab reads the environment. First converting to tensors the hierarchical representation of the environment, sending them to the GPU and manipulating those tensors via Views API calls.}}{42}{figure.142}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Image to classify used in the CLIP features demonstration notebook, showing a surfer.}}{41}{figure.141}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Focal length of the camera, relation between the object distance and image distance.}}{46}{figure.166}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Raw image sent to VLM for cube analysis}}{48}{figure.175}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces First CV applied iteration}}{49}{figure.177}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Final CV application iteration}}{49}{figure.179}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Raw image of palette detection}}{50}{figure.181}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Result of masking the palettes}}{50}{figure.183}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Palette detection results with CV application}}{51}{figure.185}%
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Raw image of robotic arm detection}}{51}{figure.187}%
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Mask filtering for the robotic arms image}}{52}{figure.189}%
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Final result of the CV algorithm application to the last target detection case.}}{52}{figure.191}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Image to classify used in the CLIP features demonstration notebook, showing a surfer.}}{43}{figure.148}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Workflow of the VLM scene captioning add on available at the IsaacSim documentation.}}{46}{figure.159}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Environment used for the VLM scene capturing. Consisting of a hospital room containing objects we could find in an hospital. Such as the patient's bed and the doctor's table.}}{46}{figure.162}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces VLM scene captioning result applied to the hospital room scene, with numbers representing object nodes and lines standing for the graph edges.}}{47}{figure.164}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Focal length of the camera, relation between the object distance and image distance.}}{52}{figure.201}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Raw image sent to VLM for cube analysis}}{55}{figure.210}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces First CV applied iteration}}{55}{figure.212}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Final CV application iteration}}{56}{figure.214}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Raw image of palette detection}}{56}{figure.216}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Result of masking the palettes}}{57}{figure.218}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Palette detection results with CV application}}{57}{figure.220}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Raw image of robotic arm detection}}{58}{figure.222}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Mask filtering for the robotic arms image}}{58}{figure.224}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Final result of the CV algorithm application to the last target detection case.}}{59}{figure.226}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
