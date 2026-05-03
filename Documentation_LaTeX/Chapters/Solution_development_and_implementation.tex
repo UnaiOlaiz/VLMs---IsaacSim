@@ -356,6 +356,7 @@ The robotic agents used throughout the development needed to have movement funct
 
 
 \subsection{RMPFlowController: the Franka Controller}
+\label{sec:franka_controller}
 \textit{RMPFlowController} implements the \textit{BaseController} interface from the motion generation API library in python \cite{IsaacSimRMPFlow2024}. And it is the best controller choice for reaching specific targets while automatically adjusting the position and orientation of their joints and avoiding obstacles. It uses a pre-defined interface to access obstacle information for avoiding collisions. Furthermore, this interface will avoid Franka to crash its hand against the other component of the robotic arm, automatically avoiding collisions and finding the best way through. 
 
 After importing the necessary libraries to form the controller class, I developed the essential functions that every controller must dispose of.
@@ -368,6 +369,7 @@ After importing the necessary libraries to form the controller class, I develope
 
 
 \subsection{Custom Jetbot controller class}
+\label{sec:jetbot_controller}
 Whereas the simple import of the predefined controller initialized all the existing joints of the Franka arm, I needed to manually set the joints to their specific locations. Being the wheels and chassis. There is a function that also receives the target coordinates and travels there, however, the movement logic follows the principle of first rotating to the correct angle facing the target and then moving forward. It first calculates the difference between the error between the robot's current position and the goal coordinates ($g{x}, g{y}$), and depending on the error it spins the left or right wheel to face the goal target direction in a straight line. This is where I developed the following functions: 
 
 \begin{itemize}
@@ -387,15 +389,205 @@ Once orienting correctly and facing the target, it is time to go forward. For th
 \section{IsaacSim environment design}
 Once collected all the necessary components, it was time to put them all together inside a controlled simulation environment. As I had no previous experience with the framework, being \textit{Unity} the most similar experience I have had, I decided to progressively develop more and more sophisticated environments to try out my VLM integration pipeline, starting from the very simplest. The following subsections will relate my progression and evolution while adapting to the challenging learning curve IsaacSim has, detailing how I made my first scenarios, what they were made of and what techniques I applied in each. 
 
-%agents, cameras, physics, ...
+\subsection{Components of the scenarios}
+Before I start, I think it is a better idea to first list the components the scenarios have made with and talk about their properties, and then just say what each scenario is composed of.
+
+\subsubsection{Franka Panda - Robotic Arm} 
+\label{sec:franka}
+The robotic arm which can be found at inside the \texttt{Assets/Robots} path in the asset explorer tab inside the editor, is the digital representation of the real Franka Emika Panda robot arm \cite{FrankaInfo}. Originally it is composed of 7 axes and is used for manipulation tasks, being able to grasp objects up to 3.0kg and the robot itself weighs around 18kg. In addition to the original seven joints, IsaacSim adds the end-effector to the robot, basically being the "fingers" of the arm see figure \ref{fig:franka_arm}. The names of the joints are the following: \textit{panda\_finger\_joint1, panda\_finger\_joint2, panda\_joint1, panda\_joint2, panda\_joint3, panda\_joint4, panda\_joint5, panda\_joint6} and finally \textit{panda\_joint7}.´
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.5\textwidth]{imgs/franka_arm.png}
+	\label{fig:franka_arm}
+	\caption{Image of the Franka arm USD, with the 7 original joints plus the added fingers.}
+\end{figure}
+
+This robot will serve as the manipulative agent responsible of lifting and placing objects in the desired positions of the environment. Furthermore it will need a consistent controller for articulating all of its joints for a correct coordination, its respective controller development has been mentioned in section \ref{sec:franka_controller}. 
+
+While directly importing the USD file from the asset explorer does include the necessary collisions and rigid body physics for all of its joints, there is a single inconvenient I found from the default importing and I had to re-configure for a better performance. I got the idea from YouTube tutorial \cite{FrankaConvexDecomposition}. Basically, as Franka will have to manipulate and lift/place complex shaped objects, it will need capable finger physics, and the pre-defined finger physics did not perform well enough. The original physics approach of the finger joints was \textit{convexHull}, approach which while being the fastest to calculate and most stable showed inaccuracy when lifting the smallest objects. When trying to make contact with a small object such as a cube, it would collapse with the cube's collision box constantly due to the fingers' big hit boxes, making unfeasible to grasp it correctly. That is why I chose to transition to the \textit{convexDecomposition} physics for the fingers, inspired on the mentioned tutorial. This method decomposes the finger itself into multiple smaller pieces, having each its own convex hit box. This approach worked much better as we were talking about a single and more awkward collision finger compared to a much more sophisticated multiple hit box chain which replicates much better the collision system of a real arm. I got much better results with this technique in the lifting stages of the pipeline. 
+
+\subsubsection{Jetbot - Navigation Agent}
+The Jetbot configuration was much more friendlier, this agent has no complex joint systems nor articulations of any kind. Even if in image \ref{fig:jetbot} the structure of the robot seems complex, it actually comes up the chassis and the wheels. The chassis acts as the main rigid body of the agent, apart from that I did not need to re-configure the collision physics of the Jetbot. Secondly it has a set of wheels to configure the navigation direction as seen in the Jetbot controller section \ref{sec:jetbot_controller} and a third one which acts as the balancing wheel which is not related to the engine. The things on top of the basis and those two aerials on the back serve no purpose in the simulator, although they may well have functionality in real cases. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.5\textwidth]{imgs/jetbot.png}
+	\label{fig:jetbot}
+	\caption{Image of the Jetbot arm USD.}
+\end{figure}
+
+\subsubsection{Cubes}
+The cubes will be the objects which will be picked and lifted by the robotic arms and placed in the corresponding places. I had doubts on how to create the cubes, whether to load them from the asset store or create them by myself, and apart from that, there are several ways one can create cubes inside IsaacSim. I finally went for creating them manually for more configuration freedom, and created them using \textit{meshes}. Even if perhaps was not necessary to create them using this class as meshes are made of thousands of little polygons and it would be enough to use a \textit{geometry prim}, I still wanted to experiment with the more complex class and it was personally easier to configure. 
+
+Moreover, I made all cubes the same size \texttt{[0.05, 0.05, 0.05]}, small enough to be easily manipulable. However, I did experiment with different rotations in more advanced scenarios. 
+
+\subsubsection{Palettes}
+On the other hand, the palettes will be where the cubes will be placed, they were all loaded from the asset explorer tab, which consists of thousands of objects that can be used in the environments. As seen in figure \ref{fig:palettesraw}, I decided to experiment with both different color and shapes. Not only does each platform has a distinct color, but it also has a different hole pattern. Which will make the detection and placement tasks a little bit trickier. 
+
+\subsubsection{Cameras}
+Cameras are also part of the USD type, they are acquired from camera pins by the use of renderers \cite{SimCamera}. As mentioned in earlier stages, I have configured a camera for each point of interest. The cameras will be responsible to capture the screenshot to be sent to the VLM. The main properties of the camera have been repeated in all the environments, which stand as the following: 
+
+\begin{itemize}
+	\item \textbf{Focal length}: refers to the distance between the optic center of the lens and the image sensor. Inside the simulator, determines what is commonly known as \textit{field of view} (FOV).
+	
+	\item \textbf{Focus distance}: defines the distance between the camera and the plane where the objects are. It is used to calculate the \textit{depth of field}, region of the environment where everything which stands out of it will appear blurry. These first two properties were used to calculate the \textit{unprojection} method part of the workflow pipeline. 
+	
+	\item \textbf{Horizontal aperture}: width length of the camera sensor. 
+	
+	\item \textbf{Vertical aperture}: height length of the camera. 
+	
+	
+\end{itemize}
+
+\subsubsection{Lights}
+Light enables a clearer and more realistic view of the scenario, without adding any it would all be black and cameras would not be able to see anything. The light component inside IsaacSim is composed of two attributes. The intensity being a numeric value to represent the strength of the light and the color RGB value \cite{SimLights}. I have kept the default values for both parameters in all my environments. 
+
+Apart from that, there are two light configurations inside the simulator. The \textit{direct light} which is the one I have used, shines towards the negative Z-direction, often pointing to the ground from a certain angle. While the second is the \textit{dome light}, which as light beams coming from all directions forming a more uniform lighting. Depending on the configuration chosen, shadows will be formed in one way or another, but I decided to not over-complicate and go for the basic and direct light choice.
+
+\subsubsection{Physics}
+All of the scenarios will include physical properties to ensure real verisimilitude. Each object part of the environment will have at least these two physics:
+
+\begin{enumerate}
+	\item \textbf{Collision properties}: features which enable the physics engine of the simulator to detect contact between objects. There are several collision configurations such as the ones mentioned at the end of section \ref{sec:franka}, which differ on the approximation used to calculate the collision among polygons. If there was no collision configuration, objects would trespass each other.  
+	
+	\item \textbf{Rigid body}: this other property brings Newton's principles to the objects in the scenario. Applying mass, inertia and gravity laws to them. This property will enable more realistic object behaviors in the physical tasks required in the scenario.  
+\end{enumerate}
+
 
 \subsection{First scenarios}
+Once I collected all the pieces that would build my different scenarios, I started by developing single agent environments. Individual cases that would then form the final workflow. The very first scenarios consisted of trying out different IsaacSim tutorials, following their official documentation to create the most basic environments, but I do not consider them worthy to mention. Let's jump straight to the interesting scenarios development. 
 
-\subsection{Last scenario}
+\subsubsection{First individual Franka environment}
+This was the first environment where I really put my VLM workflow into test. The setup is basic, a single Franka arm and three different cubes. What I actually wanted to test here was that both my VLM detection and Franka controller worked well. Nevertheless, as this was one of my first experiments, my pipeline was not fully advanced and sophisticated yet. I still had not implemented the computer vision filters, so the VLM purely relied on itself. What I wanted to achieve with this individual environment was the certainty that my pipeline was able to orchestrate the whole VLM and Franka lifting movement, and the environment would end with the robot raising the target cube. This was my workflow at that time, simple yet successful.
+
+\begin{enumerate}
+	\item While running the BentoML server, I still would use the single \textit{ground} method, which had to identify the most likely single target out of the screenshot taken by the single camera in the environment. As a fact, the camera used for this first environment captures the same screenshot seen in image \ref{fig:cubesraw}. 
+	
+	\item The VLM, still not as accurate as in the final pipeline, returned the target cube's position and stored it in a JSON file. 
+	
+	\item Finally I load the positions from the storing file and call the \textit{execute\_movement} orchestrator function from the Franka controller (section \ref{sec:franka_controller}) to reach on top of the cube, descend and close the grips and finally lift the cube. I decided to decompose the grasping and lifting task into modular functions such as descend, close grips and lift, to gain more control over the whole coordination task and implement more safety techniques. 
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=.3\textwidth]{imgs/FirstEnv.png}
+	\label{fig:first_env}
+	\caption{First practical scenario, consisting of a single Franka arm and three cubes of different colors. Same size, same orientation. }
+\end{figure}
+
+At this stage of the development, I struggled a lot with the physics engine integrated into the simulator. Such delicate coordination tasks usually returned \textit{warm start} errors, consisting of synchronization issues between the Python interpreter and the physics engine of IsaacSim. The error arose when I would try to run a function when the physics simulation was still running, concept that would lead to total collapse of both the running script and the simulator. 
+
+The solution was to perfectly synchronize the python interpreter and the physics renderer, and the best answer I found was the use of the \textit{asyncio} Python library. This library is specialized on asynchronous calls, able to coordinate the calls between the physics engine and python functions. Reason why I decided to inject \textit{async def} functions able to pause the execution using \textit{await} while the other tasks were running. This trick of waiting until the other tasks finished running enabled me to surpass the strict physics engine restrictions and orchestrate a more fluent workflow. 
+
+\subsubsection{Jetbot controller tryout environment}
+I also crafted a super basic empty environment with just the Jetbot agent to try out the controller (section \ref{sec:jetbot_controller}) I made. It was so simple just containing a basic floor, lighting and the agent, where I would arbitrarily introduce coordinates and test if the robot would travel there successfully. These first two where perhaps the most fundamental environments as would serve as the pillars to the more advanced ones that would come later on, as without these foundations integrating the multi-agent logic would not have been feasible. 
+
+\subsection{Advanced scenarios}
+After building the foundational environments and sophisticating my final pipeline, it was time to build the multi-agent logic I was looking after. If I were to start straight with multi-agent environment crafting it would have been a much harder task to tackle, but thanks to the previous environments I had a better experience.
+
+\subsubsection{Multi-agent task workflow}
+The task the agents must accomplish by cooperation is pretty straightforward: carrying target cube to target pallet. One Franka will receive the task of identifying the target cube's coordinates and will have to lift it and place it on top of the Jetbot, which will be the responsible of traveling between the robotic arms. Once the wheeled agent reaches the second arm, this one will pick the cube on top of the Jetbot and place it on top of the target platform coordinates. The task may repeat itself, and as there are many cube-platform combinations, I decided to illustrate it with graph \ref{fig:multi_agent_workflow}.
+
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric}
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		node distance=1.2cm and 1.0cm,
+		state/.style={
+			rectangle, 
+			draw, 
+			minimum width=4cm, 
+			minimum height=1.2cm, 
+			line width=0.8pt, 
+			fill=gray!5, 
+			font=\small,
+			align=center 
+		}
+		]
+		
+		\node (s1) [state] {\textbf{1. First Franka}: \\ Identify target cube location};
+		\node (s2) [state, right=of s1] {\textbf{2. First Franka}: \\ Lift and place on top of Jetbot};
+		\node (s3) [state, right=of s2] {\textbf{3. Jetbot}: \\ Travel to the second franka};
+
+		\node (s4) [state, below=of s3] {\textbf{4. Second Franka}: \\ Lift cube and identify \\ target palette location};
+		\node (s5) [state, left=of s4] {\textbf{5. Second Franka}: \\ Place cube on target palette.};
+		\node (s6) [state, left=of s5] {\textbf{6. Jetbot}: \\ Travel back to first franka};
+
+		\draw [-Stealth, line width=0.8pt] (s1) -- (s2);
+		\draw [-Stealth, line width=0.8pt] (s2) -- (s3);
+		
+
+		\draw [-Stealth, line width=0.8pt] (s3) -- (s4);
+		
+		\draw [-Stealth, line width=0.8pt] (s4) -- (s5);
+		\draw [-Stealth, line width=0.8pt] (s5) -- (s6);
+		
+		\draw [-Stealth, line width=0.8pt, dashed, gray] (s6) -- (s1);
+		
+	\end{tikzpicture}
+	\caption{Multi-agent cooperative task workflow. The discontinuous line from step 6 to 1 indicates the able to repeat the cycle once again, as the task may consist on transporting more than one cube.}
+	\label{fig:multi_agent_workflow}
+\end{figure}
+
+\subsubsection{Multi-agent scenario}
+After explaining the workflow the agents of the environment must achieve, I will go over the steps I followed to orchestrate the whole coordination task. The smartest choice in my opinion was to make a main script which would load all the necessary components to carry on the task (see pseudo code \ref{code:mainiter}), including the movement scripts and all the target detection material. From that very script I am able to orchestrate the full coordination by just selecting the target cube and target pallet, however, behind that compact structure it all comes up to modular functions. 
+
+\begin{lstlisting}[
+	language=Python, 
+	caption={[Multi-agent orchestration for blue cube] Example of orchestrating call inside the main script, composed by all the modular functions created and introducing the target colors; this call brings the blue cube to the black platform}, 
+	label={code:mainiter},
+	morekeywords={role, content, type, image, text, await, async}
+	]
+	await move_first_franka("blue")
+	await place_on_jetbot()
+	await asyncio.sleep(1.0)
+	await move_jetbot(right_json)
+	await pick_from_jetbot("blue")
+	await place_on_palett("black")
+	await move_jetbot(left_json)
+\end{lstlisting}
+
+Let's now go over the procedure hidden beyond those functions, inspired on the workflow graph \ref{fig:multi_agent_workflow}. All of the steps carried have been tested on the environment shown in picture \ref{fig:first_multi_agent}.
+
+\begin{enumerate}
+	\item \textbf{move\_first\_franka("blue")}: corresponds to the first step node of the graph. Step which consists of detecting the target cube location and grasping the cube, finishing when the arm lifts the cube up to a safe place. At this point of the development the VLM uses the \textit{ground\_multi} method. Where among all of the objects appearing in the screenshot sent to the model, it must be able to detect and distinguish the target one. For a fact, image \ref{fig:cubesraw} is the one sent to the model at this step. After successfully detecting the location of the target passing the threshold counter, that position data is saved and loaded for the next stage. The movement phase is decomposed into descending into approaching the object, then descending to a safe contact height, closing the grips and lifting it up to a safe height.
+	
+	\item \textbf{place\_on\_jetbot}: (step 2 of the graph) once the cube has been lifted is time to place it on top of the Jetbot getting its position. As the Jetbot itself has a complex top surface as seen in image \ref{fig:jetbot}, I placed a custom little platform for a better placing performance. That platform has the necessary physics to not fall of when the agent accelerates. The placing movement consists of descending, opening the grips and lifting the arm once again, all of these must take into account not collisioning with the robot's structure, as it would collapse the whole coordination task.  
+	
+	\item \textbf{asyncio.sleep(1.0)}: now I make an asynchronous call to relax the python interpreter, this is a security measure to control the synchronization errors. 
+	
+	\item \textbf{move\_jetbot(right\_json)}: corresponding to node 3, I load the right franka arm predicted position captured in screenshot \ref{fig:frankasclean}. And travel close enough to the robot to not collapse and facilitate the lifting task, using the custom Jetbot controller functions (\ref{sec:jetbot_controller}).
+	
+	\item \textbf{pick\_from\_jetbot("blue")}: step 4 was definitely the most challenging one, as the placement coordinates of the cube on top of the Jetbot platform was stochastic, and additionally the grasping action of the second arm is the most fragile step of the whole pipeline. Reason why I had to use the ground-truth positions of the cube after being placed on the platform to carry on, as other alternatives I tried would not work as great as I would want to. The lifting movement of this second arm follows the same steps as in step 1, but applying the offset of the cube being on top of the platform.  
+	
+	\item \textbf{place\_on\_jetbot("black")}: in step 5 I load the coordinates got by feeding image \ref{fig:palettesraw} to the VLM and selecting the target color by the variable introduced when calling the function. As in the other steps, a movement decomposed into little steps is used to finally place the target cube on top of the target pallet. 
+	
+	\item \textbf{move\_jetbot(left\_json)}: even if it not mandatory, it is a great choice to travel back to the other way in case of wanting to try the cycle multiple times. 
+\end{enumerate}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.75\textwidth]{imgs/Multi-agent_scenario.png}
+	\label{fig:first_multi_agent}
+	\caption{First multi agent environment, consisting of two Franka arms, a Jetbot robot and some cubes and platforms.}
+\end{figure}
+
+In case of interest, I put a full practical example of the cycle where all the cubes are transported to all platforms, one by one. It is available at section in the appendix. 
+
+\subsubsection{More advanced alternatives}
+Even if this project does not pretend to try any \textit{sim2real} transferability, all of these previous environments have shown ideal cases where all of the objects stood at their ideal positions. There were no orientation nor height alternatives for the cubes, meaning that the arm could grab and lift them equally. Reason why I decided to present an alternative version of the environment where the cubes would stand in different configurations, to force the Franka arm to adapt to each target situation. 
+
+Figure \ref{fig:alternativescenario} shows the different alternatives I have prepared for each cube. Where cube red stands as before, the green one is slightly rotated and the blue one stands on top of a custom box. Nevertheless, as the cubes are so tiny compared to the arms fingers open width, the arm is able to grab them independently of their rotation, just needing to configure the box offset to capture successfully the blue one. However, I wanted to introduce these imperfect cases as in real robotic environments not everything falls perfect. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.45\textwidth]{imgs/Screenshot from 2026-05-03 19-33-37.png}
+	\label{fig:alternativescenario}
+	\caption{Alternative scenario where each cube shows a different position configuration}.
+\end{figure}
+
+\section{RL Experiments}
 
 
-
-
-
-
-\section{Communication layer} % ?
+% \section{Communication layer} % ?

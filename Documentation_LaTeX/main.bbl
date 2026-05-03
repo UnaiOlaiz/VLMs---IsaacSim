@@ -3,6 +3,15 @@
 \bibitem{li2025surveystateartlarge}
 
 
+\bibitem{FrankaConvexDecomposition}
+
+
+\bibitem{SimCamera}
+
+
+\bibitem{SimLights}
+
+
 \bibitem{multimodal_learning_wiki}
 Multimodal learning.
 \newblock \url{https://en.wikipedia.org/wiki/Multimodal_learning}.
@@ -134,6 +143,9 @@ Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
 Nils Rethmeier and Isabelle Augenstein.
 \newblock A primer on contrastive pretraining in language processing: Methods,
   lessons learned and perspectives, 2021.
+
+\bibitem{FrankaInfo}
+RoboDK.
 
 \bibitem{Simek2012Extrinsic}
 Kyle Simek.

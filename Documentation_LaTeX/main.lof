@@ -34,6 +34,12 @@
 \contentsline {figure}{\numberline {4.12}{\ignorespaces Raw image of robotic arm detection}}{58}{figure.222}%
 \contentsline {figure}{\numberline {4.13}{\ignorespaces Mask filtering for the robotic arms image}}{58}{figure.224}%
 \contentsline {figure}{\numberline {4.14}{\ignorespaces Final result of the CV algorithm application to the last target detection case.}}{59}{figure.226}%
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Image of the Franka arm USD, with the 7 original joints plus the added fingers.}}{62}{figure.235}%
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Image of the Jetbot arm USD.}}{63}{figure.238}%
+\contentsline {figure}{\numberline {4.17}{\ignorespaces First practical scenario, consisting of a single Franka arm and three cubes of different colors. Same size, same orientation. }}{66}{figure.252}%
+\contentsline {figure}{\numberline {4.18}{\ignorespaces Multi-agent cooperative task workflow. The discontinuous line from step 6 to 1 indicates the able to repeat the cycle once again, as the task may consist on transporting more than one cube.}}{68}{figure.257}%
+\contentsline {figure}{\numberline {4.19}{\ignorespaces First multi agent environment, consisting of two Franka arms, a Jetbot robot and some cubes and platforms.}}{70}{figure.275}%
+\contentsline {figure}{\numberline {4.20}{\ignorespaces Alternative scenario where each cube shows a different position configuration}}{71}{figure.278}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

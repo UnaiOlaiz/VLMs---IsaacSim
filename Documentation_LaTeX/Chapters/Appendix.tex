@@ -2,6 +2,8 @@
 IsaacSim/Lab
 
 \section{Relevant code}
+
+\subsection{Helping offsets used for VLM guidance}
 \begin{lstlisting}[
 	language=Python, 
 	caption={Calibration offsets used, ($x, y, z$) triplets where for all cases $z$=0 (objects standing on top of the ground)},
@@ -22,8 +24,52 @@ IsaacSim/Lab
 	}
 \end{lstlisting}
 
+\subsection{Full multi-agent coordination script}
+\label{sec:fullmain}
+\begin{lstlisting}[
+	language=Python, 
+	caption={After seeing a complete cube transporting cycle, this script involves the full cycle involving all cubes and platforms},
+	label={code:main},
+	morekeywords={role, content, type, image, text}]
+	async def main():
+	print("##### STARTING FULL PIPELINE (LIFT+PLACE+NAVIGATION) STILL WITH CONTROLLER #####")
+	
+	# first cube interaction
+	await move_first_franka("red")
+	await place_on_jetbot()
+	await asyncio.sleep(1.0)
+	await move_jetbot(right_json)
+	await pick_from_jetbot("red")
+	await place_on_palett("red")
+	await move_jetbot(left_json)
+	
+	# second cube
+	await move_first_franka("green")
+	await place_on_jetbot()
+	await asyncio.sleep(1.0)
+	await move_jetbot(right_json)
+	await pick_from_jetbot("green")
+	await place_on_palett("blue")
+	await move_jetbot(left_json)
+	
+	# third cube
+	await move_first_franka("blue")
+	await place_on_jetbot()
+	await asyncio.sleep(1.0)
+	await move_jetbot(right_json)
+	await pick_from_jetbot("blue")
+	await place_on_palett("black")
+	await move_jetbot(left_json)
+	print("##### PIPELINE FINISHED! #####")
+	
+	
+	asyncio.ensure_future(main())
+\end{lstlisting}
+
 
 \section{Prompts used}
+
+\subsection{Helping prompts used for the VLM target detection task}
 \begin{lstlisting}[
 	language=Python, 
 	caption={Custom prompts used for ground\_multi detection function to try out different target names and then take the median of the predicted coordinates. },
@@ -62,8 +108,6 @@ IsaacSim/Lab
 		]
 	}
 \end{lstlisting}
-
-
 
 \section{Result table}
 \section{Tensorboard analysis}

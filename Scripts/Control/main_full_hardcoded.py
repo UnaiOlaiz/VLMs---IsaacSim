@@ -25,10 +25,15 @@ left_json = os.path.expanduser(
 )
 
 # Hardcoded positions files
-red_hard = os.path.expanduser("~/Documents/PFG/Scripts/Control/cube_jsons/rl_start_red_cube.json")
-green_hard = os.path.expanduser("~/Documents/PFG/Scripts/Control/cube_jsons/rl_start_green_cube.json")
-blue_hard = os.path.expanduser("~/Documents/PFG/Scripts/Control/cube_jsons/rl_start_blue_cube.json")
-
+red_hard = os.path.expanduser(
+    "~/Documents/PFG/Scripts/Control/cube_jsons/rl_start_red_cube.json"
+)
+green_hard = os.path.expanduser(
+    "~/Documents/PFG/Scripts/Control/cube_jsons/rl_start_green_cube.json"
+)
+blue_hard = os.path.expanduser(
+    "~/Documents/PFG/Scripts/Control/cube_jsons/rl_start_blue_cube.json"
+)
 
 
 async def main():
@@ -60,6 +65,7 @@ async def main():
     await move_jetbot(right_json)
     await pick_from_jetbot("blue")
     await place_on_palett("black")
+    await move_jetbot(left_json)
     print("##### PIPELINE FINISHED! #####")
 
 
@@ -67,5 +73,3 @@ asyncio.ensure_future(main())
 
 # hardcoded coordinates of the red cube post movement:
 # /World/Cubes/Red_Cube: [ 2.88283682 -0.05328616  0.28445387]
-
-

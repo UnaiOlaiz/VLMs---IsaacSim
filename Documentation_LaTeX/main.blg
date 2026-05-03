@@ -15,45 +15,48 @@ You're missing a field name---line 370 of file bibliography.bib
 I'm skipping whatever remains of this entry
 Warning--to sort, need author or key in multimodal_learning_wiki
 Warning--to sort, need author or key in li2025surveystateartlarge
-You've used 40 entries,
+Warning--to sort, need author or key in FrankaConvexDecomposition
+Warning--to sort, need author or key in SimCamera
+Warning--to sort, need author or key in SimLights
+You've used 44 entries,
             2118 wiz_defined-function locations,
-            654 strings with 13482 characters,
-and the built_in function-call counts, 15618 in all, are:
-= -- 1236
-> -- 1483
+            663 strings with 13594 characters,
+and the built_in function-call counts, 16210 in all, are:
+= -- 1273
+> -- 1493
 < -- 0
-+ -- 598
-- -- 554
-* -- 1230
-:= -- 2765
-add.period$ -- 107
-call.type$ -- 40
-change.case$ -- 394
++ -- 604
+- -- 556
+* -- 1250
+:= -- 2826
+add.period$ -- 111
+call.type$ -- 44
+change.case$ -- 403
 chr.to.int$ -- 0
-cite$ -- 42
-duplicate$ -- 292
-empty$ -- 880
-format.name$ -- 554
-if$ -- 3008
+cite$ -- 49
+duplicate$ -- 320
+empty$ -- 971
+format.name$ -- 556
+if$ -- 3146
 int.to.chr$ -- 0
-int.to.str$ -- 40
+int.to.str$ -- 44
 missing$ -- 2
-newline$ -- 189
-num.names$ -- 76
-pop$ -- 576
+newline$ -- 201
+num.names$ -- 78
+pop$ -- 608
 preamble$ -- 1
-purify$ -- 357
+purify$ -- 366
 quote$ -- 0
-skip$ -- 298
+skip$ -- 346
 stack$ -- 0
-substring$ -- 204
-swap$ -- 42
+substring$ -- 224
+swap$ -- 46
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 160
-warning$ -- 2
-while$ -- 76
-width$ -- 42
-write$ -- 370
+type$ -- 176
+warning$ -- 5
+while$ -- 78
+width$ -- 46
+write$ -- 387
 (There was 1 error message)
