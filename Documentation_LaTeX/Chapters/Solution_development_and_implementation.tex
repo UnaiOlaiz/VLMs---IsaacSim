@@ -587,7 +587,56 @@ Figure \ref{fig:alternativescenario} shows the different alternatives I have pre
 	\caption{Alternative scenario where each cube shows a different position configuration}.
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{RL Experiments}
+Up until now,  I have purely relied on the controller to grasp the cube from the predicted position. While using the pre-built Franka arm controller seems the easiest way to articulate all of its joints and achieve desired coordination tasks, this may not always be applicable to real scenarios. Reinforcement learning, machine learning subfield mentioned in section \ref{sec:rl}, tackles this approach developing policies that are able to generalize with new scenarios or environment alternations. 
 
+There were two things I wanted to experiment with reinforcement learning, the development of a pick and place policy for each robotic arm in the multi-agent scenario \ref{fig:first_multi_agent}. If the policy training results successful, it would be enough to just send the predicted target coordinates to the arm, and the arm itself would know how to articulate its joints to get the cube grasped and lifted.
 
-% \section{Communication layer} % ?
+Although the idea is straightforward and it seems simple, this has been the part of the project where I spent the most time and obtained the most confusing results. The following subsections will relate my progression throughout the RL experimentation process of the project. 
+
+\subsection{Lift policy training}
+The training framework used was no other than IsaacLab, which fortunately included training scripts for the Franka arm lifting task I wanted to tackle. Furthermore, there were alternative pick place and place policy training scripts, yet not supported for the Franka robotic arms. Inside the corresponding path, there are three different training approach scripts depending on how do you want to focus the lift task.
+
+\begin{enumerate}
+	\item \textbf{joint\_pos\_env\_cfg.py}: (joint position control) is the most basic and default approach. It works by learning the correct weights to articulate each of the joints of the robot, learning the angle which they must adopt in order to move the arm correctly. While once learned a good policy it is the best choice, it can be extremely hard to get the right coordination weights of the network. 
+	
+	\item \textbf{ik\_abs\_env\_cfg.py}: (absolute inverse kinematics) uses inverse kinematics (IK), and the actions are $(x,y,z)$ coordinates where the robot must move to. By introducing the target coordinates, the network must learn the weights to move the engine. 
+	
+	\item \textbf{ik\_rel\_env\_cfg.py}: (relative inverse kinematics) also using inverse kinematics, the actions now correspond to the relative placements to the current position of the end-effector. End-effector basically being the arm's hand. Instead of feeding a fixed coordinate as input, the network must receive instructions such as "move 5cm to the right from your current position". 
+\end{enumerate}
+
+The approaches I tested the most were the first two, and I also got with an idea thanks to my tutor that could reduce the training complexity of the lifting cube task. 
+
+\subsubsection{Training approaches}
+The idea was simple, starting the training from a closer position to the cube, reducing considerably all the training complexity that involves starting from the very top of the arm position. If successful, the training episodes should go shortening and getting a higher reward faster. For that reason, I made a new script which using the same Franka controller as usual would move just to the top position of the predicted cube coordinates, keeping a safe $z$ height offset. And would finally store the close position data of both the cube and the robot's joints to initialize the training episode from that same position loading the JSON. 
+
+The following corresponds to the training script I used first for just testing the red cube close position approach and the configuration I used for training, with \textit{stable baselines 3} framework and algorithm \textit{PPO} (proximal policy optimization).
+
+The \textit{vlm\_data} variable contains all the information encapsulated with the previous movement script, containing the target cube's color, the cube's position in the environment, and the joint positions of the Franka arm. Then I proceed to start the training with the same joint positions saved and the same goes for the cube. However, I have inverted the $x, y$ coordinates of the cube starting position and set $z$ to 0.06 to spawn on top of the table all lifting tasks start from by default. It is possible to quit the table from spawning though. All of the remaining code is basically the same as in the default \textit{joint\_pos\_env\_cfg.py} script.
+
+\begin{lstlisting}[
+	language=Python, 
+	caption={Custom training approach script snippet},
+	label={code:rlclosescript},
+	morekeywords={role, content, type, image, text}]
+	if vlm_data:
+		print(f"[VLM INFO] Loading initialization from JSON")
+		jp = vlm_data["joint_positions"]
+		self.scene.robot.init_state.joint_positions = {
+			f"panda_joint{i+1}": jp[i] for i in range(7)
+		}
+		self.scene.robot.init_state.joint_positions["panda_finger_joint1"] = jp[7]
+		self.scene.robot.init_state.joint_positions["panda_finger_joint2"] = jp[8]
+		self.scene.robot.default_joint_pos = self.scene.robot.init_state.joint_positions
+	
+		if "cube_world_pos" in vlm_data:
+		cp = vlm_data["cube_world_pos"]
+		self.scene.object.init_state.pos = (-cp[0], -cp[1], 0.06)
+\end{lstlisting}
+
+I trained it for 25M steps and using the parameter configuration that can be found in the appendix, using parallelization for training multiple environments simultaneously. For this, I needed to configure my GPU capacity parameters inside the training script. After around 10M steps, the Tensorboard graph showed a rising episode reward mean graph, which in fact indicated the agent was able to successfully learn to lift the cube. 
+
+\subsection{Policy inference testing}
+

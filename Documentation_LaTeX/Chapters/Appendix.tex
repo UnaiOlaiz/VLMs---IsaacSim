@@ -66,6 +66,38 @@ IsaacSim/Lab
 	asyncio.ensure_future(main())
 \end{lstlisting}
 
+\subsection{Training parameters}
+\begin{lstlisting}[
+	language=Python, 
+	caption={SB3 training parameters},
+	label={code:main},
+	morekeywords={role, content, type, image, text}]
+	seed: 42
+	n_timesteps: 25000000
+	policy: MlpPolicy
+	n_steps: 32
+	batch_size: 4096
+	gae_lambda: 0.95
+	gamma: 0.99
+	n_epochs: 4
+	ent_coef: 0.0
+	vf_coef: 0.0001
+	learning_rate: 0.0003
+	clip_range: 0.2
+	policy_kwargs:
+	activation_fn: nn.ELU
+	net_arch:
+	pi:
+	- 256
+	- 128
+	- 64
+	vf:
+	- 256
+	- 128
+	- 64
+	target_kl: 0.01
+	max_grad_norm: 1.0
+\end{lstlisting}
 
 \section{Prompts used}
 
