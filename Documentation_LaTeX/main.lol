@@ -1,3 +1,5 @@
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
@@ -8,10 +10,14 @@
 \contentsline {lstlisting}{\numberline {4.4}Command to start the created VLM service}{51}{lstlisting.197}%
 \contentsline {lstlisting}{\numberline {4.5}Multi-agent orchestration for blue cube}{68}{lstlisting.259}%
 \contentsline {lstlisting}{\numberline {4.6}Custom training approach script snippet}{73}{lstlisting.285}%
+\contentsline {lstlisting}{\numberline {4.7}Custom training command}{73}{lstlisting.299}%
+\contentsline {lstlisting}{\numberline {4.8}Custom training visualization command}{74}{lstlisting.301}%
+\contentsline {lstlisting}{\numberline {4.9}Custom training visualization command}{76}{lstlisting.308}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {lstlisting}{\numberline {7.1}Calibration offsets used, ($x, y, z$) triplets where for all cases $z$=0 (objects standing on top of the ground)}{82}{lstlisting.313}%
-\contentsline {lstlisting}{\numberline {7.2}After seeing a complete cube transporting cycle, this script involves the full cycle involving all cubes and platforms}{82}{lstlisting.328}%
-\contentsline {lstlisting}{\numberline {7.3}SB3 training parameters}{83}{lstlisting.363}%
-\contentsline {lstlisting}{\numberline {7.4}Custom prompts used for ground\_multi detection function to try out different target names and then take the median of the predicted coordinates.}{84}{lstlisting.391}%
+\contentsline {lstlisting}{\numberline {7.1}Calibration offsets used, ($x, y, z$) triplets where for all cases $z$=0 (objects standing on top of the ground)}{85}{lstlisting.323}%
+\contentsline {lstlisting}{\numberline {7.2}After seeing a complete cube transporting cycle, this script involves the full cycle involving all cubes and platforms}{85}{lstlisting.338}%
+\contentsline {lstlisting}{\numberline {7.3}SB3 training parameters}{86}{lstlisting.373}%
+\contentsline {lstlisting}{\numberline {7.4}Custom prompts used for ground\_multi detection function to try out different target names and then take the median of the predicted coordinates.}{87}{lstlisting.401}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

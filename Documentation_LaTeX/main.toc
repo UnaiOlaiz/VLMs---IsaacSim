@@ -108,23 +108,27 @@
 \contentsline {section}{\numberline {4.6}RL Experiments}{71}{section.279}%
 \contentsline {subsection}{\numberline {4.6.1}Lift policy training}{71}{subsection.280}%
 \contentsline {subsubsection}{\numberline {4.6.1.1}Training approaches}{72}{subsubsection.284}%
-\contentsline {subsection}{\numberline {4.6.2}Policy inference testing}{73}{subsection.299}%
-\contentsline {chapter}{\numberline {5}Results and Evaluation}{74}{chapter.300}%
-\contentsline {section}{\numberline {5.1}Successful and failure tries}{74}{section.301}%
-\contentsline {section}{\numberline {5.2}Results obtained in each scenario}{74}{section.302}%
-\contentsline {section}{\numberline {5.3}Result discussion}{74}{section.303}%
-\contentsline {chapter}{\numberline {6}Conclusions}{75}{chapter.304}%
-\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{75}{section.305}%
-\contentsline {section}{\numberline {6.2}Limitations found}{75}{section.306}%
-\contentsline {section}{\numberline {6.3}Future work}{76}{section.307}%
-\contentsline {chapter}{\numberline {7}Appendix}{82}{chapter.309}%
-\contentsline {section}{\numberline {7.1}Instalation guide}{82}{section.310}%
-\contentsline {section}{\numberline {7.2}Relevant code}{82}{section.311}%
-\contentsline {subsection}{\numberline {7.2.1}Helping offsets used for VLM guidance}{82}{subsection.312}%
-\contentsline {subsection}{\numberline {7.2.2}Full multi-agent coordination script}{82}{subsection.327}%
-\contentsline {subsection}{\numberline {7.2.3}Training parameters}{83}{subsection.362}%
-\contentsline {section}{\numberline {7.3}Prompts used}{84}{section.389}%
-\contentsline {subsection}{\numberline {7.3.1}Helping prompts used for the VLM target detection task}{84}{subsection.390}%
-\contentsline {section}{\numberline {7.4}Result table}{85}{section.424}%
-\contentsline {section}{\numberline {7.5}Tensorboard analysis}{85}{section.425}%
+\contentsline {subsection}{\numberline {4.6.2}Elements of the training process}{74}{subsection.303}%
+\contentsline {subsubsection}{\numberline {4.6.2.1}Observation space}{74}{subsubsection.304}%
+\contentsline {subsubsection}{\numberline {4.6.2.2}Action space}{75}{subsubsection.305}%
+\contentsline {subsubsection}{\numberline {4.6.2.3}Reward system}{75}{subsubsection.306}%
+\contentsline {subsection}{\numberline {4.6.3}Policy inference testing}{75}{subsection.307}%
+\contentsline {chapter}{\numberline {5}Results and Evaluation}{77}{chapter.310}%
+\contentsline {section}{\numberline {5.1}Successful and failure tries}{77}{section.311}%
+\contentsline {section}{\numberline {5.2}Results obtained in each scenario}{77}{section.312}%
+\contentsline {section}{\numberline {5.3}Result discussion}{77}{section.313}%
+\contentsline {chapter}{\numberline {6}Conclusions}{78}{chapter.314}%
+\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{78}{section.315}%
+\contentsline {section}{\numberline {6.2}Limitations found}{78}{section.316}%
+\contentsline {section}{\numberline {6.3}Future work}{79}{section.317}%
+\contentsline {chapter}{\numberline {7}Appendix}{85}{chapter.319}%
+\contentsline {section}{\numberline {7.1}Instalation guide}{85}{section.320}%
+\contentsline {section}{\numberline {7.2}Relevant code}{85}{section.321}%
+\contentsline {subsection}{\numberline {7.2.1}Helping offsets used for VLM guidance}{85}{subsection.322}%
+\contentsline {subsection}{\numberline {7.2.2}Full multi-agent coordination script}{85}{subsection.337}%
+\contentsline {subsection}{\numberline {7.2.3}Training parameters}{86}{subsection.372}%
+\contentsline {section}{\numberline {7.3}Prompts used}{87}{section.399}%
+\contentsline {subsection}{\numberline {7.3.1}Helping prompts used for the VLM target detection task}{87}{subsection.400}%
+\contentsline {section}{\numberline {7.4}Result table}{88}{section.434}%
+\contentsline {section}{\numberline {7.5}Tensorboard analysis}{88}{section.435}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

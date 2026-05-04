@@ -30,7 +30,7 @@ def load_vlm_dataset(folder, colors):
                 data = json.load(f)
                 if isinstance(data, list): dataset.extend(data)
                 else: dataset.append(data)
-    print(f"📦 Fase 1: Cargados {len(dataset)} estados de precisión exacta.")
+    print(f"Fase 1: Cargados {len(dataset)} estados de precisión exacta.")
     return dataset
 
 VLM_DATASET = load_vlm_dataset(json_folder, cube_colors)
