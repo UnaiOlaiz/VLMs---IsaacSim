@@ -1,0 +1,19 @@
+================================================================================
+DETECTION RESULTS - NO OFFSETS APPLIED
+================================================================================
+Timestamp: 2026-05-07T14:00:01.673944
+Target Type: CUBE
+Target Color: RED
+Camera Used: /World/Cameras/Camera_01
+Robot Position: [0.5 0.1 0. ]
+================================================================================
+
+[DEFAULT]
+  World Position (X, Y, Z): 0.022756, 0.056352, -0.001909
+  Relative to Robot: -0.477244, -0.043648, -0.001909
+  Distance from Robot: 0.479240 meters
+
+================================================================================
+Notes: These are RAW coordinates WITHOUT calibration offsets applied.
+Use these to validate offset values or compare with other detection methods.
+================================================================================

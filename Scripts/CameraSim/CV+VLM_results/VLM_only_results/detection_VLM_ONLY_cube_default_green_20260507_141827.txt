@@ -1,0 +1,20 @@
+================================================================================
+DETECTION RESULTS - VLM ONLY (NO CV PREPROCESSING, NO OFFSETS APPLIED)
+================================================================================
+Timestamp: 2026-05-07T14:18:27.305652
+Target Type: CUBE
+Target Color: GREEN
+Camera Used: /World/Cameras/Camera_01
+Robot Position: [0.5 0.1 0. ]
+================================================================================
+
+[DEFAULT]
+  World Position (X, Y, Z): -0.100287, 0.193174, 0.007358
+  Relative to Robot: -0.600287, 0.093174, 0.007358
+  Distance from Robot: 0.607519 meters
+
+================================================================================
+Notes: VLM-only detection WITHOUT CV preprocessing.
+Raw coordinates WITHOUT calibration offsets applied.
+Compare these results with CV+VLM results to assess CV impact.
+================================================================================

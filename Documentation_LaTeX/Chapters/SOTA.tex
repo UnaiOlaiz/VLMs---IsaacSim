@@ -362,21 +362,24 @@ The current vision language models are not judged exclusively by their ability t
 Following the same structure redacted in paper \textit{A Survey of State of the Art Large Vision Language Models: Alignment, Benchmark, Evaluations and Challenges} \cite{li2025surveystateartlarge}, some of the key models will be listed in a table form, alongside the metrics used to compare the models used in the paper.  
 
 % table for vlm sota models comparison
-\begin{table}[H]
+\begin{table}[htbp]
 	\centering
 	\small
-	\begin{tabular}{|>{\centering\arraybackslash}p{2.1cm}|c|>{\centering\arraybackslash}p{2.1cm}|>{\centering\arraybackslash}p{2.1cm}|c|>{\centering\arraybackslash}p{2.4cm}|>{\centering\arraybackslash}p{1.9cm}|}
-		\hline
-		\textbf{Model} & \textbf{Year} & \textbf{Architecture} & \textbf{Training Data} & \textbf{Params} & \textbf{Vision Encoder} & \textbf{Backbone} \\ \hline
-		Flamingo & 2022 & Encoder-decoder & M3W, ALIGN & 80B & Custom & Chinchilla \\ \hline 
-		BLIP/2 & 2022/23 & Encoder-decoder & COCO, Visual Genome & 223M-400M & ViT-B/L/g & Pretrained from scratch \\ \hline 
-		LLaVA-1.5 & 2023 & Decoder-only & COCO & 13B & ViT-L/14 & Vicuna \\ \hline
-		CogVLM & 2023 & Encoder-decoder & LAION-2B, COYO-700M & 18B & CLIP ViT-L/14 & Vicuna \\ \hline
-		Gemini & 2023 & Decoder-only & Undisclosed & Undisclosed & Undisclosed & Undisclosed \\ \hline
-		GPT-4V & 2023 & Decoder-only & Undisclosed & Undisclosed & Undisclosed & Undisclosed \\ \hline
-		Qwen2-VL & 2024 & Decoder-only & Undisclosed & 7B-14B & EVA-CLIP ViT-L & Qwen-2 \\ \hline
-	\end{tabular}
-	\caption{Architectural comparison of representative SOTA Vision-Language Models extracted from referenced paper, including some of the key models.}
+	\begin{tabularx}{\textwidth}{l c l l c l l}
+		\toprule
+		\textbf{Model} & \textbf{Year} & \textbf{Architecture} & \textbf{Training Data} & \textbf{Params} & \textbf{Vision Enc.} & \textbf{Backbone} \\
+		\midrule
+		Flamingo    & 2022 & Enc-Dec & M3W, ALIGN & 80B & Custom & Chinchilla \\
+		BLIP-2      & 2023 & Enc-Dec & COCO, VG   & 223M-400M & ViT-B/L/g & Pretrained \\
+		LLaVA-1.5   & 2023 & Decoder-only & COCO & 13B & ViT-L/14 & Vicuna \\
+		CogVLM      & 2023 & Enc-Dec & LAION-2B, COYO & 18B & CLIP ViT-L & Vicuna \\
+		Gemini      & 2023 & Decoder-only & Undisclosed & -- & Undisclosed & -- \\
+		GPT-4V      & 2023 & Decoder-only & Undisclosed & -- & Undisclosed & -- \\
+		Qwen2-VL    & 2024 & Decoder-only & Undisclosed & 7B-14B & EVA-CLIP & Qwen-2 \\
+		\bottomrule
+	\end{tabularx}
+	\vspace{5pt}
+	\caption{Architectural comparison of representative SOTA Vision-Language Models.}
 	\label{tab:vlm_comparison_main}
 \end{table}
 
@@ -412,19 +415,27 @@ Looking at the models collected at table \ref{tab:vlm_comparison_main}, there ar
 The amount of VLM benchmarks has grown rapidly since 2022, moving from basic visual question answering to include a wider range of tests that better evaluate the model's multimodal capacities from more aspects.
 
 % benchmark category-description table
-\begin{table}[H]
+\begin{table}[htbp]
 	\centering
 	\small
-	\begin{tabular}{|>{\centering\arraybackslash}p{4.5cm}|>{\centering\arraybackslash}p{8.5cm}|}
-		\hline
-		\textbf{Category} & \textbf{Description} \\ \hline
-		Visual text understanding & Model's ability o extract and understand texts within visual components. \\ \hline
-		Visual math reasoning & Tests the model's skills to sole math problems in image forms \\ \hline
-		Text-to-Image generation & Evaluates the image generation ability of the model \\ \hline 
-		Hallucination & Evaluates the likelihood of models hallucinating on certain visual and textual inputs \\ \hline 
-		Video understanding & Evaluates the VLM's ability to understand videos or sequence of images. \\ \hline 
-		Visual reasoning, understanding, recognition and question answering & Evaluates the model's ability to recognize objects, answer questions and reason through both visual ant textual information \\ \hline
-	\end{tabular}
+	\begin{tabularx}{\textwidth}{@{} l X @{}}
+		\toprule
+		\textbf{Category} & \textbf{Description} \\
+		\midrule
+		Visual Text Understanding & Model's ability to extract and understand texts within visual components. \\
+		\addlinespace
+		Visual Math Reasoning    & Tests the model's skills to solve math problems in image forms. \\
+		\addlinespace
+		Text-to-Image Generation & Evaluates the image generation ability of the model. \\
+		\addlinespace
+		Hallucination            & Evaluates the likelihood of models hallucinating on certain visual and textual inputs. \\
+		\addlinespace
+		Video Understanding      & Evaluates the VLM's ability to understand videos or sequence of images. \\
+		\addlinespace
+		Visual Reasoning         & Evaluates the model's ability to recognize objects, answer questions, and reason through both visual and textual information. \\
+		\bottomrule
+	\end{tabularx}
+	\vspace{5pt}
 	\caption{Categorization of standard benchmarks used to evaluate SOTA VLMs.}
 	\label{tab:benchmarks}
 \end{table}

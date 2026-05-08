@@ -1,0 +1,19 @@
+================================================================================
+DETECTION RESULTS - NO OFFSETS APPLIED
+================================================================================
+Timestamp: 2026-05-07T15:32:20.894617
+Target Type: PALLET
+Target Color: RED
+Camera Used: /World/Cameras/Camera_02
+Robot Position: [0.5 0.1 0. ]
+================================================================================
+
+[DEFAULT]
+  World Position (X, Y, Z): 4.011206, 0.484377, -0.097817
+  Relative to Robot: 3.511206, 0.384377, -0.097817
+  Distance from Robot: 3.533537 meters
+
+================================================================================
+Notes: These are RAW coordinates WITHOUT calibration offsets applied.
+Use these to validate offset values or compare with other detection methods.
+================================================================================

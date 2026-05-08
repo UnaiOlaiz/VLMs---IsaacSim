@@ -139,17 +139,22 @@ Already covered in the SOTA VLM models table \ref{tab:vlm_comparison_main}, show
 As shown in table \ref{tab:qwen_variants} there are 3 size variants of the model itself, however, the number of parameters used in the vision encoder training remains constant and is just the LLM which scales up in number of parameters. This approach ensures the power of the ViT remains constant regardless of the LLM scale, meaning that there should be little to no more visual reasoning performance difference across the models. 
 
 % Explain its properties
-\begin{table}[H]
+\begin{table}[htbp]
 	\centering
 	\small
-	\begin{tabular}{|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{7.5cm}|}
-		\hline
-		\textbf{Model Name} & \textbf{Vision Encoder} & \textbf{LLM Model} & \textbf{Description} \\ \hline
-		Qwen2-VL-2B & 675M & 1.5B & The most efficient model, designed to run on-device. It delivers adequate performance for most scenarios with limited resources. \\ \hline
-		Qwen2-VL-7B & 675M & 7.6B & The performance-optimized model in terms of cost, significantly upgraded for text recognition and video understanding. It delivers significant performance across a broad range of visual tasks. \\ \hline
-		Qwen2-VL-72B & 675M & 72B & The most capable model, with further improvements in visual reasoning, instruction-following, decision-making, and agent capabilities. It delivers optimal performance on most complex tasks. \\ \hline
-	\end{tabular}
-	\caption{Specifications and intended use cases for the different Qwen2-VL model scales, table extracted from original paper \cite{wang2024qwen2vlenhancingvisionlanguagemodels}.}
+	\begin{tabularx}{\textwidth}{@{} l c c X @{}}
+		\toprule
+		\textbf{Model Name} & \textbf{Vis. Encoder} & \textbf{LLM Model} & \textbf{Description} \\
+		\midrule
+		Qwen2-VL-2B  & 675M & 1.5B & The most efficient model, designed for on-device execution. It delivers adequate performance for scenarios with limited resources. \\
+		\addlinespace
+		Qwen2-VL-7B  & 675M & 7.6B & Performance-optimized in terms of cost. Significantly upgraded for text recognition and video understanding across a broad range of tasks. \\
+		\addlinespace
+		Qwen2-VL-72B & 675M & 72B  & The most capable model. Optimized for visual reasoning, instruction-following, decision-making, and complex agent capabilities. \\
+		\bottomrule
+	\end{tabularx}
+	\vspace{5pt}
+	\caption{Specifications and intended use cases for the different Qwen2-VL model scales, adapted from \cite{wang2024qwen2vlenhancingvisionlanguagemodels}.}
 	\label{tab:qwen_variants}
 \end{table}
 

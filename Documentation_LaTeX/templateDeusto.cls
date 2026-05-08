@@ -44,6 +44,9 @@ bookmarks=true]{hyperref}
 \RequirePackage{float}
 \RequirePackage{array}
 \RequirePackage{tikz}
+\RequirePackage{booktabs}
+\RequirePackage{tabularx}
+\RequirePackage{caption}
 
 % TO NOT RAISE CHINESE ERRORS
 \DeclareUnicodeCharacter{5347}{\relax}

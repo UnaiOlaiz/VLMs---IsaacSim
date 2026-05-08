@@ -1,11 +1,11 @@
 {
     "target_type": "pallet",
-    "target_color": "blue",
+    "target_color": "red",
     "side": "default",
     "world_pos": [
-        4.176349194962875,
-        1.2164335077911084,
-        -0.08343133692615101
+        3.9693863703303114,
+        0.485796281316823,
+        -0.11732320572171329
     ],
     "robot_world_pos": [
         0.5,
@@ -13,10 +13,10 @@
         0.0
     ],
     "relative_pos": [
-        3.6763491949628753,
-        1.1164335063009923,
-        -0.08343133692615101
+        3.4693863703303114,
+        0.3857962798267069,
+        -0.11732320572171329
     ],
     "camera_used": "/World/Cameras/Camera_02",
-    "status": "calibrated_success"
+    "status": "vlm_only_success"
 }

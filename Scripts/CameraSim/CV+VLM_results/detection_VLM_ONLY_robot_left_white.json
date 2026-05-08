@@ -1,0 +1,22 @@
+{
+    "target_type": "robot",
+    "target_color": "white",
+    "side": "left",
+    "world_pos": [
+        0.38529223859565676,
+        0.5483842156687206,
+        -0.41208966302873096
+    ],
+    "robot_world_pos": [
+        0.5,
+        0.10000000149011612,
+        0.0
+    ],
+    "relative_pos": [
+        -0.11470776140434324,
+        0.4483842141786045,
+        -0.41208966302873096
+    ],
+    "camera_used": "/World/Cameras/Camera_03",
+    "status": "vlm_only_success"
+}

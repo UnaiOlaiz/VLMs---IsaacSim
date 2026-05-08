@@ -1,0 +1,24 @@
+================================================================================
+DETECTION RESULTS - NO OFFSETS APPLIED
+================================================================================
+Timestamp: 2026-05-07T16:04:15.040288
+Target Type: ROBOT
+Target Color: WHITE
+Camera Used: /World/Cameras/Camera_03
+Robot Position: [0.5 0.1 0. ]
+================================================================================
+
+[LEFT]
+  World Position (X, Y, Z): 0.335076, 0.511246, -0.622709
+  Relative to Robot: -0.164924, 0.411246, -0.622709
+  Distance from Robot: 0.764258 meters
+
+[RIGHT]
+  World Position (X, Y, Z): 4.817960, 0.982363, -0.232408
+  Relative to Robot: 4.317960, 0.882363, -0.232408
+  Distance from Robot: 4.413316 meters
+
+================================================================================
+Notes: These are RAW coordinates WITHOUT calibration offsets applied.
+Use these to validate offset values or compare with other detection methods.
+================================================================================

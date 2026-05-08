@@ -14,9 +14,10 @@ import os
 import json
 import sys
 import cv2
+from datetime import datetime
 
-TARGET_TYPE = "pallet"  # cube / pallet / robot
-TARGET_COLOR = "black"  # red, green, blue, black (for pallet) , white (for robots)
+TARGET_TYPE = "robot"  # cube / pallet / robot
+TARGET_COLOR = "white"  # red, green, blue, black (for pallet) , white (for robots)
 RESOLUTION = (1280, 720)  # screen resolution
 ROBOT_PATH = "/World/Franka_Robot"  # franka name in environment
 URL_MULTI = "http://127.0.0.1:8000/ground_multi"  # endpoint of the function we will use inside our bentoml server
@@ -46,38 +47,6 @@ CX, CY = 640, 360
 # stability + confidence parameters
 STABILITY_COUNT = 3
 STABILITY_THRESHOLD = 0.05
-
-# calibration offsets (they are not the ground truth coordinates, but rather guiding offsets)
-OFFSETS = {
-    "cube": {
-        "red": [0.070, -0.025, 0.0],
-        "green": [0.222, 0.133, 0.0],
-        "blue": [0.004, -0.005, 0.0],
-    },
-    "pallet": {
-        "red": [0.427, -0.295, 0.0],
-        "blue": [0.220, 1.025, 0.0],
-        "black": [-0.084, 0.294, 0.0],
-    },
-    "robot": {"left": [0.56, -0.39, 0.0], "right": [-1.62, -0.93, 0.0]},
-}
-
-
-def apply_calibration(xyz, color, t_type):
-    """
-    function to callibrate the coordinates depending of the color and material type (cube/pallet)
-    """
-    corrected = np.array(xyz)
-    if t_type == "robot":
-        key = "left" if xyz[0] < 2.0 else "right"
-        offset = OFFSETS["robot"][key]
-        corrected += np.array(offset)
-        print(f"##### APPLIED ROBOT OFFSET ({key}): {offset} #####")
-    elif t_type in OFFSETS and color in OFFSETS[t_type]:
-        offset = OFFSETS[t_type][color]
-        corrected += np.array(offset)
-        print(f"##### APPLIED OFFSET TO {color} {t_type}: {offset} #####")
-    return corrected
 
 
 # OPTIONAL
@@ -126,7 +95,7 @@ def unproject(u, v, depth_map, cam_matrix):
 
 
 async def main_vision():
-    print(f"##### BUSCANDO {TARGET_TYPE.upper()} {TARGET_COLOR.upper()} #####")
+    print(f"##### BUSCANDO {TARGET_TYPE.upper()} {TARGET_COLOR.upper()} (NO OFFSETS) #####")
 
     rp = rep.create.render_product(CAMERA_PATH, resolution=RESOLUTION)
     rgb_ann = rep.AnnotatorRegistry.get_annotator("rgb")
@@ -198,7 +167,6 @@ async def main_vision():
                                     f"##### DETECTION IGNORED, MAY BE JETBOT: {xyz_raw[0]:.2f} #####"
                                 )
                                 continue
-                                
                         """
                         if TARGET_TYPE == "cube":
                             if TARGET_COLOR == "blue":
@@ -206,7 +174,8 @@ async def main_vision():
                             else:
                                 xyz_raw[2] = 0.015
                         """
-                        xyz = apply_calibration(xyz_raw, color=TARGET_COLOR, t_type=TARGET_TYPE)
+                        # NO OFFSETS APPLIED - using raw coordinates
+                        xyz = xyz_raw
 
                         obj_id = (
                             ("left" if xyz[0] < 2.0 else "right")
@@ -228,7 +197,7 @@ async def main_vision():
                             and obj_id not in final_results
                         ):
                             print(
-                                f"##### {TARGET_TYPE.upper()} {obj_id.upper()} DETECTED #####"
+                                f"##### {TARGET_TYPE.upper()} {obj_id.upper()} DETECTED (NO OFFSETS) #####"
                             )
                             final_results[obj_id] = xyz
                             spawn_marker(xyz, TARGET_COLOR, obj_id)
@@ -251,32 +220,38 @@ async def run():
         return
 
     r_pos, _ = get_world_pose(ROBOT_PATH)
-    results_dir = os.path.expanduser("~/Documents/PFG/Scripts/CameraSim/CV+VLM_results")
+    results_dir = os.path.expanduser("~/Documents/PFG/Scripts/CameraSim/CV+VLM_results/raw_no_offsets")
     os.makedirs(results_dir, exist_ok=True)
 
-    for obj_id, t_pos in all_targets.items():
-        # Custom filename if multiple robots
-        suffix = f"_{obj_id}" if TARGET_TYPE == "robot" else ""
-        filename = f"detection_{TARGET_TYPE}{suffix}_{TARGET_COLOR}.json"
+    # Create text file for results
+    suffix_file = f"_{list(all_targets.keys())[0]}" if len(all_targets) == 1 else "_all"
+    txt_filename = f"detection_NO_OFFSETS_{TARGET_TYPE}{suffix_file}_{TARGET_COLOR}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
+    txt_path = os.path.join(results_dir, txt_filename)
 
-        data_save = {
-            "target_type": TARGET_TYPE,
-            "target_color": TARGET_COLOR,
-            "side": obj_id,
-            "world_pos": t_pos.tolist(),
-            "robot_world_pos": r_pos.tolist(),
-            "relative_pos": (t_pos - np.array(r_pos)).tolist(),
-            "camera_used": CAMERA_PATH,
-            "status": "calibrated_success",
-        }
+    with open(txt_path, "w") as txt_file:
+        txt_file.write("=" * 80 + "\n")
+        txt_file.write(f"DETECTION RESULTS - NO OFFSETS APPLIED\n")
+        txt_file.write("=" * 80 + "\n")
+        txt_file.write(f"Timestamp: {datetime.now().isoformat()}\n")
+        txt_file.write(f"Target Type: {TARGET_TYPE.upper()}\n")
+        txt_file.write(f"Target Color: {TARGET_COLOR.upper()}\n")
+        txt_file.write(f"Camera Used: {CAMERA_PATH}\n")
+        txt_file.write(f"Robot Position: {r_pos}\n")
+        txt_file.write("=" * 80 + "\n\n")
 
-        path = os.path.join(results_dir, filename)
-        with open(path, "w") as f:
-            json.dump(data_save, f, indent=4)
+        for obj_id, t_pos in all_targets.items():
+            txt_file.write(f"[{obj_id.upper()}]\n")
+            txt_file.write(f"  World Position (X, Y, Z): {t_pos[0]:.6f}, {t_pos[1]:.6f}, {t_pos[2]:.6f}\n")
+            txt_file.write(f"  Relative to Robot: {(t_pos - np.array(r_pos))[0]:.6f}, {(t_pos - np.array(r_pos))[1]:.6f}, {(t_pos - np.array(r_pos))[2]:.6f}\n")
+            txt_file.write(f"  Distance from Robot: {np.linalg.norm(t_pos - np.array(r_pos)):.6f} meters\n\n")
 
-        print(
-            f"##### SUCCESS: {TARGET_TYPE.upper()} {obj_id.upper()} SAVED AT {path} #####"
-        )
+        txt_file.write("=" * 80 + "\n")
+        txt_file.write("Notes: These are RAW coordinates WITHOUT calibration offsets applied.\n")
+        txt_file.write("Use these to validate offset values or compare with other detection methods.\n")
+        txt_file.write("=" * 80 + "\n")
+
+    print(f"\n##### SUCCESS: RESULTS SAVED TO TEXT FILE #####")
+    print(f"##### Path: {txt_path} #####")
 
 
 asyncio.ensure_future(run())

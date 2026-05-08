@@ -134,6 +134,7 @@ Although both workflows share similarities in their procedure and results return
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Target detection task}
+\label{sec:target_detection}
 The target detection went through progressively changing and modifying parts of the BentoML server script to achieve better performance. Reason why it is vital to mention the structure of the service, this is what the server is made of and its functionality progressions over time. 
 
 \subsection{BentoML service class - VLMServiceIsaac}
@@ -349,9 +350,23 @@ $$\begin{bmatrix} x \\ y \\ z \end{bmatrix}_{final} = \begin{bmatrix} x \\ y \\ 
 
 This simple trick enhanced the performance of the target detection alongside the computer vision algorithms to the definitive version, reaching the best performance and most accurate detections. The offsets were found by comparing the predictions to the ground truth several times and taking the ones which generalized better, they are available a the appendix at section \ref{code:offsets}.
 
+\subsection{Coordinate mapping}
+Once the VLM has obtained the coordinates of the target object inside the screenshot, the system must translate that visual information of the given image to get the actual position inside IsaacSim. I have briefly talked about the \textit{unprojection} function used before, but I must go back to it in order to explain its vitality for closing the gap between 2D and 3D coordinate mapping. The workflow in integrated using these steps:
+
+\begin{enumerate}
+	\item \textbf{Scaling}: the returned normalized coordinates ranging [0-1000] by the VLM must first be scaled up to fill the actual resolution used in the simulation. In my case, (1280, 720) as mentioned previously. 
+	
+	\item \textbf{Depth sampling}: value $Z_{depth}$ must be extracted, corresponding to the scaled coordinates value.
+	
+	\item \textbf{Transformation}: with the described combinations using the intrinsic and extrinsic matrices vector $\mathbf{P}_{world}$.
+\end{enumerate}
+
+By automating this mapping, the system effectively bridges the gap between high-level visual reasoning and low-level physical manipulation, effectively translating the detected 2D coordinates in the screenshot fed to the VLM to the actual 3D position of the target inside the simulator scenario.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Agent Control}
+\label{sec:controllers}
 The robotic agents used throughout the development needed to have movement functionalities. Controllers with which they could use their joints to move somewhere, close their grips or do any other physical actions. In my case the robots used were the \textit{Franka arm} and the \textit{Jetbot}, one used for lifting and object manipulation purposes while the second being primarily optimized for navigation tasks (will be explained deeper in the corresponding section). For the first robot I used a pre-defined controller which worked flawlessly, but for the \textit{Jetbot} I had to manually craft one controller class as I did not find any convincing ones. Both controllers follow the same principle, having a primary function which receives ($x, y, z$) coordinates and somehow travels there. In this section of the documentation I will go over the steps and progress I made to successfully develop the control managers of both robots. 
 
 
@@ -590,6 +605,7 @@ Figure \ref{fig:alternativescenario} shows the different alternatives I have pre
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{RL Experiments}
+\label{sec:rl}
 Up until now,  I have purely relied on the controller to grasp the cube from the predicted position. While using the pre-built Franka arm controller seems the easiest way to articulate all of its joints and achieve desired coordination tasks, this may not always be applicable to real scenarios. Reinforcement learning, machine learning subfield mentioned in section \ref{sec:rl}, tackles this approach developing policies that are able to generalize with new scenarios or environment alternations. 
 
 There were two things I wanted to experiment with reinforcement learning, the development of a pick and place policy for each robotic arm in the multi-agent scenario \ref{fig:first_multi_agent}. If the policy training results successful, it would be enough to just send the predicted target coordinates to the arm, and the arm itself would know how to articulate its joints to get the cube grasped and lifted.
@@ -610,6 +626,7 @@ The training framework used was no other than IsaacLab, which fortunately includ
 The approaches I tested the most were the first two, and I also got with an idea thanks to my tutor that could reduce the training complexity of the lifting cube task. 
 
 \subsubsection{Training approaches}
+\label{sec:training_approaches}
 The idea was simple, starting the training from a closer position to the cube, reducing considerably all the training complexity that involves starting from the very top of the arm position. If successful, the training episodes should go shortening and getting a higher reward faster. For that reason, I made a new script which using the same Franka controller as usual would move just to the top position of the predicted cube coordinates, keeping a safe $z$ height offset. And would finally store the close position data of both the cube and the robot's joints to initialize the training episode from that same position loading the JSON. 
 
 The following corresponds to the training script I used first for just testing the red cube close position approach and the configuration I used for training, with \textit{stable baselines 3} framework and algorithm \textit{PPO} (proximal policy optimization).
@@ -708,7 +725,7 @@ The rewards are all inherited from the basic lift class, where all the specific 
 When a training process ends, the output of usually consists of several things. Some of them needed to load up the trained model weights to perform inference.
 
 \begin{itemize}
-	\item \textbf{command.txt}: referring to the command used to launch training (pseudocode 4.7).
+	\item \textbf{command.txt}: referring to the command used to launch training.
 	
 	\item \textbf{agent.yaml}: training parameters used (pseudo code \ref{code:main}).
 	

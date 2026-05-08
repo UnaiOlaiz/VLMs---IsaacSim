@@ -14,9 +14,10 @@ import os
 import json
 import sys
 import cv2
+from datetime import datetime
 
-TARGET_TYPE = "pallet"  # cube / pallet / robot
-TARGET_COLOR = "black"  # red, green, blue, black (for pallet) , white (for robots)
+TARGET_TYPE = "robot"  # cube / pallet / robot
+TARGET_COLOR = "white"  # red, green, blue, black (for pallet) , white (for robots)
 RESOLUTION = (1280, 720)  # screen resolution
 ROBOT_PATH = "/World/Franka_Robot"  # franka name in environment
 URL_MULTI = "http://127.0.0.1:8000/ground_multi"  # endpoint of the function we will use inside our bentoml server
@@ -30,15 +31,6 @@ CAMERA_PATH = (
     else "/World/Cameras/Camera_03"
 )  # if target equals robot
 
-# We load the CV detection scripts
-sys.path.append(os.path.expanduser("~/Documents/PFG/Scripts/CameraSim/CV"))
-try:
-    from detect_cubes import detect as detect_cubes
-    from detect_palettes import detect_palette
-    from detect_frankas import detect as detect_frankas
-except ImportError as e:
-    print(f"Error loading the CV scripts: {e}")
-
 # Camera properties
 F_PIXEL = (18.14764 * 1280) / 20.955
 CX, CY = 640, 360
@@ -46,38 +38,6 @@ CX, CY = 640, 360
 # stability + confidence parameters
 STABILITY_COUNT = 3
 STABILITY_THRESHOLD = 0.05
-
-# calibration offsets (they are not the ground truth coordinates, but rather guiding offsets)
-OFFSETS = {
-    "cube": {
-        "red": [0.070, -0.025, 0.0],
-        "green": [0.222, 0.133, 0.0],
-        "blue": [0.004, -0.005, 0.0],
-    },
-    "pallet": {
-        "red": [0.427, -0.295, 0.0],
-        "blue": [0.220, 1.025, 0.0],
-        "black": [-0.084, 0.294, 0.0],
-    },
-    "robot": {"left": [0.56, -0.39, 0.0], "right": [-1.62, -0.93, 0.0]},
-}
-
-
-def apply_calibration(xyz, color, t_type):
-    """
-    function to callibrate the coordinates depending of the color and material type (cube/pallet)
-    """
-    corrected = np.array(xyz)
-    if t_type == "robot":
-        key = "left" if xyz[0] < 2.0 else "right"
-        offset = OFFSETS["robot"][key]
-        corrected += np.array(offset)
-        print(f"##### APPLIED ROBOT OFFSET ({key}): {offset} #####")
-    elif t_type in OFFSETS and color in OFFSETS[t_type]:
-        offset = OFFSETS[t_type][color]
-        corrected += np.array(offset)
-        print(f"##### APPLIED OFFSET TO {color} {t_type}: {offset} #####")
-    return corrected
 
 
 # OPTIONAL
@@ -89,7 +49,7 @@ def spawn_marker(position, color_name, suffix=""):
         "blue": [0, 0, 1],
         "black": [0.1, 0.1, 0.1],
         "white": [0.0, 1, 0.0],
-    }  # Verde para robots
+    }
     rgb = c_map.get(color_name.lower(), [1, 1, 0])
     try:
         VisualSphere(
@@ -126,7 +86,7 @@ def unproject(u, v, depth_map, cam_matrix):
 
 
 async def main_vision():
-    print(f"##### BUSCANDO {TARGET_TYPE.upper()} {TARGET_COLOR.upper()} #####")
+    print(f"##### BUSCANDO {TARGET_TYPE.upper()} {TARGET_COLOR.upper()} (VLM ONLY - NO OFFSETS) #####")
 
     rp = rep.create.render_product(CAMERA_PATH, resolution=RESOLUTION)
     rgb_ann = rep.AnnotatorRegistry.get_annotator("rgb")
@@ -151,17 +111,8 @@ async def main_vision():
         if rgb_data is None or dep_data is None:
             continue
 
-        if TARGET_TYPE == "pallet":
-            proc_rgb, found = detect_palette(rgb_data, TARGET_COLOR)
-        elif TARGET_TYPE == "robot":
-            proc_rgb, found = detect_frankas(rgb_data, "white")
-        else:
-            proc_rgb, found = detect_cubes(rgb_data, TARGET_COLOR)
-
-        if not found:
-            continue
-
-        img = PILImage.fromarray(proc_rgb)
+        # VLM ONLY - No CV preprocessing, send raw RGB directly
+        img = PILImage.fromarray(rgb_data)
         buffered = BytesIO()
         img.save(buffered, format="PNG")
         img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
@@ -198,15 +149,8 @@ async def main_vision():
                                     f"##### DETECTION IGNORED, MAY BE JETBOT: {xyz_raw[0]:.2f} #####"
                                 )
                                 continue
-                                
-                        """
-                        if TARGET_TYPE == "cube":
-                            if TARGET_COLOR == "blue":
-                                xyz_raw[2] = 0.315
-                            else:
-                                xyz_raw[2] = 0.015
-                        """
-                        xyz = apply_calibration(xyz_raw, color=TARGET_COLOR, t_type=TARGET_TYPE)
+                        # NO OFFSETS APPLIED - using raw coordinates
+                        xyz = xyz_raw
 
                         obj_id = (
                             ("left" if xyz[0] < 2.0 else "right")
@@ -228,7 +172,7 @@ async def main_vision():
                             and obj_id not in final_results
                         ):
                             print(
-                                f"##### {TARGET_TYPE.upper()} {obj_id.upper()} DETECTED #####"
+                                f"##### {TARGET_TYPE.upper()} {obj_id.upper()} DETECTED (VLM ONLY - NO OFFSETS) #####"
                             )
                             final_results[obj_id] = xyz
                             spawn_marker(xyz, TARGET_COLOR, obj_id)
@@ -257,7 +201,7 @@ async def run():
     for obj_id, t_pos in all_targets.items():
         # Custom filename if multiple robots
         suffix = f"_{obj_id}" if TARGET_TYPE == "robot" else ""
-        filename = f"detection_{TARGET_TYPE}{suffix}_{TARGET_COLOR}.json"
+        filename = f"detection_VLM_ONLY_{TARGET_TYPE}{suffix}_{TARGET_COLOR}.json"
 
         data_save = {
             "target_type": TARGET_TYPE,
@@ -267,7 +211,7 @@ async def run():
             "robot_world_pos": r_pos.tolist(),
             "relative_pos": (t_pos - np.array(r_pos)).tolist(),
             "camera_used": CAMERA_PATH,
-            "status": "calibrated_success",
+            "status": "vlm_only_success",
         }
 
         path = os.path.join(results_dir, filename)

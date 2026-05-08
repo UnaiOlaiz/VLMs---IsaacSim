@@ -1,0 +1,11 @@
+/World/Cubes/Red_Cube: [9.46034640e-02 2.30016610e-07 1.49999559e-02]
+/World/Cubes/Green_Cube: [0.09460346 0.38187057 0.01499997]
+/World/Cubes/Blue_Cube: [ 0.09460349 -0.33150104  0.01499996]
+
+/World/Palettes/Red_Palette: [ 4.45158195e+00  1.35004595e-01 -4.58210707e-07]
+/World/Palettes/Blue_Palette: [ 4.03007126e+00  7.92411983e-01 -6.29574060e-07]
+/World/Palettes/Black_Palette: [ 3.92780757e+00 -5.64667881e-01 -5.92321157e-07]
+
+/World/Franka_Robot: [0.5 0.1 0. ]
+/World/Franka_Robot_01: [3.74662282 0.1        0.        ]
+/World/Jetbot: [ 1.28030509 -0.00182721  0.06731872]

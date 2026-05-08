@@ -2,45 +2,48 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Deep Boltzmann machine.}}{3}{figure.17}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Perceiver architecture from the referenced paper}}{4}{figure.21}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Graphical example of phrase grounding.}}{9}{figure.33}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Vision transformer architecture}}{13}{figure.43}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Masked autoencoder architecture}}{14}{figure.45}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces CLIP workflow}}{18}{figure.57}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces VLM trained from scratch vs training strategy using a pre-trained LLM as backbone}}{22}{figure.71}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Most common benchmark evaluation metrics illustrated visually; showing \textit {answer matching, multiple choice} and \textit {image-caption similarity} graphical examples.}}{28}{figure.92}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Standard vision language action model architecture.}}{29}{figure.95}%
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Given an image observation and a language instruction, the model predicts 7-dimensional robot control actions. The architecture consists of three key components: a vision encoder, a projector that maps visual features to the language embedding space, and the LLM backbone, in this case, a Llama 2 7B-parameter large language model.}}{29}{figure.98}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Basic RL worfklow schema: the agent iteratively maps states to actions by maximizing a cumulative reward signal through trial and error interaction.}}{30}{figure.101}%
-\contentsline {figure}{\numberline {2.12}{\ignorespaces Different RL training approach comparison}}{32}{figure.106}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Deep Boltzmann machine.}}{3}{figure.caption.16}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Perceiver architecture from the referenced paper}}{4}{figure.caption.19}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Graphical example of phrase grounding.}}{9}{figure.caption.30}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Vision transformer architecture}}{13}{figure.caption.39}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Masked autoencoder architecture}}{14}{figure.caption.40}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces CLIP workflow}}{18}{figure.caption.51}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces VLM trained from scratch vs training strategy using a pre-trained LLM as backbone}}{22}{figure.caption.64}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Most common benchmark evaluation metrics illustrated visually; showing \textit {answer matching, multiple choice} and \textit {image-caption similarity} graphical examples.}}{27}{figure.caption.82}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Standard vision language action model architecture.}}{28}{figure.caption.84}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Given an image observation and a language instruction, the model predicts 7-dimensional robot control actions. The architecture consists of three key components: a vision encoder, a projector that maps visual features to the language embedding space, and the LLM backbone, in this case, a Llama 2 7B-parameter large language model.}}{29}{figure.caption.86}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Basic RL worfklow schema: the agent iteratively maps states to actions by maximizing a cumulative reward signal through trial and error interaction.}}{30}{figure.caption.88}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Different RL training approach comparison}}{31}{figure.caption.92}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces System architecture diagram.}}{36}{figure.120}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Standard workflow of the solution, going from the visual captioning stage up to the physical agent movement execution. The dashed line indicates a non-continuous feedback loop allowing for cycle repetition, especially in multi-agent tasks.}}{37}{figure.128}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Demonstration of M-RoPE}}{40}{figure.136}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Procedure of how IsaacLab reads the environment. First converting to tensors the hierarchical representation of the environment, sending them to the GPU and manipulating those tensors via Views API calls.}}{42}{figure.142}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces System architecture diagram.}}{36}{figure.caption.105}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Standard workflow of the solution, going from the visual captioning stage up to the physical agent movement execution. The dashed line indicates a non-continuous feedback loop allowing for cycle repetition, especially in multi-agent tasks.}}{37}{figure.caption.112}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Demonstration of M-RoPE}}{39}{figure.caption.118}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Procedure of how IsaacLab reads the environment. First converting to tensors the hierarchical representation of the environment, sending them to the GPU and manipulating those tensors via Views API calls.}}{42}{figure.caption.123}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Image to classify used in the CLIP features demonstration notebook, showing a surfer.}}{43}{figure.148}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Workflow of the VLM scene captioning add on available at the IsaacSim documentation.}}{46}{figure.159}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Environment used for the VLM scene capturing. Consisting of a hospital room containing objects we could find in an hospital. Such as the patient's bed and the doctor's table.}}{46}{figure.162}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces VLM scene captioning result applied to the hospital room scene, with numbers representing object nodes and lines standing for the graph edges.}}{47}{figure.164}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Focal length of the camera, relation between the object distance and image distance.}}{52}{figure.201}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Raw image sent to VLM for cube analysis}}{55}{figure.210}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces First CV applied iteration}}{55}{figure.212}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Final CV application iteration}}{56}{figure.214}%
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Raw image of palette detection}}{56}{figure.216}%
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Result of masking the palettes}}{57}{figure.218}%
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Palette detection results with CV application}}{57}{figure.220}%
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Raw image of robotic arm detection}}{58}{figure.222}%
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Mask filtering for the robotic arms image}}{58}{figure.224}%
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Final result of the CV algorithm application to the last target detection case.}}{59}{figure.226}%
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Image of the Franka arm USD, with the 7 original joints plus the added fingers.}}{62}{figure.235}%
-\contentsline {figure}{\numberline {4.16}{\ignorespaces Image of the Jetbot arm USD.}}{63}{figure.238}%
-\contentsline {figure}{\numberline {4.17}{\ignorespaces First practical scenario, consisting of a single Franka arm and three cubes of different colors. Same size, same orientation. }}{66}{figure.252}%
-\contentsline {figure}{\numberline {4.18}{\ignorespaces Multi-agent cooperative task workflow. The discontinuous line from step 6 to 1 indicates the able to repeat the cycle once again, as the task may consist on transporting more than one cube.}}{68}{figure.257}%
-\contentsline {figure}{\numberline {4.19}{\ignorespaces First multi agent environment, consisting of two Franka arms, a Jetbot robot and some cubes and platforms.}}{70}{figure.275}%
-\contentsline {figure}{\numberline {4.20}{\ignorespaces Alternative scenario where each cube shows a different position configuration}}{71}{figure.278}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Image to classify used in the CLIP features demonstration notebook, showing a surfer.}}{43}{figure.caption.128}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Workflow of the VLM scene captioning add on available at the IsaacSim documentation.}}{46}{figure.caption.138}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Environment used for the VLM scene capturing. Consisting of a hospital room containing objects we could find in an hospital. Such as the patient's bed and the doctor's table.}}{46}{figure.caption.140}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces VLM scene captioning result applied to the hospital room scene, with numbers representing object nodes and lines standing for the graph edges.}}{47}{figure.caption.141}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Focal length of the camera, relation between the object distance and image distance.}}{52}{figure.caption.177}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Raw image sent to VLM for cube analysis}}{55}{figure.caption.185}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces First CV applied iteration}}{55}{figure.caption.186}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Final CV application iteration}}{56}{figure.caption.187}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Raw image of palette detection}}{56}{figure.caption.188}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Result of masking the palettes}}{57}{figure.caption.189}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Palette detection results with CV application}}{57}{figure.caption.190}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Raw image of robotic arm detection}}{58}{figure.caption.191}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Mask filtering for the robotic arms image}}{58}{figure.caption.192}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Final result of the CV algorithm application to the last target detection case.}}{58}{figure.caption.193}%
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Image of the Franka arm USD, with the 7 original joints plus the added fingers.}}{62}{figure.caption.205}%
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Image of the Jetbot arm USD.}}{64}{figure.caption.207}%
+\contentsline {figure}{\numberline {4.17}{\ignorespaces First practical scenario, consisting of a single Franka arm and three cubes of different colors. Same size, same orientation. }}{67}{figure.caption.220}%
+\contentsline {figure}{\numberline {4.18}{\ignorespaces Multi-agent cooperative task workflow. The discontinuous line from step 6 to 1 indicates the able to repeat the cycle once again, as the task may consist on transporting more than one cube.}}{68}{figure.caption.224}%
+\contentsline {figure}{\numberline {4.19}{\ignorespaces First multi agent environment, consisting of two Franka arms, a Jetbot robot and some cubes and platforms.}}{70}{figure.caption.241}%
+\contentsline {figure}{\numberline {4.20}{\ignorespaces Alternative scenario where each cube shows a different position configuration}}{71}{figure.caption.243}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Tensorboard \textit {rollout/ep\_rew\_mean} graph progression over near 50M steps.}}{81}{figure.caption.289}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Tensorboard \textit {train/explained\_variance} graph progression over near 50M steps.}}{82}{figure.caption.290}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Tensorboard \textit {train/entropy\_loss} graph progression over near 50M steps.}}{82}{figure.caption.291}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

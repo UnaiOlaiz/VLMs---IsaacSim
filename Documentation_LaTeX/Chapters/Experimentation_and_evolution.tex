@@ -1,4 +1,176 @@
+After discussing what my solution approach consists of and enumerating the different approaches and stages I have gone through in the practical area of the project, it is time to evaluate the results obtained. Not everything has worked straight out the way nor every result is good, however, I will talk about what could have gone better and what may have been the reason some aspects have not given great results. 
 
-\section{Successful and failure tries}
-\section{Results obtained in each scenario}
-\section{Result discussion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Results obtained in the target detection}
+Previously in section \ref{sec:target_detection} I have gone over the steps and evolution of the procedure I have used to tackle the target detection task, and even if I have mentioned the results have gone progressively raising as I introduced more helping techniques, it is now time to compare and evaluate the results obtained in each scenario. I will be comparing the difference between the real distance to the predicted one, comparing both $(x,y,z)$ coordinates triplets, the following will be the metric I will be using: 
+
+\subsection{Mean Euclidean Distance Error (MEDE)}
+The concept is simple, I will be comparing each $(x,y,z)$ coordinates of each ground truth and real triplet, squaring it and taking the root result. However, as I am comparing the results of different target objects, I will be taking the mean of the different results obtained in the previous step to get a more compact metric. The formulas in order to carry the process are the following ones:
+
+$$d_i = \sqrt{(x_{real} - x_{pred})^2 + (y_{real} - y_{pred})^2 + (z_{real} - z_{pred})^2}$$
+
+Then just calculate the mean for all cubes:$$\text{MEDE} = \frac{1}{N} \sum_{i=1}^{N} d_i$$
+
+The reason behind the selection of this evaluation metric is its performance with outliers and the chance to get the mean metric for all the cubes, if I desired to implement even more. 
+
+\subsection{Comparison tables}
+
+\subsubsection{Table results for the cubes}
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabularx}{\textwidth}{l l X X c}
+		\toprule
+		\textbf{Phase} & \textbf{Target} & \textbf{Predicted $(x, y, z)$} & \textbf{Real $(x, y, z)$} & \textbf{MEDE ($m$)} \\
+		\midrule
+		\textbf{Pure VLM} 
+		& Red Cube   & $(0.0178, 0.0797, -0.0020)$ & $(0.0946, 0.0000, 0.0150)$ & $0.1120$ \\
+		& Green Cube & $(-0.1003, 0.1932, 0.0074)$ & $(0.0946, 0.3819, 0.0150)$ & $0.2714$ \\
+		& Blue Cube  & $(0.1849, -0.0373, -0.0559)$ & $(0.0946, -0.3315, 0.0150)$ & $0.3158$ \\
+		\midrule
+		\textbf{VLM + CV} 
+		& Red Cube   & $(0.0228, 0.0564, -0.0019)$ & $(0.0946, 0.0000, 0.0150)$ & $0.0929$ \\
+		& Green Cube & $(-0.1052, 0.1412, 0.0152)$ & $(0.0946, 0.3819, 0.0150)$ & $0.3128$ \\
+		& Blue Cube  & $(0.0634, -0.0885, -0.0153)$  & $(0.0946, -0.3315, 0.0150)$ & $0.2469$ \\
+		\midrule
+		\textbf{VLM+CV+Offsets} 
+		& Red Cube   & $(0.0980, 0.0460, -0.0040)$  & $(0.0946, 0.0000, 0.0150)$ & $\mathbf{0.0499}$ \\
+		& Green Cube & $(0.1168, 0.2752, 0.0151)$  & $(0.0946, 0.3819, 0.0150)$ & $\mathbf{0.1090}$ \\
+		& Blue Cube  & $(0.0558, -0.1138, -0.0174)$ & $(0.0946, -0.3315, 0.0150)$ & $\mathbf{0.2235}$ \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Comparative analysis of the localization accuracy across different processing phases, the cube positions correspond to the first multi agent environment without any alternatives.}
+	\label{tab:cube_results}
+\end{table}
+
+\subsubsection{Table results for the palettes}
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabularx}{\textwidth}{l l X X c}
+		\toprule
+		\textbf{Phase} & \textbf{Target} & \textbf{Predicted $(x, y, z)$} & \textbf{Real $(x, y, z)$} & \textbf{MEDE ($m$)} \\
+		\midrule
+		\textbf{Pure VLM} 
+		& Red Palette   & $(3.9694, 0.4858, -0.1173)$ & $(4.4516, 0.1350, 0.0000)$ & $0.6015$ \\
+		& Blue Palette  & $(3.9556, 0.1952, -0.0023)$ & $(4.0301, 0.7924, 0.0000)$ & $0.6018$ \\
+		& Black Palette & $(4.1149, -0.3052, -0.0050)$ & $(3.9278, -0.5647, 0.0000)$ & $0.3201$ \\
+		\midrule
+		\textbf{VLM + CV} 
+		& Red Palette   & $(4.0112, 0.4844, -0.0978)$ & $(4.4516, 0.1350, 0.0000)$ & $0.5707$ \\
+		& Blue Palette  & $(3.9563, 0.1914, -0.0834)$ & $(4.0301, 0.7924, 0.0000)$ & $0.6112$ \\
+		& Black Palette & $(3.9583, 0.1519, 0.0029)$  & $(3.9278, -0.5647, 0.0000)$ & $0.7172$ \\
+		\midrule
+		\textbf{VLM+CV+Offsets} 
+		& Red Palette   & $(4.4521, 0.1889, -0.0915)$ & $(4.4516, 0.1350, 0.0000)$ & $\mathbf{0.1065}$ \\
+		& Blue Palette  & $(4.1763, 1.2164, -0.0834)$ & $(4.0301, 0.7924, 0.0000)$ & $\mathbf{0.4563}$ \\
+		& Black Palette & $(3.9110, -0.5752, 0.0000)$  & $(3.9278, -0.5647, 0.0000)$ & $\mathbf{0.0198}$ \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Comparative analysis of the localization accuracy across different processing phases for the palettes. }
+	\label{tab:platform_results}
+\end{table}
+
+\subsubsection{Table results for the Frankas} %?
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabularx}{\textwidth}{l l X X c}
+		\toprule
+		\textbf{Phase} & \textbf{Target} & \textbf{Predicted $(x, y, z)$} & \textbf{Real $(x, y, z)$} & \textbf{MEDE ($m$)} \\
+		\midrule
+		\textbf{Pure VLM} 
+		& Left Franka  & $(0.3853, 0.5484, -0.4121)$ & $(0.5000, 0.1000, 0.0000)$ & $0.6127$ \\
+		& Right Franka & $(4.8180, 0.9824, -0.2324)$ & $(3.7466, 0.1000, 0.0000)$ & $1.4069$ \\
+		\midrule
+		\textbf{VLM + CV} 
+		& Left Franka  & $(0.3351, 0.5112, -0.6227)$ & $(0.5000, 0.1000, 0.0000)$ & $0.7588$ \\
+		& Right Franka & $(4.8180, 0.9824, -0.2324)$ & $(3.7466, 0.1000, 0.0000)$ & $1.4069$ \\
+		\midrule
+		\textbf{VLM+CV+Offsets} 
+		& Left Franka  & $(0.9453, 0.1584, 0.0000)$  & $(0.5000, 0.1000, 0.0000)$ & $\mathbf{0.4491}$ \\
+		& Right Franka & $(3.2103, 0.0401, 0.0000)$  & $(3.7466, 0.1000, 0.0000)$ & $\mathbf{0.5397}$ \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Comparative analysis of the localization accuracy for the Franka arm positions in the primary multi-agent environment.}
+	\label{tab:franka_results}
+\end{table}
+
+\subsection{Target detection results evaluation}
+After experimenting the target detection task across all types of target objects, the performance evolution has been clear. The VLM only phase showed the worst results, reflecting their lack of spatial reasoning precision among the smallest vision language models, whereas the result has improved significantly while implementing helping techniques such as the computer vision filters and helping offsets. 
+
+Starting from the cube detection results of table \ref{tab:cube_results}, these being the smallest objects on the environment, the pure VLM approach returned coordinates with which the grasping task would not be feasible at all due to the large error margin. Although the three stages did not struggle when locating the red cube as it was in the middle of the camera screenshot, the improvement is more evident with the other two. Furthermore, there have been sometimes where the pure VLM has outperformed the CV helping filtering, but there is no discussion that the final VLM + CV + the helping offsets have been the same for all of the three colored cubes. 
+
+When it comes to the platforms (table \ref{tab:platform_results}), the final stage showed the best results once again, getting the best metric for all targets with the black palette, around 0.0198 m mean euclidean distance error. However, in the platform detection task, there has been little to no improvement from the pure VLM stage to the CV phase. Perhaps reflecting that the raw VLM did manage to detect larger objects such as the platforms, but struggled with smaller ones as seen with the cubes. 
+
+Finally, with the Franka detection task there has also been a huge improvement as seen in table \ref{tab:franka_results}. The initial stages returned an error larger than 1.4 meters of difference, while the following stages managed to reduce it to 0.53. Margin which the Jetbot will have no problems traveling close enough to. Surprisingly, the final stage of the robotic arms detection manage to return exactly 0.0 in the predicted $z$ offset, demonstrating it has achieved the perception of the arms standing just above the ground. 
+
+In conclusion, these result tables demonstrate that the raw vision language model approach is enough for object identification but not the best for spatial coordinate detection and reasoning. While it has managed to at least detect where the objects could stand in the environment, the initial coordinate prediction were far from convincing. The results also reflect that the computer vision refinement was helpful to reduce the variance and get arguably better results, but still did not eliminate the VLM's systematic bias. Finally, the helping offsets were vital for helping the detection get rid of the drift and reduce down the results metric considerably, getting the best results for the next manipulation phases of the project. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{RL Policies \& Inference}
+In this second section of the evaluation chapter I will be reviewing the performance of the trained policies for the grasping tasks, across all training stages covered in section \ref{sec:rl}. Furthermore, I will go over the reasons why the RL results were not convincing enough and I have decided to stick to the controller classes (section \ref{sec:controllers}) for the manipulation tasks of the project. 
+
+\subsection{Single cube lifting}
+I must state that I accidentally deleted the Tensorboard log folder containing all the information about the successful training of the single cube close-approach (section \ref{sec:training_approaches}), so I am not able to show any graph related to the training, I just have the model weights of that policy. Even if I tried with multiple training configurations, the best result I obtained was with the default training script and reward system, the only thing I needed to change was the collision approach of the two finger joints of the arms. Moreover, the higher number of training steps did not equal better performance, as there were cases where out of the blue the training would just collapse. However, this single cube lifting policy managed to adjust its weights correctly by around step 8M when trained for 25M.
+
+Nevertheless, this training scenario was directed to work just for the cube's case, which in fact was the ideal one. The red cube just stood in front of the arm with no rotation, so the arm would just need to descent without orientating its joint to reach another cube which was not in a straight line. Although it should work the other color cases, the result was not near convincing, as the end-effector would learn to go to the backside of the arm or would just orientate in such a peculiar way never reaching the target. My guess is that the default training script would just include functionalities to reach a cube standing on front, not other abrupt position variations rather than slightly rotated cube randomization. 
+
+\subsection{Multiple cube lifting}
+The multiple cube lifting approach inherited the logic seen in its predecessor, yet was trained for more steps due to its random nature complexity. My original idea was to implement a successful policy which was able to generalize the grasping task for the three cubes and then implement it in inference, however, the results made me see that would not be easy. 
+
+The following Tensorboard graphs belong to a training instance of this multi cube grasping policy, which also implemented the closer joint start logic as before. The first graph \ref{fig:train_mean_rew} reflects what happened on most of the training instances, the agent would start learning and getting better mean rewards per episode but unexpectedly around step 40M, the metric would collapse brutally going down to even negative rewards.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{imgs/rollout_ep_rew_mean.png}
+	\label{fig:train_mean_rew}
+	\caption{Tensorboard \textit{rollout/ep\_rew\_mean} graph progression over near 50M steps.}
+\end{figure}
+
+The following graphs \ref{fig:train_explained_variance}, \ref{fig:train_entropy_loss} show the evolution of the explained variance and entropy loss respectively. The explained variance relates to the predictive ability of the value function used, which also after those 40M steps checkpoint drops. This indicates the agent has lost its ability to accurately value the states of the environment. Whereas the entropy loss shows that the policy's randomness starts decreasing as it attempts to converge on more specific actions, and around the same step checkpoint becomes more deterministic, messing the overall training performance. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{imgs/train_explained_variance.png}
+	\label{fig:train_explained_variance}
+	\caption{Tensorboard \textit{train/explained\_variance} graph progression over near 50M steps.}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{imgs/train_entropy_loss.png}
+	\label{fig:train_entropy_loss}
+	\caption{Tensorboard \textit{train/entropy\_loss} graph progression over near 50M steps.}
+\end{figure}
+
+\subsection{Inference}
+The transition from a simulated training environment to real-time inference showed a significant \textit{sim2real} gap that which evidenced the RL policies were impractical for the project's final deployment. Despite the policy reaching a seemingly stable reward before the 40M step collapse and a successful lifting in the single cube lifting stage, the inference performance was characterized by three main issues:
+
+\begin{enumerate}
+	\item During inference, the neural network generated continuous actions that were extremely sensitive to noise in the observation space even if the deployment and training shared action and observation spaces. Since the VLM+CV pipeline introduces slight variations in coordinates due to pixel-to-world mapping, the RL policy reacted so aggressively to these changes, causing the end-effector to oscillate or "shake" rather than performing a steady grasp.
+	
+	\item The policy may have been over-specialized to the specific starting distributions of the training environment. When presented with a target detected via the VLM+CV+Offsets pipeline, if the coordinates were even slightly outside the distribution seen during training, the policy would often enter an inconsistent loop phase where the arm moved to the back of the workspace or rotated the gripper indefinitely.
+\end{enumerate}
+
+\subsection{Conclusion}
+The experimental results in the RL training phase demonstrate that while VLMs can effectively identify and localize targets, training a robust end-to-end grasping policy is a significantly more complex task.
+
+The collapse observed around step 40M is a critical turning point. The explained variance drop to negative values indicates that the critic network failed to approximate the value of states accurately, likely due to the high complexity of the reward landscape when multiple cubes and random rotations were introduced. This, coupled with the decreasing entropy loss, suggests that the agent became prematurely deterministic on a greedy strategy that favored fast movement over precise manipulation. Once the value function lost its predictive power, the policy updates became erratic, leading to the observed drop in mean reward.
+
+Consequently, for the final multi-agent manipulation tasks, I have decided to utilize the custom controller classes described in section \ref{sec:controllers}. The main reasons are the following: 
+
+\begin{itemize}
+	\item \textbf{Reliability:} The  controller ensures a deterministic kinematic solution, translating the high-precision coordinates obtained in the detection phase  into smoother, repeatable trajectories. This eliminates the stochastic error inherent in RL policies, which often fail to exploit the full accuracy of the perception pipeline.
+	
+	\item \textbf{Predictability:} In complex multi-agent scenarios involving the multiple agents, motion predictability always comes handy. Scripted control avoids the black box nature of neural networks, providing consistent joint-space behavior across all target variations and mitigating the risk of erratic or divergent movements during high-stakes manipulation as seen in the training process.
+	
+	\item \textbf{Custom modularity:}  the controller classes allow for modular adjustments. Specifically, the collision approach and gripper aperture logic were manually tuned to not crash the physics engine of the simulator. This control over specific joint constraints and velocity profiles enabled me a level of  precision that the RL policies were unable to maintain.
+\end{itemize}
+
+In summary, the RL training served as a valuable benchmark to understand the limits of end-to-end learning in this environment, but the combination of high-precision VLM detection and deterministic controllers proved to be the only viable architecture for the project's success.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
