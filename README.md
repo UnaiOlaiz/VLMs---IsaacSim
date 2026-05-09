@@ -50,13 +50,22 @@ The project is divided into two main components:
 ### Local Component (Isaac Sim)
 - **Physics simulation and rendering** using ``NVIDIA Omniverse``. 
 - **Camera capture** and computer vision processing.
-- **Robot controllers** for multi-agent coordination. 
+- **Robot controllers** for multi-agent coordination.
+
+<p align="center">
+    <img src="Documentation_LaTeX/imgs/franka_arm.png" alt="Franka Robot Arm" width="45%" style="margin-right: 5%;">
+    <img src="Documentation_LaTeX/imgs/jetbot.png" alt="Jetbot" width="45%;">
+</p> 
 
 ### Remote Component (BentoML Server)
 - **Vision Language Model inference** using Qwen2-VL.
 - **High-level decision making** based on visual input and natural language reasoning.
 - **Modular and scalabile**
 - **VRAM and resource optimization** through BentoML.
+
+<p align="center">
+    <img src="https://imgs.search.brave.com/qprtNkRbM90eIzeLE7M6XyK-hwoxrlSZxNfxEm81YH8/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly9haS1p/bmZyYXN0cnVjdHVy/ZS5vcmcvd3AtY29u/dGVudC91cGxvYWRz/LzIwMjIvMDgvQmVu/dG9NTC1Mb2dvLTEu/cG5n" alt="BentoML Logo">
+</p>
 
 ### Communication Bridge
 - **REST API** for seamless communication between local and remote components.
@@ -90,11 +99,7 @@ Even if it is possible to run the project with lower-fidelity hardware, NVIDIA's
    pip install -r requirements.txt
    ```
 
-3. Configure API tokens. The worked has been carried out using open-source models which often ask for a custom ``API key`` necessary for trying them out.
-   - Add your NVIDIA VLM API key to `tokens/api_key_nvidia.txt`
-   - Add your HuggingFace token to `tokens/hugging_token.txt`
-
-4. Set up IsaacLab environment. Also recommended to clone the official ``Isaac Lab`` repository. 
+3. Set up IsaacLab environment. Also recommended to clone the official ``Isaac Lab`` repository. 
    ```bash
    git clone https://github.com/isaac-sim/IsaacLab.git
    ```
