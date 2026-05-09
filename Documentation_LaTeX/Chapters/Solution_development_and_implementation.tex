@@ -11,8 +11,8 @@ Using the \textit{ViT-B/32} model CLIP offers inside its library, being a vision
 \begin{figure}[H]
 	\centering 
 	\includegraphics[width=.3\textwidth]{imgs/surfer.png}
-	\label{fig:surfer_image}
 	\caption{Image to classify used in the CLIP features demonstration notebook, showing a surfer.}
+	\label{fig:surfer_image}
 \end{figure}
 
 After processing and encoding the features of the image and \textit{tokenizing} the labels of the candidates, calculates the probabilities of the image belonging to each label. Returning a probability distribution that sums up to 1 because of the \textit{softmax} activation function. Looking at the results, the vision transformer trained with CLIP's contrastive learning approach had no problem identifying the winner. Reflecting CLIP's astonishing performance for simple classification tasks, however, the second sub-task is a little bit more difficult.
@@ -68,8 +68,9 @@ Similar to my workflow developed, this process is also pretty straightforward an
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.9\textwidth]{imgs/isim_5.0_full_ext-isaacsim.replicator.caption-5.0.0_gui_IRC_workflow.png}
-	\label{fig:scenecaptioningworkflow}
+
 	\caption{Workflow of the VLM scene captioning add on available at the IsaacSim documentation.}
+	\label{fig:scenecaptioningworkflow}
 \end{figure}
 
 \subsection{Scene representation using graphs}
@@ -78,8 +79,9 @@ As mentioned earlier, all the information of the scene is captured in a single g
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.7\textwidth]{imgs/World_Cameras_Camera.png}
-	\label{fig:hospitalscene}
+
 	\caption{Environment used for the VLM scene capturing. Consisting of a hospital room containing objects we could find in an hospital. Such as the patient's bed and the doctor's table.}
+	\label{fig:hospitalscene}
 \end{figure}
 
 After applying the scene captioning technique to the environment seen in figure \ref{fig:hospitalscene}, we should get a number corresponding to each object in the picture representing a node in the graph. And links representing the graph edges which stand for the spatial relations among them.
@@ -87,8 +89,8 @@ After applying the scene captioning technique to the environment seen in figure 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.7\textwidth]{imgs/viz_camera_scene_graph.jpg}
-	\label{fig:hospitalgraph}
 	\caption{VLM scene captioning result applied to the hospital room scene, with numbers representing object nodes and lines standing for the graph edges.}
+	\label{fig:hospitalgraph}
 \end{figure}
 
 \subsubsection{Returned results}
@@ -102,7 +104,9 @@ All of the information captured in the scene graph is returned in three differen
 	\item \textbf{scene\_graph\_caption}: for each object identified in the scene, it returns a caption with a detailed description of the object and a list of the objects it is related to. These related objects tend to be the closest in the scene. For instance this is the example for the hospital bed:
 	
 	\begin{lstlisting}[
-		language=Python, 
+		float=ht,
+		style=python_pro_black, 
+		language=PYthon, 
 		caption={Scene graph caption result for the patient bed in the hospital scene.},
 		morekeywords={role, content, type, image, text}]
 		"0-hospitalbed": {
@@ -145,6 +149,8 @@ This class also has some functions for filtering the VLM hallucinations, as the 
 Then there is the main function \textit{infer} which as as the bridging between the robotic environment and the VLM. The function receives the environment cropped image, the instruction it must follow and the target type, and returns the coordinates of the desired target if found. It works with the usual template VLMs receive, being the same image-text pair discussed throughout the whole documentation see pseudocode \ref{code:vlmtemplate}. 
 
 \begin{lstlisting}[
+	float=ht,
+	style=python_pro_black,
 	language=Python, 
 	caption={Structure template Qwen receives, consisting of the screenshot of the desired part of the environment and prompt. Similar to a JSON format.}, 
 	label={code:vlmtemplate},
@@ -159,6 +165,8 @@ Then there is the main function \textit{infer} which as as the bridging between 
 The prompt the service receives has been changes several times, each time to the overall target detection logic. This has been the end result: 
 
 \begin{lstlisting}[
+	float=ht,
+	style=python_pro_black,
 	language=Python, 
 	caption={Custom prompt the VLM receives, indicating what to detect, what to return and the format of the returned data},
 	morekeywords={role, content, type, image, text}]
@@ -179,12 +187,14 @@ The second part of the script consists of the detection function that will be ca
 \begin{itemize}
 	\item \textbf{ground}: function used in the first server scripts for the very basic environments. The main difference between this function and its successor is that this simpler approach just detects a single target in the given image, while the following detects all of the possible objects and then filters to get the target. I used this function for the environments from the beginning where there was not so much difficulty, but I decided to change it for the more complex environments where it showed a catastrophic performance when dealing with more objects because it always returned hallucinations or mismatched the target object. 
 	
-	\item \textbf{multi\_ground}: this second and definitive detection function uses more sophisticated techniques and was used for the final multi-agents scenarios, showing much better performance than the previous. Depending of the target type, it uses additional helping prompts and uses them to test different coordinate predictions to then get the median of those coordinates as final prediction. I chose the median instead of the average to deal better with those hallucination outliers. Those custom prompts help changing the 'subject' of the prompt (basically being the target described with different names) so the model can have a broader idea of what he might be asked to detect. Those custom prompts will be found in the appendix \ref{code:customprompts}. 
+	\item \textbf{multi\_ground}: this second and definitive detection function uses more sophisticated techniques and was used for the final multi-agents scenarios, showing much better performance than the previous. Depending of the target type, it uses additional helping prompts and uses them to test different coordinate predictions to then get the median of those coordinates as final prediction. I chose the median instead of the average to deal better with those hallucination outliers. Those custom prompts help changing the 'subject' of the prompt (basically being the target described with different names) so the model can have a broader idea of what he might be asked to detect. Those custom prompts will be found in the appendix \ref{code:custom_prompts}. 
 \end{itemize}
 
 The BentoML created service will be run and interacted with inside the robotic environment simulator for the target detection tasks. In order to mount the service just need to run the following command \ref{code:runbento}: 
 
 \begin{lstlisting}[
+	float=tp,
+	style=python_pro_black,
 	language=Python, 
 	caption={Command to start the created VLM service}, 
 	label={code:runbento},
@@ -262,8 +272,8 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/vlm_input_debug.png}
-		\label{fig:cubesraw}
 		\caption{Raw image sent to VLM for cube analysis}
+		\label{fig:cubesraw}
 	\end{figure}
 	
 	After the initial CV filter application, the result is the following:
@@ -271,8 +281,8 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/result.png}
-		\label{fig:cubeswnoise}
 		\caption{First CV applied iteration}
+		\label{fig:cubeswnoise}
 	\end{figure}
 	
 	As seen in in figure \ref{fig:cubeswnoise}, there are so many things that can distract the VLM as this is the image itself sent to the server in the image-text prompt. So I needed to apply further cleaning to get a simpler result without confusing text and shadows. 
@@ -280,8 +290,9 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/result_clean.png}
-		\label{fig:cubesgreat}
+
 		\caption{Final CV application iteration}
+		\label{fig:cubesgreat}
 	\end{figure}
 	
 	This approach returns a much cleaner analysis where there are no distractive shadows nor cube names, just the image with the yellow rectangle surroundings. 
@@ -291,8 +302,8 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/Pasted image.png}
-		\label{fig:palettesraw}
 		\caption{Raw image of palette detection}
+		\label{fig:palettesraw}
 	\end{figure}
 	
 	The script uses the same color range technic as before but now transforms the image to \textit{HLS} to filter the white part of the distracting obstacle. In order to avoid detecting the robotic arm instead of the palettes, I create a mask to cover the undesired part of the image. 
@@ -300,8 +311,8 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/palette_clean_mask_black.png}
-		\label{fig:palettesmask}
 		\caption{Result of masking the palettes}
+		\label{fig:palettesmask}
 	\end{figure}
 	
 	As seen in image \ref{fig:palettesmask}, the mask does not behave equally for all of the platforms, as each of the palettes has a distinct hole distribution the result is different for each. While the blue one shows the most compact surface with the smallest holes obtaining the best overall masking result, the remaining show not so complete masks as they originally have bigger holes and more complex designs. The final result after applying all of the filters is the following \ref{fig:palettesclean}:
@@ -309,8 +320,9 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/palette_clean.png}
-		\label{fig:palettesclean}
+
 		\caption{Palette detection results with CV application}
+		\label{fig:palettesclean}
 	\end{figure}
 	
 	The key here is to try to get the center of the platform, as the objects to place on top of them are so little they may fall from the holes. The final coordinate predictions of the target will be those yellow circles near the centroid.
@@ -320,8 +332,9 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/Pasted image (2).png}
-		\label{fig:frankasraw}
+
 		\caption{Raw image of robotic arm detection}
+		\label{fig:frankasraw}
 	\end{figure}
 	
 	The same way as in the previous case, I apply masking to "get rid of" the unnecessary parts of the environment, removing the majority of the middle section of the image and applies the centroid circle for each robot. 
@@ -329,8 +342,9 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/frankas_clean_mask.png}
-		\label{fig:frankasmask}
+
 		\caption{Mask filtering for the robotic arms image}
+		\label{fig:frankasmask}
 	\end{figure}
 	
 	The masking gets rid of the other agents which stands in the middle of the arms, and successfully removes the cubes and platforms. It captures the overall structure of the arms, as it was too difficult to get the complex curves and shapes of the whole robot. Still, the results are great, let's check the final result of the robotic arms target detection task alongside CV filters.
@@ -338,8 +352,9 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/frankas_clean.png}
-		\label{fig:frankasclean}
+
 		\caption{Final result of the CV algorithm application to the last target detection case.}
+		\label{fig:frankasclean}
 	\end{figure}
 \end{itemize}
 
@@ -414,8 +429,9 @@ The robotic arm which can be found at inside the \texttt{Assets/Robots} path in 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.5\textwidth]{imgs/franka_arm.png}
-	\label{fig:franka_arm}
+
 	\caption{Image of the Franka arm USD, with the 7 original joints plus the added fingers.}
+	\label{fig:franka_arm}
 \end{figure}
 
 This robot will serve as the manipulative agent responsible of lifting and placing objects in the desired positions of the environment. Furthermore it will need a consistent controller for articulating all of its joints for a correct coordination, its respective controller development has been mentioned in section \ref{sec:franka_controller}. 
@@ -428,8 +444,9 @@ The Jetbot configuration was much more friendlier, this agent has no complex joi
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.5\textwidth]{imgs/jetbot.png}
-	\label{fig:jetbot}
+
 	\caption{Image of the Jetbot arm USD.}
+	\label{fig:jetbot}
 \end{figure}
 
 \subsubsection{Cubes}
@@ -549,6 +566,8 @@ The task the agents must accomplish by cooperation is pretty straightforward: ca
 After explaining the workflow the agents of the environment must achieve, I will go over the steps I followed to orchestrate the whole coordination task. The smartest choice in my opinion was to make a main script which would load all the necessary components to carry on the task (see pseudo code \ref{code:mainiter}), including the movement scripts and all the target detection material. From that very script I am able to orchestrate the full coordination by just selecting the target cube and target pallet, however, behind that compact structure it all comes up to modular functions. 
 
 \begin{lstlisting}[
+	float=ht,
+	style=python_pro_black,
 	language=Python, 
 	caption={[Multi-agent orchestration for blue cube] Example of orchestrating call inside the main script, composed by all the modular functions created and introducing the target colors; this call brings the blue cube to the black platform}, 
 	label={code:mainiter},
@@ -584,8 +603,9 @@ Let's now go over the procedure hidden beyond those functions, inspired on the w
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.75\textwidth]{imgs/Multi-agent_scenario.png}
-	\label{fig:first_multi_agent}
+
 	\caption{First multi agent environment, consisting of two Franka arms, a Jetbot robot and some cubes and platforms.}
+	\label{fig:first_multi_agent}
 \end{figure}
 
 In case of interest, I put a full practical example of the cycle where all the cubes are transported to all platforms, one by one. It is available at section in the appendix. 
@@ -598,8 +618,9 @@ Figure \ref{fig:alternativescenario} shows the different alternatives I have pre
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.45\textwidth]{imgs/Screenshot from 2026-05-03 19-33-37.png}
-	\label{fig:alternativescenario}
+
 	\caption{Alternative scenario where each cube shows a different position configuration}.
+	\label{fig:alternativescenario}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -634,6 +655,8 @@ The following corresponds to the training script I used first for just testing t
 The \textit{vlm\_data} variable contains all the information encapsulated with the previous movement script, containing the target cube's color, the cube's position in the environment, and the joint positions of the Franka arm. Then I proceed to start the training with the same joint positions saved and the same goes for the cube. However, I have inverted the $x, y$ coordinates of the cube starting position and set $z$ to 0.06 to spawn on top of the table all lifting tasks start from by default. It is possible to quit the table from spawning though. All of the remaining code is basically the same as in the default \textit{joint\_pos\_env\_cfg.py} script.
 
 \begin{lstlisting}[
+	float=ht,
+	style=python_pro_black,
 	language=Python, 
 	caption={Custom training approach script snippet},
 	label={code:rlclosescript},
@@ -656,6 +679,8 @@ The \textit{vlm\_data} variable contains all the information encapsulated with t
 I trained it for 25M steps and using the parameter configuration that can be found in the appendix, using parallelization for training multiple environments simultaneously. For this, I needed to configure my GPU capacity parameters inside the training script. After around 10M steps, the Tensorboard graph showed a rising episode reward mean graph, which in fact indicated the agent was able to successfully learn to lift the cube. The final training command was the following:
 
 \begin{lstlisting}[
+	float=ht, 
+	style=python_pro_black,
 	language=Python, 
 	caption={Custom training command},
 	label={code:rlruntraining},
@@ -666,11 +691,13 @@ I trained it for 25M steps and using the parameter configuration that can be fou
 Where the path to the training script inside the IsaacLab directory specified alongside the name of the task to train, the number of parallel heads and the training interface mode. In my case headless to optimize time. And the command for visualizing the training is pretty similar. 
 
 \begin{lstlisting}[
+	float=ht, 
+	style=python_pro_black,
 	language=Python, 
-	caption={Custom training visualization command},
-	label={code:rlseetraining},
-	morekeywords={role, content, type, image, text}]
-	scripts/reinforcement_learning/sb3/play.py --task Isaac-Lift-Cube-Franka-v0 --num_envs 16
+	caption={Command for visualizing the trained Reinforcement Learning policy in a multi-environment Isaac Lab simulation.},
+	label={code:rl_visualization}
+	]
+	python scripts/reinforcement_learning/sb3/play.py --task Isaac-Lift-Cube-Franka-v0 --num_envs 16
 \end{lstlisting}
 
 The difference being the script called, reducing the number of environments to not crash the simulator and removing the headless flag to offer visualization. 
@@ -737,9 +764,11 @@ When a training process ends, the output of usually consists of several things. 
 After that, in order to start inference, it would be necessary to remove all the controller parts of the script and load the weights using the corresponding function to each algorithm. In my case: 
 
 \begin{lstlisting}[
+	float=htbp, 
+	style=python_pro_black,
 	language=Python, 
-	caption={Custom training visualization command},
-	label={code:loadmodel},
-	morekeywords={role, content, type, image, text}]
-	model = PPO.load(model.zip)
+	caption={Command for loading a pre-trained PPO model for inference and visualization within the Isaac Sim environment.},
+	label={code:load_trained_model}
+	]
+	model = PPO.load("trained_model.zip")
 \end{lstlisting}

@@ -168,13 +168,13 @@ In traditional multimodal systems, the language encoder functioned as a bidirect
 The most significant paradigm shift in VLM evolution is the transition from symmetric \textit{encoder-decoder} systems to \textit{decoder-only} architectures. This move toward generative LLMs is driven by three fundamental technical advantages:
 
 \begin{itemize}
-	\item \textbf{Causal Attention vs. Bidirectional Attention}: Unlike encoders that allow tokens to see the entire sequence at once, decoders implement a \textit{causal mask}. This ensures that during training and inference, each token can only attend to itself and preceding tokens. This directional dependency is what enables autoregressive generation, the ability to reason and predict the next word in a conversation.The causal mask $M$ is typically a lower triangular matrix, where the attention score between position $i$ and $j$ is set to $-\infty$ if $j > i$:
+	\item \textbf{Causal attention vs bidirectional attention}: Unlike encoders that allow tokens to see the entire sequence at once, decoders implement a \textit{causal mask}. This ensures that during training and inference, each token can only attend to itself and preceding tokens. This directional dependency is what enables autoregressive generation, the ability to reason and predict the next word in a conversation.The causal mask $M$ is typically a lower triangular matrix, where the attention score between position $i$ and $j$ is set to $-\infty$ if $j > i$:
 	\[ M_{ij} = \begin{cases} 0 & \text{if } i \geq j \\ -\infty & \text{if } i < j \end{cases} \]
 	After applying the \textit{softmax} activation function, these $-\infty$ values become zero probability, effectively blocking information flow from future tokens.
 	
-	\item \textbf{In-Context Learning and Reasoning}: By utilizing a decoder-only system, the VLM treats the input image as a visual prefix. The model does not just classify the image, rather it predicts the logical continuation of a sequence $[Image, Instruction, Response]$. This allows the model to influence \textit{Chain-of-Thought} (CoT) reasoning, where it can articulate its thought process before arriving at a final answer.
+	\item \textbf{In-context learning and reasoning}: By utilizing a decoder-only system, the VLM treats the input image as a visual prefix. The model does not just classify the image, rather it predicts the logical continuation of a sequence $[Image, Instruction, Response]$. This allows the model to influence \textit{Chain-of-Thought} (CoT) reasoning, where it can articulate its thought process before arriving at a final answer.
 	
-	\item \textbf{Scalability and Unified Training}: Decoder-only models are simpler to scale because they consolidate the entire reasoning process into a single set of weights. In a model like \textit{LLaVA}, the LLM receives a unified sequence of tokens: $\mathcal{S} = [v_1, \dots, v_n, t_1, \dots, t_m]$, where $v$ represents aligned visual pseudo-tokens and $t$ represents text tokens. The model treats these two modalities as a single language, significantly reducing the architectural bottleneck between "seeing" and "speaking."
+	\item \textbf{Scalability and unified training}: Decoder-only models are simpler to scale because they consolidate the entire reasoning process into a single set of weights. In a model like \textit{LLaVA}, the LLM receives a unified sequence of tokens: $\mathcal{S} = [v_1, \dots, v_n, t_1, \dots, t_m]$, where $v$ represents aligned visual pseudo-tokens and $t$ represents text tokens. The model treats these two modalities as a single language, significantly reducing the architectural bottleneck between "seeing" and "speaking."
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -201,7 +201,7 @@ The image available below \ref{fig:vit_architecture} references the original arc
 % geroko
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\textwidth]{imgs/Vision_Transformer.png}
+	\includegraphics[width=0.5\textwidth]{imgs/Vision_Transformer.png}
 	\caption{Vision transformer architecture}
 	\label{fig:vit_architecture}
 \end{figure}
@@ -213,7 +213,7 @@ There are other ViT variants which have been published and reported having used 
 	
 	\item \textbf{Multi-head attention pooling (MAP)}: it applies a new \textit{multi-head attention} block to pooling. It takes the output of the ViT this being the list of vectors $x_1, x_2, \dots, x_n$, whereas its output is $\text{MultiheadedAttention}(Q, V, V)$. Where \textit{Q} is the trainable query vector and \textit{V} the matrix with the rows being the input vectors. More recent papers state that both GAP and MAP show a better performance than the basic BERT-like pooling. 
 	
-	\item \textbf{Masked Autoencoder}: this architecture involves two vision transformers put end-to-end. The first one takes the input image patches with positional encoding and output the vectors representing each patch (same encoder procedure seen until now). This is where the second component being the decoder (even if it still an encoder-only transformer) takes the first encoder's output with positional encoding too and outputs the image patches again. See the architecture in the image below \ref{fig:masked_autoencoder_architecture}.
+	\item \textbf{Masked autoencoder}: this architecture involves two vision transformers put end-to-end. The first one takes the input image patches with positional encoding and output the vectors representing each patch (same encoder procedure seen until now). This is where the second component being the decoder (even if it still an encoder-only transformer) takes the first encoder's output with positional encoding too and outputs the image patches again. See the architecture in the image below \ref{fig:masked_autoencoder_architecture}.
 	
 	\begin{figure}[H]
 		\centering
@@ -317,7 +317,7 @@ When it comes to practical cases, this alignment is implemented through varying 
 \section{Training Strategies in VLMs}
 Vision language models are trained not only in a single step process, but in a multi-stage training workflow, starting from the alignment of two disparate data modalities going to refining the model's ability to deal with natural instructions. The methodologies can be categorized into paradigms:
 
-\subsection{Contrastive Pre-Training}:
+\subsection{Contrastive Pre-Training}
 The core of contrastive methods is the idea  of learning how to contrast between pairs of similar and dissimilar data points \cite{rethmeier2021primercontrastivepretraininglanguage}. A pair of similar data points is called positive sample if both points are different representations of the same data instance, in our case multimodal representations of the same instance. Whereas the negative samples are those pairs in which the data points belong to different examples. While computer vision methods learn from input-input (image-image) pairs and natural language processing methods deal with input-output (text, label) pairs, vision language models receive input-input (text, image) pairs. Previously mentioned models such as \textit{CLIP} \cite{radford2021learningtransferablevisualmodels}, apply this learning approach to maximize the \textit{cosine similarity} distance metric between matching image-text pairs in a shared embedding space, aiming to maximize the metric for the positive samples while minimizing the negative ones. The loss function used is the \textit{cross-entropy} function.
 
 \subsection{Generative Pre-Training}
@@ -475,21 +475,22 @@ After collecting the data for benchmark evaluation, it's benchmark evaluation ti
 \end{itemize}
 
 % figure of benchmark metrics
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1\textwidth]{imgs/benchmark_metrics.png}
-	\caption{Most common benchmark evaluation metrics illustrated visually; showing \textit{answer matching, multiple choice} and \textit{image-caption similarity} graphical examples.}
-	\label{fig:benchmark_metrics}
-\end{figure}
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=1\textwidth]{imgs/benchmark_metrics.png}
+%	\caption{Most common benchmark evaluation metrics illustrated visually; showing \textit{answer matching, multiple choice} and \textit{image-caption similarity} graphical examples.}
+%	\label{fig:benchmark_metrics}
+%\end{figure}
 
 \subsection{Vision Language Action (VLA) Models}
+\label{sec:VLA}
 As the latest step of VLM evolutions, a new sub variant arose with the name of vision-language-action (VLA) models. Multimodal foundational models which include all the prior work of the VLMs, adding the actions space to the vision and language ones. With these models, given an input image or video of the robot's surroundings alongside a text instruction, the VLA directly outputs low-level robot action instructions to be executed to accomplish the task \cite{wiki_vla_2026}. 
 
 The architecture of the VLA would stand as the standard VLM architecture just changing the decoder to an \textit{action decoder} which translates the latent VLM representation into continuous output actions to be directly applied on the robot. 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=.6\textwidth]{imgs/VLA.png}
+	\includegraphics[width=.7\textwidth]{imgs/VLA.png}
 	\caption{Standard vision language action model architecture.}
 	\label{fig:vla_architecture}
 \end{figure}
@@ -545,8 +546,8 @@ As illustrated in the comparison image below \ref{fig:VARL_comparison} for a rob
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.8\textwidth]{imgs/VARL.png}
-	 \label{fig:VARL_comparison}
-	 \caption{Different RL training approach comparison}
+	\caption{Different RL training approach comparison}
+	\label{fig:VARL_comparison}
 \end{figure}
 
 \subsubsection{VLM-based Reward Shaping}

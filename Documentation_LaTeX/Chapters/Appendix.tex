@@ -1,14 +1,13 @@
 %\section{Instalation guide}
 %IsaacSim/Lab
 
-\section{Relevant code}
-
-\subsection{Helping offsets used for VLM guidance}
+\section{Helping offsets used for VLM guidance}
 \begin{lstlisting}[
+	style=python_pro_black,
 	language=Python, 
-	caption={Calibration offsets used, ($x, y, z$) triplets where for all cases $z$=0 (objects standing on top of the ground)},
-	label={code:offsets},
-	morekeywords={role, content, type, image, text}]
+	caption={Calibration offsets used in the last stage of the target detection task.},
+	label={code:offsets}
+	]
 	OFFSETS = {
 		"cube": {
 			"red": [0.070, -0.025, 0.0],
@@ -24,54 +23,55 @@
 	}
 \end{lstlisting}
 
-\subsection{Full multi-agent coordination script}
+\section{Full multi-agent coordination script}
 \label{sec:fullmain}
 \begin{lstlisting}[
+	style=python_pro_black,
 	language=Python, 
-	caption={After seeing a complete cube transporting cycle, this script involves the full cycle involving all cubes and platforms},
-	label={code:main},
-	morekeywords={role, content, type, image, text}]
+	caption={Complete multi-agent orchestration script for the sequential transport of three cubes utilizing modular asynchronous functions.},
+	label={code:full_orchestration_final}
+	]
 	async def main():
-	print("##### STARTING FULL PIPELINE (LIFT+PLACE+NAVIGATION) STILL WITH CONTROLLER #####")
 	
-	# first cube interaction
-	await move_first_franka("red")
-	await place_on_jetbot()
-	await asyncio.sleep(1.0)
-	await move_jetbot(right_json)
-	await pick_from_jetbot("red")
-	await place_on_palett("red")
-	await move_jetbot(left_json)
+		# First interaction: red cube -> red platform
+		await move_first_franka("red")
+		await place_on_jetbot()
+		await asyncio.sleep(1.0)
+		await move_jetbot(right_json)
+		await pick_from_jetbot("red")
+		await place_on_palett("red")
+		await move_jetbot(left_json)
 	
-	# second cube
-	await move_first_franka("green")
-	await place_on_jetbot()
-	await asyncio.sleep(1.0)
-	await move_jetbot(right_json)
-	await pick_from_jetbot("green")
-	await place_on_palett("blue")
-	await move_jetbot(left_json)
+		# Second interaction: green cube -> blue platform
+		await move_first_franka("green")
+		await place_on_jetbot()
+		await asyncio.sleep(1.0)
+		await move_jetbot(right_json)
+		await pick_from_jetbot("green")
+		await place_on_palett("blue")
+		await move_jetbot(left_json)
 	
-	# third cube
-	await move_first_franka("blue")
-	await place_on_jetbot()
-	await asyncio.sleep(1.0)
-	await move_jetbot(right_json)
-	await pick_from_jetbot("blue")
-	await place_on_palett("black")
-	await move_jetbot(left_json)
-	print("##### PIPELINE FINISHED! #####")
+		# Third interaction: blue cube -> black platform
+		await move_first_franka("blue")
+		await place_on_jetbot()
+		await asyncio.sleep(1.0)
+		await move_jetbot(right_json)
+		await pick_from_jetbot("blue")
+		await place_on_palett("black")
+		await move_jetbot(left_json)
 	
+		print("##### PIPELINE FINISHED! #####")
 	
 	asyncio.ensure_future(main())
 \end{lstlisting}
 
-\subsection{Training parameters}
+\section{Training parameters}
 \begin{lstlisting}[
-	language=Python, 
-	caption={SB3 training parameters},
-	label={code:main},
-	morekeywords={role, content, type, image, text}]
+	style=python_pro_black,
+	language=bash, 
+	caption={Stable Baselines3 (SB3) PPO training hyperparameters and network architecture.},
+	label={code:main}
+	]
 	seed: 42
 	n_timesteps: 25000000
 	policy: MlpPolicy
@@ -87,26 +87,19 @@
 	policy_kwargs:
 	activation_fn: nn.ELU
 	net_arch:
-	pi:
-	- 256
-	- 128
-	- 64
-	vf:
-	- 256
-	- 128
-	- 64
+	pi: [256, 128, 64]
+	vf: [256, 128, 64]
 	target_kl: 0.01
 	max_grad_norm: 1.0
 \end{lstlisting}
 
-\section{Prompts used}
-
-\subsection{Helping prompts used for the VLM target detection task}
+\section{Helping prompts used for the VLM target detection task}
 \begin{lstlisting}[
+	style=python_pro_black,
 	language=Python, 
-	caption={Custom prompts used for ground\_multi detection function to try out different target names and then take the median of the predicted coordinates. },
-	label={code:customprompts},
-	morekeywords={role, content, type, image, text}]
+	caption={Dictionary of custom prompts used for the \textit{ground\_multi} detection function to achieve coordinate consensus.},
+	label={code:custom_prompts}
+	]
 	CUBE_PROMPTS = {
 		"red": ["red cube in the center", "small red block near robot"],
 		"green": ["small green cube on the right side", "green block on the right"],
@@ -141,5 +134,5 @@
 	}
 \end{lstlisting}
 
-\section{Result table}
-\section{Tensorboard analysis}
+%\section{Result table}
+%\section{Tensorboard analysis}

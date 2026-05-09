@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.17)  8 MAY 2026 14:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.17)  9 MAY 2026 10:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -985,40 +985,37 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 
 LaTeX Warning: Label `sec:rl' multiply defined.
 
-
-LaTeX Warning: Label `code:main' multiply defined.
-
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-Package scrbase Info: activating english \partname on input line 37.
-Package scrbase Info: activating english \chaptername on input line 37.
-Package scrbase Info: activating english \appendixname on input line 37.
-Package scrbase Info: activating english \figurename on input line 37.
-Package scrbase Info: activating english \tablename on input line 37.
-Package scrbase Info: activating english \contentsname on input line 37.
-Package scrbase Info: activating english \listfigurename on input line 37.
-Package scrbase Info: activating english \listtablename on input line 37.
-Package scrbase Info: activating english \bibname on input line 37.
-Package scrbase Info: activating english \indexname on input line 37.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+Package scrbase Info: activating english \partname on input line 69.
+Package scrbase Info: activating english \chaptername on input line 69.
+Package scrbase Info: activating english \appendixname on input line 69.
+Package scrbase Info: activating english \figurename on input line 69.
+Package scrbase Info: activating english \tablename on input line 69.
+Package scrbase Info: activating english \contentsname on input line 69.
+Package scrbase Info: activating english \listfigurename on input line 69.
+Package scrbase Info: activating english \listtablename on input line 69.
+Package scrbase Info: activating english \bibname on input line 69.
+Package scrbase Info: activating english \indexname on input line 69.
 
 
 Package scrlayer-scrpage Warning: Very small head height detected!
@@ -1066,7 +1063,7 @@ Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 ))
-Package hyperref Info: Link coloring ON on input line 37.
+Package hyperref Info: Link coloring ON on input line 69.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 
@@ -1111,7 +1108,7 @@ F version <1.7>, but at most version <1.5> allowed
 <portada.pdf, id=7, 597.79335pt x 845.19763pt>
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf>
-Package pdftex.def Info: portada.pdf  used on input line 40.
+Package pdftex.def Info: portada.pdf  used on input line 72.
 (pdftex.def)             Requested size: 597.79189pt x 845.19557pt.
 
 
@@ -1119,7 +1116,7 @@ pdfTeX warning: /usr/bin/pdflatex (file ./portada.pdf): PDF inclusion: found PD
 F version <1.7>, but at most version <1.5> allowed
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf>
-Package pdftex.def Info: portada.pdf  used on input line 40.
+Package pdftex.def Info: portada.pdf  used on input line 72.
 (pdftex.def)             Requested size: 597.79189pt x 845.19557pt.
 
 
@@ -1132,23 +1129,23 @@ F version <1.7>, but at most version <1.5> allowed
 <portada.pdf, id=10, page=1, 597.79335pt x 845.19763pt>
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf, page 1>
-Package pdftex.def Info: portada.pdf , page1 used on input line 40.
+Package pdftex.def Info: portada.pdf , page1 used on input line 72.
 (pdftex.def)             Requested size: 597.79189pt x 845.19557pt.
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf, page 1>
-Package pdftex.def Info: portada.pdf , page1 used on input line 40.
+Package pdftex.def Info: portada.pdf , page1 used on input line 72.
 (pdftex.def)             Requested size: 597.81924pt x 845.23425pt.
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf, page 1>
-Package pdftex.def Info: portada.pdf , page1 used on input line 40.
+Package pdftex.def Info: portada.pdf , page1 used on input line 72.
 (pdftex.def)             Requested size: 597.81924pt x 845.23425pt.
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf, page 1>
-Package pdftex.def Info: portada.pdf , page1 used on input line 40.
+Package pdftex.def Info: portada.pdf , page1 used on input line 72.
 (pdftex.def)             Requested size: 597.81924pt x 845.23425pt.
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf, page 1>
-Package pdftex.def Info: portada.pdf , page1 used on input line 40.
+Package pdftex.def Info: portada.pdf , page1 used on input line 72.
 (pdftex.def)             Requested size: 597.81924pt x 845.23425pt.
 [1
 
@@ -1156,7 +1153,7 @@ Package pdftex.def Info: portada.pdf , page1 used on input line 40.
  <./portada.pdf>]
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf>
-Package pdftex.def Info: portada.pdf  used on input line 41.
+Package pdftex.def Info: portada.pdf  used on input line 73.
 (pdftex.def)             Requested size: 597.79189pt x 845.19557pt.
 
 
@@ -1164,7 +1161,7 @@ pdfTeX warning: /usr/bin/pdflatex (file ./portada.pdf): PDF inclusion: found PD
 F version <1.7>, but at most version <1.5> allowed
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf>
-Package pdftex.def Info: portada.pdf  used on input line 41.
+Package pdftex.def Info: portada.pdf  used on input line 73.
 (pdftex.def)             Requested size: 597.79189pt x 845.19557pt.
 
 
@@ -1172,33 +1169,33 @@ pdfTeX warning: /usr/bin/pdflatex (file ./portada.pdf): PDF inclusion: found PD
 F version <1.7>, but at most version <1.5> allowed
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf, page 1>
-Package pdftex.def Info: portada.pdf , page1 used on input line 41.
+Package pdftex.def Info: portada.pdf , page1 used on input line 73.
 (pdftex.def)             Requested size: 597.79189pt x 845.19557pt.
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf, page 1>
-Package pdftex.def Info: portada.pdf , page1 used on input line 41.
+Package pdftex.def Info: portada.pdf , page1 used on input line 73.
 (pdftex.def)             Requested size: 597.81924pt x 845.23425pt.
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf, page 1>
-Package pdftex.def Info: portada.pdf , page1 used on input line 41.
+Package pdftex.def Info: portada.pdf , page1 used on input line 73.
 (pdftex.def)             Requested size: 597.81924pt x 845.23425pt.
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf, page 1>
-Package pdftex.def Info: portada.pdf , page1 used on input line 41.
+Package pdftex.def Info: portada.pdf , page1 used on input line 73.
 (pdftex.def)             Requested size: 597.81924pt x 845.23425pt.
 File: portada.pdf Graphic file (type pdf)
 <use portada.pdf, page 1>
-Package pdftex.def Info: portada.pdf , page1 used on input line 41.
+Package pdftex.def Info: portada.pdf , page1 used on input line 73.
 (pdftex.def)             Requested size: 597.81924pt x 845.23425pt.
 [2
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 62.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 99.
 
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 62.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 99.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -1212,8 +1209,8 @@ Package scrlayer-scrpage Warning: \headheight to low.
 (scrlayer-scrpage)                processing, but you should do this yourself,
 (scrlayer-scrpage)                e.g., setting geometry's option
 (scrlayer-scrpage)                `head=18.0pt'.
-(scrlayer-scrpage)                I'll also decrease \topmargin on input line 6
-2.
+(scrlayer-scrpage)                I'll also decrease \topmargin on input line 9
+9.
 
 
 Overfull \vbox (12.30954pt too high) has occurred while \output is active []
@@ -1228,7 +1225,7 @@ Package scrlayer-scrpage Warning: \footheight to low.
 (scrlayer-scrpage)                e.g., using
 (scrlayer-scrpage)                  \setlength{\footheight}{18.68198pt}
 (scrlayer-scrpage)                in your preamble.
-(scrlayer-scrpage)                I'll also increase \footskip on input line 62
+(scrlayer-scrpage)                I'll also increase \footskip on input line 99
 .
 
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/en
@@ -1238,7 +1235,7 @@ c/dvips/cm-super/cm-super-t1.enc}] [1
 ]
 
 LaTeX Font Warning: Font shape `T1/cmr/bx/n' in size <16> not available
-(Font)              size <17.28> substituted on input line 64.
+(Font)              size <17.28> substituted on input line 101.
 
 (./main.toc [2
 
@@ -1266,7 +1263,7 @@ Class scrbook Warning: \float@listhead detected!
 (scrbook)              Loading of package `scrhack' may help to
 (scrbook)              avoid this warning, if you are using a
 (scrbook)              a package that still implements the
-(scrbook)              deprecated \float@listhead interface on input line 66.
+(scrbook)              deprecated \float@listhead interface on input line 103.
 
 [7] (./main.lol)
 \tf@lol=\write9
@@ -1304,7 +1301,7 @@ Class scrbook Warning: \float@addtolists detected!
 ]) [2{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
 chapter 2.
 (./Chapters/SOTA.tex
-<imgs/boltzmann.png, id=623, 250.9375pt x 237.88875pt>
+<imgs/boltzmann.png, id=607, 250.9375pt x 237.88875pt>
 File: imgs/boltzmann.png Graphic file (type png)
 <use imgs/boltzmann.png>
 Package pdftex.def Info: imgs/boltzmann.png  used on input line 11.
@@ -1312,14 +1309,19 @@ Package pdftex.def Info: imgs/boltzmann.png  used on input line 11.
  [3
 
  <./imgs/boltzmann.png>]
-<imgs/Perceiver.png, id=630, 673.51625pt x 222.8325pt>
+<imgs/Perceiver.png, id=614, 673.51625pt x 222.8325pt>
 File: imgs/Perceiver.png Graphic file (type png)
 <use imgs/Perceiver.png>
 Package pdftex.def Info: imgs/Perceiver.png  used on input line 27.
 (pdftex.def)             Requested size: 409.71692pt x 135.557pt.
  [4 <./imgs/Perceiver.png>]
-[5] [6] [7] [8]
-<imgs/phrase_grounding.jpg, id=671, 978.65625pt x 851.18pt>
+[5]
+
+LaTeX Warning: Citation `wiki:Vision-language_model' on page 6 undefined on inp
+ut line 61.
+
+[6] [7] [8]
+<imgs/phrase_grounding.jpg, id=654, 978.65625pt x 851.18pt>
 File: imgs/phrase_grounding.jpg Graphic file (type jpg)
 <use imgs/phrase_grounding.jpg>
 Package pdftex.def Info: imgs/phrase_grounding.jpg  used on input line 149.
@@ -1331,81 +1333,68 @@ LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 1
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 ) [11]
-<imgs/Vision_Transformer.png, id=693, 963.6pt x 914.41624pt>
+<imgs/Vision_Transformer.png, id=676, 963.6pt x 914.41624pt>
 File: imgs/Vision_Transformer.png Graphic file (type png)
 <use imgs/Vision_Transformer.png>
 Package pdftex.def Info: imgs/Vision_Transformer.png  used on input line 204.
-(pdftex.def)             Requested size: 318.66948pt x 302.40012pt.
- [12] [13 <./imgs/Vision_Transformer.png>]
-<imgs/Masked_Autoencoder..png, id=711, 250.9375pt x 139.52126pt>
+(pdftex.def)             Requested size: 227.62206pt x 216.00407pt.
+ [12]
+<imgs/Masked_Autoencoder..png, id=688, 250.9375pt x 139.52126pt>
 File: imgs/Masked_Autoencoder..png Graphic file (type png)
 <use imgs/Masked_Autoencoder..png>
 Package pdftex.def Info: imgs/Masked_Autoencoder..png  used on input line 220.
 (pdftex.def)             Requested size: 273.14923pt x 151.88779pt.
- [14 <./imgs/Masked_Autoencoder..png>] [15] [16]
-<imgs/CLIP.png, id=739, 2170.1075pt x 764.8575pt>
+ [13 <./imgs/Vision_Transformer.png>] [14 <./imgs/Masked_Autoencoder..png>] [15
+] [16]
+<imgs/CLIP.png, id=721, 2170.1075pt x 764.8575pt>
 File: imgs/CLIP.png Graphic file (type png)
 <use imgs/CLIP.png>
 Package pdftex.def Info: imgs/CLIP.png  used on input line 290.
 (pdftex.def)             Requested size: 364.19667pt x 128.35513pt.
 
-[17] [18 <./imgs/CLIP.png>] [19] [20] [21]
-<imgs/train_scratch_vs_llm_backbone.png, id=784, 574.145pt x 339.2675pt>
+[17 <./imgs/CLIP.png>] [18] [19] [20]
+<imgs/train_scratch_vs_llm_backbone.png, id=758, 574.145pt x 339.2675pt>
 File: imgs/train_scratch_vs_llm_backbone.png Graphic file (type png)
 <use imgs/train_scratch_vs_llm_backbone.png>
 Package pdftex.def Info: imgs/train_scratch_vs_llm_backbone.png  used on input 
 line 350.
 (pdftex.def)             Requested size: 364.19667pt x 215.20985pt.
-
+ [21]
 Underfull \hbox (badness 10000) in alignment at lines 380--380
 [][][][][][][] 
  []
 
 [22 <./imgs/train_scratch_vs_llm_backbone.png>] [23] [24] [25] [26]
-<imgs/benchmark_metrics.png, id=832, 648.4225pt x 361.35pt>
-File: imgs/benchmark_metrics.png Graphic file (type png)
-<use imgs/benchmark_metrics.png>
-Package pdftex.def Info: imgs/benchmark_metrics.png  used on input line 480.
-(pdftex.def)             Requested size: 455.24411pt x 253.69865pt.
- [27 <./imgs/benchmark_metrics.png>]
-<imgs/VLA.png, id=839, 376.40625pt x 79.04532pt>
+<imgs/VLA.png, id=816, 376.40625pt x 79.04532pt>
 File: imgs/VLA.png Graphic file (type png)
 <use imgs/VLA.png>
-Package pdftex.def Info: imgs/VLA.png  used on input line 492.
-(pdftex.def)             Requested size: 273.14923pt x 57.36487pt.
-<imgs/OpenVLA_architecture.png, id=841, 957.5775pt x 368.87813pt>
+Package pdftex.def Info: imgs/VLA.png  used on input line 493.
+(pdftex.def)             Requested size: 318.66948pt x 66.92587pt.
+ [27 <./imgs/VLA.png>]
+<imgs/OpenVLA_architecture.png, id=825, 957.5775pt x 368.87813pt>
 File: imgs/OpenVLA_architecture.png Graphic file (type png)
 <use imgs/OpenVLA_architecture.png>
-Package pdftex.def Info: imgs/OpenVLA_architecture.png  used on input line 504.
+Package pdftex.def Info: imgs/OpenVLA_architecture.png  used on input line 505.
 
 (pdftex.def)             Requested size: 364.19667pt x 140.29333pt.
- [28 <./imgs/VLA.png>]
-<imgs/reinforcement-learning-fig1-700.jpg, id=849, 421.575pt x 162.6075pt>
+<imgs/reinforcement-learning-fig1-700.jpg, id=826, 421.575pt x 162.6075pt>
 File: imgs/reinforcement-learning-fig1-700.jpg Graphic file (type jpg)
 <use imgs/reinforcement-learning-fig1-700.jpg>
 Package pdftex.def Info: imgs/reinforcement-learning-fig1-700.jpg  used on inpu
-t line 521.
+t line 522.
 (pdftex.def)             Requested size: 227.62206pt x 87.79929pt.
- [29 <./imgs/OpenVLA_architecture.png>] [30 <./imgs/reinforcement-learning-fig1
+ [28 <./imgs/OpenVLA_architecture.png>] [29 <./imgs/reinforcement-learning-fig1
 -700.jpg>]
-
-Package caption Warning: \label without proper reference on input line 548.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:VARL_comparison' on page 31 undefined on input li
-ne 543.
-
-<imgs/VARL.png, id=865, 1137.4997pt x 381.67593pt>
+<imgs/VARL.png, id=841, 1137.4997pt x 381.67593pt>
 File: imgs/VARL.png Graphic file (type png)
 <use imgs/VARL.png>
-Package pdftex.def Info: imgs/VARL.png  used on input line 547.
+Package pdftex.def Info: imgs/VARL.png  used on input line 548.
 (pdftex.def)             Requested size: 364.19667pt x 122.20285pt.
-[31 <./imgs/VARL.png>] [32] [33]) [34]
+ [30 <./imgs/VARL.png>] [31] [32]) [33]
 chapter 3.
-(./Chapters/Solution_approach.tex [35
+(./Chapters/Solution_approach.tex [34
 
-] [36]
+] [35]
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.
 code.tex
 File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
@@ -1421,48 +1410,31 @@ File: tikzlibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshape
 s.geometric.code.tex
 File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
-)) [37] [38]
-<imgs/MROPE.png, id=932, 1114.91531pt x 228.10219pt>
+)) [36] [37]
+<imgs/MROPE.png, id=909, 1114.91531pt x 228.10219pt>
 File: imgs/MROPE.png Graphic file (type png)
 <use imgs/MROPE.png>
 Package pdftex.def Info: imgs/MROPE.png  used on input line 170.
 (pdftex.def)             Requested size: 409.71692pt x 83.82219pt.
- [39 <./imgs/MROPE.png>] [40] [41]
-<imgs/lab_workflow.png, id=956, 655.44875pt x 186.6975pt>
+ [38 <./imgs/MROPE.png>] [39] [40]
+<imgs/lab_workflow.png, id=933, 655.44875pt x 186.6975pt>
 File: imgs/lab_workflow.png Graphic file (type png)
 <use imgs/lab_workflow.png>
 Package pdftex.def Info: imgs/lab_workflow.png  used on input line 221.
 (pdftex.def)             Requested size: 273.14923pt x 77.80276pt.
-) [42 <./imgs/lab_workflow.png>]
+) [41 <./imgs/lab_workflow.png>]
 chapter 4.
 (./Chapters/Solution_development_and_implementation.tex
-
-Package caption Warning: \label without proper reference on input line 14.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:surfer_image' on page 43 undefined on input line 
-9.
-
-<imgs/surfer.png, id=964, 206.7725pt x 148.555pt>
+<imgs/surfer.png, id=941, 206.7725pt x 148.555pt>
 File: imgs/surfer.png Graphic file (type png)
 <use imgs/surfer.png>
 Package pdftex.def Info: imgs/surfer.png  used on input line 13.
 (pdftex.def)             Requested size: 136.57462pt x 98.12366pt.
-[43
+ [42
 
- <./imgs/surfer.png (PNG copy)>]
-
-Package caption Warning: \label without proper reference on input line 14.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:surfer_image' on page 44 undefined on input line 
-36.
-
-[44] [45]
+ <./imgs/surfer.png (PNG copy)>] [43] [44]
 <imgs/isim_5.0_full_ext-isaacsim.replicator.caption-5.0.0_gui_IRC_workflow.png,
- id=990, 624.83438pt x 187.29974pt>
+ id=967, 624.83438pt x 187.29974pt>
 File: imgs/isim_5.0_full_ext-isaacsim.replicator.caption-5.0.0_gui_IRC_workflow
 .png Graphic file (type png)
 <use imgs/isim_5.0_full_ext-isaacsim.replicator.caption-5.0.0_gui_IRC_workflow.
@@ -1470,280 +1442,127 @@ png>
 Package pdftex.def Info: imgs/isim_5.0_full_ext-isaacsim.replicator.caption-5.0
 .0_gui_IRC_workflow.png  used on input line 70.
 (pdftex.def)             Requested size: 409.71692pt x 122.81796pt.
-<imgs/World_Cameras_Camera.png, id=991, 1927.2pt x 1084.05pt>
+<imgs/World_Cameras_Camera.png, id=968, 1927.2pt x 1084.05pt>
 File: imgs/World_Cameras_Camera.png Graphic file (type png)
 <use imgs/World_Cameras_Camera.png>
-Package pdftex.def Info: imgs/World_Cameras_Camera.png  used on input line 80.
+Package pdftex.def Info: imgs/World_Cameras_Camera.png  used on input line 81.
 (pdftex.def)             Requested size: 318.66948pt x 179.24098pt.
-
-
-Package caption Warning: \label without proper reference on input line 81.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:hospitalscene' on page 46 undefined on input line
- 85.
-
-[46 <./imgs/isim_5.0_full_ext-isaacsim.replicator.caption-5.0.0_gui_IRC_workflo
-w.png> <./imgs/World_Cameras_Camera.png (PNG copy)>]
-<imgs/viz_camera_scene_graph.jpg, id=999, 1927.2pt x 1084.05pt>
+ [45 <./imgs/isim_5.0_full_ext-isaacsim.replicator.caption-5.0.0_gui_IRC_workfl
+ow.png> <./imgs/World_Cameras_Camera.png (PNG copy)>]
+<imgs/viz_camera_scene_graph.jpg, id=976, 1927.2pt x 1084.05pt>
 File: imgs/viz_camera_scene_graph.jpg Graphic file (type jpg)
 <use imgs/viz_camera_scene_graph.jpg>
-Package pdftex.def Info: imgs/viz_camera_scene_graph.jpg  used on input line 89
+Package pdftex.def Info: imgs/viz_camera_scene_graph.jpg  used on input line 91
 .
 (pdftex.def)             Requested size: 318.66948pt x 179.24098pt.
-
-
-Package caption Warning: \label without proper reference on input line 90.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:hospitalgraph' on page 47 undefined on input line
- 95.
 
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 107.
- [47 <./imgs/viz_camera_scene_graph.jpg>]
-
-Package caption Warning: \label without proper reference on input line 90.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:hospitalgraph' on page 48 undefined on input line
- 119.
-
-[48]
-
-Package caption Warning: \label without proper reference on input line 71.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:scenecaptioningworkflow' on page 49 undefined on 
-input line 131.
-
-[49]
+nput line 111.
+ [46 <./imgs/viz_camera_scene_graph.jpg>] [47] [48]
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <9> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 154.
- [50] [51]
-<imgs/focal_length.jpg, id=1057, 434.62375pt x 261.97874pt>
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 160.
+ [49] [50]
+<imgs/focal_length.jpg, id=1039, 434.62375pt x 261.97874pt>
 File: imgs/focal_length.jpg Graphic file (type jpg)
 <use imgs/focal_length.jpg>
-Package pdftex.def Info: imgs/focal_length.jpg  used on input line 205.
+Package pdftex.def Info: imgs/focal_length.jpg  used on input line 215.
 (pdftex.def)             Requested size: 227.62206pt x 137.20511pt.
- [52 <./imgs/focal_length.jpg>] [53]
-<imgs/vlm_input_debug.png, id=1073, 1284.8pt x 722.7pt>
+ [51 <./imgs/focal_length.jpg>]
+[52]
+<imgs/vlm_input_debug.png, id=1057, 1284.8pt x 722.7pt>
 File: imgs/vlm_input_debug.png Graphic file (type png)
 <use imgs/vlm_input_debug.png>
-Package pdftex.def Info: imgs/vlm_input_debug.png  used on input line 264.
+Package pdftex.def Info: imgs/vlm_input_debug.png  used on input line 274.
 (pdftex.def)             Requested size: 273.14923pt x 153.64615pt.
- [54]
-<imgs/result.png, id=1081, 1284.8pt x 722.7pt>
+<imgs/result.png, id=1058, 1284.8pt x 722.7pt>
 File: imgs/result.png Graphic file (type png)
 <use imgs/result.png>
-Package pdftex.def Info: imgs/result.png  used on input line 273.
+Package pdftex.def Info: imgs/result.png  used on input line 283.
 (pdftex.def)             Requested size: 273.14923pt x 153.64615pt.
-
-
-Package caption Warning: \label without proper reference on input line 274.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:cubeswnoise' on page 55 undefined on input line 2
-78.
-
-<imgs/result_clean.png, id=1083, 1284.8pt x 722.7pt>
+ [53 <./imgs/vlm_input_debug.png (PNG copy)>]
+<imgs/result_clean.png, id=1065, 1284.8pt x 722.7pt>
 File: imgs/result_clean.png Graphic file (type png)
 <use imgs/result_clean.png>
-Package pdftex.def Info: imgs/result_clean.png  used on input line 282.
+Package pdftex.def Info: imgs/result_clean.png  used on input line 292.
 (pdftex.def)             Requested size: 273.14923pt x 153.64615pt.
-[55 <./imgs/vlm_input_debug.png (PNG copy)> <./imgs/result.png (PNG copy)>]
-<imgs/Pasted image.png, id=1089, 607.26875pt x 363.3575pt>
+<imgs/Pasted image.png, id=1066, 607.26875pt x 363.3575pt>
 File: imgs/Pasted image.png Graphic file (type png)
 <use imgs/Pasted image.png>
-Package pdftex.def Info: imgs/Pasted image.png  used on input line 293.
+Package pdftex.def Info: imgs/Pasted image.png  used on input line 304.
 (pdftex.def)             Requested size: 273.14923pt x 163.43727pt.
-<imgs/palette_clean_mask_black.png, id=1090, 607.26875pt x 363.3575pt>
+ [54 <./imgs/result.png (PNG copy)> <./imgs/result_clean.png (PNG copy)>]
+<imgs/palette_clean_mask_black.png, id=1071, 607.26875pt x 363.3575pt>
 File: imgs/palette_clean_mask_black.png Graphic file (type png)
 <use imgs/palette_clean_mask_black.png>
 Package pdftex.def Info: imgs/palette_clean_mask_black.png  used on input line 
-302.
+313.
 (pdftex.def)             Requested size: 273.14923pt x 163.43727pt.
-
-[56 <./imgs/result_clean.png (PNG copy)> <./imgs/Pasted image.png (PNG copy)>]
-
-Package caption Warning: \label without proper reference on input line 303.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:palettesmask' on page 57 undefined on input line 
-307.
-
-
-Package caption Warning: \label without proper reference on input line 312.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:palettesclean' on page 57 undefined on input line
- 307.
-
-<imgs/palette_clean.png, id=1097, 607.26875pt x 363.3575pt>
+<imgs/palette_clean.png, id=1074, 607.26875pt x 363.3575pt>
 File: imgs/palette_clean.png Graphic file (type png)
 <use imgs/palette_clean.png>
-Package pdftex.def Info: imgs/palette_clean.png  used on input line 311.
+Package pdftex.def Info: imgs/palette_clean.png  used on input line 322.
 (pdftex.def)             Requested size: 273.14923pt x 163.43727pt.
-
-Package caption Warning: \label without proper reference on input line 323.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:frankasraw' on page 57 undefined on input line 31
-8.
-
-<imgs/Pasted image (2).png, id=1099, 1128.215pt x 390.45876pt>
+ [55 <./imgs/Pasted image.png (PNG copy)> <./imgs/palette_clean_mask_black.png 
+(PNG copy)>]
+<imgs/Pasted image (2).png, id=1081, 1128.215pt x 390.45876pt>
 File: imgs/Pasted image (2).png Graphic file (type png)
 <use imgs/Pasted image (2).png>
-Package pdftex.def Info: imgs/Pasted image (2).png  used on input line 322.
+Package pdftex.def Info: imgs/Pasted image (2).png  used on input line 334.
 (pdftex.def)             Requested size: 273.14923pt x 94.5342pt.
-[57 <./imgs/palette_clean_mask_black.png (PNG copy)> <./imgs/palette_clean.png 
-(PNG copy)>]
-<imgs/frankas_clean_mask.png, id=1104, 1128.215pt x 390.45876pt>
+<imgs/frankas_clean_mask.png, id=1082, 1128.215pt x 390.45876pt>
 File: imgs/frankas_clean_mask.png Graphic file (type png)
 <use imgs/frankas_clean_mask.png>
-Package pdftex.def Info: imgs/frankas_clean_mask.png  used on input line 331.
+Package pdftex.def Info: imgs/frankas_clean_mask.png  used on input line 344.
 (pdftex.def)             Requested size: 273.14923pt x 94.5342pt.
-<imgs/frankas_clean.png, id=1105, 1128.215pt x 390.45876pt>
+ [56 <./imgs/palette_clean.png (PNG copy)> <./imgs/Pasted image (2).png (PNG co
+py)>]
+<imgs/frankas_clean.png, id=1087, 1128.215pt x 390.45876pt>
 File: imgs/frankas_clean.png Graphic file (type png)
 <use imgs/frankas_clean.png>
-Package pdftex.def Info: imgs/frankas_clean.png  used on input line 340.
+Package pdftex.def Info: imgs/frankas_clean.png  used on input line 354.
 (pdftex.def)             Requested size: 273.14923pt x 94.5342pt.
- [58 <./imgs/Pasted image (2).png (PNG copy)> <./imgs/frankas_clean_mask.png (P
-NG copy)> <./imgs/frankas_clean.png (PNG copy)>] [59] [60] [61]
-
-Package caption Warning: \label without proper reference on input line 417.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:franka_arm' on page 62 undefined on input line 41
-2.
-
-<imgs/franka_arm.png, id=1131, 1198.4775pt x 747.79375pt>
+ [57 <./imgs/frankas_clean_mask.png (PNG copy)> <./imgs/frankas_clean.png (PNG 
+copy)>] [58]
+[59] [60]
+<imgs/franka_arm.png, id=1112, 1198.4775pt x 747.79375pt>
 File: imgs/franka_arm.png Graphic file (type png)
 <use imgs/franka_arm.png>
-Package pdftex.def Info: imgs/franka_arm.png  used on input line 416.
+Package pdftex.def Info: imgs/franka_arm.png  used on input line 431.
 (pdftex.def)             Requested size: 227.62206pt x 142.02522pt.
-[62 <./imgs/franka_arm.png>]
-
-Package caption Warning: \label without proper reference on input line 431.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:jetbot' on page 63 undefined on input line 426.
-
-<imgs/jetbot.png, id=1143, 1927.2pt x 1084.05pt>
+ [61 <./imgs/franka_arm.png>]
+<imgs/jetbot.png, id=1126, 1927.2pt x 1084.05pt>
 File: imgs/jetbot.png Graphic file (type png)
 <use imgs/jetbot.png>
-Package pdftex.def Info: imgs/jetbot.png  used on input line 430.
+Package pdftex.def Info: imgs/jetbot.png  used on input line 446.
 (pdftex.def)             Requested size: 227.62206pt x 128.02927pt.
-[63]
-
-Package caption Warning: \label without proper reference on input line 294.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:palettesraw' on page 64 undefined on input line 4
-41.
-
-[64 <./imgs/jetbot.png (PNG copy)>] [65]
-
-Package caption Warning: \label without proper reference on input line 265.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:cubesraw' on page 66 undefined on input line 480.
-
-
-[66]
-<imgs/FirstEnv.png, id=1181, 305.14pt x 359.3425pt>
+ [62 <./imgs/jetbot.png (PNG copy)>]
+[63] [64]
+<imgs/FirstEnv.png, id=1156, 305.14pt x 359.3425pt>
 File: imgs/FirstEnv.png Graphic file (type png)
 <use imgs/FirstEnv.png>
-Package pdftex.def Info: imgs/FirstEnv.png  used on input line 489.
+Package pdftex.def Info: imgs/FirstEnv.png  used on input line 506.
 (pdftex.def)             Requested size: 115.97768pt x 136.57462pt.
- [67 <./imgs/FirstEnv.png>] [68]
-
-Package caption Warning: \label without proper reference on input line 587.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:first_multi_agent' on page 69 undefined on input 
-line 566.
-
-
-Package caption Warning: \label without proper reference on input line 265.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:cubesraw' on page 69 undefined on input line 569.
-
-
-
-Package caption Warning: \label without proper reference on input line 431.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:jetbot' on page 69 undefined on input line 571.
-
-
-Package caption Warning: \label without proper reference on input line 341.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:frankasclean' on page 69 undefined on input line 
-575.
-
-[69]
-
-Package caption Warning: \label without proper reference on input line 294.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:palettesraw' on page 70 undefined on input line 5
-79.
-
-<imgs/Multi-agent_scenario.png, id=1221, 923.45pt x 384.43625pt>
+ [65 <./imgs/FirstEnv.png>] [66] [67]
+<imgs/Multi-agent_scenario.png, id=1197, 923.45pt x 384.43625pt>
 File: imgs/Multi-agent_scenario.png Graphic file (type png)
 <use imgs/Multi-agent_scenario.png>
-Package pdftex.def Info: imgs/Multi-agent_scenario.png  used on input line 586.
+Package pdftex.def Info: imgs/Multi-agent_scenario.png  used on input line 605.
 
 (pdftex.def)             Requested size: 341.43307pt x 142.13945pt.
-[70 <./imgs/Multi-agent_scenario.png>]
-
-Package caption Warning: \label without proper reference on input line 601.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:alternativescenario' on page 71 undefined on inpu
-t line 596.
-
-<imgs/Screenshot from 2026-05-03 19-33-37.png, id=1231, 559.08875pt x 391.4625p
+ [68]
+<imgs/Screenshot from 2026-05-03 19-33-37.png, id=1209, 559.08875pt x 391.4625p
 t>
 File: imgs/Screenshot from 2026-05-03 19-33-37.png Graphic file (type png)
 <use imgs/Screenshot from 2026-05-03 19-33-37.png>
 Package pdftex.def Info: imgs/Screenshot from 2026-05-03 19-33-37.png  used on 
-input line 600.
+input line 620.
 (pdftex.def)             Requested size: 204.85846pt x 143.43513pt.
-
-Package caption Warning: \label without proper reference on input line 587.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:first_multi_agent' on page 71 undefined on input 
-line 611.
-
-[71 <./imgs/Screenshot from 2026-05-03 19-33-37.png>] [72] [73] [74] [75])
-[76]
+ [69 <./imgs/Multi-agent_scenario.png>] [70 <./imgs/Screenshot from 2026-05-03 
+19-33-37.png>] [71] [72]
+[73]) [74] [75]
 chapter 5.
 (./Chapters/Experimentation_and_evolution.tex
 Overfull \hbox (3.91249pt too wide) in paragraph at lines 42--42
@@ -1769,7 +1588,7 @@ t/9 ; \OMS/cmsy/m/n/9 ^^@\OT1/cmr/m/n/9 0\OML/cmm/m/it/9 :\OT1/cmr/m/n/9 0174)$
 | 
  []
 
-[77
+[76
 
 ]
 Overfull \hbox (6.69339pt too wide) in paragraph at lines 70--70
@@ -1779,88 +1598,59 @@ t/9 ; \OMS/cmsy/m/n/9 ^^@\OT1/cmr/m/n/9 0\OML/cmm/m/it/9 :\OT1/cmr/m/n/9 0050)$
 | 
  []
 
-[78] [79] [80]
-
-Package caption Warning: \label without proper reference on input line 129.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:train_mean_rew' on page 81 undefined on input lin
-e 124.
-
-<imgs/rollout_ep_rew_mean.png, id=1318, 892.33376pt x 325.215pt>
+[77] [78] [79]
+<imgs/rollout_ep_rew_mean.png, id=1305, 892.33376pt x 325.215pt>
 File: imgs/rollout_ep_rew_mean.png Graphic file (type png)
 <use imgs/rollout_ep_rew_mean.png>
 Package pdftex.def Info: imgs/rollout_ep_rew_mean.png  used on input line 128.
 (pdftex.def)             Requested size: 318.66948pt x 116.13942pt.
-
-Package caption Warning: \label without proper reference on input line 138.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:train_explained_variance' on page 81 undefined on
- input line 133.
-
-
-Package caption Warning: \label without proper reference on input line 145.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:train_entropy_loss' on page 81 undefined on input
- line 133.
-
-<imgs/train_explained_variance.png, id=1321, 929.4725pt x 316.18124pt>
+<imgs/train_explained_variance.png, id=1308, 929.4725pt x 316.18124pt>
 File: imgs/train_explained_variance.png Graphic file (type png)
 <use imgs/train_explained_variance.png>
 Package pdftex.def Info: imgs/train_explained_variance.png  used on input line 
-137.
+138.
 (pdftex.def)             Requested size: 318.66948pt x 108.40237pt.
-[81 <./imgs/rollout_ep_rew_mean.png>]
-<imgs/train_entropy_loss.png, id=1327, 929.4725pt x 316.18124pt>
+ [80 <./imgs/rollout_ep_rew_mean.png>]
+<imgs/train_entropy_loss.png, id=1314, 929.4725pt x 316.18124pt>
 File: imgs/train_entropy_loss.png Graphic file (type png)
 <use imgs/train_entropy_loss.png>
-Package pdftex.def Info: imgs/train_entropy_loss.png  used on input line 144.
+Package pdftex.def Info: imgs/train_entropy_loss.png  used on input line 146.
 (pdftex.def)             Requested size: 318.66948pt x 108.40237pt.
- [82 <./imgs/train_explained_variance.png> <./imgs/train_entropy_loss.png>]
-Overfull \hbox (2.85849pt too wide) in paragraph at lines 166--167
+ [81 <./imgs/train_explained_variance.png> <./imgs/train_entropy_loss.png>]
+Overfull \hbox (2.85849pt too wide) in paragraph at lines 169--170
 []\T1/cmr/bx/n/10 Reliability: \T1/cmr/m/n/10 The con-troller en-sures a de-ter
 -min-is-tic kine-matic so-lu-tion, trans-lat-ing the high-precision
  []
 
-) [83]
+) [82]
 chapter 6.
-(./Chapters/Conclusions.tex [84
+(./Chapters/Conclusions.tex [83
 
-]) (./main.bbl [85]
-Underfull \hbox (badness 10000) in paragraph at lines 35--42
+] [84] [85]) (./main.bbl [86]
+Underfull \hbox (badness 10000) in paragraph at lines 33--39
 []\T1/cmr/m/n/10 Gravio Team.  Vision-language mod-els (VLM) vs vi-sual ques-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--42
+Underfull \hbox (badness 10000) in paragraph at lines 33--39
 \T1/cmr/m/n/10 tion an-swer-ing (VQA) in 2025?  [][]$\T1/cmtt/m/n/10 https : / 
 / www . gravio . com / en-[]blog /
  []
 
+[87
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--42
-\T1/cmtt/m/n/10 vision-[]language-[]models-[]vlm-[]vs-[]visual-[]question-[]ans
-wering-[]vqa-[]in-[]2025$[][]\T1/cmr/m/n/10 , Mar 2025.
- []
-
-[86
-
-] [87]
-Underfull \hbox (badness 10000) in paragraph at lines 174--178
-[]\T1/cmr/m/n/10 M. Tim-o-thy.  What is phrase ground-ing?  [][]$\T1/cmtt/m/n/1
-0 https : / / blog . roboflow . com /
- []
-
-[88] [89]) [90]
+] [88] [89] [90]) [91]
 chapter 7.
-(./Chapters/Appendix.tex [91
+(./Chapters/Appendix.tex [92
 
-] [92] [93]) [94] (./main.aux)
+]
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2023/02/27 1.9 listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2023/02/27 1.9 listings language file
+) [93] [94])
+[95] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -1878,13 +1668,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 33933 strings out of 474222
- 661417 string characters out of 5748733
- 2111975 words of memory out of 5000000
- 55073 multiletter control sequences out of 15000+600000
+ 34002 strings out of 474222
+ 662277 string characters out of 5748733
+ 2184975 words of memory out of 5000000
+ 55138 multiletter control sequences out of 15000+600000
  577237 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 122i,21n,121p,10941b,2329s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 122i,21n,121p,10941b,2193s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texli
@@ -1911,10 +1701,10 @@ m-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsl1095.pfb
 onts/type1/public/cm-super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm
 -super/sftt0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb>
 
-Output written on main.pdf (106 pages, 7637927 bytes).
+Output written on main.pdf (107 pages, 7510059 bytes).
 PDF statistics:
- 2187 PDF objects out of 2487 (max. 8388607)
- 1926 compressed objects within 20 object streams
+ 2166 PDF objects out of 2487 (max. 8388607)
+ 1906 compressed objects within 20 object streams
  567 named destinations out of 1000 (max. 500000)
- 1343 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1306 words of extra memory for PDF output out of 10000 (max. 10000000)
 

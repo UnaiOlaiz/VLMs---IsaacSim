@@ -48,6 +48,7 @@ bookmarks=true]{hyperref}
 \RequirePackage{tabularx}
 \RequirePackage{caption}
 
+
 % TO NOT RAISE CHINESE ERRORS
 \DeclareUnicodeCharacter{5347}{\relax}
 \DeclareUnicodeCharacter{7EA7}{\relax}

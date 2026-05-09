@@ -126,8 +126,9 @@ The following Tensorboard graphs belong to a training instance of this multi cub
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.7\textwidth]{imgs/rollout_ep_rew_mean.png}
-	\label{fig:train_mean_rew}
+
 	\caption{Tensorboard \textit{rollout/ep\_rew\_mean} graph progression over near 50M steps.}
+	\label{fig:train_mean_rew}
 \end{figure}
 
 The following graphs \ref{fig:train_explained_variance}, \ref{fig:train_entropy_loss} show the evolution of the explained variance and entropy loss respectively. The explained variance relates to the predictive ability of the value function used, which also after those 40M steps checkpoint drops. This indicates the agent has lost its ability to accurately value the states of the environment. Whereas the entropy loss shows that the policy's randomness starts decreasing as it attempts to converge on more specific actions, and around the same step checkpoint becomes more deterministic, messing the overall training performance. 
@@ -135,15 +136,17 @@ The following graphs \ref{fig:train_explained_variance}, \ref{fig:train_entropy_
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.7\textwidth]{imgs/train_explained_variance.png}
-	\label{fig:train_explained_variance}
+
 	\caption{Tensorboard \textit{train/explained\_variance} graph progression over near 50M steps.}
+	\label{fig:train_explained_variance}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.7\textwidth]{imgs/train_entropy_loss.png}
-	\label{fig:train_entropy_loss}
+
 	\caption{Tensorboard \textit{train/entropy\_loss} graph progression over near 50M steps.}
+	\label{fig:train_entropy_loss}
 \end{figure}
 
 \subsection{Inference}

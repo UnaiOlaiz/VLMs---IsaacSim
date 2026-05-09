@@ -27,6 +27,38 @@
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
+% for listings
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{float}
+
+\definecolor{darkgray}{rgb}{0.2,0.2,0.2}
+\definecolor{lightgray}{rgb}{0.97,0.97,0.97}
+\definecolor{linegray}{rgb}{0.9,0.9,0.9}
+
+\lstdefinestyle{python_pro_black}{
+	backgroundcolor=\color{lightgray},   
+	commentstyle=\itshape\color{gray},    % Comments in italics/gray
+	keywordstyle=\bfseries\color{black},  % Keywords in bold black
+	numberstyle=\tiny\color{gray},
+	stringstyle=\color{darkgray},         % Strings in dark gray
+	basicstyle=\ttfamily\small\color{black},
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=8pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=4,
+	frame=single,
+	rulecolor=\color{linegray},
+	framesep=3pt,
+	xleftmargin=10pt
+}
+
 % Metadata for the document
 \title{Integration of Vision Language Models (VLMs) in a Multi-Agent environment for cooperative robotic tasks in NVIDIA Isaac Sim}
 \authors{Unai Olaizola}{} 
@@ -49,6 +81,11 @@
 	% Acknowledgements section
 	\section*{Acknowledgments}
 	\addcontentsline{toc}{chapter}{Acknowledgments}
+	I must state I did not know anything about vision language models before selecting what would be my final degree project, and that I felt quite insecure about the choice when I was told that there had not been any previous work on the subject before. Nevertheless, my tutor Iñaki Vázquez Gómez was the one who encouraged me to take on this challenge. Challenge which has not been easy at all, as it has been my first experiences working with these new technologies but based on Iñaki's organized workflow and consistent planning structure, has been much easier to tackle. 
+	
+	This section aims to emphasize on the constant support my tutor has given me throughout the development process, and I would like to thank him for all the tutoring he gave me in previous subjects of the grade which served as the essential foundation for this project. 
+	
+	Furthermore, I would also like to thank the University of Deusto for providing all the resources to carry out the research and the education received during these years, which will be a fundamental pillar upon the project built. Finally I would like to thank my family and colleagues for the encouragement and patience, their support allowed me to successfully achieve the challenge the final degree project is. 
 	
 	% Custom abstract + key words loading
 	\customAbstract{
@@ -91,7 +128,7 @@
 	
 	% end content
 	% bibliography
-	\bibliographystyle{plain} % bibliography properties
+	\bibliographystyle{unsrt} % bibliography properties
 	\bibliography{bibliography} % my blibliography file
 	
 	% appendix

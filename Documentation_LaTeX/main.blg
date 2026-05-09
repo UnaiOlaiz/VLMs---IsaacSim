@@ -1,46 +1,48 @@
 This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
-The style file: plain.bst
+The style file: unsrt.bst
 Database file #1: bibliography.bib
-You've used 44 entries,
-            2118 wiz_defined-function locations,
-            670 strings with 13922 characters,
-and the built_in function-call counts, 16435 in all, are:
-= -- 1299
-> -- 1523
+Warning--I didn't find a database entry for "wiki:Vision-language_model"
+You've used 45 entries,
+            1791 wiz_defined-function locations,
+            620 strings with 13486 characters,
+and the built_in function-call counts, 8676 in all, are:
+= -- 420
+> -- 911
 < -- 0
-+ -- 615
-- -- 566
-* -- 1244
-:= -- 2906
-add.period$ -- 113
-call.type$ -- 44
-change.case$ -- 412
++ -- 327
+- -- 282
+* -- 543
+:= -- 1517
+add.period$ -- 110
+call.type$ -- 45
+change.case$ -- 42
 chr.to.int$ -- 0
-cite$ -- 44
-duplicate$ -- 308
-empty$ -- 969
-format.name$ -- 566
-if$ -- 3181
+cite$ -- 45
+duplicate$ -- 225
+empty$ -- 811
+format.name$ -- 282
+if$ -- 1817
 int.to.chr$ -- 0
-int.to.str$ -- 44
+int.to.str$ -- 45
 missing$ -- 0
-newline$ -- 204
-num.names$ -- 88
-pop$ -- 620
+newline$ -- 203
+num.names$ -- 43
+pop$ -- 290
 preamble$ -- 1
-purify$ -- 371
+purify$ -- 0
 quote$ -- 0
-skip$ -- 340
+skip$ -- 188
 stack$ -- 0
-substring$ -- 225
-swap$ -- 44
+substring$ -- 0
+swap$ -- 45
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 176
+type$ -- 0
 warning$ -- 0
-while$ -- 88
-width$ -- 46
-write$ -- 398
+while$ -- 43
+width$ -- 47
+write$ -- 394
+(There was 1 warning)
