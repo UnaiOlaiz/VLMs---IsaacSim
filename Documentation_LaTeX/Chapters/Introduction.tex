@@ -1,22 +1,22 @@
 \section{Problem context}
-The gap between human and robots still remains significant and leads to communication  issues in robotic environments, the interpretation of commands may well be too rigid and may not translate as intended to the real scenario. Furthermore the task of coordinating multiple agents in an environment arises more issues including the previous, as the difficulty of synchronizing more than one agent raises exponentially due to integration and coordination issues. In order to tackle that gap, several techniques have been developed including simulation environments to reduce the \textit{sim2real} hole of robotics deployment, however, there are still some performance issues these frameworks cannot cover. Reason why different artificial intelligence methodologies have started to been applied for robotics. In parallel, the rise of multimodal models including the vision language models (VLMs) has opened a new possibility frontier for bridging this gap. VLMs offer the ability of perceiving visual scenes alongside natural language reasoning simultaneously, extending a more flexible interface for human-robot interaction. Nevertheless, the successful integration of this technology to robot physical execution of multiple tasks remains an open challenge to be explored throughout this project. 
+The gap between human and robots still remains significant and leads to communication  issues in robotic environments, the interpretation of commands may well be too rigid and may not translate as intended to the real scenario. Furthermore the task of coordinating multiple agents in an environment arises more issues including the previous, as the difficulty of synchronizing more than one agent raises exponentially due to integration and coordination issues. In order to tackle that gap, several techniques have be developed including simulation environments to reduce the \textit{sim2real} gap of robotics deployment, however, there are still some performance issues these frameworks cannot cover. Reason why different artificial intelligence methodologies have started to been applied for robotics. In parallel, the rise of multimodal models including the vision language models (VLMs) has opened a new possibility frontier for bridging this gap. VLMs offer the ability of perceiving visual scenes alongside natural language reasoning simultaneously, extending a more flexible interface for human-robot interaction. Nevertheless, the successful integration of this technology to robot physical execution of multiple tasks remains an open challenge to be explored throughout this project. 
 
 \section{Motivation}
-Vision language models had little to no other integration in other field rather than \textit{chatbot} plugins. Reason why I wanted to experiment VLM integrations in another such interesting field as robotics. I also wanted to experiment with a high-level reasoning engine able to think for itself instead of relying on hard-coded actions and positions to give to the agents. Likewise, this project encouraged to use state of the art models and frameworks for the experimentation part. 
+Vision language models had little to no other integration in other field rather than \textit{chatbot} plugins and image captioning. Reason why I have wanted to experiment VLM integrations in another such interesting field as robotics. I also have wanted to experiment with a high-level reasoning engine able to think for itself instead of relying on hard-coded actions and positions to give to the agents. Likewise, this project aims to use state of the art models and frameworks for the experimentation part. 
 
 \section{Objectives}
 \subsection{Main objective}
-Experiment with the integration of reasoning capacities of a vision language model in a controlled simulated multi-agent robotic environment to solve cooperative manipulation tasks while covering the whole process alongside the SOTA of the models in the documentation.
+Experimentation with the integration of reasoning capacities of a vision language model in a controlled simulated multi-agent robotic environment to solve cooperative manipulation tasks while covering the whole process alongside the SOTA of the models in the documentation.
 
 \subsection{Specific objectives} % ???
 \begin{itemize}
-	\item Design progressively more complex environments in the robotic scenario simulator.
+	\item Design progressively more complex environments in the robotic scenario simulator. Starting from the most basic tasks, advancing to more training alternatives which require more sophisticated techniques and sharper model performance. 
 	
-	\item Implement a communication system between VLM and the agents. 
+	\item Implement a communication layer between VLM and the agents, as the vision language model will be hosted on a server while all the agent manipulation will be run locally.  
 	
-	\item Define metrics to measure the success rate of cooperative tasks, the response time to natural language commands, and the model's ability to generalize across different environmental variations.
+	\item Define metrics to measure the success rate of cooperative tasks and the performance of the VLM. Such as the model's ability to generalize across different environmental variations.
 	
-	\item Evaluate the robustness of the learned policies and the VLM's perception under different levels of domain randomization to assess the feasibility of future deployment on physical hardware.
+	\item Evaluate and visualize the robustness of the learned policies and the VLM's perception under different levels of domain randomization to assess the feasibility of future deployment on physical hardware.
 \end{itemize}
 
 \section{Project scope}
@@ -27,7 +27,7 @@ What the project includes:
 	
 	\item Vision language models integration as high-level decision-making orchestrators. 
 	
-	\item Communication pipeline orchestration.
+	\item Custom communication pipeline orchestration.
 \end{itemize}
 
 What is not covered in the project:

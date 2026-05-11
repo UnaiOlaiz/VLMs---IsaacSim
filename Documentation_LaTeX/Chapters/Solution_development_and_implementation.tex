@@ -146,7 +146,7 @@ Responsible for loading the VLM pre-trained instance and specific processor, run
 
 This class also has some functions for filtering the VLM hallucinations, as the small size model often fails and returns disparate values. Depending on the desired target type's size, it will consider some dimension limits to discard hallucinations. This hallucination filters takes the \textit{bounding box} of the object and compare its viability, that bounding box consists of a rectangular region which embodies the object. Consisting of coordinate points $y_{min}$, $y_{max}$, $x_{min}$ and $x_{max}$.
 
-Then there is the main function \textit{infer} which as as the bridging between the robotic environment and the VLM. The function receives the environment cropped image, the instruction it must follow and the target type, and returns the coordinates of the desired target if found. It works with the usual template VLMs receive, being the same image-text pair discussed throughout the whole documentation see pseudocode \ref{code:vlmtemplate}. 
+Then there is the main function \textit{infer} which serves as as the bridging between the robotic environment and the VLM. The function receives the environment cropped image, the instruction it must follow and the target type, and returns the coordinates of the desired target if found. It works with the usual template VLMs receive, being the same image-text pair discussed throughout the whole documentation, see pseudocode \ref{code:vlmtemplate}. 
 
 \begin{lstlisting}[
 	float=ht,
@@ -703,6 +703,11 @@ Where the path to the training script inside the IsaacLab directory specified al
 The difference being the script called, reducing the number of environments to not crash the simulator and removing the headless flag to offer visualization. 
 
 Even if the policy worked fine, I had just trained it for the red cube case which is in fact the easiest one as it stands straight in front of the arm with perfect orientation. Nevertheless, I still needed to take this approach and apply it for the other cubes. So after collecting the cube and joint positions close to the cube, I tried to include domain randomization to the reinforcement learning training start. The idea was simple, each episode would start from a predefined pose, loading one of the three JSONs including the cube and joint positions for each color. However, the results were disappointing and I had to discard the idea, the reasons will be included in the evaluation chapter 5. 
+
+\subsubsection{Training alternatives}
+All the training performed until this point has been done with the aim of lifting rigid bodies such as the cubes, where the target was not deformable at all and stayed rigid throughout the contact phases with the robotic arm. Nevertheless, the reinforcement learning framework also allows to train policies to manipulate deformable objects such as teddy bears. 
+
+Compared to the cubes, the teddy bear shows greater complexity as it is a non-convex shape. The policy must adapt its weights to learn to spot the best grasping point. The teddy bear has much more joints that form the overall body of the toy, leading to more computational power needed to deal with all the physics. So when experimenting with this training alternative I have needed to relax down the number of parallel training environments and configure my GPU capacities inside the script. Apart from that, it is run the same way as the lifting cube task, just by changing the task name to \textit{Isaac-Lift-Teddy-Bear-Franka-IK-Abs-v0}. It will take much more time to train the lifting policy, but it is great to know that manipulation policies with much more complex objects is also supported and can be applied to the project.  
 
 \subsection{Elements of the training process}
 I cannot forget about reflecting on the different elements the agent will rely on during training. The following subsections capture the things the agent sees during training, what actions it can take and how it will be judged depending on the decision taken, based on the \textit{Markov Decision Process} (MDP) standards.

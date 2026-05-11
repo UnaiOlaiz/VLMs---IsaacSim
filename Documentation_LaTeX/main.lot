@@ -8,9 +8,9 @@
 \contentsline {table}{\numberline {3.1}{\ignorespaces Specifications and intended use cases for the different Qwen2-VL model scales, extracted from paper \cite {wang2024qwen2vlenhancingvisionlanguagemodels}.}}{38}{table.caption.116}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Comparative analysis of the localization accuracy across different processing phases, the cube positions correspond to the first multi agent environment without any alternatives.}}{77}{table.caption.289}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Comparative analysis of the localization accuracy across different processing phases for the palettes. }}{77}{table.caption.291}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces Comparative analysis of the localization accuracy for the Franka arm positions in the primary multi-agent environment.}}{78}{table.caption.293}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces Comparative analysis of the localization accuracy across different processing phases, the cube positions correspond to the first multi agent environment without any alternatives.}}{77}{table.caption.290}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Comparative analysis of the localization accuracy across different processing phases for the palettes. }}{77}{table.caption.292}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Comparative analysis of the localization accuracy for the Franka arm positions in the primary multi-agent environment.}}{78}{table.caption.294}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

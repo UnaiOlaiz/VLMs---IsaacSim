@@ -1,3 +1,5 @@
+\babel@toc {english}{}\relax 
+\babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
@@ -10,11 +12,12 @@
 \contentsline {lstlisting}{\numberline {4.6}{\ignorespaces Custom training approach script snippet}}{72}{lstlisting.256}%
 \contentsline {lstlisting}{\numberline {4.7}{\ignorespaces Custom training command}}{72}{lstlisting.271}%
 \contentsline {lstlisting}{\numberline {4.8}{\ignorespaces Command for visualizing the trained Reinforcement Learning policy in a multi-environment Isaac Lab simulation.}}{72}{lstlisting.274}%
-\contentsline {lstlisting}{\numberline {4.9}{\ignorespaces Command for loading a pre-trained PPO model for inference and visualization within the Isaac Sim environment.}}{75}{lstlisting.282}%
+\contentsline {lstlisting}{\numberline {4.9}{\ignorespaces Command for loading a pre-trained PPO model for inference and visualization within the Isaac Sim environment.}}{75}{lstlisting.283}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {lstlisting}{\numberline {7.1}{\ignorespaces Calibration offsets used in the last stage of the target detection task.}}{92}{lstlisting.312}%
-\contentsline {lstlisting}{\numberline {7.2}{\ignorespaces Complete multi-agent orchestration script for the sequential transport of three cubes utilizing modular asynchronous functions.}}{92}{lstlisting.327}%
-\contentsline {lstlisting}{\numberline {7.3}{\ignorespaces Stable Baselines3 (SB3) PPO training hyperparameters and network architecture.}}{93}{lstlisting.361}%
-\contentsline {lstlisting}{\numberline {7.4}{\ignorespaces Dictionary of custom prompts used for the \textit {ground\_multi} detection function to achieve coordinate consensus.}}{94}{lstlisting.382}%
+\contentsline {lstlisting}{\numberline {7.1}{\ignorespaces Calibration offsets used in the last stage of the target detection task.}}{93}{lstlisting.313}%
+\contentsline {lstlisting}{\numberline {7.2}{\ignorespaces Complete multi-agent orchestration script for the sequential transport of three cubes utilizing modular asynchronous functions.}}{93}{lstlisting.328}%
+\contentsline {lstlisting}{\numberline {7.3}{\ignorespaces Stable Baselines3 (SB3) PPO training hyperparameters and network architecture.}}{94}{lstlisting.362}%
+\contentsline {lstlisting}{\numberline {7.4}{\ignorespaces Dictionary of custom prompts used for the \textit {ground\_multi} detection function to achieve coordinate consensus.}}{95}{lstlisting.383}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

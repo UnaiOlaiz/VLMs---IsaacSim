@@ -149,6 +149,8 @@ The following graphs \ref{fig:train_explained_variance}, \ref{fig:train_entropy_
 	\label{fig:train_entropy_loss}
 \end{figure}
 
+Going back to the hypothesis on the reason why the network stopped improving after the 40M step threshold also happens in other artificial intelligence network trainings where the \textit{actor-critic} training paradigm is used and SB3's PPO algorithm is based on that logic. My hypothesis is that after a successful training start, one of the two networks of the architecture failing while the other kept working until reaching total failure. This problem is also present in other AI architectures such as in \textit{GANs} (generative adversarial networks), which are known for their instability, where often one network collapses while the other one keeps going until loosing stochasticity and returning more and more deterministic actions until falling over. The number of 40M time steps may be influenced by the hyperparameters used for training. 
+
 \subsection{Inference}
 The transition from a simulated training environment to real-time inference showed a significant \textit{sim2real} gap that which evidenced the RL policies were impractical for the project's final deployment. Despite the policy reaching a seemingly stable reward before the 40M step collapse and a successful lifting in the single cube lifting stage, the inference performance was characterized by three main issues:
 

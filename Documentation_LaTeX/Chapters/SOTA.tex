@@ -174,7 +174,7 @@ The most significant paradigm shift in VLM evolution is the transition from symm
 	
 	\item \textbf{In-context learning and reasoning}: By utilizing a decoder-only system, the VLM treats the input image as a visual prefix. The model does not just classify the image, rather it predicts the logical continuation of a sequence $[Image, Instruction, Response]$. This allows the model to influence \textit{Chain-of-Thought} (CoT) reasoning, where it can articulate its thought process before arriving at a final answer.
 	
-	\item \textbf{Scalability and unified training}: Decoder-only models are simpler to scale because they consolidate the entire reasoning process into a single set of weights. In a model like \textit{LLaVA}, the LLM receives a unified sequence of tokens: $\mathcal{S} = [v_1, \dots, v_n, t_1, \dots, t_m]$, where $v$ represents aligned visual pseudo-tokens and $t$ represents text tokens. The model treats these two modalities as a single language, significantly reducing the architectural bottleneck between "seeing" and "speaking."
+	\item \textbf{Scalability and unified training}: Decoder-only models are simpler to scale because they consolidate the entire reasoning process into a single set of weights. In a model like \textit{LLaVA}, the LLM receives a unified sequence of tokens: $\mathcal{S} = [v_1, \dots, v_n, t_1, \dots, t_m]$, where $v$ represents aligned visual pseudo-tokens and $t$ represents text tokens. The model treats these two modalities as a single language.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
