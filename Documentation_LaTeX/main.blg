@@ -1,48 +1,49 @@
-This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2025/dev/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: unsrt.bst
 Database file #1: bibliography.bib
-Warning--I didn't find a database entry for "wiki:Vision-language_model"
-You've used 45 entries,
+Warning--entry type for "MuJoCoDoc" isn't style-file defined
+--line 465 of file bibliography.bib
+You've used 46 entries,
             1791 wiz_defined-function locations,
-            620 strings with 13486 characters,
-and the built_in function-call counts, 8676 in all, are:
-= -- 420
-> -- 911
+            621 strings with 11672 characters,
+and the built_in function-call counts, 7491 in all, are:
+= -- 425
+> -- 618
 < -- 0
-+ -- 327
-- -- 282
-* -- 543
-:= -- 1517
-add.period$ -- 110
-call.type$ -- 45
-change.case$ -- 42
++ -- 230
+- -- 184
+* -- 347
+:= -- 1229
+add.period$ -- 111
+call.type$ -- 46
+change.case$ -- 43
 chr.to.int$ -- 0
-cite$ -- 45
-duplicate$ -- 225
-empty$ -- 811
-format.name$ -- 282
-if$ -- 1817
+cite$ -- 46
+duplicate$ -- 230
+empty$ -- 829
+format.name$ -- 184
+if$ -- 1645
 int.to.chr$ -- 0
-int.to.str$ -- 45
+int.to.str$ -- 46
 missing$ -- 0
-newline$ -- 203
+newline$ -- 206
 num.names$ -- 43
-pop$ -- 290
+pop$ -- 296
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 188
+skip$ -- 196
 stack$ -- 0
 substring$ -- 0
-swap$ -- 45
+swap$ -- 46
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
 while$ -- 43
-width$ -- 47
-write$ -- 394
+width$ -- 48
+write$ -- 399
 (There was 1 warning)

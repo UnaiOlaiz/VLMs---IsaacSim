@@ -22,7 +22,7 @@ After processing and encoding the features of the image and \textit{tokenizing} 
 \end{quote}
 
 \subsubsection{Zero-Shot Classification with CLIP}
-Loading the \textit{CIFAR100} well-known dataset for including thousands of colored images belonging to 100 different classes, the same vision-transformer must generate text descriptions for all of the 100 classes of the dataset and taking a random sample instance calculate the similarity between the image's visual inputs and each of the generated descriptions. Basically a zero-shot classification task, where the model must predict the answer without any previous knowledge, just based on the generated text captions.
+Loading the \textit{CIFAR100} well-known dataset for including thousands of colored images belonging to 100 different classes, the same vision-transformer must generate text descriptions for all of the 100 classes of the dataset and taking a random sample instance calculate the similarity between the image's visual inputs and each of the generated descriptions. Basically a zero-shot classification task, where the model must predict the answer without any previous knowledge, just based on the generated text captions. The following is an example of that same task given an image of a snake, and the top 5 results returned in a probability distribution manner due to its softmax activation function in its last layer.
 
 \begin{quote}
 	\textbf{Selected image:} \texttt{snake image} \\
@@ -33,7 +33,7 @@ Loading the \textit{CIFAR100} well-known dataset for including thousands of colo
 Great results  as the model gets the correct answer sharing a pretty well distributed probability. As while getting the best result the next most probable ones are all green animals or green food, showing great zero-shot classification performance.
 
 \subsubsection{Image Captioning with BLIP}
-I also tried other tasks as image captioning with other VLM models such as BLIP. Having the same surfer image \ref{fig:surfer_image} as input, the model did describe it surprisingly well for a maximum number of tokens like 30. Being its short description for the image: 
+I also tried other tasks as image captioning with other VLM models such as BLIP. Having the same surfer image \ref{fig:surfer_image} as input, the model did describe it surprisingly well for a maximum number of tokens like 30, being its short description for the image: 
 
 \begin{quote}
 	\textbf{Caption:} \textit{a man riding a wave on top of a surfboard}
@@ -53,7 +53,7 @@ The question of what is the color of the surfboard seems easier than what it act
 \section{VLM Scene Captioning in IsaacSim}
 Even if the project's goal is to implement an end to end VLM integration pipeline into a robotic environment, IsaacSim already offers some kind of vision language model integration inside the framework \cite{SceneCaptioning}. In this section, I will go over the capabilities of this functionality and argue why I still chose to develop my own pipeline. 
 
-The VLM integration the framework offers includes detailed descriptions including object relationships and spatial reasoning of an environment returned in a graph format. Being able to translate complex three dimensional spatial relationships into a compact graph while maintaining all the relevant information. In order to download and start using this add-on, I recommend installing it in the extensions panel by the name \texttt{Isaacsim.Replicator.CaptionCore}.
+The VLM integration the framework offers includes detailed descriptions including object relationships and spatial reasoning of an environment returned in a graph format, able to translate complex three dimensional spatial relationships into a compact graph while maintaining all the relevant information. In order to download and start using this add-on, I recommend installing it in the extensions panel by the name \texttt{Isaacsim.Replicator.CaptionCore}.
 
 \subsection{Workflow of scene captioning}
 Similar to my workflow developed, this process is also pretty straightforward and lineal. The workflow flows as follows:
@@ -132,7 +132,7 @@ Although both workflows share similarities in their procedure and results return
 	\item \textbf{Modular and independent architecture}: IsaacSim's scene captioning plugin is directly integrated into the simulator, and it cannot be modified. Whereas my architecture establishes the VLM in a server, making it more portable, lighter and more independent. Furthermore, I am able to tweak any parameter of the model or even change it, while NVIDIA's comes pre-established and is not open for any changes. In these situations I always prefer to go for the modularity choice. Hosting my own model also introduces the opportunity of enhancing its performance as I have with computer vision, however that is not an option for the replicator choice.
 	
 	%lama 3.1
-	\item \textbf{Model choice}: nevertheless, not everything have been advantages. The models used in the official replicator pipeline \ref{fig:scenecaptioningworkflow} are much more powerful than the one I have used, leading to greater performance. The model used by NVIDIA is actually \textit{GPT-4o}, and even if the number of parameters has not been officially published it could be around 200 billion parameters, almost 100 times more than the open-source alternatives I have used, and in addition, \textit{Llama 3.1} is another possible alternative which can scale up to 80B. It is evident the previous models will considerably outperform my alternative, nevertheless, I am not able to run that computation power to host the models locally. Reason why I went for a more humble open-source model with much less parameters. Which, even if its performance does not catch up, with some configuration can get considerable results as it has done. Moreover, I think it was a better choice to go for the pure VLM model and discard any "black box" alternatives. 
+	\item \textbf{Model choice}: nevertheless, not everything have been advantages. The models used in the official replicator pipeline \ref{fig:scenecaptioningworkflow} are much more powerful than the one I have used, leading to greater performance. The model used by NVIDIA is actually \textit{GPT-4o}, and even if the number of parameters has not been officially published it could be around 200 billion parameters, almost 100 times more than the open-source alternatives I have used, and in addition, \textit{Llama 3.1} is another possible alternative which can scale up to 80B. It is evident the previous models will considerably outperform my alternative, nevertheless, I am not able to run that computation power to host the models locally. That was the reason why I went for a more humble open-source model with much less parameters. Which, even if its performance does not catch up, with some configuration can get considerable results as it has done. Moreover, I think it was a better choice to go for the pure VLM model and discard any "black box" alternatives. 
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -193,7 +193,7 @@ The second part of the script consists of the detection function that will be ca
 The BentoML created service will be run and interacted with inside the robotic environment simulator for the target detection tasks. In order to mount the service just need to run the following command \ref{code:runbento}: 
 
 \begin{lstlisting}[
-	float=tp,
+	float=h,
 	style=python_pro_black,
 	language=Python, 
 	caption={Command to start the created VLM service}, 
@@ -272,7 +272,7 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/vlm_input_debug.png}
-		\caption{Raw image sent to VLM for cube analysis}
+		\caption{Raw image sent to VLM for cube analysis.}
 		\label{fig:cubesraw}
 	\end{figure}
 	
@@ -281,7 +281,7 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/result.png}
-		\caption{First CV applied iteration}
+		\caption{First CV applied iteration.}
 		\label{fig:cubeswnoise}
 	\end{figure}
 	
@@ -291,7 +291,7 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/result_clean.png}
 
-		\caption{Final CV application iteration}
+		\caption{Final CV application iteration.}
 		\label{fig:cubesgreat}
 	\end{figure}
 	
@@ -302,7 +302,7 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/Pasted image.png}
-		\caption{Raw image of palette detection}
+		\caption{Raw image of palette detection.}
 		\label{fig:palettesraw}
 	\end{figure}
 	
@@ -311,7 +311,7 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/palette_clean_mask_black.png}
-		\caption{Result of masking the palettes}
+		\caption{Result of masking the palettes.}
 		\label{fig:palettesmask}
 	\end{figure}
 	
@@ -321,7 +321,7 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/palette_clean.png}
 
-		\caption{Palette detection results with CV application}
+		\caption{Palette detection results with CV application.}
 		\label{fig:palettesclean}
 	\end{figure}
 	
@@ -333,7 +333,7 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/Pasted image (2).png}
 
-		\caption{Raw image of robotic arm detection}
+		\caption{Raw image of robotic arm detection.}
 		\label{fig:frankasraw}
 	\end{figure}
 	
@@ -343,7 +343,7 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/frankas_clean_mask.png}
 
-		\caption{Mask filtering for the robotic arms image}
+		\caption{Mask filtering for the robotic arms image.}
 		\label{fig:frankasmask}
 	\end{figure}
 	
@@ -650,7 +650,7 @@ The approaches I tested the most were the first two, and I also got with an idea
 \label{sec:training_approaches}
 The idea was simple, starting the training from a closer position to the cube, reducing considerably all the training complexity that involves starting from the very top of the arm position. If successful, the training episodes should go shortening and getting a higher reward faster. For that reason, I made a new script which using the same Franka controller as usual would move just to the top position of the predicted cube coordinates, keeping a safe $z$ height offset. And would finally store the close position data of both the cube and the robot's joints to initialize the training episode from that same position loading the JSON. 
 
-The following corresponds to the training script I used first for just testing the red cube close position approach and the configuration I used for training, with \textit{stable baselines 3} framework and algorithm \textit{PPO} (proximal policy optimization).
+The following corresponds to the training script I used first for just testing the red cube close position approach and the configuration I used for training, with \textit{Stable-Baselines3} framework and algorithm \textit{PPO} (proximal policy optimization).
 
 The \textit{vlm\_data} variable contains all the information encapsulated with the previous movement script, containing the target cube's color, the cube's position in the environment, and the joint positions of the Franka arm. Then I proceed to start the training with the same joint positions saved and the same goes for the cube. However, I have inverted the $x, y$ coordinates of the cube starting position and set $z$ to 0.06 to spawn on top of the table all lifting tasks start from by default. It is possible to quit the table from spawning though. All of the remaining code is basically the same as in the default \textit{joint\_pos\_env\_cfg.py} script.
 

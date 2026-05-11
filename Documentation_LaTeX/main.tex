@@ -132,9 +132,17 @@
 	\bibliography{bibliography} % my blibliography file
 	
 	% appendix
-	\chapter{Appendix} %?
-	\input{Chapters/Appendix}
-	\appendix
+	\appendix 
+	
+	% This will appear as: Appendix A. Source Code & Hyperparameters
+	\chapter{Source Code \& Hyperparameters} 
+	\input{Chapters/appendix_A.tex}
+	
+	% This will appear as: Appendix B. Custom Prompts Used
+	\chapter{Custom Prompts Used}
+	\input{Chapters/appendix_B.tex}
+	%\input{Chapters/Appendix}
+	
 	
 	
 \end{document}

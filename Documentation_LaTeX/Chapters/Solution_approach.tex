@@ -1,5 +1,5 @@
 \section{Solution proposal}
-In order to reflect the power of vision language models as high-level instruction orchestrators inside a robotic environment, I worked inside \textit{NVIDIA IsaacSim}. An open source SOTA framework for robotics simulation and synthetic data generation in physically based virtual environments built on top of \textit{NVIDIA Omniverse}. My final solution proposes a simulated robotic multi-agent environment where the vision language clearly dominates the high-level decision making, and orchestrates the whole workflow pipeline with the information received and sent to the other agents in the scenario. 
+In order to reflect the power of vision language models as high-level instruction orchestrators inside a robotic environment, I worked inside \textit{NVIDIA IsaacSim}, an open-source SOTA framework for robotics simulation and synthetic data generation in physically based virtual environments built on top of \textit{NVIDIA Omniverse}. My final solution proposes a simulated robotic multi-agent environment where the vision language clearly dominates the high-level decision making, and orchestrates the whole workflow pipeline with the information received and sent to the other agents in the scenario. 
 
 \section{System architecture}
 Figure \ref{fig:arch_clean} illustrates the architecture of the project, divided into two main sides: the components that run on local and those running in the server. There are several reasons why I decided to not run everything locally, as running things remotely allows better VLM inference performance takins considerably much less time and also opens the gate for modularity if I decide to change the model or the server architecture. 
@@ -72,7 +72,7 @@ The workflow used for the final scenarios inside \textit{IsaacSim} could be redu
 	
 	\item \textbf{CV algorithms to enhance detection}: depending on the target object to be detected by the vision language model specified in the next component, a specific computer vision algorithm application script will be called. In order to modify the screenshot image so the specified target is more detectable. 
 	
-	\item \textbf{VLM hosted on BentoML}: there will be a \textit{BentoML} server running up ready to capture the CV-modified screenshot of the desired section of the scenario taken in the previous step. However, as VLM receive a pair of (image-text) as input, the image will be accompanied by a prompt. Prompt consisting of identifying a specific target inside the scenario area captured by the camera. While the service is running, another component will be responsible for coordinating the calls with the server's API.
+	\item \textbf{VLM processing of the image}: there will be a \textit{BentoML} server running up ready to capture the CV-modified screenshot of the desired section of the scenario taken in the previous step. However, as VLM receive a pair of (image-text) as input, the image will be accompanied by a prompt consisting of identifying a specific target inside the scenario area captured by the camera. While the service is running, another component will be responsible for coordinating the calls with the server's API.
 	
 	\item \textbf{Target object coordinates prediction}: another script will interact with the VLM to try to get the closest coordinate predictions of the target object. Passing the prediction through hallucination filters and other several functions to get the most reliable function. 
 	
@@ -99,7 +99,7 @@ Depending on the task, there could be just one target object detection and movem
 		% Nodes
 		\node (p1) [state] {1. Visual captioning};
 		\node (p2) [state, right=of p1] {2. CV Enhancement};
-		\node (p3) [state, right=of p2] {3. VLM Hosting on BentoML};
+		\node (p3) [state, right=of p2] {3. VLM processing of the image};
 		\node (p4) [state, below=of p3] {4. Target position prediction};
 		\node (p5) [state, left=of p4] {5. Movement execution};
 		
@@ -224,4 +224,4 @@ The reason why I chose this framework among other options such as \textit{OpenAI
 	\end{figure}
 \end{itemize}
 
-Finally, I will be using \textit{stable-baselines3} (SB3) framework for all the trainings due to its support inside IsaacLab and compatibility with visualization tools such as \textit{Tensorboard}.
+Finally, I will be using \textit{Stable-Baselines3} (SB3) framework for all the trainings due to its support inside IsaacLab and compatibility with visualization tools such as \textit{Tensorboard}.

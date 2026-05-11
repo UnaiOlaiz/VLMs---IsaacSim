@@ -58,7 +58,7 @@ The integration of data from different domains has allowed a deeper understandin
 \section{Advancements of Vision Language Models}
 While the multimodal models mentioned before established the standard workflow for processing heterogeneous data, they often treated modalities independently to be combined or translated. The next step in the evolution are the \textit{Vision Language Models}, representing a shift towards a more reasoning approach rather than bare multimodal output goals. Instead of just generating an image from text or retrieving text from a video, VLMs think across all the domains simultaneously, implementing the reasoning capabilities from \textit{large language models} to interpret visual scenes. 
 
-VLMs are the result of the evolution to earlier image captioning systems, systems which were designed primarily to take isolated images and produce descriptions. However, this systems just received the image as input, not an image-text pair input as the vision language models do now \cite{wiki:Vision-language_model}. I will now go over some of the huge advancements that resulted when transitioning from the traditional multimodal learning to these new vision language models and their main differences:
+VLMs are the result of the evolution to earlier image captioning systems, systems which were designed primarily to take isolated images and produce descriptions. However, this systems just received the image as input, not an image-text pair input as the vision language models do now. I will now go over some of the huge advancements that resulted when transitioning from the traditional multimodal learning to these new vision language models and their main differences:
 
 \begin{itemize}
 	\item \textbf{Different input handling}: while with multimodal learning you would have a separate model for handling data from a specific domain e.g. one for dealing with text and another for video, VLMs were designed to receive input pairs of data from different modalities. Usually being (image, text) pairs. The VLM is able to align concepts belonging to different modalities inside a single shared vector space. 
@@ -131,12 +131,12 @@ The functionality of the basic Transformers architecture can be wrapped into thr
 	\item Finally the decoders of the transformers take both the output of the self-attention mechanism and the encoder generated embeddings to generate the most statistically likely output sequence. In the case of VLMs, it can also use those attention-weighted embeddings to output the most loyal visual representation compression.
 \end{enumerate}
 
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.6\textwidth]{imgs/The-Transformer-model-architecture.png}
-%	\caption{Original Transformers architecture published in \textit{"Attention is all you need"}}
-%	\label{fig:transformer_architecture}
-%\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{imgs/The-Transformer-model-architecture.png}
+	\caption{Original Transformers architecture published in \textit{"Attention is all you need".}}
+	\label{fig:transformer_architecture}
+\end{figure}
 
 \subsubsection{VLM tasks with Transformers} 
 The transformer architecture replaced the sequential recurrent neural networks in the role as decoders. In parallel, the network parameter training started relying on image-text pair datasets, and the scope of VLMs widened until reaching other tasks. 
@@ -202,7 +202,7 @@ The image available below \ref{fig:vit_architecture} references the original arc
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{imgs/Vision_Transformer.png}
-	\caption{Vision transformer architecture}
+	\caption{Vision transformer architecture.}
 	\label{fig:vit_architecture}
 \end{figure}
 
@@ -218,7 +218,7 @@ There are other ViT variants which have been published and reported having used 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.6\textwidth]{imgs/Masked_Autoencoder..png}
-		\caption{Masked autoencoder architecture}
+		\caption{Masked autoencoder architecture.}
 		\label{fig:masked_autoencoder_architecture}
 	\end{figure}
 	
@@ -288,7 +288,7 @@ After going over the properties of both encoders that make the whole CLIP model,
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{imgs/CLIP.png}
-	\caption{CLIP workflow}
+	\caption{CLIP workflow.}
 	\label{fig:clip_architecture}
 \end{figure}
 
@@ -348,7 +348,7 @@ On the other hand, starting from the checkpoint of already having a pre-trained 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.8\textwidth]{imgs/train_scratch_vs_llm_backbone.png}
-	\caption{VLM trained from scratch vs training strategy using a pre-trained LLM as backbone}
+	\caption{VLM trained from scratch vs training strategy using a pre-trained LLM as backbone.}
 	\label{fig:scratch_vs_llm_backbone}
 \end{figure}
 
@@ -541,12 +541,20 @@ Reinforcement learning in complex scenarios is time consuming and as massive int
 \subsubsection{Vision Language Models as Action Advisors}
 In many studies vision languages models are proposed as action advisors for online reinforcement learning, leveraging the knowledge of VLMs to provide action suggestions for RL agents. Unlike previous methods, actions are proposed rather than designing heuristic rewards. 
 
-As illustrated in the comparison image below \ref{fig:VARL_comparison} for a robotic-arm grasp policy, zero-shot vision-language-action models tend to produce biased still inaccurate actions which partially approach task success. When it comes to the policy obtained in the early stages of a RL, often reflect near-random behaviors. In contrast to the previous two approaches, VLM as action advisor for online reinforcement learning (VARL) achieves the most accurate grasping with just a few interactions and converges efficiently. 
+As illustrated in the comparison image below \ref{fig:VARL_comparison} for a robotic-arm grasp policy, zero-shot vision-language-action models tend to produce biased still inaccurate actions which partially approach task success. When it comes to the policy obtained in the early stages of a RL, often reflect near-random behaviors. In contrast to the previous two approaches, VLM as action advisor for online reinforcement learning (VARL) achieves the most accurate grasping with just a few interactions and converges efficiently. These are the three alternatives seen in the following figure, what they consist of and how they differ from the other options: 
+
+\begin{itemize}
+	\item \textbf{Zero-shot VLA models}: these models map pixels directly to motor actions without environment-specific training. They lack the spatial precision required for sub-centimeter accuracy, often resulting in biased or "near-miss" trajectories. However, they can be useful in some cases where the pure performance of the model must be tested. 
+	
+	\item \textbf{Early-stage RL policies}: in the initial stages of the training process, the agent's movements are purely random and stochastic, leading to a slow and inefficient exploration of the state space where the reward signal is rarely encountered.
+	
+	\item \textbf{VLM as action advisor (VARL)}: this approach utilizes the VLM to provide high-level hints and actions. It achieves faster convergence and higher precision than zero-shot methods or standalone RL.
+\end{itemize}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.8\textwidth]{imgs/VARL.png}
-	\caption{Different RL training approach comparison}
+	\caption{Different RL training approach comparison.}
 	\label{fig:VARL_comparison}
 \end{figure}
 
@@ -576,16 +584,43 @@ Sim2Real frameworks are computational systems designed to transfer control polic
 \begin{itemize}
 	\item \textbf{Sim2Real-AD}: is a modular framework specially designed for autonomous driving that enables zero-shot deployment of vision language model guided reinforcement learning policies \cite{huang2026sim2realadmodularsimtorealframework}. The framework is known for implementing SOTA technology such as a \textit{geometric observation bridge} (GOB) for converting monocular camera images into the simulator's \textit{bird eye view} (BEV) representation and a \textit{physics-aware action mapping} (PAM) to translate policy outputs into physical commands.
 	
-%	\begin{figure}[H]
-%		\centering
-%		\includegraphics[height=.5\textwidth]{imgs/sim2realAD.png}
-%		\label{fig:sim2realAD}
-%		\caption{In order to tackle sim-to-real challenges}
-%	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[height=.5\textwidth]{imgs/sim2realAD.png}
+		\label{fig:sim2realAD}
+		\caption{Sim2Real-AD framework's workflow pipeline illustration.}
+	\end{figure}
 	
 	\item \textbf{EAGERx}: provides a unified software pipeline for robot learning that supports multiple simulation engines and integrates state, action, and time-scale abstractions. The open source project available in GitHub \cite{eagerx2023}, enables the user to define environments as graph nodes visualized in a GUI. Policies are trained in simulation and zero-shot evaluated on real systems and EAGERx's design allows users to create complex environments using modular compositions. 
 	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.6\textwidth]{imgs/EAGERx_image.png}
+		\label{fig:eagerx}
+		\caption{Visualization of EAGERx physics engine framework, illustrating the training process of some agents.}
+	\end{figure}
+	
+	% ADD Gymnasium+MuJoCo
+	\item \textbf{Gymnasium's MuJoCo}: MuJoCo (multi-joint dynamics with contact) is the physics engine provided by Gymnasium for reinforcement learning \cite{MuJoCoDoc}. In fact, it has been the framework used in the reinforcement learning subject of the grade. It is a highly-customization oriented framework where users are able to modify the environments and shape the rewards system. MuJoCo offers the most foundational environments that can be easily trained and visualized. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.6\textwidth]{imgs/mujoco_envs.png}
+		\label{fig:mujoco_envs}
+		\caption{Some of the RL environments available at MuJoCo framework. }
+	\end{figure}
+	
+	
 	\item \textbf{NVIDIA IsaacSim}: NVIDIA's physics simulation platform built on top of \textit{NVIDIA Omniverse}, which will in fact be the selected framework for the practical field of the project. IsaacSim enables zero-shot sim2real transfer offering accurate physics simulation for realistic robot dynamics, synthetic data generation with domain randomization to train more robust models and it also supports reinforcement and imitation learning. On top of that it is integrated with \textit{Isaac ROS} and \textit{Isaac Lab} for real time deployment. Furthermore, Isaac Sim leverages NVIDIA RTX technology for ray-traced rendering, providing the photorealistic visual inputs essential for the effective reasoning of VLMs. The platform is built on the \textit{Universal Scene Description} (USD) framework, which facilitates seamless asset interoperability and scene management. Crucially for multi-agent research, Isaac Sim enables massively parallel simulation by executing physics and perception pipelines entirely on the GPU, allowing for the simultaneous training of large robotic fleets in complex, shared environments. As a quick note, I have preferred to keep the overview of the framework simple in this section in order to deepen in the corresponding chapter due to its importance and links to the practical environment development. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.6\textwidth]{imgs/NVIDIA_isaacsim.png}
+		\label{fig:isaacsim}
+		\caption{Example of an IsaacSim scenario containing multiple agents, the screenshot corresponds to an actual scenario. Showing off the high-fidelity graphics rendering technologies of the framework.}
+	\end{figure}
+	
+	
 \end{itemize}
 
 % Finally, a conclusion paragraph for the SOTA chapter

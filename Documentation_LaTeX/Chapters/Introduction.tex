@@ -9,32 +9,9 @@ Vision language models had little to no other integration in other field rather 
 Experimentation with the integration of reasoning capacities of a vision language model in a controlled simulated multi-agent robotic environment to solve cooperative manipulation tasks while covering the whole process alongside the SOTA of the models in the documentation.
 
 \subsection{Specific objectives} % ???
-\begin{itemize}
-	\item Design progressively more complex environments in the robotic scenario simulator. Starting from the most basic tasks, advancing to more training alternatives which require more sophisticated techniques and sharper model performance. 
-	
-	\item Implement a communication layer between VLM and the agents, as the vision language model will be hosted on a server while all the agent manipulation will be run locally.  
-	
-	\item Define metrics to measure the success rate of cooperative tasks and the performance of the VLM. Such as the model's ability to generalize across different environmental variations.
-	
-	\item Evaluate and visualize the robustness of the learned policies and the VLM's perception under different levels of domain randomization to assess the feasibility of future deployment on physical hardware.
-\end{itemize}
+The project also aims to meet certain objectives which are more specific. Among those there are the design of progressively more complex environments in the robotic scenario simulator. Starting from the most basic tasks, advancing to more training alternatives which require more sophisticated techniques and sharper model performance. Secondly, another goal to achieve is to implement a communication layer between VLM and the agents, as the vision language model will be hosted on a server while all the agent manipulation will be run locally. Moreover I will also define metrics to measure the success rate of cooperative tasks and the performance of the VLM. Such as the model's ability to generalize across different environmental variations. Finally I will be evaluating and visualizing the robustness of the learned policies and the VLM's perception under different levels of domain randomization to assess the feasibility of future deployment on physical hardware. 
 
 \section{Project scope}
-What the project includes: 
+I will distinct between what the project will include and what will not. Let's go over the topics and ideas the project will execute first. Firstly, the vision language models will be integrated as high-level decision making orchestrator brains. Furthermore, the orchestration pipeline for communication will be custom. Finally, the practical area of the project is strictly developed in NVIDIA IsaacSim, taking advantage of its complex physics engine and realistic rendering capacities (RTX).
 
-\begin{itemize}
-	\item The practical area of the project is strictly developed in NVIDIA IsaacSim, taking advantage of its complex physics engine and realistic rendering capacities (RTX).
-	
-	\item Vision language models integration as high-level decision-making orchestrators. 
-	
-	\item Custom communication pipeline orchestration.
-\end{itemize}
-
-What is not covered in the project:
-\begin{itemize}
-	\item Physical display of the robots, they are strictly displayed in the controlled environment. 
-	
-	\item Foundational VLMs training from scratch. The used model(s) are pre-trained open source alternatives. 
-	
-	% RL?
-\end{itemize}
+On the other hand, there are several aspects the project will not cover, and I belief it is essential to mention them in order to not create any sort of confusion. The physical display of the robots won't be covered, they will be strictly displayed in the controlled environment. This project will also not train foundational VLMs from scratch, the use models are pre-trained open-source alternatives. 

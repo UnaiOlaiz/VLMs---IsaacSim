@@ -1,0 +1,91 @@
+\section{Helping offsets used for VLM guidance}
+\begin{lstlisting}[
+	style=python_pro_black,
+	language=Python, 
+	caption={Calibration offsets used in the last stage of the target detection task.},
+	label={code:offsets}
+	]
+	OFFSETS = {
+		"cube": {
+			"red": [0.070, -0.025, 0.0],
+			"green": [0.222, 0.133, 0.0],
+			"blue": [0.004, -0.005, 0.0],
+		},
+		"pallet": {
+			"red": [0.427, -0.295, 0.0],
+			"blue": [0.220, 1.025, 0.0],
+			"black": [-0.084, 0.294, 0.0],
+		},
+		"robot": {"left": [0.56, -0.39, 0.0], "right": [-1.62, -0.93, 0.0]},
+	}
+\end{lstlisting}
+
+\section{Full multi-agent coordination script}
+\label{sec:fullmain}
+\begin{lstlisting}[
+	style=python_pro_black,
+	language=Python, 
+	caption={Complete multi-agent orchestration script for the sequential transport of three cubes utilizing modular asynchronous functions.},
+	label={code:full_orchestration_final}
+	]
+	async def main():
+	
+	# First interaction: red cube -> red platform
+	await move_first_franka("red")
+	await place_on_jetbot()
+	await asyncio.sleep(1.0)
+	await move_jetbot(right_json)
+	await pick_from_jetbot("red")
+	await place_on_palett("red")
+	await move_jetbot(left_json)
+	
+	# Second interaction: green cube -> blue platform
+	await move_first_franka("green")
+	await place_on_jetbot()
+	await asyncio.sleep(1.0)
+	await move_jetbot(right_json)
+	await pick_from_jetbot("green")
+	await place_on_palett("blue")
+	await move_jetbot(left_json)
+	
+	# Third interaction: blue cube -> black platform
+	await move_first_franka("blue")
+	await place_on_jetbot()
+	await asyncio.sleep(1.0)
+	await move_jetbot(right_json)
+	await pick_from_jetbot("blue")
+	await place_on_palett("black")
+	await move_jetbot(left_json)
+	
+	print("##### PIPELINE FINISHED! #####")
+	
+	asyncio.ensure_future(main())
+\end{lstlisting}
+
+\section{Training parameters}
+\begin{lstlisting}[
+	style=python_pro_black,
+	language=bash, 
+	caption={Stable Baselines3 (SB3) PPO training hyperparameters and network architecture.},
+	label={code:main}
+	]
+	seed: 42
+	n_timesteps: 25000000
+	policy: MlpPolicy
+	n_steps: 32
+	batch_size: 4096
+	gae_lambda: 0.95
+	gamma: 0.99
+	n_epochs: 4
+	ent_coef: 0.0
+	vf_coef: 0.0001
+	learning_rate: 0.0003
+	clip_range: 0.2
+	policy_kwargs:
+	activation_fn: nn.ELU
+	net_arch:
+	pi: [256, 128, 64]
+	vf: [256, 128, 64]
+	target_kl: 0.01
+	max_grad_norm: 1.0
+\end{lstlisting}
