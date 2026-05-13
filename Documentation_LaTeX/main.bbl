@@ -12,7 +12,6 @@ Peng Wang, Shuai Bai, Sinan Tan, Shijie Wang, Zhihao Fan, Jinze Bai, Keqin
 {Wikipedia contributors}.
 \newblock Multimodal learning.
 \newblock \url{https://en.wikipedia.org/wiki/Multimodal_learning}.
-\newblock Accessed: April 23, 2026.
 
 \bibitem{jaegle2021perceivergeneralperceptioniterative}
 Andrew Jaegle, Felix Gimeno, Andrew Brock, Andrew Zisserman, Oriol Vinyals, and
@@ -23,7 +22,6 @@ Andrew Jaegle, Felix Gimeno, Andrew Brock, Andrew Zisserman, Oriol Vinyals, and
 {Wikipedia}.
 \newblock Cross-modal retrieval.
 \newblock \url{https://en.wikipedia.org/wiki/Cross-modal_retrieval}, 2026.
-\newblock Accessed: 2026-04-23.
 
 \bibitem{timothy2024phrasegrounding}
 M.~Timothy.
@@ -53,7 +51,6 @@ Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
 {Wikipedia contributors}.
 \newblock Knowledge distillation --- {W}ikipedia{,} the free encyclopedia.
 \newblock \url{https://en.wikipedia.org/wiki/Knowledge_distillation}, 2024.
-\newblock [Online; accessed 20-April-2026].
 
 \bibitem{wiki:clip}
 {Wikipedia contributors}.
@@ -62,7 +59,6 @@ Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
 \newblock
   \url{https://en.wikipedia.org/wiki/Contrastive_Language-Image_Pre-training},
   2024.
-\newblock [Online; accessed 19-April-2026].
 
 \bibitem{radford2021learningtransferablevisualmodels}
 Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
@@ -75,12 +71,10 @@ Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
 {Wikipedia contributors}.
 \newblock Bicubic interpolation --- {W}ikipedia{,} the free encyclopedia.
 \newblock \url{https://en.wikipedia.org/wiki/Bicubic_interpolation}, 2024.
-\newblock [Online; accessed 19-April-2026].
 
 \bibitem{wiki:manifold_alignment}
 {{Wikipedia contributors}}.
 \newblock Manifold alignment --- {Wikipedia}{,} the free encyclopedia, 2024.
-\newblock [Online; accessed 22-April-2026].
 
 \bibitem{tan2022sentenceworth128pseudo}
 Haochen Tan, Wei Shao, Han Wu, Ke~Yang, and Linqi Song.
@@ -114,7 +108,6 @@ EleventhHourEnthusiast.
 \newblock
   \url{https://medium.com/@EleventhHourEnthusiast/llava-and-llava-1-5-1cf8be377245},
   2023.
-\newblock Accessed: 2026-04-24.
 
 \bibitem{yue2024mmmumassivemultidisciplinemultimodal}
 Xiang Yue, Yuansheng Ni, Kai Zhang, Tianyu Zheng, Ruoqi Liu, Ge~Zhang, Samuel
@@ -135,7 +128,6 @@ Jack Hessel, Ari Holtzman, Maxwell Forbes, Ronan~Le Bras, and Yejin Choi.
   encyclopedia.
 \newblock \url{https://en.wikipedia.org/wiki/Vision-language-action_model},
   2026.
-\newblock [Online; accessed 24-April-2026].
 
 \bibitem{kim2024openvlaopensourcevisionlanguageactionmodel}
 Moo~Jin Kim, Karl Pertsch, Siddharth Karamcheti, Ted Xiao, Ashwin Balakrishna,
@@ -223,18 +215,20 @@ NVIDIA.
 Kyle Simek.
 \newblock Dissecting the camera matrix, part 2: The extrinsic matrix, August
   2012.
-\newblock Accessed: 2024-05-22.
 
 \bibitem{IsaacSimRMPFlow2024}
 {NVIDIA Corporation}.
 \newblock Rmpflow: Reactive motion policies for robot control, 2024.
-\newblock Accessed: 2024-05-22.
 
 \bibitem{FrankaInfo}
 RoboDK.
+\newblock Franka emika panda robot.
 
 \bibitem{FrankaConvexDecomposition}
 {NVIDIA Omniverse}.
+\newblock Training a robot from scratch in simulation, from {URDF} to
+  {OpenUSD}, 2024.
+\newblock YouTube video from NVIDIA Omniverse channel.
 
 \bibitem{SimCamera}
 {NVIDIA Corporation}.
@@ -245,8 +239,10 @@ RoboDK.
 \newblock Replicator tutorial: Lighting.
 
 \bibitem{GithubLiftQuestion}
-[question] how to grasp and lift an object with a franka robot in a direct rl
-  approach?
+{IsaacLab Contributors}.
+\newblock [question] how to grasp and lift an object with a {Franka} robot in a
+  direct {RL} approach?, 2024.
+\newblock GitHub Issue \#1270.
 
 \bibitem{NVIDIAFrankaQuestion}
 Trying to train isaac-lift-cube-franka-v0 example task.

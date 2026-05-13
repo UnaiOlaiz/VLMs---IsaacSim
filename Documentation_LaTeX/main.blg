@@ -4,37 +4,37 @@ The top-level auxiliary file: main.aux
 The style file: unsrt.bst
 Database file #1: bibliography.bib
 Warning--entry type for "MuJoCoDoc" isn't style-file defined
---line 465 of file bibliography.bib
+--line 466 of file bibliography.bib
 You've used 46 entries,
             1791 wiz_defined-function locations,
-            621 strings with 11672 characters,
-and the built_in function-call counts, 7491 in all, are:
-= -- 425
-> -- 618
+            619 strings with 11662 characters,
+and the built_in function-call counts, 7476 in all, are:
+= -- 419
+> -- 621
 < -- 0
-+ -- 230
-- -- 184
-* -- 347
-:= -- 1229
-add.period$ -- 111
++ -- 231
+- -- 185
+* -- 349
+:= -- 1231
+add.period$ -- 106
 call.type$ -- 46
-change.case$ -- 43
+change.case$ -- 45
 chr.to.int$ -- 0
 cite$ -- 46
 duplicate$ -- 230
 empty$ -- 829
-format.name$ -- 184
-if$ -- 1645
+format.name$ -- 185
+if$ -- 1640
 int.to.chr$ -- 0
 int.to.str$ -- 46
 missing$ -- 0
-newline$ -- 206
-num.names$ -- 43
-pop$ -- 296
+newline$ -- 201
+num.names$ -- 44
+pop$ -- 299
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 196
+skip$ -- 193
 stack$ -- 0
 substring$ -- 0
 swap$ -- 46
@@ -43,7 +43,7 @@ text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 43
+while$ -- 44
 width$ -- 48
-write$ -- 399
+write$ -- 391
 (There was 1 warning)

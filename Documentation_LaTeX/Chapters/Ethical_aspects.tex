@@ -1,0 +1,28 @@
+The different ethical aspect this project addresses are clearly worth mentioning, as at the end of the day engineers must consider the ethical consequences their designed projects may have. The following points correspond to several of the ethical aspects that this project may affect, explaining their effects and finally alternatives to tackle the solutions. 
+
+\section{Environmental Impact}
+Even if I run the smallest toy size VLMs on the server, the computational cost of training and deploying  the bigger models represents a significant environmental consideration. Foundational models require massive energy consumption during their training phase, contributing to substantial carbon emissions and water consumptions. In order to confront this issue, strategies have been employed to mitigate this impact. For instance using pre-trained models. As mentioned before, by using open-source pre-trained models like \textit{Qwen2-VL}, the project avoids the immense energy expenditure of training from scratch which would not have been feasible at all. 
+
+\section{Data bias and transparency}
+During the professional ethics course, a topic has been stated and questioned several times: the data engineers work with will never be neutral. We humans have biases due to our culture and ideology, and the data we work with will inherently be biased too. Vision language models are trained on massive datasets extracted from the internet, which inevitably contain these data biases, and applied to this project these are the topics which can be in risk due to this factor. 
+
+\begin{itemize}
+	\item \textbf{Object recognition bias}: the model might perform better or worse depending on the visual texture or cultural context of the objects it is asked to target. For example, it may struggle more detecting a certain object depending on how it was originally labeled like by their designers, not returning the same deterministic results for all cases. 
+	
+	\item \textbf{Data privacy}: all the manipulation processes involving the cameras is stored on a server and its source code is available at all times. Compared to real world applications where there are cameras analyzing the environment for similar tasks, the final destination and storage information usually is preserved due to their "black box" policies. This project aims to give a transparent insight in order to clear what is happening and what is not.  
+\end{itemize}
+
+\section{Real life deployment safety problems}
+In real robot deployment cases, several issues are raised, even if this project strictly covers agent deployment in a simulated environment. Transitioning from controlled programming to artificial intelligence driven actions introduces stochasticity into physical systems. Furthermore, the uncertainty these systems involve in real cases is one of the most vital issues to consider. To bridge this gap safely, the following challenges must be addressed:
+
+\begin{itemize}
+	\item \textbf{Sensor noise and uncertainty}: unlike the perfectly safe data available in IsaacSim, real-world cameras and sensors are subject to lighting variations, motion blur, and physical occlusions. A VLM might misinterpret a shadow as an object edge, leading to incorrect coordinate generation.
+	
+	\item \textbf{Latency issues}: in simulation, joints move with mathematical precision. In reality, factors such as gear backlash, motor limits, and friction over time can cause the robot to deviate from the VLM's intended path, potentially leading to collisions with the environment or human collaborators.
+	
+	\item \textbf{Environment dynamics}: while a simulator is a closed system, real-world deployments often involve dynamic elements like people, moving vehicles, or varying floor textures. A safety system must include real-time obstacle avoidance that can override VLM commands if a person enters the robot’s workspace.
+	
+	\item \textbf{Hardware integrity}: physical robots are high-cost assets, they are really expensive. An incorrect command from a hallucinating VLM could result in a collision that damages the Franka arm or the Jetbot. Therefore, any real-world deployment requires a deterministic safety layer to perform sanity checks on all AI-suggested coordinates before execution.
+\end{itemize}
+
+

@@ -297,31 +297,31 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	
 	This approach returns a much cleaner analysis where there are no distractive shadows nor cube names, just the image with the yellow rectangle surroundings. 
 	
-	\item \textbf{Palettes}: the platforms were much simpler to detect due to their much bigger size, nevertheless, there is an inconvenient the VLM must resolve which did not have to for the cubes case: there is an "obstacle" that must avoid detecting. The obstacle being a robotic arm between the platforms. 
+	\item \textbf{Pallets}: the platforms were much simpler to detect due to their much bigger size, nevertheless, there is an inconvenient the VLM must resolve which did not have to for the cubes case: there is an "obstacle" that must avoid detecting. The obstacle being a robotic arm between the platforms. 
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/Pasted image.png}
-		\caption{Raw image of palette detection.}
+		\caption{Raw image of pallet detection.}
 		\label{fig:palettesraw}
 	\end{figure}
 	
-	The script uses the same color range technic as before but now transforms the image to \textit{HLS} to filter the white part of the distracting obstacle. In order to avoid detecting the robotic arm instead of the palettes, I create a mask to cover the undesired part of the image. 
+	The script uses the same color range technic as before but now transforms the image to \textit{HLS} to filter the white part of the distracting obstacle. In order to avoid detecting the robotic arm instead of the pallets, I create a mask to cover the undesired part of the image. 
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/palette_clean_mask_black.png}
-		\caption{Result of masking the palettes.}
+		\caption{Result of masking the pallets.}
 		\label{fig:palettesmask}
 	\end{figure}
 	
-	As seen in image \ref{fig:palettesmask}, the mask does not behave equally for all of the platforms, as each of the palettes has a distinct hole distribution the result is different for each. While the blue one shows the most compact surface with the smallest holes obtaining the best overall masking result, the remaining show not so complete masks as they originally have bigger holes and more complex designs. The final result after applying all of the filters is the following \ref{fig:palettesclean}:
+	As seen in image \ref{fig:palettesmask}, the mask does not behave equally for all of the platforms, as each of the pallets has a distinct hole distribution the result is different for each. While the blue one shows the most compact surface with the smallest holes obtaining the best overall masking result, the remaining show not so complete masks as they originally have bigger holes and more complex designs. The final result after applying all of the filters is the following \ref{fig:palettesclean}:
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/palette_clean.png}
 
-		\caption{Palette detection results with CV application.}
+		\caption{Pallet detection results with CV application.}
 		\label{fig:palettesclean}
 	\end{figure}
 	
@@ -454,8 +454,8 @@ The cubes will be the objects which will be picked and lifted by the robotic arm
 
 Moreover, I made all cubes the same size \texttt{[0.05, 0.05, 0.05]}, small enough to be easily manipulable. However, I did experiment with different rotations in more advanced scenarios. 
 
-\subsubsection{Palettes}
-On the other hand, the palettes will be where the cubes will be placed, they were all loaded from the asset explorer tab, which consists of thousands of objects that can be used in the environments. As seen in figure \ref{fig:palettesraw}, I decided to experiment with both different color and shapes. Not only does each platform has a distinct color, but it also has a different hole pattern. Which will make the detection and placement tasks a little bit trickier. 
+\subsubsection{Pallets}
+On the other hand, the pallets will be where the cubes will be placed, they were all loaded from the asset explorer tab, which consists of thousands of objects that can be used in the environments. As seen in figure \ref{fig:palettesraw}, I decided to experiment with both different color and shapes. Not only does each platform has a distinct color, but it also has a different hole pattern. Which will make the detection and placement tasks a little bit trickier. 
 
 \subsubsection{Cameras}
 Cameras are also part of the USD type, they are acquired from camera pins by the use of renderers \cite{SimCamera}. As mentioned in earlier stages, I have configured a camera for each point of interest. The cameras will be responsible to capture the screenshot to be sent to the VLM. The main properties of the camera have been repeated in all the environments, which stand as the following: 
@@ -542,8 +542,8 @@ The task the agents must accomplish by cooperation is pretty straightforward: ca
 		\node (s2) [state, right=of s1] {\textbf{2. First Franka}: \\ Lift and place on top of Jetbot};
 		\node (s3) [state, right=of s2] {\textbf{3. Jetbot}: \\ Travel to the second franka};
 
-		\node (s4) [state, below=of s3] {\textbf{4. Second Franka}: \\ Lift cube and identify \\ target palette location};
-		\node (s5) [state, left=of s4] {\textbf{5. Second Franka}: \\ Place cube on target palette.};
+		\node (s4) [state, below=of s3] {\textbf{4. Second Franka}: \\ Lift cube and identify \\ target pallet location};
+		\node (s5) [state, left=of s4] {\textbf{5. Second Franka}: \\ Place cube on target pallet.};
 		\node (s6) [state, left=of s5] {\textbf{6. Jetbot}: \\ Travel back to first franka};
 
 		\draw [-Stealth, line width=0.8pt] (s1) -- (s2);

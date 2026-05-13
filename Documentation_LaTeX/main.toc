@@ -95,7 +95,7 @@
 \contentsline {subsubsection}{\numberline {4.5.1.1}Franka Panda - Robotic Arm}{63}{subsubsection.213}%
 \contentsline {subsubsection}{\numberline {4.5.1.2}Jetbot - Navigation Agent}{64}{subsubsection.215}%
 \contentsline {subsubsection}{\numberline {4.5.1.3}Cubes}{64}{subsubsection.217}%
-\contentsline {subsubsection}{\numberline {4.5.1.4}Palettes}{65}{subsubsection.218}%
+\contentsline {subsubsection}{\numberline {4.5.1.4}Pallets}{65}{subsubsection.218}%
 \contentsline {subsubsection}{\numberline {4.5.1.5}Cameras}{65}{subsubsection.219}%
 \contentsline {subsubsection}{\numberline {4.5.1.6}Lights}{65}{subsubsection.220}%
 \contentsline {subsubsection}{\numberline {4.5.1.7}Physics}{66}{subsubsection.221}%
@@ -120,7 +120,7 @@
 \contentsline {subsection}{\numberline {5.1.1}Mean Euclidean Distance Error (MEDE)}{78}{subsection.292}%
 \contentsline {subsection}{\numberline {5.1.2}Comparison tables}{79}{subsection.293}%
 \contentsline {subsubsection}{\numberline {5.1.2.1}Table results for the cubes}{79}{subsubsection.294}%
-\contentsline {subsubsection}{\numberline {5.1.2.2}Table results for the palettes}{79}{subsubsection.296}%
+\contentsline {subsubsection}{\numberline {5.1.2.2}Table results for the pallets}{79}{subsubsection.296}%
 \contentsline {subsubsection}{\numberline {5.1.2.3}Table results for the Frankas}{80}{subsubsection.298}%
 \contentsline {subsection}{\numberline {5.1.3}Target detection results evaluation}{80}{subsection.300}%
 \contentsline {section}{\numberline {5.2}RL Policies \& Inference}{81}{section.301}%
@@ -128,14 +128,18 @@
 \contentsline {subsection}{\numberline {5.2.2}Multiple cube lifting}{82}{subsection.303}%
 \contentsline {subsection}{\numberline {5.2.3}Inference}{83}{subsection.307}%
 \contentsline {subsection}{\numberline {5.2.4}Conclusion}{84}{subsection.310}%
-\contentsline {chapter}{\numberline {6}Conclusions}{86}{chapter.311}%
-\contentsline {section}{\numberline {6.1}Conclusions and lessons learned}{86}{section.312}%
-\contentsline {section}{\numberline {6.2}Limitations found}{87}{section.313}%
-\contentsline {section}{\numberline {6.3}Future work}{88}{section.314}%
-\contentsline {chapter}{\numberline {A}Source Code \& Hyperparameters}{94}{appendix.316}%
-\contentsline {section}{\numberline {A.1}Helping offsets used for VLM guidance}{94}{section.317}%
-\contentsline {section}{\numberline {A.2}Full multi-agent coordination script}{94}{section.332}%
-\contentsline {section}{\numberline {A.3}Training parameters}{95}{section.366}%
-\contentsline {chapter}{\numberline {B}Custom Prompts Used}{97}{appendix.387}%
-\contentsline {section}{\numberline {B.1}Helping prompts used for the VLM target detection task}{97}{section.388}%
+\contentsline {chapter}{\numberline {6}Ethical aspects}{86}{chapter.311}%
+\contentsline {section}{\numberline {6.1}Environmental Impact}{86}{section.312}%
+\contentsline {section}{\numberline {6.2}Data bias and transparency}{86}{section.313}%
+\contentsline {section}{\numberline {6.3}Real life deployment safety problems}{87}{section.314}%
+\contentsline {chapter}{\numberline {7}Conclusions}{88}{chapter.315}%
+\contentsline {section}{\numberline {7.1}Conclusions and lessons learned}{88}{section.316}%
+\contentsline {section}{\numberline {7.2}Limitations found}{89}{section.317}%
+\contentsline {section}{\numberline {7.3}Future work}{90}{section.318}%
+\contentsline {chapter}{\numberline {A}Source Code \& Hyperparameters}{96}{appendix.320}%
+\contentsline {section}{\numberline {A.1}Helping offsets used for VLM guidance}{96}{section.321}%
+\contentsline {section}{\numberline {A.2}Full multi-agent coordination script}{96}{section.336}%
+\contentsline {section}{\numberline {A.3}Training parameters}{97}{section.370}%
+\contentsline {chapter}{\numberline {B}Custom Prompts Used}{99}{appendix.391}%
+\contentsline {section}{\numberline {B.1}Helping prompts used for the VLM target detection task}{99}{section.392}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

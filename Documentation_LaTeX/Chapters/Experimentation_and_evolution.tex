@@ -44,7 +44,7 @@ The reason behind the selection of this evaluation metric is its performance wit
 	\label{tab:cube_results}
 \end{table}
 
-\subsubsection{Table results for the palettes}
+\subsubsection{Table results for the pallets}
 \begin{table}[H]
 	\centering
 	\small
@@ -53,22 +53,22 @@ The reason behind the selection of this evaluation metric is its performance wit
 		\textbf{Phase} & \textbf{Target} & \textbf{Predicted $(x, y, z)$} & \textbf{Real $(x, y, z)$} & \textbf{MEDE ($m$)} \\
 		\midrule
 		\textbf{Pure VLM} 
-		& Red Palette   & $(3.9694, 0.4858, -0.1173)$ & $(4.4516, 0.1350, 0.0000)$ & $0.6015$ \\
-		& Blue Palette  & $(3.9556, 0.1952, -0.0023)$ & $(4.0301, 0.7924, 0.0000)$ & $0.6018$ \\
-		& Black Palette & $(4.1149, -0.3052, -0.0050)$ & $(3.9278, -0.5647, 0.0000)$ & $0.3201$ \\
+		& Red Pallet   & $(3.9694, 0.4858, -0.1173)$ & $(4.4516, 0.1350, 0.0000)$ & $0.6015$ \\
+		& Blue Pallet  & $(3.9556, 0.1952, -0.0023)$ & $(4.0301, 0.7924, 0.0000)$ & $0.6018$ \\
+		& Black Pallet & $(4.1149, -0.3052, -0.0050)$ & $(3.9278, -0.5647, 0.0000)$ & $0.3201$ \\
 		\midrule
 		\textbf{VLM + CV} 
-		& Red Palette   & $(4.0112, 0.4844, -0.0978)$ & $(4.4516, 0.1350, 0.0000)$ & $0.5707$ \\
-		& Blue Palette  & $(3.9563, 0.1914, -0.0834)$ & $(4.0301, 0.7924, 0.0000)$ & $0.6112$ \\
-		& Black Palette & $(3.9583, 0.1519, 0.0029)$  & $(3.9278, -0.5647, 0.0000)$ & $0.7172$ \\
+		& Red Pallet   & $(4.0112, 0.4844, -0.0978)$ & $(4.4516, 0.1350, 0.0000)$ & $0.5707$ \\
+		& Blue Pallet  & $(3.9563, 0.1914, -0.0834)$ & $(4.0301, 0.7924, 0.0000)$ & $0.6112$ \\
+		& Black Pallet & $(3.9583, 0.1519, 0.0029)$  & $(3.9278, -0.5647, 0.0000)$ & $0.7172$ \\
 		\midrule
 		\textbf{VLM+CV+Offsets} 
-		& Red Palette   & $(4.4521, 0.1889, -0.0915)$ & $(4.4516, 0.1350, 0.0000)$ & $\mathbf{0.1065}$ \\
-		& Blue Palette  & $(4.1763, 1.2164, -0.0834)$ & $(4.0301, 0.7924, 0.0000)$ & $\mathbf{0.4563}$ \\
-		& Black Palette & $(3.9110, -0.5752, 0.0000)$  & $(3.9278, -0.5647, 0.0000)$ & $\mathbf{0.0198}$ \\
+		& Red Pallet   & $(4.4521, 0.1889, -0.0915)$ & $(4.4516, 0.1350, 0.0000)$ & $\mathbf{0.1065}$ \\
+		& Blue Pallet  & $(4.1763, 1.2164, -0.0834)$ & $(4.0301, 0.7924, 0.0000)$ & $\mathbf{0.4563}$ \\
+		& Black Pallet & $(3.9110, -0.5752, 0.0000)$  & $(3.9278, -0.5647, 0.0000)$ & $\mathbf{0.0198}$ \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Comparative analysis of the localization accuracy across different processing phases for the palettes. }
+	\caption{Comparative analysis of the localization accuracy across different processing phases for the pallets. }
 	\label{tab:platform_results}
 \end{table}
 
@@ -102,7 +102,7 @@ After experimenting the target detection task across all types of target objects
 
 Starting from the cube detection results of table \ref{tab:cube_results}, these being the smallest objects on the environment, the pure VLM approach returned coordinates with which the grasping task would not be feasible at all due to the large error margin. Although the three stages did not struggle when locating the red cube as it was in the middle of the camera screenshot, the improvement is more evident with the other two. Furthermore, there have been sometimes where the pure VLM has outperformed the CV helping filtering, but there is no discussion that the final VLM + CV + the helping offsets have been the same for all of the three colored cubes. 
 
-When it comes to the platforms (table \ref{tab:platform_results}), the final stage showed the best results once again, getting the best metric for all targets with the black palette, around 0.0198 m mean euclidean distance error. However, in the platform detection task, there has been little to no improvement from the pure VLM stage to the CV phase. Perhaps reflecting that the raw VLM did manage to detect larger objects such as the platforms, but struggled with smaller ones as seen with the cubes. 
+When it comes to the platforms (table \ref{tab:platform_results}), the final stage showed the best results once again, getting the best metric for all targets with the black pallet, around 0.0198 m mean euclidean distance error. However, in the platform detection task, there has been little to no improvement from the pure VLM stage to the CV phase. Perhaps reflecting that the raw VLM did manage to detect larger objects such as the platforms, but struggled with smaller ones as seen with the cubes. 
 
 Finally, with the Franka detection task there has also been a huge improvement as seen in table \ref{tab:franka_results}. The initial stages returned an error larger than 1.4 meters of difference, while the following stages managed to reduce it to 0.53. Margin which the Jetbot will have no problems traveling close enough to. Surprisingly, the final stage of the robotic arms detection manage to return exactly 0.0 in the predicted $z$ offset, demonstrating it has achieved the perception of the arms standing just above the ground. 
 
