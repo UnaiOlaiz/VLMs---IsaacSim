@@ -8,138 +8,141 @@
 \contentsline {subsection}{\numberline {1.3.1}Main objective}{1}{subsection.10}%
 \contentsline {subsection}{\numberline {1.3.2}Specific objectives}{2}{subsection.11}%
 \contentsline {section}{\numberline {1.4}Project scope}{2}{section.12}%
-\contentsline {chapter}{\numberline {2}State of the Art}{3}{chapter.13}%
-\contentsline {section}{\numberline {2.1}Evolution of Multimodal Learning}{3}{section.14}%
-\contentsline {subsection}{\numberline {2.1.1}Multimodal deep Boltzmann machines}{3}{subsection.15}%
-\contentsline {subsection}{\numberline {2.1.2}Multimodal Transformers}{4}{subsection.17}%
-\contentsline {subsubsection}{\numberline {2.1.2.1}The Perceiver}{4}{subsubsection.18}%
-\contentsline {subsubsection}{\numberline {2.1.2.2}Image generation Transformer models}{4}{subsubsection.20}%
-\contentsline {subsection}{\numberline {2.1.3}Applications of Multimodal Learning}{5}{subsection.21}%
-\contentsline {section}{\numberline {2.2}Advancements of Vision Language Models}{5}{section.22}%
-\contentsline {subsection}{\numberline {2.2.1}Earliest models}{6}{subsection.23}%
-\contentsline {subsection}{\numberline {2.2.2}Deep learning based models}{7}{subsection.24}%
-\contentsline {subsection}{\numberline {2.2.3}The Transformers architecture standard}{8}{subsection.25}%
-\contentsline {subsubsection}{\numberline {2.2.3.1}VLM tasks with Transformers}{9}{subsubsection.30}%
-\contentsline {section}{\numberline {2.3}From Encoders to Generative LLMs}{11}{section.32}%
-\contentsline {subsection}{\numberline {2.3.1}Language encoder}{11}{subsection.33}%
-\contentsline {subsection}{\numberline {2.3.2}The LLM transition: from encoders to decoder-only architectures}{11}{subsection.34}%
-\contentsline {section}{\numberline {2.4}Vision Transformers}{12}{section.35}%
-\contentsline {subsection}{\numberline {2.4.1}Vision encoder \& Vision Transformers (ViT)}{12}{subsection.36}%
-\contentsline {section}{\numberline {2.5}Multimodal Alignment: CLIP}{16}{section.44}%
-\contentsline {subsection}{\numberline {2.5.1}CLIP: Contrastive Language-Image Pretraining}{16}{subsection.45}%
-\contentsline {section}{\numberline {2.6}Modality Bridging and Pseudo-Tokens}{18}{section.53}%
-\contentsline {subsection}{\numberline {2.6.1}Modality bridging mechanism}{18}{subsection.54}%
-\contentsline {subsection}{\numberline {2.6.2}Pseudo-Tokens}{19}{subsection.55}%
-\contentsline {section}{\numberline {2.7}Training Strategies in VLMs}{19}{section.56}%
-\contentsline {subsection}{\numberline {2.7.1}Contrastive Pre-Training}{20}{subsection.57}%
-\contentsline {subsection}{\numberline {2.7.2}Generative Pre-Training}{20}{subsection.58}%
-\contentsline {subsection}{\numberline {2.7.3}Visual Instruction Tuning}{20}{subsection.59}%
-\contentsline {subsection}{\numberline {2.7.4}Vision Language Models Training Paradigm}{21}{subsection.60}%
-\contentsline {subsubsection}{\numberline {2.7.4.1}Training a VLM from Scratch}{21}{subsubsection.61}%
-\contentsline {subsubsection}{\numberline {2.7.4.2}Starting from a pre-trained LLM}{21}{subsubsection.62}%
-\contentsline {section}{\numberline {2.8}Current SOTA VLMs}{22}{section.66}%
-\contentsline {subsection}{\numberline {2.8.1}State of the Art Models}{22}{subsection.67}%
-\contentsline {subsection}{\numberline {2.8.2}Benchmarks}{25}{subsection.76}%
-\contentsline {subsubsection}{\numberline {2.8.2.1}Benchmark Data Collection}{25}{subsubsection.78}%
-\contentsline {subsubsection}{\numberline {2.8.2.2}Evaluation Metrics}{26}{subsubsection.82}%
-\contentsline {subsection}{\numberline {2.8.3}Vision Language Action (VLA) Models}{27}{subsection.83}%
-\contentsline {subsubsection}{\numberline {2.8.3.1}OpenVLA}{28}{subsubsection.85}%
-\contentsline {section}{\numberline {2.9}Reinforcement Learning and Multi-Agent Systems in Robotics}{29}{section.87}%
-\contentsline {subsection}{\numberline {2.9.1}Reinforcement Learning in robotic environments}{29}{subsection.89}%
-\contentsline {subsection}{\numberline {2.9.2}RL and VLM Combination}{30}{subsection.90}%
-\contentsline {subsubsection}{\numberline {2.9.2.1}Vision Language Models as Action Advisors}{30}{subsubsection.91}%
-\contentsline {subsubsection}{\numberline {2.9.2.2}VLM-based Reward Shaping}{31}{subsubsection.93}%
-\contentsline {subsection}{\numberline {2.9.3}Multi Agent Robotic Systems (MARS)}{31}{subsection.94}%
-\contentsline {subsubsection}{\numberline {2.9.3.1}Multi Agent Reinforcement Learning (MARL)}{32}{subsubsection.95}%
-\contentsline {subsection}{\numberline {2.9.4}Sim to Real Frameworks}{32}{subsection.98}%
-\contentsline {chapter}{\numberline {3}Solution approach}{36}{chapter.103}%
-\contentsline {section}{\numberline {3.1}Solution proposal}{36}{section.104}%
-\contentsline {section}{\numberline {3.2}System architecture}{36}{section.105}%
-\contentsline {subsection}{\numberline {3.2.1}Run locally}{36}{subsection.106}%
-\contentsline {subsection}{\numberline {3.2.2}Run remotely}{36}{subsection.107}%
-\contentsline {subsection}{\numberline {3.2.3}Communication bridge}{36}{subsection.108}%
-\contentsline {section}{\numberline {3.3}Workflow}{37}{section.110}%
-\contentsline {section}{\numberline {3.4}Tools used}{38}{section.117}%
-\contentsline {subsection}{\numberline {3.4.1}Vision Language Model choice}{38}{subsection.118}%
-\contentsline {subsubsection}{\numberline {3.4.1.1}SmolVLM-256M - the initial pick}{39}{subsubsection.119}%
-\contentsline {subsubsection}{\numberline {3.4.1.2}Used Vision Language Model: Qwen2-VL}{39}{subsubsection.120}%
-\contentsline {subsection}{\numberline {3.4.2}VLM hosted on BentoML server}{41}{subsection.123}%
-\contentsline {subsubsection}{\numberline {3.4.2.1}Vision as a Service (VaaS)}{41}{subsubsection.124}%
-\contentsline {subsection}{\numberline {3.4.3}IsaacSim as physics simulator}{42}{subsection.125}%
-\contentsline {subsection}{\numberline {3.4.4}IsaacLab for RL experimentation}{42}{subsection.126}%
-\contentsline {chapter}{\numberline {4}Design and Implementation}{44}{chapter.128}%
-\contentsline {section}{\numberline {4.1}Initial dummy experimentation}{44}{section.129}%
-\contentsline {subsection}{\numberline {4.1.1}CLIP Demo Analysis}{44}{subsection.130}%
-\contentsline {subsubsection}{\numberline {4.1.1.1}Simple Classification}{44}{subsubsection.131}%
-\contentsline {subsubsection}{\numberline {4.1.1.2}Zero-Shot Classification with CLIP}{45}{subsubsection.133}%
-\contentsline {subsubsection}{\numberline {4.1.1.3}Image Captioning with BLIP}{45}{subsubsection.134}%
-\contentsline {subsubsection}{\numberline {4.1.1.4}Visual Question Answering}{46}{subsubsection.135}%
-\contentsline {section}{\numberline {4.2}VLM Scene Captioning in IsaacSim}{46}{section.136}%
-\contentsline {subsection}{\numberline {4.2.1}Workflow of scene captioning}{46}{subsection.137}%
-\contentsline {subsection}{\numberline {4.2.2}Scene representation using graphs}{47}{subsection.143}%
-\contentsline {subsubsection}{\numberline {4.2.2.1}Returned results}{48}{subsubsection.146}%
-\contentsline {subsection}{\numberline {4.2.3}Comparison with my developed workflow}{49}{subsection.162}%
-\contentsline {section}{\numberline {4.3}Target detection task}{50}{section.163}%
-\contentsline {subsection}{\numberline {4.3.1}BentoML service class - VLMServiceIsaac}{50}{subsection.164}%
-\contentsline {subsection}{\numberline {4.3.2}Evolution of detection functions}{51}{subsection.181}%
-\contentsline {subsection}{\numberline {4.3.3}Task definition}{52}{subsection.185}%
-\contentsline {subsubsection}{\numberline {4.3.3.1}Procedure}{53}{subsubsection.187}%
-\contentsline {subsection}{\numberline {4.3.4}Computer Vision for performance enhancement}{55}{subsection.193}%
-\contentsline {subsection}{\numberline {4.3.5}Helping offsets}{59}{subsection.203}%
-\contentsline {subsection}{\numberline {4.3.6}Coordinate mapping}{60}{subsection.204}%
-\contentsline {section}{\numberline {4.4}Agent Control}{60}{section.208}%
-\contentsline {subsection}{\numberline {4.4.1}RMPFlowController: the Franka Controller}{61}{subsection.209}%
-\contentsline {subsection}{\numberline {4.4.2}Custom Jetbot controller class}{61}{subsection.210}%
-\contentsline {section}{\numberline {4.5}IsaacSim environment design}{62}{section.211}%
-\contentsline {subsection}{\numberline {4.5.1}Components of the scenarios}{62}{subsection.212}%
-\contentsline {subsubsection}{\numberline {4.5.1.1}Franka Panda - Robotic Arm}{63}{subsubsection.213}%
-\contentsline {subsubsection}{\numberline {4.5.1.2}Jetbot - Navigation Agent}{64}{subsubsection.215}%
-\contentsline {subsubsection}{\numberline {4.5.1.3}Cubes}{64}{subsubsection.217}%
-\contentsline {subsubsection}{\numberline {4.5.1.4}Pallets}{65}{subsubsection.218}%
-\contentsline {subsubsection}{\numberline {4.5.1.5}Cameras}{65}{subsubsection.219}%
-\contentsline {subsubsection}{\numberline {4.5.1.6}Lights}{65}{subsubsection.220}%
-\contentsline {subsubsection}{\numberline {4.5.1.7}Physics}{66}{subsubsection.221}%
-\contentsline {subsection}{\numberline {4.5.2}First scenarios}{66}{subsection.224}%
-\contentsline {subsubsection}{\numberline {4.5.2.1}First individual Franka environment}{66}{subsubsection.225}%
-\contentsline {subsubsection}{\numberline {4.5.2.2}Jetbot controller tryout environment}{68}{subsubsection.230}%
-\contentsline {subsection}{\numberline {4.5.3}Advanced scenarios}{68}{subsection.231}%
-\contentsline {subsubsection}{\numberline {4.5.3.1}Multi-agent task workflow}{68}{subsubsection.232}%
-\contentsline {subsubsection}{\numberline {4.5.3.2}Multi-agent scenario}{69}{subsubsection.234}%
-\contentsline {subsubsection}{\numberline {4.5.3.3}More advanced alternatives}{71}{subsubsection.252}%
-\contentsline {section}{\numberline {4.6}RL Experiments}{72}{section.254}%
-\contentsline {subsection}{\numberline {4.6.1}Lift policy training}{72}{subsection.255}%
-\contentsline {subsubsection}{\numberline {4.6.1.1}Training approaches}{73}{subsubsection.259}%
-\contentsline {subsubsection}{\numberline {4.6.1.2}Training alternatives}{75}{subsubsection.281}%
-\contentsline {subsection}{\numberline {4.6.2}Elements of the training process}{75}{subsection.282}%
-\contentsline {subsubsection}{\numberline {4.6.2.1}Observation space}{76}{subsubsection.283}%
-\contentsline {subsubsection}{\numberline {4.6.2.2}Action space}{76}{subsubsection.284}%
-\contentsline {subsubsection}{\numberline {4.6.2.3}Reward system}{76}{subsubsection.285}%
-\contentsline {subsection}{\numberline {4.6.3}Policy inference testing}{77}{subsection.286}%
-\contentsline {chapter}{\numberline {5}Results and Evaluation}{78}{chapter.290}%
-\contentsline {section}{\numberline {5.1}Results obtained in the target detection}{78}{section.291}%
-\contentsline {subsection}{\numberline {5.1.1}Mean Euclidean Distance Error (MEDE)}{78}{subsection.292}%
-\contentsline {subsection}{\numberline {5.1.2}Comparison tables}{79}{subsection.293}%
-\contentsline {subsubsection}{\numberline {5.1.2.1}Table results for the cubes}{79}{subsubsection.294}%
-\contentsline {subsubsection}{\numberline {5.1.2.2}Table results for the pallets}{79}{subsubsection.296}%
-\contentsline {subsubsection}{\numberline {5.1.2.3}Table results for the Frankas}{80}{subsubsection.298}%
-\contentsline {subsection}{\numberline {5.1.3}Target detection results evaluation}{80}{subsection.300}%
-\contentsline {section}{\numberline {5.2}RL Policies \& Inference}{81}{section.301}%
-\contentsline {subsection}{\numberline {5.2.1}Single cube lifting}{81}{subsection.302}%
-\contentsline {subsection}{\numberline {5.2.2}Multiple cube lifting}{82}{subsection.303}%
-\contentsline {subsection}{\numberline {5.2.3}Inference}{83}{subsection.307}%
-\contentsline {subsection}{\numberline {5.2.4}Conclusion}{84}{subsection.310}%
-\contentsline {chapter}{\numberline {6}Ethical aspects}{86}{chapter.311}%
-\contentsline {section}{\numberline {6.1}Environmental Impact}{86}{section.312}%
-\contentsline {section}{\numberline {6.2}Data bias and transparency}{86}{section.313}%
-\contentsline {section}{\numberline {6.3}Real life deployment safety problems}{87}{section.314}%
-\contentsline {chapter}{\numberline {7}Conclusions}{88}{chapter.315}%
-\contentsline {section}{\numberline {7.1}Conclusions and lessons learned}{88}{section.316}%
-\contentsline {section}{\numberline {7.2}Limitations found}{89}{section.317}%
-\contentsline {section}{\numberline {7.3}Future work}{90}{section.318}%
-\contentsline {chapter}{\numberline {A}Source Code \& Hyperparameters}{96}{appendix.320}%
-\contentsline {section}{\numberline {A.1}Helping offsets used for VLM guidance}{96}{section.321}%
-\contentsline {section}{\numberline {A.2}Full multi-agent coordination script}{96}{section.336}%
-\contentsline {section}{\numberline {A.3}Training parameters}{97}{section.370}%
-\contentsline {chapter}{\numberline {B}Custom Prompts Used}{99}{appendix.391}%
-\contentsline {section}{\numberline {B.1}Helping prompts used for the VLM target detection task}{99}{section.392}%
+\contentsline {chapter}{\numberline {2}Planning}{3}{chapter.13}%
+\contentsline {section}{\numberline {2.1}Task division}{3}{section.14}%
+\contentsline {subsection}{\numberline {2.1.1}Planification table}{5}{subsection.21}%
+\contentsline {chapter}{\numberline {3}State of the Art}{7}{chapter.24}%
+\contentsline {section}{\numberline {3.1}Evolution of Multimodal Learning}{7}{section.25}%
+\contentsline {subsection}{\numberline {3.1.1}Multimodal deep Boltzmann machines}{7}{subsection.26}%
+\contentsline {subsection}{\numberline {3.1.2}Multimodal Transformers}{8}{subsection.28}%
+\contentsline {subsubsection}{\numberline {3.1.2.1}The Perceiver}{8}{subsubsection.29}%
+\contentsline {subsubsection}{\numberline {3.1.2.2}Image generation Transformer models}{8}{subsubsection.31}%
+\contentsline {subsection}{\numberline {3.1.3}Applications of Multimodal Learning}{9}{subsection.32}%
+\contentsline {section}{\numberline {3.2}Advancements of Vision Language Models}{9}{section.33}%
+\contentsline {subsection}{\numberline {3.2.1}Earliest models}{10}{subsection.34}%
+\contentsline {subsection}{\numberline {3.2.2}Deep learning based models}{11}{subsection.35}%
+\contentsline {subsection}{\numberline {3.2.3}The Transformers architecture standard}{12}{subsection.36}%
+\contentsline {subsubsection}{\numberline {3.2.3.1}VLM tasks with Transformers}{13}{subsubsection.41}%
+\contentsline {section}{\numberline {3.3}From Encoders to Generative LLMs}{15}{section.43}%
+\contentsline {subsection}{\numberline {3.3.1}Language encoder}{15}{subsection.44}%
+\contentsline {subsection}{\numberline {3.3.2}The LLM transition: from encoders to decoder-only architectures}{15}{subsection.45}%
+\contentsline {section}{\numberline {3.4}Vision Transformers}{16}{section.46}%
+\contentsline {subsection}{\numberline {3.4.1}Vision encoder \& Vision Transformers (ViT)}{16}{subsection.47}%
+\contentsline {section}{\numberline {3.5}Multimodal Alignment: CLIP}{20}{section.55}%
+\contentsline {subsection}{\numberline {3.5.1}CLIP: Contrastive Language-Image Pretraining}{20}{subsection.56}%
+\contentsline {section}{\numberline {3.6}Modality Bridging and Pseudo-Tokens}{22}{section.64}%
+\contentsline {subsection}{\numberline {3.6.1}Modality bridging mechanism}{22}{subsection.65}%
+\contentsline {subsection}{\numberline {3.6.2}Pseudo-Tokens}{23}{subsection.66}%
+\contentsline {section}{\numberline {3.7}Training Strategies in VLMs}{23}{section.67}%
+\contentsline {subsection}{\numberline {3.7.1}Contrastive Pre-Training}{24}{subsection.68}%
+\contentsline {subsection}{\numberline {3.7.2}Generative Pre-Training}{24}{subsection.69}%
+\contentsline {subsection}{\numberline {3.7.3}Visual Instruction Tuning}{24}{subsection.70}%
+\contentsline {subsection}{\numberline {3.7.4}Vision Language Models Training Paradigm}{25}{subsection.71}%
+\contentsline {subsubsection}{\numberline {3.7.4.1}Training a VLM from Scratch}{25}{subsubsection.72}%
+\contentsline {subsubsection}{\numberline {3.7.4.2}Starting from a pre-trained LLM}{25}{subsubsection.73}%
+\contentsline {section}{\numberline {3.8}Current SOTA VLMs}{26}{section.77}%
+\contentsline {subsection}{\numberline {3.8.1}State of the Art Models}{26}{subsection.78}%
+\contentsline {subsection}{\numberline {3.8.2}Benchmarks}{29}{subsection.87}%
+\contentsline {subsubsection}{\numberline {3.8.2.1}Benchmark Data Collection}{29}{subsubsection.89}%
+\contentsline {subsubsection}{\numberline {3.8.2.2}Evaluation Metrics}{30}{subsubsection.93}%
+\contentsline {subsection}{\numberline {3.8.3}Vision Language Action (VLA) Models}{31}{subsection.94}%
+\contentsline {subsubsection}{\numberline {3.8.3.1}OpenVLA}{32}{subsubsection.96}%
+\contentsline {section}{\numberline {3.9}Reinforcement Learning and Multi-Agent Systems in Robotics}{33}{section.98}%
+\contentsline {subsection}{\numberline {3.9.1}Reinforcement Learning in robotic environments}{33}{subsection.100}%
+\contentsline {subsection}{\numberline {3.9.2}RL and VLM Combination}{34}{subsection.101}%
+\contentsline {subsubsection}{\numberline {3.9.2.1}Vision Language Models as Action Advisors}{34}{subsubsection.102}%
+\contentsline {subsubsection}{\numberline {3.9.2.2}VLM-based Reward Shaping}{35}{subsubsection.104}%
+\contentsline {subsection}{\numberline {3.9.3}Multi Agent Robotic Systems (MARS)}{35}{subsection.105}%
+\contentsline {subsubsection}{\numberline {3.9.3.1}Multi Agent Reinforcement Learning (MARL)}{36}{subsubsection.106}%
+\contentsline {subsection}{\numberline {3.9.4}Sim to Real Frameworks}{36}{subsection.109}%
+\contentsline {chapter}{\numberline {4}Solution approach}{40}{chapter.114}%
+\contentsline {section}{\numberline {4.1}Solution proposal}{40}{section.115}%
+\contentsline {section}{\numberline {4.2}System architecture}{40}{section.116}%
+\contentsline {subsection}{\numberline {4.2.1}Run locally}{40}{subsection.117}%
+\contentsline {subsection}{\numberline {4.2.2}Run remotely}{40}{subsection.118}%
+\contentsline {subsection}{\numberline {4.2.3}Communication bridge}{40}{subsection.119}%
+\contentsline {section}{\numberline {4.3}Workflow}{41}{section.121}%
+\contentsline {section}{\numberline {4.4}Tools used}{42}{section.128}%
+\contentsline {subsection}{\numberline {4.4.1}Vision Language Model choice}{42}{subsection.129}%
+\contentsline {subsubsection}{\numberline {4.4.1.1}SmolVLM-256M - the initial pick}{43}{subsubsection.130}%
+\contentsline {subsubsection}{\numberline {4.4.1.2}Used Vision Language Model: Qwen2-VL}{43}{subsubsection.131}%
+\contentsline {subsection}{\numberline {4.4.2}VLM hosted on BentoML server}{45}{subsection.134}%
+\contentsline {subsubsection}{\numberline {4.4.2.1}Vision as a Service (VaaS)}{45}{subsubsection.135}%
+\contentsline {subsection}{\numberline {4.4.3}IsaacSim as physics simulator}{46}{subsection.136}%
+\contentsline {subsection}{\numberline {4.4.4}IsaacLab for RL experimentation}{46}{subsection.137}%
+\contentsline {chapter}{\numberline {5}Design and Implementation}{48}{chapter.139}%
+\contentsline {section}{\numberline {5.1}Initial dummy experimentation}{48}{section.140}%
+\contentsline {subsection}{\numberline {5.1.1}CLIP Demo Analysis}{48}{subsection.141}%
+\contentsline {subsubsection}{\numberline {5.1.1.1}Simple Classification}{48}{subsubsection.142}%
+\contentsline {subsubsection}{\numberline {5.1.1.2}Zero-Shot Classification with CLIP}{49}{subsubsection.144}%
+\contentsline {subsubsection}{\numberline {5.1.1.3}Image Captioning with BLIP}{49}{subsubsection.145}%
+\contentsline {subsubsection}{\numberline {5.1.1.4}Visual Question Answering}{50}{subsubsection.146}%
+\contentsline {section}{\numberline {5.2}VLM Scene Captioning in IsaacSim}{50}{section.147}%
+\contentsline {subsection}{\numberline {5.2.1}Workflow of scene captioning}{50}{subsection.148}%
+\contentsline {subsection}{\numberline {5.2.2}Scene representation using graphs}{51}{subsection.154}%
+\contentsline {subsubsection}{\numberline {5.2.2.1}Returned results}{52}{subsubsection.157}%
+\contentsline {subsection}{\numberline {5.2.3}Comparison with my developed workflow}{53}{subsection.173}%
+\contentsline {section}{\numberline {5.3}Target detection task}{54}{section.174}%
+\contentsline {subsection}{\numberline {5.3.1}BentoML service class - VLMServiceIsaac}{54}{subsection.175}%
+\contentsline {subsection}{\numberline {5.3.2}Evolution of detection functions}{55}{subsection.192}%
+\contentsline {subsection}{\numberline {5.3.3}Task definition}{56}{subsection.196}%
+\contentsline {subsubsection}{\numberline {5.3.3.1}Procedure}{57}{subsubsection.198}%
+\contentsline {subsection}{\numberline {5.3.4}Computer Vision for performance enhancement}{59}{subsection.204}%
+\contentsline {subsection}{\numberline {5.3.5}Helping offsets}{63}{subsection.214}%
+\contentsline {subsection}{\numberline {5.3.6}Coordinate mapping}{64}{subsection.215}%
+\contentsline {section}{\numberline {5.4}Agent Control}{64}{section.219}%
+\contentsline {subsection}{\numberline {5.4.1}RMPFlowController: the Franka Controller}{65}{subsection.220}%
+\contentsline {subsection}{\numberline {5.4.2}Custom Jetbot controller class}{65}{subsection.221}%
+\contentsline {section}{\numberline {5.5}IsaacSim environment design}{66}{section.222}%
+\contentsline {subsection}{\numberline {5.5.1}Components of the scenarios}{66}{subsection.223}%
+\contentsline {subsubsection}{\numberline {5.5.1.1}Franka Panda - Robotic Arm}{67}{subsubsection.224}%
+\contentsline {subsubsection}{\numberline {5.5.1.2}Jetbot - Navigation Agent}{68}{subsubsection.226}%
+\contentsline {subsubsection}{\numberline {5.5.1.3}Cubes}{68}{subsubsection.228}%
+\contentsline {subsubsection}{\numberline {5.5.1.4}Pallets}{69}{subsubsection.229}%
+\contentsline {subsubsection}{\numberline {5.5.1.5}Cameras}{69}{subsubsection.230}%
+\contentsline {subsubsection}{\numberline {5.5.1.6}Lights}{69}{subsubsection.231}%
+\contentsline {subsubsection}{\numberline {5.5.1.7}Physics}{70}{subsubsection.232}%
+\contentsline {subsection}{\numberline {5.5.2}First scenarios}{70}{subsection.235}%
+\contentsline {subsubsection}{\numberline {5.5.2.1}First individual Franka environment}{70}{subsubsection.236}%
+\contentsline {subsubsection}{\numberline {5.5.2.2}Jetbot controller tryout environment}{72}{subsubsection.241}%
+\contentsline {subsection}{\numberline {5.5.3}Advanced scenarios}{72}{subsection.242}%
+\contentsline {subsubsection}{\numberline {5.5.3.1}Multi-agent task workflow}{72}{subsubsection.243}%
+\contentsline {subsubsection}{\numberline {5.5.3.2}Multi-agent scenario}{73}{subsubsection.245}%
+\contentsline {subsubsection}{\numberline {5.5.3.3}More advanced alternatives}{75}{subsubsection.263}%
+\contentsline {section}{\numberline {5.6}RL Experiments}{76}{section.265}%
+\contentsline {subsection}{\numberline {5.6.1}Lift policy training}{76}{subsection.266}%
+\contentsline {subsubsection}{\numberline {5.6.1.1}Training approaches}{77}{subsubsection.270}%
+\contentsline {subsubsection}{\numberline {5.6.1.2}Training alternatives}{79}{subsubsection.292}%
+\contentsline {subsection}{\numberline {5.6.2}Elements of the training process}{79}{subsection.293}%
+\contentsline {subsubsection}{\numberline {5.6.2.1}Observation space}{80}{subsubsection.294}%
+\contentsline {subsubsection}{\numberline {5.6.2.2}Action space}{80}{subsubsection.295}%
+\contentsline {subsubsection}{\numberline {5.6.2.3}Reward system}{80}{subsubsection.296}%
+\contentsline {subsection}{\numberline {5.6.3}Policy inference testing}{81}{subsection.297}%
+\contentsline {chapter}{\numberline {6}Results and Evaluation}{82}{chapter.301}%
+\contentsline {section}{\numberline {6.1}Results obtained in the target detection}{82}{section.302}%
+\contentsline {subsection}{\numberline {6.1.1}Mean Euclidean Distance Error (MEDE)}{82}{subsection.303}%
+\contentsline {subsection}{\numberline {6.1.2}Comparison tables}{83}{subsection.304}%
+\contentsline {subsubsection}{\numberline {6.1.2.1}Table results for the cubes}{83}{subsubsection.305}%
+\contentsline {subsubsection}{\numberline {6.1.2.2}Table results for the pallets}{83}{subsubsection.307}%
+\contentsline {subsubsection}{\numberline {6.1.2.3}Table results for the Frankas}{84}{subsubsection.309}%
+\contentsline {subsection}{\numberline {6.1.3}Target detection results evaluation}{84}{subsection.311}%
+\contentsline {section}{\numberline {6.2}RL Policies \& Inference}{85}{section.312}%
+\contentsline {subsection}{\numberline {6.2.1}Single cube lifting}{85}{subsection.313}%
+\contentsline {subsection}{\numberline {6.2.2}Multiple cube lifting}{86}{subsection.314}%
+\contentsline {subsection}{\numberline {6.2.3}Inference}{87}{subsection.318}%
+\contentsline {subsection}{\numberline {6.2.4}Conclusion}{88}{subsection.321}%
+\contentsline {chapter}{\numberline {7}Ethical aspects}{90}{chapter.322}%
+\contentsline {section}{\numberline {7.1}Environmental Impact}{90}{section.323}%
+\contentsline {section}{\numberline {7.2}Data bias and transparency}{90}{section.324}%
+\contentsline {section}{\numberline {7.3}Safety Problems of Real life deployment}{91}{section.325}%
+\contentsline {chapter}{\numberline {8}Conclusions}{92}{chapter.326}%
+\contentsline {section}{\numberline {8.1}Conclusions and lessons learned}{92}{section.327}%
+\contentsline {section}{\numberline {8.2}Limitations found}{93}{section.328}%
+\contentsline {section}{\numberline {8.3}Future work}{94}{section.329}%
+\contentsline {chapter}{\numberline {A}Source Code \& Hyperparameters}{100}{appendix.331}%
+\contentsline {section}{\numberline {A.1}Helping offsets used for VLM guidance}{100}{section.332}%
+\contentsline {section}{\numberline {A.2}Full multi-agent coordination script}{100}{section.347}%
+\contentsline {section}{\numberline {A.3}Training parameters}{101}{section.381}%
+\contentsline {chapter}{\numberline {B}Custom Prompts Used}{103}{appendix.402}%
+\contentsline {section}{\numberline {B.1}Helping prompts used for the VLM target detection task}{103}{section.403}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

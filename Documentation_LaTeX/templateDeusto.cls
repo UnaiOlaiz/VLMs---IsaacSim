@@ -47,6 +47,8 @@ bookmarks=true]{hyperref}
 \RequirePackage{booktabs}
 \RequirePackage{tabularx}
 \RequirePackage{caption}
+\RequirePackage{pgfgantt}
+\RequirePackage{rotating}
 
 
 % TO NOT RAISE CHINESE ERRORS

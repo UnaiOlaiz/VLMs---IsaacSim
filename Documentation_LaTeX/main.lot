@@ -2,15 +2,17 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Architectural comparison of representative SOTA Vision-Language Models.}}{23}{table.caption.68}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces Categorization of standard benchmarks used to evaluate SOTA VLMs.}}{25}{table.caption.77}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Table indicating the time spent in each major phase of the project.}}{5}{table.caption.22}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Specifications and intended use cases for the different Qwen2-VL model scales, extracted from paper \cite {wang2024qwen2vlenhancingvisionlanguagemodels}.}}{40}{table.caption.121}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces Architectural comparison of representative SOTA Vision-Language Models.}}{27}{table.caption.79}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Categorization of standard benchmarks used to evaluate SOTA VLMs.}}{29}{table.caption.88}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Specifications and intended use cases for the different Qwen2-VL model scales, extracted from paper \cite {wang2024qwen2vlenhancingvisionlanguagemodels}.}}{44}{table.caption.132}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Comparative analysis of the localization accuracy across different processing phases, the cube positions correspond to the first multi agent environment without any alternatives.}}{79}{table.caption.295}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Comparative analysis of the localization accuracy across different processing phases for the pallets. }}{79}{table.caption.297}%
-\contentsline {table}{\numberline {5.3}{\ignorespaces Comparative analysis of the localization accuracy for the Franka arm positions in the primary multi-agent environment.}}{80}{table.caption.299}%
+\contentsline {table}{\numberline {6.1}{\ignorespaces Comparative analysis of the localization accuracy across different processing phases, the cube positions correspond to the first multi agent environment without any alternatives.}}{83}{table.caption.306}%
+\contentsline {table}{\numberline {6.2}{\ignorespaces Comparative analysis of the localization accuracy across different processing phases for the pallets. }}{83}{table.caption.308}%
+\contentsline {table}{\numberline {6.3}{\ignorespaces Comparative analysis of the localization accuracy for the Franka arm positions in the primary multi-agent environment.}}{84}{table.caption.310}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
