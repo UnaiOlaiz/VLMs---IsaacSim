@@ -1,40 +1,38 @@
-This is BibTeX, Version 0.99d (TeX Live 2025/dev/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: unsrt.bst
 Database file #1: bibliography.bib
-Warning--entry type for "MuJoCoDoc" isn't style-file defined
---line 466 of file bibliography.bib
 You've used 46 entries,
             1791 wiz_defined-function locations,
-            619 strings with 11662 characters,
-and the built_in function-call counts, 7476 in all, are:
-= -- 419
-> -- 621
+            637 strings with 12893 characters,
+and the built_in function-call counts, 7689 in all, are:
+= -- 472
+> -- 624
 < -- 0
-+ -- 231
-- -- 185
++ -- 232
+- -- 186
 * -- 349
-:= -- 1231
-add.period$ -- 106
+:= -- 1292
+add.period$ -- 124
 call.type$ -- 46
-change.case$ -- 45
+change.case$ -- 46
 chr.to.int$ -- 0
 cite$ -- 46
 duplicate$ -- 230
 empty$ -- 829
-format.name$ -- 185
-if$ -- 1640
+format.name$ -- 186
+if$ -- 1694
 int.to.chr$ -- 0
 int.to.str$ -- 46
 missing$ -- 0
-newline$ -- 201
-num.names$ -- 44
-pop$ -- 299
+newline$ -- 219
+num.names$ -- 45
+pop$ -- 291
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 193
+skip$ -- 165
 stack$ -- 0
 substring$ -- 0
 swap$ -- 46
@@ -43,7 +41,6 @@ text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 44
+while$ -- 45
 width$ -- 48
-write$ -- 391
-(There was 1 warning)
+write$ -- 427

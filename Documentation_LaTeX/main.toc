@@ -139,10 +139,10 @@
 \contentsline {section}{\numberline {8.1}Conclusions and lessons learned}{92}{section.327}%
 \contentsline {section}{\numberline {8.2}Limitations found}{93}{section.328}%
 \contentsline {section}{\numberline {8.3}Future work}{94}{section.329}%
-\contentsline {chapter}{\numberline {A}Source Code \& Hyperparameters}{100}{appendix.331}%
-\contentsline {section}{\numberline {A.1}Helping offsets used for VLM guidance}{100}{section.332}%
-\contentsline {section}{\numberline {A.2}Full multi-agent coordination script}{100}{section.347}%
-\contentsline {section}{\numberline {A.3}Training parameters}{101}{section.381}%
-\contentsline {chapter}{\numberline {B}Custom Prompts Used}{103}{appendix.402}%
-\contentsline {section}{\numberline {B.1}Helping prompts used for the VLM target detection task}{103}{section.403}%
+\contentsline {chapter}{\numberline {A}Source Code \& Hyperparameters}{101}{appendix.331}%
+\contentsline {section}{\numberline {A.1}Helping offsets used for VLM guidance}{101}{section.332}%
+\contentsline {section}{\numberline {A.2}Full multi-agent coordination script}{101}{section.347}%
+\contentsline {section}{\numberline {A.3}Training parameters}{102}{section.381}%
+\contentsline {section}{\numberline {A.4}Helping prompts used for the VLM target detection task}{103}{section.402}%
+\contentsline {chapter}{\numberline {B}Artificial Intelligence Tools Used}{105}{appendix.436}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

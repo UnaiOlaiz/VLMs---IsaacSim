@@ -25,7 +25,8 @@ Andrew Jaegle, Felix Gimeno, Andrew Brock, Andrew Zisserman, Oriol Vinyals, and
 
 \bibitem{timothy2024phrasegrounding}
 M.~Timothy.
-\newblock What is phrase grounding?, 2024.
+\newblock What is phrase grounding?
+\newblock \url{https://blog.roboflow.com/what-is-phrase-grounding/}, 2024.
 
 \bibitem{gravio2025vlmvqa}
 {Gravio Team}.
@@ -74,7 +75,8 @@ Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
 
 \bibitem{wiki:manifold_alignment}
 {{Wikipedia contributors}}.
-\newblock Manifold alignment --- {Wikipedia}{,} the free encyclopedia, 2024.
+\newblock Manifold alignment.
+\newblock \url{https://en.wikipedia.org/wiki/Manifold_alignment}, 2024.
 
 \bibitem{tan2022sentenceworth128pseudo}
 Haochen Tan, Wei Shao, Han Wu, Ke~Yang, and Linqi Song.
@@ -170,11 +172,14 @@ EAGERx Contributors.
 \newblock \url{https://github.com/eager-dev/eagerx}, 2023.
 
 \bibitem{MuJoCoDoc}
-Mujoco - gymnasium documentation.
+Gymnasium.
+\newblock Mujoco - gymnasium documentation.
+\newblock \url{https://gymnasium.farama.org/environments/mujoco/}.
 
 \bibitem{su2021rope2d}
 Jianlin Su.
-\newblock Rope 2d: Rotary position embedding for 2d, May 2021.
+\newblock Rope 2d: Rotary position embedding for 2d.
+\newblock \url{https://www.spaces.ac.cn/archives/8397}, May 2021.
 \newblock Scientific Spaces.
 
 \bibitem{su2023roformerenhancedtransformerrotary}
@@ -183,14 +188,17 @@ Jianlin Su, Yu~Lu, Shengfeng Pan, Ahmed Murtadha, Bo~Wen, and Yunfeng Liu.
 
 \bibitem{BentoML_2024}
 {BentoML Team}.
-\newblock Bentoml: The unified model serving framework, 2024.
+\newblock Bentoml: The unified model serving framework.
+\newblock \url{https://github.com/bentoml/BentoML}, 2024.
 \newblock Version 1.3.15. Available at GitHub.
 
 \bibitem{EdgeAIVision2015}
 Edge AI and Vision Alliance.
 \newblock Vision as a service: Democratization of vision for consumers and
-  businesses (a presentation from tend), September 2015.
-\newblock Accessed: 2024-05-22.
+  businesses (a presentation from tend).
+\newblock
+  \url{https://www.edge-ai-vision.com/2015/09/vision-as-a-service-democratization-of-vision-for-consumers-and-businesses-a-presentation-from-tend/},
+  September 2015.
 
 \bibitem{mittal2025isaaclab}
 Mayank Mittal, Pascal Roth, James Tigue, Antoine Richard, Octi Zhang, Peter Du,
@@ -206,45 +214,64 @@ Mayank Mittal, Pascal Roth, James Tigue, Antoine Richard, Octi Zhang, Peter Du,
 
 \bibitem{SceneCaptioning}
 NVIDIA.
+\newblock Tutorial replicator caption.
+\newblock
+  \url{https://docs.isaacsim.omniverse.nvidia.com/5.0.0/action_and_event_data_generation/tutorial_replicator_caption.html}.
 
 \bibitem{nikonFocalLength}
 {Nikon USA}.
-\newblock Understanding focal length, 2024.
+\newblock Understanding focal length.
+\newblock
+  \url{https://www.nikonusa.com/learn-and-explore/c/tips-and-techniques/understanding-focal-length},
+  2024.
 
 \bibitem{Simek2012Extrinsic}
 Kyle Simek.
-\newblock Dissecting the camera matrix, part 2: The extrinsic matrix, August
-  2012.
+\newblock Dissecting the camera matrix, part 2: The extrinsic matrix.
+\newblock \url{https://ksimek.github.io/2012/08/22/extrinsic/}, August 2012.
 
 \bibitem{IsaacSimRMPFlow2024}
 {NVIDIA Corporation}.
-\newblock Rmpflow: Reactive motion policies for robot control, 2024.
+\newblock Rmpflow: Reactive motion policies for robot control.
+\newblock
+  \url{https://docs.isaacsim.omniverse.nvidia.com/6.0.0/cumotion/tutorial_rmpflow.html},
+  2024.
 
 \bibitem{FrankaInfo}
 RoboDK.
 \newblock Franka emika panda robot.
+\newblock \url{https://robodk.com/robot/Franka/Emika-Panda#View3D}.
+\newblock Franka Emika Panda robot visualization page.
 
 \bibitem{FrankaConvexDecomposition}
 {NVIDIA Omniverse}.
 \newblock Training a robot from scratch in simulation, from {URDF} to
-  {OpenUSD}, 2024.
+  {OpenUSD}.
+\newblock \url{https://www.youtube.com/watch?v=_HMk7I-vSBQ}, 2024.
 \newblock YouTube video from NVIDIA Omniverse channel.
 
 \bibitem{SimCamera}
 {NVIDIA Corporation}.
 \newblock Isaac sim sensors: Camera documentation.
+\newblock
+  \url{https://docs.isaacsim.omniverse.nvidia.com/4.5.0/sensors/isaacsim_sensors_camera.html}.
 
 \bibitem{SimLights}
 {NVIDIA Corporation}.
 \newblock Replicator tutorial: Lighting.
+\newblock
+  \url{https://docs.isaacsim.omniverse.nvidia.com/4.5.0/replicator_tutorials/ext_replicator-object/light.html}.
 
 \bibitem{GithubLiftQuestion}
 {IsaacLab Contributors}.
 \newblock [question] how to grasp and lift an object with a {Franka} robot in a
-  direct {RL} approach?, 2024.
+  direct {RL} approach?
+\newblock \url{https://github.com/isaac-sim/IsaacLab/issues/1270}, 2024.
 \newblock GitHub Issue \#1270.
 
 \bibitem{NVIDIAFrankaQuestion}
 Trying to train isaac-lift-cube-franka-v0 example task.
+\newblock
+  \url{https://forums.developer.nvidia.com/t/trying-to-train-isaac-lift-cube-franka-v0-example-task/320388}.
 
 \end{thebibliography}

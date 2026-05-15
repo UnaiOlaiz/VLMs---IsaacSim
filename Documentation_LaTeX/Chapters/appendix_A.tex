@@ -1,3 +1,5 @@
+This first appendix lists the different source code and hyperparameter configurations used throughout the development process, and contents which have been referenced in the documentation but were put here due to their length or technical detail, in order to maintain the best readability flow as possible. 
+
 \section{Helping offsets used for VLM guidance}
 \begin{lstlisting}[
 	style=python_pro_black,
@@ -88,4 +90,45 @@
 	vf: [256, 128, 64]
 	target_kl: 0.01
 	max_grad_norm: 1.0
+\end{lstlisting}
+
+\section{Helping prompts used for the VLM target detection task}
+\begin{lstlisting}[
+	style=python_pro_black,
+	language=Python, 
+	caption={Dictionary of custom prompts used for the \textit{ground\_multi} detection function to achieve coordinate consensus.},
+	label={code:custom_prompts}
+	]
+	CUBE_PROMPTS = {
+		"red": ["red cube in the center", "small red block near robot"],
+		"green": ["small green cube on the right side", "green block on the right"],
+		"blue": ["small blue cube on the left side", "blue block on the left"],
+	}
+	
+	PALLET_PROMPTS = {
+		"red": [
+		"red plastic pallet on the floor",
+		"top view of a red cargo pallet near the robot",
+		"the center of the red rectangular grid structure",
+		],
+		"blue": [
+		"blue plastic pallet located to the left",
+		"blue industrial pallet on the grey surface",
+		"top-down view of a blue rectangular pallet",
+		],
+		"black": [
+		"black plastic pallet on the right side",
+		"dark grey cargo pallet on the floor",
+		"rectangular black grid structure",
+		],
+	}
+	
+	ROBOT_PROMPTS = {
+		"white": [
+		"white robotic arm located at the far left edge of the image",
+		"white robotic arm located at the far right edge of the image",
+		"franka emika panda arm near the corners",
+		"robotic manipulator, ignore the mobile platform in the center",
+		]
+	}
 \end{lstlisting}
