@@ -1,17 +1,17 @@
 \section{Solution proposal}
-In order to reflect the power of vision language models as high-level instruction orchestrators inside a robotic environment, I worked inside \textit{NVIDIA IsaacSim}, an open-source SOTA framework for robotics simulation and synthetic data generation in physically based virtual environments built on top of \textit{NVIDIA Omniverse}. My final solution proposes a simulated robotic multi-agent environment where the vision language clearly dominates the high-level decision making, and orchestrates the whole workflow pipeline with the information received and sent to the other agents in the scenario. 
+In order to reflect the power of vision language models as high-level instruction orchestrators inside a robotic environment, I will be working inside NVIDIA Isaac Sim, an open-source SOTA framework for robotics simulation and synthetic data generation in physically based virtual environments built on top of \textit{NVIDIA Omniverse}. My final solution proposes a simulated robotic multi-agent environment where the vision language clearly dominates the high-level decision making, and orchestrates the whole workflow pipeline with the information received and sent to the other agents in the scenario. 
 
 \section{System architecture}
-Figure \ref{fig:arch_clean} illustrates the architecture of the project, divided into two main sides: the components that run on local and those running in the server. There are several reasons why I decided to not run everything locally, as running things remotely allows better VLM inference performance takins considerably much less time and also opens the gate for modularity if I decide to change the model or the server architecture. 
+Figure \ref{fig:arch_clean} illustrates the architecture of the project, divided into two main sides: the components that run on local and those running in the server. There are several reasons why I decided to not run everything locally, as running things remotely allows better VLM inference performance, taking considerably much less time. And also opens the gate for modularity if I decide to change the model or the server architecture at any point. 
 
-\subsection{Run locally}
-Everything that is run locally is located on the left side of the diagram. Basically consisting of all the physics, rendering and controller tasks. 
-
-\subsection{Run remotely}
-While the things run in a server correspond to the nodes of the right side of the graph, encapsulating all the VLM inference processes. The VLM is run on the server because BentoML manages the VRAM resources more efficiently than if I were to run it locally.
+\begin{enumerate}
+	\item \textbf{Run locally}: everything that is run locally is located on the left side of the diagram. Basically consisting of all the physics, rendering and controller tasks.  
+	
+	\item \textbf{Run remotely}: while the things run in a server correspond to the nodes of the right side of the graph, encapsulating all the VLM inference processes. The VLM is run on the server because BentoML manages the VRAM resources more efficiently than if I were to run it locally.
+\end{enumerate}
 
 \subsection{Communication bridge}
-To connect both local and remote sections, I use HTTP protocols to communicate with a REST API. The local side of the architecture will send POST requests and the remote side will answer returning JSON files containing everything needed to carry on with the workflow. 
+To connect both local and remote sections, I will HTTP protocols to communicate with a REST API. The local side of the architecture will send POST requests and the remote side will answer returning JSON files containing everything needed to carry on with the workflow. 
 
 \begin{figure}[ht]
 	\centering
@@ -65,7 +65,7 @@ To connect both local and remote sections, I use HTTP protocols to communicate w
 \end{figure}
 
 \section{Workflow}
-The workflow used for the final scenarios inside \textit{IsaacSim} could be reduced to this basic pipeline, illustrated below \ref{fig:minimalist_workflow_cycle}. The following workflow stands for the "standard" pipeline, however, depending on the desired task components of the pipeline will follow different procedures or repeat their selves more than one time. 
+The workflow used for the final scenarios inside Isaac Sim could be reduced to this basic pipeline, illustrated below \ref{fig:minimalist_workflow_cycle}. The following workflow stands for the "standard" pipeline, however, depending on the desired task components of the pipeline will follow different procedures or repeat themselves more than one time. 
 
 \begin{enumerate}
 	\item \textbf{Visual captioning}: there will be cameras distributed throughout the scenario, pointing towards the key interest points where the VLM must put into action its reasoning capabilities. A screenshot of the area will be taken and sent to the next step.
@@ -123,10 +123,10 @@ Depending on the task, there could be just one target object detection and movem
 \end{figure}
 
 \section{Tools used}
-There are several technologies I have used in order to consolidate the final solution of the project. Nevertheless, some have evolved changing its versions or have been modified throughout the experimentation to include additional functionalities to seek better performance. Those tool's brief definition and implementation will be explained now, however, the different tweaks applied through the progression will be mentioned in the corresponding design experimentation section \ref{chapter:design_implementation}. 
+There are several technologies I will use in order to consolidate the final solution of the project. Nevertheless, some have evolved changing its versions or have been modified throughout the experimentation to include additional functionalities to seek better performance. Those tool's brief definition and implementation will be explained now, however, the different tweaks applied through the progression will be mentioned in the corresponding design experimentation section (section \ref{chapter:design_implementation}). 
 
 \subsection{Vision Language Model choice}
-The VLM used in the final workflow was not the one I started experimenting with, there was actually a progressively evolution which led me from starting with the smallest models to scale up in the number of parameters. 
+The VLM used in the final workflow was not the one I started experimenting with, there was actually a progressively evolution which led me from starting with the smallest models up to scaling up in the number of parameters. 
 
 \subsubsection{SmolVLM-256M - the initial pick}
 I actually started from the very smallest of the models, being the first model \textit{SmolVLM-256M-Instruct}. Extracted from \textit{HuggingFace}, the model is a tiny multimodal one, the smallest of the family. Originally designed for efficiency, its lightweight architecture makes it suitable for small applications just taking about 1.23GB of GPU RAM, reason why I decided to go for this model at first.
@@ -144,7 +144,7 @@ As shown in table \ref{tab:qwen_variants} there are 3 size variants of the model
 	\small
 	\begin{tabularx}{\textwidth}{@{} l c c X @{}}
 		\toprule
-		\textbf{Model Name} & \textbf{Vis. Encoder} & \textbf{LLM Model} & \textbf{Description} \\
+		\textbf{Model Name} & \textbf{Vision Encoder (ViT)} & \textbf{LLM Model} & \textbf{Description} \\
 		\midrule
 		Qwen2-VL-2B  & 675M & 1.5B & The most efficient model, designed for on-device execution. It delivers adequate performance for scenarios with limited resources. \\
 		\addlinespace
@@ -158,18 +158,18 @@ As shown in table \ref{tab:qwen_variants} there are 3 size variants of the model
 	\label{tab:qwen_variants}
 \end{table}
 
-When it comes the architecture of the model and as that \textit{2} indicates in the name, it was actually trained starting from the base point of its predecessor. In order to deal with scalability and performance issues they upgraded some of the components. They implemented a ViT able to deal with both image and video data formats and strengthened the LLM backbone. Several upgrades were implemented to strengthen the video analysis performance of the ViT.
+When it comes the architecture of the model and as that \textit{2} indicates in the model name, it was actually trained starting from the base point of its predecessor. In order to deal with scalability and performance issues they upgraded some of the components. They implemented a ViT able to deal with both image and video data formats and strengthened the LLM backbone. Several upgrades were implemented to strengthen the video analysis performance of the ViT.
 
 \begin{itemize}
-	\item \textbf{Naive Dynamic Resolution}: this implementation enables the processing of images of any kind of resolution, dynamically converted into visual tokens. This was a result of removing the positional encoding layer from the vision transformer and introducing \textit{2D-RoPE}, approach which replaces the traditional positional encoding by embedding absolute positions via dimension-wise rotations which allow naturally captured spatial relationships \cite{su2021rope2d}. Technique used also in computer vision to capture the two-dimensional positional information of images. As statement, rotatory embeddings are made with rotation matrices and work by capturing both global and relative position information \cite{su2023roformerenhancedtransformerrotary}. And rotation matrices are matrices are those which represent an angle rotation in the euclidean space. 
+	\item \textbf{Naive Dynamic Resolution}: this implementation enables the processing of images of any kind of resolution, dynamically converted into visual tokens. This was a result of removing the positional encoding layer from the vision transformer and introducing \textit{2D-RoPE}, approach which replaces the traditional positional encoding by embedding absolute positions via dimension-wise rotations which allow naturally capturing spatial relationships \cite{su2021rope2d}. Technique used also in computer vision to capture the two-dimensional positional information of images. As statement, rotatory embeddings are made with rotation matrices and work by capturing both global and relative position information \cite{su2023roformerenhancedtransformerrotary}. And rotation matrices are matrices which represent an angle rotation in the euclidean space. 
 	
-	\item \textbf{Multimodal Rotary Position Embedding (M-RoPE)}: it uses a similar variant to method \textit{2D-RoPE} mentioned in the previous paragraph in order to successfully model the positional information of multimodal inputs. It works by decomposing the rotatory embeddings into new latent features such as height and width, so it can model explicitly the positional information of text, images and videos in LLMs.
+	\item \textbf{Multimodal Rotary Position Embedding (M-RoPE)}: it uses a similar variant to method \textit{2D-RoPE} mentioned in the previous paragraph, in order to successfully model the positional information of multimodal inputs. It works by decomposing the rotatory embeddings into new latent features such as height and width, so it can model explicitly the positional information of text, images and videos in LLMs.
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.9\textwidth]{imgs/MROPE.png}
 		\label{fig:MROPE}
-		\caption{Demonstration of M-RoPE}
+		\caption{Demonstration of M-RoPE (Multimodal Rotatory Position Embedding)}
 	\end{figure}
 	
 \end{itemize}
@@ -187,7 +187,7 @@ When it comes the architecture of the model and as that \textit{2} indicates in 
 Taking advantage of the material seen throughout the different subjects of the grade, I think it was suitable to host Qwen2 in a \textit{BentoML} server and communicate with it via API calls. BentoML, is an open-source project implemented in a Python library for building online server systems mainly optimized for AI apps and model inference, being this second option where the VLM will really stand out. The inference will be controlled with REST API server lines, and will also be run in the GPU. As mentioned in previous sections, I have had to make my way through GPU space balancing, and did have to try out different parameters that make up the service to optimize performance, nevertheless all this configurations will be mentioned in the respective place. Among the reasons why I chose this option the following could be highlighted: 
 
 \begin{itemize}
-	\item \textbf{Computational efficiency}: IsaacSim requires significant GPU resources in order to maintain high-fidelity of the physics, and by delegating the inference part of the workflow to a BentoML service enables asynchronous communication and overall stability. 
+	\item \textbf{Computational efficiency}: Isaac Sim requires significant GPU resources in order to maintain high-fidelity of the physics, and by delegating the inference part of the workflow to a BentoML service enables asynchronous communication and overall stability. 
 	
 	\item \textbf{Resource management}: BentoML is known for a wise resource balancing, and as mentioned above, it was crucial during the development to manage my resources wisely. Hosting the model separately allowed deeper control on the VRAM allocation.
 	
@@ -197,31 +197,31 @@ Taking advantage of the material seen throughout the different subjects of the g
 \subsubsection{Vision as a Service (VaaS)}
 This approach of deploying a vision language model in a cloud system has already been explored, it is called \textit{Vision-as-a-Service} (VaaS). It was launched as a business model that leveraged the cloud system to apply SOTA computer vision tools to video streams captured in surveillance cameras \cite{EdgeAIVision2015}, nevertheless VLM can be implemented equally.
 
-Applied to the project, makes possible the interaction between the VLM and the robotic environment via HTTP requests and JSON responses and ensures scalability of the system for more complex environments. 
+Applied to the project, it makes possible the interaction between the VLM and the robotic environment via HTTP requests and JSON responses and ensures scalability of the system for more complex environments. 
 
 \subsection{IsaacSim as physics simulator}
 All there was to mention why I chose this framework was covered in section \ref{sec:sim2realframeworks}, so I will not repeat myself in this part. I just wanted to highlight this has been the robotic environment simulator I chose to develop the robotic scenarios.
 
-\subsection{IsaacLab for RL experimentation}
-\textit{IsaacLab} is an open-source framework built on top of \textit{IsaacSim} and \textit{Omniverse} to inherit the high-fidelity physics simulation, aimed for unifying and simplifying robotic research workflows such as reinforcement learning, imitation learning and motion planning \cite{mittal2025isaaclab}. Also built to be run on the GPU, it is the ideal choice for sim-to-real transfer tasks in robotics. This framework is also modular and easy to customize, agile, open-sourced and includes various trial environments, sensors and tasks ready to be used from the very start. Furthermore, it has been the best choice for training RL policies inside IsaacSim. Offering the freedom to create custom training environments or train tasks that are already included. I must state I have used the \texttt{main} branch version of the repository according to the IsaacSim version I have been using. 
+\subsection{Isaac Lab for RL experimentation}
+\textit{Isaac Lab} is an open-source framework built on top of \textit{Isaac Sim} and \textit{Omniverse} to inherit the high-fidelity physics simulation, aimed for unifying and simplifying robotic research workflows such as reinforcement learning, imitation learning and motion planning \cite{mittal2025isaaclab}. Also built to be run on the GPU, it is the ideal choice for sim-to-real transfer tasks in robotics. This framework is also modular and easy to customize, agile, open-sourced and includes various trial environments, sensors and tasks ready to be used from the very start. Furthermore, it has been the best choice for training RL policies inside IsaacSim. Offering the freedom to create custom training environments or train tasks that are already included. I must state I have used the \texttt{main} branch version of the repository according to the IsaacSim version I have been using. 
 
 The reason why I chose this framework among other options such as \textit{OpenAI Gym} or \textit{PyBullet} is not just because of its direct integration inside IsaacSim, but also because of the following points:
 
 \begin{itemize}
 	\item \textbf{Parallelization}: the fact of IsaacLab running on GPU allows optimized training techniques such as parallel training several environments simultaneously. Moreover, this frameworks also allows running inference in the GPU, discarding any CPU bottleneck issues I have.
 	
-	\item \textbf{Available examples}: not all robots have training examples available at the repository, but Franka does. Fact which reduced what would cost a lot of time designing observation and action spaces and specific rewards. 
+	\item \textbf{Available examples}: not all robots have training examples available at the repository, but the agents I will use do. Fact which reduced what would cost a lot of time designing observation and action spaces and specific rewards. 
 	
 	\item \textbf{Modular design via managers}: the framework is designed as a manager-based API which organizes environments into reusable and composable components, enabling consistent workflows across diverse tasks. There are manager classes for the scene, observation, reward and termination components of the environment, allowing modular swaps, changes and class inheritance. 
 	
-	\item \textbf{Integration of USD with PhysX in OmniPhysics}: This mixture provides a representation of the objects and robots in a hierarchical manner in the scene. The scene, represented in a graph is then parsed into \textit{PhysX} allocating all the internal representation of the environment as tensors to the GPU. PhysX being a physics engine developed by NVIDIA originally used for video games. Once the representation is in a tensor manner inside the GPU, IsaacLab interacts with that info through View APIs, allowing reading or writing objects of the scene while managing data efficiently and improving usability. 
+	\item \textbf{Integration of USD with PhysX in OmniPhysics}: This mixture provides a representation of the objects and robots in a hierarchical manner in the scene. The scene, represented in a graph is then parsed into \textit{PhysX} allocating all the internal representation of the environment as tensors to the GPU. PhysX being a physics engine developed by NVIDIA originally used for video games. Once the representation is in a tensor manner inside the GPU, Isaac Lab interacts with that info through \textit{View APIs}, allowing reading or writing objects of the scene while managing data efficiently and improving usability. 
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/lab_workflow.png}
 		\label{fig:labworkflow}
-		\caption{Procedure of how IsaacLab reads the environment. First converting to tensors the hierarchical representation of the environment, sending them to the GPU and manipulating those tensors via Views API calls.}
+		\caption{Procedure of how Isaac Lab reads the environment. First converting to tensors the hierarchical representation of the environment, sending them to the GPU and manipulating those tensors via Views API calls.}
 	\end{figure}
 \end{itemize}
 
-Finally, I will be using \textit{Stable-Baselines3} (SB3) framework for all the trainings due to its support inside IsaacLab and compatibility with visualization tools such as \textit{Tensorboard}.
+Finally, I will be using \textit{Stable-Baselines3} (SB3) framework for all the trainings due to its support inside Isaac Lab and compatibility with visualization tools such as \textit{Tensorboard}.

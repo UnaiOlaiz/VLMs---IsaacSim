@@ -10,7 +10,7 @@
 \contentsline {section}{\numberline {1.4}Project scope}{2}{section.12}%
 \contentsline {chapter}{\numberline {2}Planning}{3}{chapter.13}%
 \contentsline {section}{\numberline {2.1}Task division}{3}{section.14}%
-\contentsline {subsection}{\numberline {2.1.1}Planification table}{5}{subsection.21}%
+\contentsline {subsection}{\numberline {2.1.1}Planning table}{5}{subsection.21}%
 \contentsline {chapter}{\numberline {3}State of the Art}{7}{chapter.24}%
 \contentsline {section}{\numberline {3.1}Evolution of Multimodal Learning}{7}{section.25}%
 \contentsline {subsection}{\numberline {3.1.1}Multimodal deep Boltzmann machines}{7}{subsection.26}%
@@ -21,15 +21,15 @@
 \contentsline {section}{\numberline {3.2}Advancements of Vision Language Models}{9}{section.33}%
 \contentsline {subsection}{\numberline {3.2.1}Earliest models}{10}{subsection.34}%
 \contentsline {subsection}{\numberline {3.2.2}Deep learning based models}{11}{subsection.35}%
-\contentsline {subsection}{\numberline {3.2.3}The Transformers architecture standard}{12}{subsection.36}%
+\contentsline {subsection}{\numberline {3.2.3}The Transformers architecture standard}{11}{subsection.36}%
 \contentsline {subsubsection}{\numberline {3.2.3.1}VLM tasks with Transformers}{13}{subsubsection.41}%
-\contentsline {section}{\numberline {3.3}From Encoders to Generative LLMs}{15}{section.43}%
-\contentsline {subsection}{\numberline {3.3.1}Language encoder}{15}{subsection.44}%
+\contentsline {section}{\numberline {3.3}From Encoders to Generative LLMs}{14}{section.43}%
+\contentsline {subsection}{\numberline {3.3.1}Language encoder}{14}{subsection.44}%
 \contentsline {subsection}{\numberline {3.3.2}The LLM transition: from encoders to decoder-only architectures}{15}{subsection.45}%
 \contentsline {section}{\numberline {3.4}Vision Transformers}{16}{section.46}%
 \contentsline {subsection}{\numberline {3.4.1}Vision encoder \& Vision Transformers (ViT)}{16}{subsection.47}%
-\contentsline {section}{\numberline {3.5}Multimodal Alignment: CLIP}{20}{section.55}%
-\contentsline {subsection}{\numberline {3.5.1}CLIP: Contrastive Language-Image Pretraining}{20}{subsection.56}%
+\contentsline {section}{\numberline {3.5}Multimodal Alignment: CLIP}{19}{section.55}%
+\contentsline {subsection}{\numberline {3.5.1}CLIP: Contrastive Language-Image Pretraining}{19}{subsection.56}%
 \contentsline {section}{\numberline {3.6}Modality Bridging and Pseudo-Tokens}{22}{section.64}%
 \contentsline {subsection}{\numberline {3.6.1}Modality bridging mechanism}{22}{subsection.65}%
 \contentsline {subsection}{\numberline {3.6.2}Pseudo-Tokens}{23}{subsection.66}%
@@ -58,9 +58,7 @@
 \contentsline {chapter}{\numberline {4}Solution approach}{40}{chapter.114}%
 \contentsline {section}{\numberline {4.1}Solution proposal}{40}{section.115}%
 \contentsline {section}{\numberline {4.2}System architecture}{40}{section.116}%
-\contentsline {subsection}{\numberline {4.2.1}Run locally}{40}{subsection.117}%
-\contentsline {subsection}{\numberline {4.2.2}Run remotely}{40}{subsection.118}%
-\contentsline {subsection}{\numberline {4.2.3}Communication bridge}{40}{subsection.119}%
+\contentsline {subsection}{\numberline {4.2.1}Communication bridge}{40}{subsection.119}%
 \contentsline {section}{\numberline {4.3}Workflow}{41}{section.121}%
 \contentsline {section}{\numberline {4.4}Tools used}{42}{section.128}%
 \contentsline {subsection}{\numberline {4.4.1}Vision Language Model choice}{42}{subsection.129}%
@@ -69,7 +67,7 @@
 \contentsline {subsection}{\numberline {4.4.2}VLM hosted on BentoML server}{45}{subsection.134}%
 \contentsline {subsubsection}{\numberline {4.4.2.1}Vision as a Service (VaaS)}{45}{subsubsection.135}%
 \contentsline {subsection}{\numberline {4.4.3}IsaacSim as physics simulator}{46}{subsection.136}%
-\contentsline {subsection}{\numberline {4.4.4}IsaacLab for RL experimentation}{46}{subsection.137}%
+\contentsline {subsection}{\numberline {4.4.4}Isaac Lab for RL experimentation}{46}{subsection.137}%
 \contentsline {chapter}{\numberline {5}Design and Implementation}{48}{chapter.139}%
 \contentsline {section}{\numberline {5.1}Initial dummy experimentation}{48}{section.140}%
 \contentsline {subsection}{\numberline {5.1.1}CLIP Demo Analysis}{48}{subsection.141}%
@@ -77,7 +75,7 @@
 \contentsline {subsubsection}{\numberline {5.1.1.2}Zero-Shot Classification with CLIP}{49}{subsubsection.144}%
 \contentsline {subsubsection}{\numberline {5.1.1.3}Image Captioning with BLIP}{49}{subsubsection.145}%
 \contentsline {subsubsection}{\numberline {5.1.1.4}Visual Question Answering}{50}{subsubsection.146}%
-\contentsline {section}{\numberline {5.2}VLM Scene Captioning in IsaacSim}{50}{section.147}%
+\contentsline {section}{\numberline {5.2}VLM Scene Captioning in Isaac Sim}{50}{section.147}%
 \contentsline {subsection}{\numberline {5.2.1}Workflow of scene captioning}{50}{subsection.148}%
 \contentsline {subsection}{\numberline {5.2.2}Scene representation using graphs}{51}{subsection.154}%
 \contentsline {subsubsection}{\numberline {5.2.2.1}Returned results}{52}{subsubsection.157}%
@@ -86,14 +84,14 @@
 \contentsline {subsection}{\numberline {5.3.1}BentoML service class - VLMServiceIsaac}{54}{subsection.175}%
 \contentsline {subsection}{\numberline {5.3.2}Evolution of detection functions}{55}{subsection.192}%
 \contentsline {subsection}{\numberline {5.3.3}Task definition}{56}{subsection.196}%
-\contentsline {subsubsection}{\numberline {5.3.3.1}Procedure}{57}{subsubsection.198}%
+\contentsline {subsubsection}{\numberline {5.3.3.1}Unprojection Function Procedure}{57}{subsubsection.198}%
 \contentsline {subsection}{\numberline {5.3.4}Computer Vision for performance enhancement}{59}{subsection.204}%
 \contentsline {subsection}{\numberline {5.3.5}Helping offsets}{63}{subsection.214}%
 \contentsline {subsection}{\numberline {5.3.6}Coordinate mapping}{64}{subsection.215}%
 \contentsline {section}{\numberline {5.4}Agent Control}{64}{section.219}%
 \contentsline {subsection}{\numberline {5.4.1}RMPFlowController: the Franka Controller}{65}{subsection.220}%
 \contentsline {subsection}{\numberline {5.4.2}Custom Jetbot controller class}{65}{subsection.221}%
-\contentsline {section}{\numberline {5.5}IsaacSim environment design}{66}{section.222}%
+\contentsline {section}{\numberline {5.5}Isaac Sim environment design}{66}{section.222}%
 \contentsline {subsection}{\numberline {5.5.1}Components of the scenarios}{66}{subsection.223}%
 \contentsline {subsubsection}{\numberline {5.5.1.1}Franka Panda - Robotic Arm}{67}{subsubsection.224}%
 \contentsline {subsubsection}{\numberline {5.5.1.2}Jetbot - Navigation Agent}{68}{subsubsection.226}%
@@ -136,7 +134,7 @@
 \contentsline {section}{\numberline {7.2}Data bias and transparency}{90}{section.324}%
 \contentsline {section}{\numberline {7.3}Safety Problems of Real life deployment}{91}{section.325}%
 \contentsline {chapter}{\numberline {8}Conclusions}{92}{chapter.326}%
-\contentsline {section}{\numberline {8.1}Conclusions and lessons learned}{92}{section.327}%
+\contentsline {section}{\numberline {8.1}Lessons learned}{92}{section.327}%
 \contentsline {section}{\numberline {8.2}Limitations found}{93}{section.328}%
 \contentsline {section}{\numberline {8.3}Future work}{94}{section.329}%
 \contentsline {chapter}{\numberline {A}Source Code \& Hyperparameters}{101}{appendix.331}%

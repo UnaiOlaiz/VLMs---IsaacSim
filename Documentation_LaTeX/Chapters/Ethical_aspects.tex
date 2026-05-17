@@ -18,7 +18,7 @@ During the professional ethics course, a topic has been stated and questioned se
 In real robot deployment cases, several issues are raised, even if this project strictly covers agent deployment in a simulated environment. Transitioning from controlled programming to artificial intelligence driven actions introduces stochasticity into physical systems. Furthermore, the uncertainty these systems involve in real cases is one of the most vital issues to consider. To bridge this gap safely, the following challenges must be addressed:
 
 \begin{itemize}
-	\item \textbf{Sensor noise and uncertainty}: unlike the perfectly safe data available in IsaacSim, real-world cameras and sensors are subject to lighting variations, motion blur, and physical occlusions. A VLM might misinterpret a shadow as an object edge, leading to incorrect coordinate generation.
+	\item \textbf{Sensor noise and uncertainty}: unlike the perfectly safe data available in Isaac Sim, real-world cameras and sensors are subject to lighting variations, motion blur, and physical occlusions. A VLM might misinterpret a shadow as an object edge, leading to incorrect coordinate generation.
 	
 	\item \textbf{Latency issues}: in simulation, joints move with mathematical precision. In reality, factors such as gear backlash, motor limits, and friction over time can cause the robot to deviate from the VLM's intended path, potentially leading to collisions with the environment or human collaborators.
 	
@@ -26,5 +26,3 @@ In real robot deployment cases, several issues are raised, even if this project 
 	
 	\item \textbf{Hardware integrity}: physical robots are high-cost assets, they are really expensive. An incorrect command from a hallucinating VLM could result in a collision that damages the Franka arm or the Jetbot. Therefore, any real-world deployment requires a deterministic safety layer to perform sanity checks on all AI-suggested coordinates before execution.
 \end{itemize}
-
-

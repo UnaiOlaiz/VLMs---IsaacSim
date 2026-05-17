@@ -6,29 +6,29 @@ The tasks will be divided by project area, and each will contain a brief descrip
 \subsection*{Phase 1: Theoretical research}
 Focus on studying the theoretical foundations of the project and the best tool options to tackle the challenge.
 \begin{itemize}
-	\item \textbf{Research of VLMs}: investigate what VLMs are and how they work, plus options to integrate them in a practical way.
+	\item \textbf{Research of VLMs}: investigate what vision language models are and how they work, plus options to integrate them in a practical way.
 	
-	\item \textbf{RL framework research}: check for the best options to integrate vision language models into robotic environments.
+	\item \textbf{Framework  and libraries research}: check for the best options to integrate vision language models into robotic environments.
 	
 	\item \textbf{State-of-the-art review}: comparative analysis of existing models and papers.
 \end{itemize}
 
 \subsection*{Phase 2: Experimentation}
-Start experimenting with basic VLM implementation and the principles of IsaacSim.
+Start experimenting with basic VLM implementation and the principles of Isaac Sim.
 \begin{itemize}
 	\item \textbf{Foundational VLM tasks}: first visual question answering, image captioning tests.
 	
-	\item \textbf{IsaacSim tutorials}: follow up of the official documentation tutorials and YouTube videos to get familiar with the framework and its functionalities.
+	\item \textbf{Isaac Sim tutorials}: follow up of the official documentation tutorials and YouTube videos to get familiar with the framework and its functionalities.
 	
-	\item \textbf{Local Model Deployment}: setting up the local environment and running the first inferences with the first VLMs outside of the simulation.
+	\item \textbf{Local Model Deployment}: setting up the local environment and running the first inference processes with the  VLMs running outside of the simulation.
 	
 	\item \textbf{Basic Scene Scripting}: testing Python snippets to manipulate simple objects within the scenario and experiment with the VLM captioning asset inside Isaac Sim.
 \end{itemize}
 
 \subsection*{Phase 3: Architecture design}
-Designing the communication bridge between the high-level reasoning and the low-level simulation.
+Design the communication bridge between the high-level reasoning layer and the low-level simulation.
 \begin{itemize}
-	\item \textbf{BentoML server architecture}: design of a local BentoML server to handle asynchronous requests, experimenting with different functionalities and features.
+	\item \textbf{BentoML server architecture}: design of a local BentoML service hosting the model. To handle asynchronous requests, experimenting with different functionalities and features.
 	
 	\item \textbf{Coordinate transformation logic}: mathematical definition of the function used to transform the predicted VLM coordinates into real scenario points.
 	
@@ -36,15 +36,15 @@ Designing the communication bridge between the high-level reasoning and the low-
 \end{itemize}
 
 \subsection*{Phase 4: Solution development}
-Technical implementation of the simulation environment and the agent logic.
+Technical implementation of the solution into the simulation environment and the agent logic.
 \begin{itemize}
 	\item \textbf{Scenarios development}: design of progressively more complex scenarios, starting from the very basics up to multi-agent environments. 
 	
 	\item \textbf{RL policy training}: training of different policy trainings, tweaking different hyperparameters, rewards and approaches.
 	
-	\item \textbf{Prompt Engineering Refinement}: developing specific system prompts for the VLM to improve detection accuracy in industrial contexts. 
+	\item \textbf{Prompt engineering refinement}: developing specific system prompts for the VLM to improve detection accuracy in the target detection task. 
 	
-	\item \textbf{Robot Control Integration}: linking the unprojected coordinates to the Franka Emika and Jetbot motion controllers, creating custom classes and functions for each case.
+	\item \textbf{Robot control integration}: creating custom controller classes to get the agents moving, and get functions depending on the joints and structure of the robots.
 \end{itemize}
 
 \subsection*{Phase 5: Results evaluation \& refinement}
@@ -60,17 +60,15 @@ Analysis of the system's performance and iterative enhancement.
 \subsection*{Phase 6: Documentation}
 Summary of the research, development, and results into the final report.
 
-\subsection{Planification table}
-
+\subsection{Planning table}
 The following table quantifies the dedication required for each of the major blocks of the project. 
-
 
 \begin{table}[H]
 	\centering
 	\small
 	\begin{tabularx}{10cm}{X r}
 		\toprule
-		\textbf{Phase} & \textbf{Estimated Hours} \\
+		\textbf{Phase} & \textbf{Estimated hours} \\
 		\midrule
 		Theoretical research & 15h \\
 		\midrule

@@ -32,34 +32,34 @@ This first appendix lists the different source code and hyperparameter configura
 	]
 	async def main():
 	
-	# First interaction: red cube -> red platform
-	await move_first_franka("red")
-	await place_on_jetbot()
-	await asyncio.sleep(1.0)
-	await move_jetbot(right_json)
-	await pick_from_jetbot("red")
-	await place_on_palett("red")
-	await move_jetbot(left_json)
+		# First interaction: red cube -> red platform
+		await move_first_franka("red")
+		await place_on_jetbot()
+		await asyncio.sleep(1.0)
+		await move_jetbot(right_json)
+		await pick_from_jetbot("red")
+		await place_on_palett("red")
+		await move_jetbot(left_json)
 	
-	# Second interaction: green cube -> blue platform
-	await move_first_franka("green")
-	await place_on_jetbot()
-	await asyncio.sleep(1.0)
-	await move_jetbot(right_json)
-	await pick_from_jetbot("green")
-	await place_on_palett("blue")
-	await move_jetbot(left_json)
+		# Second interaction: green cube -> blue platform
+		await move_first_franka("green")
+		await place_on_jetbot()
+		await asyncio.sleep(1.0)
+		await move_jetbot(right_json)
+		await pick_from_jetbot("green")
+		await place_on_palett("blue")
+		await move_jetbot(left_json)
 	
-	# Third interaction: blue cube -> black platform
-	await move_first_franka("blue")
-	await place_on_jetbot()
-	await asyncio.sleep(1.0)
-	await move_jetbot(right_json)
-	await pick_from_jetbot("blue")
-	await place_on_palett("black")
-	await move_jetbot(left_json)
+		# Third interaction: blue cube -> black platform
+		await move_first_franka("blue")
+		await place_on_jetbot()
+		await asyncio.sleep(1.0)
+		await move_jetbot(right_json)
+		await pick_from_jetbot("blue")
+		await place_on_palett("black")
+		await move_jetbot(left_json)
 	
-	print("##### PIPELINE FINISHED! #####")
+		print("##### PIPELINE FINISHED! #####")
 	
 	asyncio.ensure_future(main())
 \end{lstlisting}

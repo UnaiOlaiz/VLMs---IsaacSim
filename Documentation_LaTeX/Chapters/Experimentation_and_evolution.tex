@@ -168,11 +168,11 @@ The collapse observed around step 40M is a critical turning point. The explained
 Consequently, for the final multi-agent manipulation tasks, I have decided to utilize the custom controller classes described in section \ref{sec:controllers}. The main reasons are the following: 
 
 \begin{itemize}
-	\item \textbf{Reliability:} The  controller ensures a deterministic kinematic solution, translating the high-precision coordinates obtained in the detection phase  into smoother, repeatable trajectories. This eliminates the stochastic error inherent in RL policies, which often fail to exploit the full accuracy of the perception pipeline.
+	\item \textbf{Reliability}: the  controller ensures a deterministic kinematic solution, translating the high-precision coordinates obtained in the detection phase  into smoother, repeatable trajectories. This eliminates the stochastic error inherent in RL policies, which often fail to exploit the full accuracy of the perception pipeline.
 	
-	\item \textbf{Predictability:} In complex multi-agent scenarios involving the multiple agents, motion predictability always comes handy. Scripted control avoids the black box nature of neural networks, providing consistent joint-space behavior across all target variations and mitigating the risk of erratic or divergent movements during high-stakes manipulation as seen in the training process.
+	\item \textbf{Predictability}: in complex multi-agent scenarios involving the multiple agents, motion predictability always comes handy. Scripted control avoids the black box nature of neural networks, providing consistent joint-space behavior across all target variations and mitigating the risk of erratic or divergent movements during high-stakes manipulation as seen in the training process.
 	
-	\item \textbf{Custom modularity:}  the controller classes allow for modular adjustments. Specifically, the collision approach and gripper aperture logic were manually tuned to not crash the physics engine of the simulator. This control over specific joint constraints and velocity profiles enabled me a level of  precision that the RL policies were unable to maintain.
+	\item \textbf{Custom modularity}: the controller classes allow for modular adjustments. Specifically, the collision approach and gripper aperture logic were manually tuned to not crash the physics engine of the simulator. This control over specific joint constraints and velocity profiles enabled me a level of  precision that the RL policies were unable to maintain.
 \end{itemize}
 
 In summary, the RL training served as a valuable benchmark to understand the limits of end-to-end learning in this environment, but the combination of high-precision VLM detection and deterministic controllers proved to be the only viable architecture for the project's success.

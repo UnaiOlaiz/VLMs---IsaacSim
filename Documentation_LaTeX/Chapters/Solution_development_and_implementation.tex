@@ -22,7 +22,7 @@ After processing and encoding the features of the image and \textit{tokenizing} 
 \end{quote}
 
 \subsubsection{Zero-Shot Classification with CLIP}
-Loading the \textit{CIFAR100} well-known dataset for including thousands of colored images belonging to 100 different classes, the same vision-transformer must generate text descriptions for all of the 100 classes of the dataset and taking a random sample instance calculate the similarity between the image's visual inputs and each of the generated descriptions. Basically a zero-shot classification task, where the model must predict the answer without any previous knowledge, just based on the generated text captions. The following is an example of that same task given an image of a snake, and the top 5 results returned in a probability distribution manner due to its softmax activation function in its last layer.
+Loading the \textit{CIFAR100} well-known dataset for including thousands of colored images belonging to 100 different classes, the same vision-transformer must generate text descriptions for all of the 100 classes of the dataset and taking a random sample instance calculate the similarity between the image's visual inputs and each of the generated descriptions. Basically a zero-shot classification task, where the model must predict the answer without any previous knowledge, just based on the generated text captions. The following is an example of that same task given an image of a snake, and the top 5 results returned in a probability distribution manner due to its softmax activation function in its last network layer.
 
 \begin{quote}
 	\textbf{Selected image:} \texttt{snake image} \\
@@ -50,8 +50,8 @@ The question of what is the color of the surfboard seems easier than what it act
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{VLM Scene Captioning in IsaacSim}
-Even if the project's goal is to implement an end to end VLM integration pipeline into a robotic environment, IsaacSim already offers some kind of vision language model integration inside the framework \cite{SceneCaptioning}. In this section, I will go over the capabilities of this functionality and argue why I still chose to develop my own pipeline. 
+\section{VLM Scene Captioning in Isaac Sim}
+Even if the project's goal is to implement an end to end VLM integration pipeline into a robotic environment, Isaac Sim already offers some kind of vision language model integration inside the framework \cite{SceneCaptioning}. In this section, I will go over the capabilities of this functionality and argue why I still chose to develop my own pipeline. 
 
 The VLM integration the framework offers includes detailed descriptions including object relationships and spatial reasoning of an environment returned in a graph format, able to translate complex three dimensional spatial relationships into a compact graph while maintaining all the relevant information. In order to download and start using this add-on, I recommend installing it in the extensions panel by the name \texttt{Isaacsim.Replicator.CaptionCore}.
 
@@ -69,12 +69,12 @@ Similar to my workflow developed, this process is also pretty straightforward an
 	\centering
 	\includegraphics[width=.9\textwidth]{imgs/isim_5.0_full_ext-isaacsim.replicator.caption-5.0.0_gui_IRC_workflow.png}
 
-	\caption{Workflow of the VLM scene captioning add on available at the IsaacSim documentation.}
+	\caption{Workflow of the VLM scene captioning add on available at the Isaac Sim documentation.}
 	\label{fig:scenecaptioningworkflow}
 \end{figure}
 
 \subsection{Scene representation using graphs}
-As mentioned earlier, all the information of the scene is captured in a single graph, which is returned after each running iteration.  In the graph, the nodes represent the objects and the edges stand for the spatial relationships among them. Besides that, the graphs also capture data such as relative positions and even orientations, making them extremely useful for scene capturing returning an organized graph. Let's put it into practice, for this demonstration I will load an environment which came pre-installed alongside the framework.
+As mentioned earlier, all the information of the scene is captured in a single graph, which is returned after each running iteration. In the graph, the nodes represent the objects and the edges stand for the spatial relationships among them. Besides that, the graphs also capture data such as relative positions and even orientations, making them extremely useful for scene capturing returning an organized graph. Let's put it into practice, for this demonstration I will load an environment which came pre-installed alongside the framework.
 
 \begin{figure}[H]
 	\centering
@@ -127,12 +127,12 @@ All of the information captured in the scene graph is returned in three differen
 Although both workflows share similarities in their procedure and results returned, there are several differences which led me to develop my own system. The following are the main reasons that helped me decide on the best alternative for the project: 
 
 \begin{itemize}
-	\item \textbf{Extraction results}: while NVIDIA's scene captioning returns all the information of all the objects included in the environment, has no additional idea of what to do with their descriptions and relations. On the other hand, my pipeline includes the additional task which helps the model know what to do with the extraction data. That additional information is provided by the target prompt i.e. "locate the red cube...". Additionally my model must filter all the distractive noise of the environment to focus on the target, while IsaacSim's captures it all, and I think that when working with models with limited capacity is a smarter choice to filter the unnecessary to optimize performance. 
+	\item \textbf{Extraction results}: while NVIDIA's scene captioning returns all the information of all the objects included in the environment, provides no additional idea of what to do with their descriptions and relations. On the other hand, my pipeline includes the additional task which helps the model know what to do with the extraction data. That additional information is provided by the target prompt i.e. "locate the red cube...". Additionally my model must filter all the distractive noise of the environment to focus on the target, while Isaac Sim's captures it all, and I think that when working with models with limited capacity is a smarter choice to filter the unnecessary to optimize performance. 
 	
-	\item \textbf{Modular and independent architecture}: IsaacSim's scene captioning plugin is directly integrated into the simulator, and it cannot be modified. Whereas my architecture establishes the VLM in a server, making it more portable, lighter and more independent. Furthermore, I am able to tweak any parameter of the model or even change it, while NVIDIA's comes pre-established and is not open for any changes. In these situations I always prefer to go for the modularity choice. Hosting my own model also introduces the opportunity of enhancing its performance as I have with computer vision, however that is not an option for the replicator choice.
+	\item \textbf{Modular and independent architecture}: Isaac Sim's scene captioning plugin is directly integrated into the simulator, and it cannot be modified. Whereas my architecture establishes the VLM in a server, making it more portable, lighter and more independent. Furthermore, I am able to tweak any parameter of the model or even change it, while NVIDIA's comes pre-established and is not open for any changes. In these situations I always prefer to go for the modularity choice. Hosting my own model also introduces the opportunity of enhancing its performance as I have with computer vision, however that is not an option for the replicator choice.
 	
 	%lama 3.1
-	\item \textbf{Model choice}: nevertheless, not everything have been advantages. The models used in the official replicator pipeline \ref{fig:scenecaptioningworkflow} are much more powerful than the one I have used, leading to greater performance. The model used by NVIDIA is actually \textit{GPT-4o}, and even if the number of parameters has not been officially published it could be around 200 billion parameters, almost 100 times more than the open-source alternatives I have used, and in addition, \textit{Llama 3.1} is another possible alternative which can scale up to 80B. It is evident the previous models will considerably outperform my alternative, nevertheless, I am not able to run that computation power to host the models locally. That was the reason why I went for a more humble open-source model with much less parameters. Which, even if its performance does not catch up, with some configuration can get considerable results as it has done. Moreover, I think it was a better choice to go for the pure VLM model and discard any "black box" alternatives. 
+	\item \textbf{Model choice}: nevertheless, not everything have been advantages. The models used in the official replicator pipeline (figure \ref{fig:scenecaptioningworkflow}) are much more powerful than the one I have used, leading to greater performance. The model used by NVIDIA is actually \textit{GPT-4o}, and even if the number of parameters has not been officially published it could be around 200 billion parameters, almost 100 times more than the open-source alternatives I have used, and in addition, \textit{Llama 3.1} is another possible alternative which can scale up to 80B. It is evident the previous models will considerably outperform my alternative, nevertheless, I am not able to run that computation power to host the models locally. That was the reason why I went for a more humble open-source model with much less parameters. Which, even if its performance does not catch up, with some configuration can get considerable results as it has done. Moreover, I think it was a better choice to go for the pure VLM model and discard any "black box" alternatives. 
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -142,7 +142,7 @@ Although both workflows share similarities in their procedure and results return
 The target detection went through progressively changing and modifying parts of the BentoML server script to achieve better performance. Reason why it is vital to mention the structure of the service, this is what the server is made of and its functionality progressions over time. 
 
 \subsection{BentoML service class - VLMServiceIsaac}
-Responsible for loading the VLM pre-trained instance and specific processor, running in the GPU, I decided to deal with \textit{torch.float16 dtype} to balance performance and stability. I also experimented with sending the API calls to the CPU and setting the \textit{dtype} to \textit{torch.float32}, but due to the optimization of Bento in the GPU, the result were always time-outs even if float32 promised better results.
+Responsible for loading the VLM pre-trained instance and specific processor, running in the GPU, I decided to go with \textit{torch.float16 dtype} to balance performance and stability. I also experimented with sending the API calls to the CPU and setting the \textit{dtype} to \textit{torch.float32}, but due to the optimization of Bento in the GPU, the result were always time-outs even if float32 promised better results.
 
 This class also has some functions for filtering the VLM hallucinations, as the small size model often fails and returns disparate values. Depending on the desired target type's size, it will consider some dimension limits to discard hallucinations. This hallucination filters takes the \textit{bounding box} of the object and compare its viability, that bounding box consists of a rectangular region which embodies the object. Consisting of coordinate points $y_{min}$, $y_{max}$, $x_{min}$ and $x_{max}$.
 
@@ -162,13 +162,13 @@ Then there is the main function \textit{infer} which serves as as the bridging b
 	]
 \end{lstlisting}
 
-The prompt the service receives has been changes several times, each time to the overall target detection logic. This has been the end result: 
+The prompt the service receives has been changed several times, each time adapting to the overall target detection logic. This has been the end result: 
 
 \begin{lstlisting}[
 	float=ht,
 	style=python_pro_black,
 	language=Python, 
-	caption={Custom prompt the VLM receives, indicating what to detect, what to return and the format of the returned data},
+	caption={Custom prompt the VLM receives, indicating what to detect, what to return and the format of the returned data.},
 	morekeywords={role, content, type, image, text}]
 	prompt = (
 	f"Locate the {instruction}. I have marked its exact color center with a yellow square. "
@@ -179,7 +179,7 @@ The prompt the service receives has been changes several times, each time to the
 	)
 \end{lstlisting}
 
-The instruction is the target object to detect in the image, and the yellow square helping technique is highly related to the computer vision section \ref{sec:cv} next seen in the documentation. The other lines of the prompt consist of helping lines to ensure the VLM focuses on the desired target and the format it must return the target coordinates. Normalized \textit{bounding boxes} to be filtered with the previous hallucination method. The next lines of the function are dedicated to the call preparation and output parsing to clean the noise.
+The instruction is the target object to detect in the image, and the yellow square helping technique is highly related to the computer vision section \ref{sec:cv} next to see in the documentation. The other lines of the prompt consist of helping lines to ensure the VLM focuses on the desired target and the format it must return the target coordinates. Normalized \textit{bounding boxes} to be filtered with the previous hallucination method. The next lines of the function are dedicated to the call preparation and output parsing to clean the noise.
 
 \subsection{Evolution of detection functions}
 The second part of the script consists of the detection function that will be called in order to perform the target detection, and it's the part where there have been the most changes depending on the approach I have followed. 
@@ -187,7 +187,7 @@ The second part of the script consists of the detection function that will be ca
 \begin{itemize}
 	\item \textbf{ground}: function used in the first server scripts for the very basic environments. The main difference between this function and its successor is that this simpler approach just detects a single target in the given image, while the following detects all of the possible objects and then filters to get the target. I used this function for the environments from the beginning where there was not so much difficulty, but I decided to change it for the more complex environments where it showed a catastrophic performance when dealing with more objects because it always returned hallucinations or mismatched the target object. 
 	
-	\item \textbf{multi\_ground}: this second and definitive detection function uses more sophisticated techniques and was used for the final multi-agents scenarios, showing much better performance than the previous. Depending of the target type, it uses additional helping prompts and uses them to test different coordinate predictions to then get the median of those coordinates as final prediction. I chose the median instead of the average to deal better with those hallucination outliers. Those custom prompts help changing the 'subject' of the prompt (basically being the target described with different names) so the model can have a broader idea of what he might be asked to detect. Those custom prompts will be found in the appendix \ref{code:custom_prompts}. 
+	\item \textbf{multi\_ground}: this second and definitive detection function uses more sophisticated techniques and was used for the final multi-agents scenarios, showing much better performance than the previous. Depending of the target type, it uses additional helping prompts and uses them to test different coordinate predictions to then get the median of those coordinates as final prediction. I chose the median instead of the average to deal better with those hallucination outliers. Those custom prompts help changing the 'subject' of the prompt (basically being the target described with different names) so the model can have a broader idea of what he might be asked to detect. Those custom prompts will be found in the appendix section \ref{code:custom_prompts}. 
 \end{itemize}
 
 The BentoML created service will be run and interacted with inside the robotic environment simulator for the target detection tasks. In order to mount the service just need to run the following command \ref{code:runbento}: 
@@ -196,19 +196,19 @@ The BentoML created service will be run and interacted with inside the robotic e
 	float=h,
 	style=python_pro_black,
 	language=Python, 
-	caption={Command to start the created VLM service}, 
+	caption={Command to start the created VLM service.}, 
 	label={code:runbento},
 	morekeywords={role, content, type, image, text}]
 	bentoml serve server_bento:VLMServiceIsaac --port 8000 --reload
 \end{lstlisting}
 
 \subsection{Task definition}
-The target detection task, reduced to the basic, consists of calling the VLM service with API calls selecting the target to be the detected and wait for its response to get the target coordinates approximation in a JSON format. I decided to store the coordinates in a file for re-usability and modularity for other scripts/tasks. Although it is the VLM the one getting the coordinates predictions, it is run inside the IsaacSim simulator, so I had to adapt the capturing logic to the camera properties of the framework. Among the properties I had to take into account:
+The target detection task, reduced to the basic, consists of calling the VLM service with API calls selecting the target to be the detected and wait for its response to get the target coordinates approximation in a JSON format. I decided to store the coordinates in a file for re-usability and modularity for other scripts/tasks. Although it is the VLM the one getting the coordinates predictions, it is run inside the Isaac Sim simulator, so I had to adapt the capturing logic to the camera properties of the framework. Among the properties I had to take into account I could list the following:
 
 \begin{itemize}
 	\item \textbf{Display resolution}: display dimensions of the screen I work with, necessary to calculate projection and unprojection functions, \texttt{(1280, 720)}.
 	
-	\item \textbf{Focal length}: \texttt{(18.14764 * 1280) / 20.955} hard-coded camera property which servers for defining the camera zoom movement. The higher it is the narrower view the camera will have, while the lower the wider \cite{nikonFocalLength}.
+	\item \textbf{Focal length}: \texttt{(18.14764 * 1280) / 20.955} hard-coded camera property which serves for defining the camera zoom movement. The higher it is the narrower view the camera will have, while the lower the wider \cite{nikonFocalLength}.
 	
 	\begin{figure}[H]
 		\centering
@@ -222,7 +222,7 @@ The target detection task, reduced to the basic, consists of calling the VLM ser
 \end{itemize}
 
 
-\subsubsection{Procedure}
+\subsubsection{Unprojection Function Procedure}
 \label{sec:unprojection_procedure}
 
 \begin{enumerate}
@@ -253,7 +253,7 @@ The target detection task, reduced to the basic, consists of calling the VLM ser
 		
 		\item $\mathbf{T}_{cam}$ is the extrinsic transformation matrix of the camera (a $4 \times 4$ matrix encoding the rotation and translation within the simulator). Extrinsic matrices are those who position the camera in the real world/scenario, while the intrinsic are the ones used for focal and principal points \cite{Simek2012Extrinsic}. 
 		
-		\item $\mathbf{P}_{world}$ is the resulting vector containing the final $(X, Y, Z)$ coordinates in the IsaacSim global 3D coordinate system.
+		\item $\mathbf{P}_{world}$ is the resulting vector containing the final $(X, Y, Z)$ coordinates in the Isaac Sim global 3D coordinate system.
 	\end{itemize}
 	
 	\item Depending on the target being larger/smaller, I have set a stability counter to make sure the final result is a consolidation and not a random disparate value. For smaller targets such as the cubes, I have set more strict thresholds to ensure getting right the coordinates of such tiny targets while for larger objects like the platforms I have been more flexible. 
@@ -268,12 +268,12 @@ While this approach seemed correct and feasible, the results were a little bit d
 CV algorithms were the first idea that came up to me, so I decided to make a separate detection script for each target type. In the procedure, I had to deal with the other components that were part of the scenario such as the shadows of other objects and the lightning produced by the configured light source. These were the steps followed for each target case and available at its respective file:
 
 \begin{itemize}
-	\item \textbf{Cubes}: due to the tiny size of the cubes I defined a range of threshold for each color to be distinguishable from the other components of the scenario. I also converted the image to \textit{HSV} for better segmentation performance. In the case of finding the target(s), I defined the contour yellow rectangle surrounding each target, same yellow rectangle specified at the prompt the VLM receives. The initial screenshot of the cubes analysis can be found in the following image. 
+	\item \textbf{Cubes}: due to the tiny size of the cubes I defined a range of values threshold for each color to be distinguishable from the other components of the scenario. I also converted the image to \textit{HSV} for better segmentation performance. In the case of finding the target(s), I defined the contour yellow rectangle surrounding each target, same yellow rectangle specified at the prompt the VLM receives. The initial screenshot of the cubes analysis can be found in the following image. 
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/vlm_input_debug.png}
-		\caption{Raw image sent to VLM for cube analysis.}
+		\caption{Raw image captured by the camera sent to VLM for cube analysis.}
 		\label{fig:cubesraw}
 	\end{figure}
 	
@@ -321,19 +321,17 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/palette_clean.png}
-
 		\caption{Pallet detection results with CV application.}
 		\label{fig:palettesclean}
 	\end{figure}
 	
 	The key here is to try to get the center of the platform, as the objects to place on top of them are so little they may fall from the holes. The final coordinate predictions of the target will be those yellow circles near the centroid.
 	
-	\item \textbf{Robotic agents}: finally this is the task where CV struggled more to shine. In image \ref{fig:frankasraw}, there are several agents and environment components while its the robots what the VLM must target. 
+	\item \textbf{Robotic agents}: finally this is the task where CV struggled the most. In image \ref{fig:frankasraw}, there are several agents and environment components while its the robots what the VLM must target. 
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/Pasted image (2).png}
-
 		\caption{Raw image of robotic arm detection.}
 		\label{fig:frankasraw}
 	\end{figure}
@@ -353,21 +351,20 @@ CV algorithms were the first idea that came up to me, so I decided to make a sep
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=.6\textwidth]{imgs/frankas_clean.png}
-
 		\caption{Final result of the CV algorithm application to the last target detection case.}
 		\label{fig:frankasclean}
 	\end{figure}
 \end{itemize}
 
 \subsection{Helping offsets}
-While CV filter application significantly boosted the difference between ground truth target position and the VLM predictions, there was still some tendency of deviating a little on the prediction for some of the targets. While smaller VLM such as the one selected perform great for segmentation and target detection, they still struggle when returning predicted precise position coordinates. Furthermore, when dealing with small objects, the error margins may lead to imprecise predictions, reason why I decided to implement the last helping techniques of the target detection section: calibration guiding offsets. Taking as reference predictions visualized by the spawned colored-markers, I introduced a set of guiding ($x, y, z$) offsets to guide the VLM through the predictions it struggled most with. The application of the offsets basically consists of a sum of the prediction array and the offset one.
+While CV filter application significantly boosted the difference between ground truth target position and the VLM predictions, there was still some tendency of deviating a little on the prediction for some of the targets. While smaller VLM such as the one selected perform great for segmentation and target detection, they still struggle when returning predicted precise position coordinates. Furthermore, when dealing with small objects, the error margins may lead to imprecise predictions, reason why I decided to implement the last helping techniques of the target detection section: calibration guiding offsets. Taking as reference predictions visualized by some spawned colored-markers, I introduced a set of guiding ($x, y, z$) offsets to guide the VLM through the predictions it struggled most with. The application of the offsets basically consists of a sum of the prediction array and the offset one.
 
 $$\begin{bmatrix} x \\ y \\ z \end{bmatrix}_{final} = \begin{bmatrix} x \\ y \\ z \end{bmatrix}_{prediction} + \begin{bmatrix} offset_x \\ offset_y \\ offset_z \end{bmatrix}$$
 
 This simple trick enhanced the performance of the target detection alongside the computer vision algorithms to the definitive version, reaching the best performance and most accurate detections. The offsets were found by comparing the predictions to the ground truth several times and taking the ones which generalized better, they are available a the appendix at section \ref{code:offsets}.
 
-\subsection{Coordinate mapping}
-Once the VLM has obtained the coordinates of the target object inside the screenshot, the system must translate that visual information of the given image to get the actual position inside IsaacSim. I have briefly talked about the \textit{unprojection} function used before, but I must go back to it in order to explain its vitality for closing the gap between 2D and 3D coordinate mapping. The workflow in integrated using these steps:
+\subsection{Coordinate mapping} % necessary?
+Once the VLM has obtained the coordinates of the target object inside the screenshot, the system must translate that visual information of the given image to get the actual position inside Isaac Sim. I have briefly talked about the \textit{unprojection} function used before, but I must go back to it in order to explain its vitality for closing the gap between 2D and 3D coordinate mapping. The workflow in integrated using these steps:
 
 \begin{enumerate}
 	\item \textbf{Scaling}: the returned normalized coordinates ranging [0-1000] by the VLM must first be scaled up to fill the actual resolution used in the simulation. In my case, (1280, 720) as mentioned previously. 
@@ -384,7 +381,6 @@ By automating this mapping, the system effectively bridges the gap between high-
 \section{Agent Control}
 \label{sec:controllers}
 The robotic agents used throughout the development needed to have movement functionalities. Controllers with which they could use their joints to move somewhere, close their grips or do any other physical actions. In my case the robots used were the \textit{Franka arm} and the \textit{Jetbot}, one used for lifting and object manipulation purposes while the second being primarily optimized for navigation tasks (will be explained deeper in the corresponding section). For the first robot I used a pre-defined controller which worked flawlessly, but for the \textit{Jetbot} I had to manually craft one controller class as I did not find any convincing ones. Both controllers follow the same principle, having a primary function which receives ($x, y, z$) coordinates and somehow travels there. In this section of the documentation I will go over the steps and progress I made to successfully develop the control managers of both robots. 
-
 
 \subsection{RMPFlowController: the Franka Controller}
 \label{sec:franka_controller}
@@ -404,10 +400,8 @@ After importing the necessary libraries to form the controller class, I develope
 Whereas the simple import of the predefined controller initialized all the existing joints of the Franka arm, I needed to manually set the joints to their specific locations. Being the wheels and chassis. There is a function that also receives the target coordinates and travels there, however, the movement logic follows the principle of first rotating to the correct angle facing the target and then moving forward. It first calculates the difference between the error between the robot's current position and the goal coordinates ($g{x}, g{y}$), and depending on the error it spins the left or right wheel to face the goal target direction in a straight line. This is where I developed the following functions: 
 
 \begin{itemize}
-	\item \textbf{quat\_wxyz\_to\_yaw}: IsaacSim uses \textit{quaternions} ($w,x,y,z$) to represent orientations, but are hard to represent and use for programming tasks. This functions converts quaternions to angles in radians [$-\pi$, $\pi$]. I use the term \textit{yaw} to represent the rotation around the vertical Z axis). 
-	
-	$$((\theta + \pi) \pmod{2\pi}) - \pi$$ 
-	
+	\item \textbf{quat\_wxyz\_to\_yaw}: Isaac Sim uses \textit{quaternions} ($w,x,y,z$) to represent orientations, but are hard to represent and use for programming tasks. This functions converts quaternions to angles in radians [$-\pi$, $\pi$]. I use the term \textit{yaw} to represent the rotation around the vertical Z axis). 
+	$$((\theta + \pi) \pmod{2\pi}) - \pi$$ 	
 	where $\theta$ is the angle received by the function.
 	
 	\item \textbf{wrap\_to\_pi}: used for calculating the orientation error between current and target vectors and update the corresponding wheel velocity to face the target. 
@@ -417,25 +411,24 @@ Once orienting correctly and facing the target, it is time to go forward. For th
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{IsaacSim environment design}
-Once collected all the necessary components, it was time to put them all together inside a controlled simulation environment. As I had no previous experience with the framework, being \textit{Unity} the most similar experience I have had, I decided to progressively develop more and more sophisticated environments to try out my VLM integration pipeline, starting from the very simplest. The following subsections will relate my progression and evolution while adapting to the challenging learning curve IsaacSim has, detailing how I made my first scenarios, what they were made of and what techniques I applied in each. 
+\section{Isaac Sim environment design}
+Once collected all the necessary components, it was time to put them all together inside a controlled simulation environment. As I had no previous experience with the framework, being \textit{Unity} the most similar experience I have had, I decided to progressively develop more and more sophisticated environments to try out my VLM integration pipeline, starting from the very simplest. The following subsections will relate my progression and evolution while adapting to the challenging learning curve Isaac Sim has, detailing how I made my first scenarios, what they were made of and what techniques I applied in each. 
 
 \subsection{Components of the scenarios}
 Before I start, I think it is a better idea to first list the components the scenarios have made with and talk about their properties, and then just say what each scenario is composed of.
 
 \subsubsection{Franka Panda - Robotic Arm} 
 \label{sec:franka}
-The robotic arm which can be found at inside the \texttt{Assets/Robots} path in the asset explorer tab inside the editor, is the digital representation of the real Franka Emika Panda robot arm \cite{FrankaInfo}. Originally it is composed of 7 axes and is used for manipulation tasks, being able to grasp objects up to 3.0kg and the robot itself weighs around 18kg. In addition to the original seven joints, IsaacSim adds the end-effector to the robot, basically being the "fingers" of the arm see figure \ref{fig:franka_arm}. The names of the joints are the following: \textit{panda\_finger\_joint1, panda\_finger\_joint2, panda\_joint1, panda\_joint2, panda\_joint3, panda\_joint4, panda\_joint5, panda\_joint6} and finally \textit{panda\_joint7}.´
+The robotic arm which can be found at inside the \texttt{Assets/Robots} path in the asset explorer tab inside the editor, is the digital representation of the real Franka Emika Panda robot arm \cite{FrankaInfo}. Originally it is composed of 7 axes and is used for manipulation tasks, being able to grasp objects up to 3.0kg and the robot itself weighs around 18kg. In addition to the original seven joints, Isaac Sim adds the end-effector to the robot, basically being the "fingers" of the arm see figure \ref{fig:franka_arm}. The names of the joints are the following: \textit{panda\_finger\_joint1, panda\_finger\_joint2, panda\_joint1, panda\_joint2, panda\_joint3, panda\_joint4, panda\_joint5, panda\_joint6} and finally \textit{panda\_joint7}.´
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=.5\textwidth]{imgs/franka_arm.png}
-
 	\caption{Image of the Franka arm USD, with the 7 original joints plus the added fingers.}
 	\label{fig:franka_arm}
 \end{figure}
 
-This robot will serve as the manipulative agent responsible of lifting and placing objects in the desired positions of the environment. Furthermore it will need a consistent controller for articulating all of its joints for a correct coordination, its respective controller development has been mentioned in section \ref{sec:franka_controller}. 
+This robot will serve as the manipulative agent responsible of lifting and placing objects in the desired positions of the environment. Furthermore, it will need a consistent controller for articulating all of its joints for a correct coordination, its respective controller development has been mentioned in section \ref{sec:franka_controller}. 
 
 While directly importing the USD file from the asset explorer does include the necessary collisions and rigid body physics for all of its joints, there is a single inconvenient I found from the default importing and I had to re-configure for a better performance. I got the idea from YouTube tutorial \cite{FrankaConvexDecomposition}. Basically, as Franka will have to manipulate and lift/place complex shaped objects, it will need capable finger physics, and the pre-defined finger physics did not perform well enough. The original physics approach of the finger joints was \textit{convexHull}, approach which while being the fastest to calculate and most stable showed inaccuracy when lifting the smallest objects. When trying to make contact with a small object such as a cube, it would collapse with the cube's collision box constantly due to the fingers' big hit boxes, making unfeasible to grasp it correctly. That is why I chose to transition to the \textit{convexDecomposition} physics for the fingers, inspired on the mentioned tutorial. This method decomposes the finger itself into multiple smaller pieces, having each its own convex hit box. This approach worked much better as we were talking about a single and more awkward collision finger compared to a much more sophisticated multiple hit box chain which replicates much better the collision system of a real arm. I got much better results with this technique in the lifting stages of the pipeline. 
 
@@ -446,14 +439,12 @@ The Jetbot configuration was much more friendlier, this agent has no complex joi
 	\centering
 	\includegraphics[width=.5\textwidth]{imgs/jetbot.png}
 
-	\caption{Image of the Jetbot arm USD.}
+	\caption{Image of the Jetbot USD.}
 	\label{fig:jetbot}
 \end{figure}
 
 \subsubsection{Cubes}
-The cubes will be the objects which will be picked and lifted by the robotic arms and placed in the corresponding places. I had doubts on how to create the cubes, whether to load them from the asset store or create them by myself, and apart from that, there are several ways one can create cubes inside IsaacSim. I finally went for creating them manually for more configuration freedom, and created them using \textit{meshes}. Even if perhaps was not necessary to create them using this class as meshes are made of thousands of little polygons and it would be enough to use a \textit{geometry prim}, I still wanted to experiment with the more complex class and it was personally easier to configure. 
-
-Moreover, I made all cubes the same size \texttt{[0.05, 0.05, 0.05]}, small enough to be easily manipulable. However, I did experiment with different rotations in more advanced scenarios. 
+The cubes will be the objects which will be picked and lifted by the robotic arms and placed in the corresponding places. I had doubts on how to create the cubes, whether to load them from the asset store or create them by myself, and apart from that, there are several ways one can create cubes inside Isaac Sim. I finally went for creating them manually for more configuration freedom, and created them using \textit{meshes}. Even if perhaps was not necessary to create them using this class as meshes are made of thousands of little polygons and it would be enough to use a \textit{geometry prim}, I still wanted to experiment with the more complex class and it was personally easier to configure. Moreover, I made all cubes the same size \texttt{[0.05, 0.05, 0.05]}, small enough to be easily manipulable. However, I did experiment with different rotations in more advanced scenarios. 
 
 \subsubsection{Pallets}
 On the other hand, the pallets will be where the cubes will be placed, they were all loaded from the asset explorer tab, which consists of thousands of objects that can be used in the environments. As seen in figure \ref{fig:palettesraw}, I decided to experiment with both different color and shapes. Not only does each platform has a distinct color, but it also has a different hole pattern. Which will make the detection and placement tasks a little bit trickier. 
@@ -468,13 +459,11 @@ Cameras are also part of the USD type, they are acquired from camera pins by the
 	
 	\item \textbf{Horizontal aperture}: width length of the camera sensor. 
 	
-	\item \textbf{Vertical aperture}: height length of the camera. 
-	
-	
+	\item \textbf{Vertical aperture}: height length of the camera. 	
 \end{itemize}
 
 \subsubsection{Lights}
-Light enables a clearer and more realistic view of the scenario, without adding any it would all be black and cameras would not be able to see anything. The light component inside IsaacSim is composed of two attributes. The intensity being a numeric value to represent the strength of the light and the color RGB value \cite{SimLights}. I have kept the default values for both parameters in all my environments. 
+Light enables a clearer and more realistic view of the scenario, without adding any it would all be black and cameras would not be able to see anything. The light component inside Isaac Sim is composed of two attributes. The intensity being a numeric value to represent the strength of the light and the color RGB value \cite{SimLights}. I have kept the default values for both parameters in all my environments. 
 
 Apart from that, there are two light configurations inside the simulator. The \textit{direct light} which is the one I have used, shines towards the negative Z-direction, often pointing to the ground from a certain angle. While the second is the \textit{dome light}, which as light beams coming from all directions forming a more uniform lighting. Depending on the configuration chosen, shadows will be formed in one way or another, but I decided to not over-complicate and go for the basic and direct light choice.
 
@@ -487,9 +476,8 @@ All of the scenarios will include physical properties to ensure real verisimilit
 	\item \textbf{Rigid body}: this other property brings Newton's principles to the objects in the scenario. Applying mass, inertia and gravity laws to them. This property will enable more realistic object behaviors in the physical tasks required in the scenario.  
 \end{enumerate}
 
-
 \subsection{First scenarios}
-Once I collected all the pieces that would build my different scenarios, I started by developing single agent environments. Individual cases that would then form the final workflow. The very first scenarios consisted of trying out different IsaacSim tutorials, following their official documentation to create the most basic environments, but I do not consider them worthy to mention. Let's jump straight to the interesting scenarios development. 
+Once I collected all the pieces that would build my different scenarios, I started by developing single agent environments. Individual cases that would then form the final workflow. The very first scenarios consisted of trying out different Isaac Sim tutorials, following their official documentation to create the most basic environments, but I do not consider them worthy to mention. Let's jump straight to the interesting scenarios development. 
 
 \subsubsection{First individual Franka environment}
 This was the first environment where I really put my VLM workflow into test. The setup is basic, a single Franka arm and three different cubes. What I actually wanted to test here was that both my VLM detection and Franka controller worked well. Nevertheless, as this was one of my first experiments, my pipeline was not fully advanced and sophisticated yet. I still had not implemented the computer vision filters, so the VLM purely relied on itself. What I wanted to achieve with this individual environment was the certainty that my pipeline was able to orchestrate the whole VLM and Franka lifting movement, and the environment would end with the robot raising the target cube. This was my workflow at that time, simple yet successful.
@@ -509,9 +497,9 @@ This was the first environment where I really put my VLM workflow into test. The
 	\caption{First practical scenario, consisting of a single Franka arm and three cubes of different colors. Same size, same orientation. }
 \end{figure}
 
-At this stage of the development, I struggled a lot with the physics engine integrated into the simulator. Such delicate coordination tasks usually returned \textit{warm start} errors, consisting of synchronization issues between the Python interpreter and the physics engine of IsaacSim. The error arose when I would try to run a function when the physics simulation was still running, concept that would lead to total collapse of both the running script and the simulator. 
+At this stage of the development, I struggled a lot with the physics engine integrated into the simulator. Such delicate coordination tasks usually returned \textit{warm start} errors, consisting of synchronization issues between the Python interpreter and the physics engine of Isaac Sim. The error arose when I would try to run a function when the physics simulation was still running, concept that would lead to total collapse of both the running script and the simulator. 
 
-The solution was to perfectly synchronize the python interpreter and the physics renderer, and the best answer I found was the use of the \textit{asyncio} Python library. This library is specialized on asynchronous calls, able to coordinate the calls between the physics engine and python functions. Reason why I decided to inject \textit{async def} functions able to pause the execution using \textit{await} while the other tasks were running. This trick of waiting until the other tasks finished running enabled me to surpass the strict physics engine restrictions and orchestrate a more fluent workflow. 
+The solution was to perfectly synchronize the Python interpreter and the physics renderer, and the best answer I found was the use of the \textit{asyncio} Python library. This library is specialized on asynchronous calls, able to coordinate the calls between the physics engine and python functions. Reason why I decided to inject \textit{async def} functions able to pause the execution using \textit{await} while the other tasks were running. This trick of waiting until the other tasks finished running enabled me to surpass the strict physics engine restrictions and orchestrate a more fluent workflow. 
 
 \subsubsection{Jetbot controller tryout environment}
 I also crafted a super basic empty environment with just the Jetbot agent to try out the controller (section \ref{sec:jetbot_controller}) I made. It was so simple just containing a basic floor, lighting and the agent, where I would arbitrarily introduce coordinates and test if the robot would travel there successfully. These first two where perhaps the most fundamental environments as would serve as the pillars to the more advanced ones that would come later on, as without these foundations integrating the multi-agent logic would not have been feasible. 
@@ -570,7 +558,7 @@ After explaining the workflow the agents of the environment must achieve, I will
 	float=ht,
 	style=python_pro_black,
 	language=Python, 
-	caption={[Multi-agent orchestration for blue cube] Example of orchestrating call inside the main script, composed by all the modular functions created and introducing the target colors; this call brings the blue cube to the black platform}, 
+	caption={[Multi-agent orchestration for blue cube] Example of orchestrating call inside the main script, composed by all the modular functions created and introducing the target colors; this call brings the blue cube to the black platform.}, 
 	label={code:mainiter},
 	morekeywords={role, content, type, image, text, await, async}
 	]
@@ -588,9 +576,9 @@ Let's now go over the procedure hidden beyond those functions, inspired on the w
 \begin{enumerate}
 	\item \textbf{move\_first\_franka("blue")}: corresponds to the first step node of the graph. Step which consists of detecting the target cube location and grasping the cube, finishing when the arm lifts the cube up to a safe place. At this point of the development the VLM uses the \textit{ground\_multi} method. Where among all of the objects appearing in the screenshot sent to the model, it must be able to detect and distinguish the target one. For a fact, image \ref{fig:cubesraw} is the one sent to the model at this step. After successfully detecting the location of the target passing the threshold counter, that position data is saved and loaded for the next stage. The movement phase is decomposed into descending into approaching the object, then descending to a safe contact height, closing the grips and lifting it up to a safe height.
 	
-	\item \textbf{place\_on\_jetbot}: (step 2 of the graph) once the cube has been lifted is time to place it on top of the Jetbot getting its position. As the Jetbot itself has a complex top surface as seen in image \ref{fig:jetbot}, I placed a custom little platform for a better placing performance. That platform has the necessary physics to not fall of when the agent accelerates. The placing movement consists of descending, opening the grips and lifting the arm once again, all of these must take into account not collisioning with the robot's structure, as it would collapse the whole coordination task.  
+	\item \textbf{place\_on\_jetbot}: (step 2 of the graph) once the cube has been lifted is time to place it on top of the Jetbot getting its position. As the Jetbot itself has a complex top surface as seen in image \ref{fig:jetbot}, I placed a custom little platform for a better placing performance. That platform has the necessary physics to not fall of when the agent accelerates. The placing movement consists of descending, opening the grips and lifting the arm once again, all of these must take into account not to collide with the robot's structure, as it would collapse the whole coordination task.  
 	
-	\item \textbf{asyncio.sleep(1.0)}: now I make an asynchronous call to relax the python interpreter, this is a security measure to control the synchronization errors. 
+	\item \textbf{asyncio.sleep(1.0)}: now I make an asynchronous call to relax the Python interpreter, this is a security measure to control the synchronization errors. 
 	
 	\item \textbf{move\_jetbot(right\_json)}: corresponding to node 3, I load the right franka arm predicted position captured in screenshot \ref{fig:frankasclean}. And travel close enough to the robot to not collapse and facilitate the lifting task, using the custom Jetbot controller functions (\ref{sec:jetbot_controller}).
 	
@@ -620,7 +608,7 @@ Figure \ref{fig:alternativescenario} shows the different alternatives I have pre
 	\centering
 	\includegraphics[width=.45\textwidth]{imgs/Screenshot from 2026-05-03 19-33-37.png}
 
-	\caption{Alternative scenario where each cube shows a different position configuration}.
+	\caption{Alternative scenario where each cube shows a different position configuration.}
 	\label{fig:alternativescenario}
 \end{figure}
 
@@ -635,7 +623,7 @@ There were two things I wanted to experiment with reinforcement learning, the de
 Although the idea is straightforward and it seems simple, this has been the part of the project where I spent the most time and obtained the most confusing results. The following subsections will relate my progression throughout the RL experimentation process of the project. 
 
 \subsection{Lift policy training}
-The training framework used was no other than IsaacLab, which fortunately included training scripts for the Franka arm lifting task I wanted to tackle. Furthermore, there were alternative pick place and place policy training scripts, yet not supported for the Franka robotic arms. Inside the corresponding path, there are three different training approach scripts depending on how do you want to focus the lift task.
+The training framework used was no other than Isaac Lab, which fortunately included training scripts for the Franka arm lifting task I wanted to tackle. Furthermore, there were alternative pick place and place policy training scripts, yet not supported for the Franka robotic arms. Inside the corresponding path, there are three different training approach scripts depending on how do you want to focus the lift task.
 
 \begin{enumerate}
 	\item \textbf{joint\_pos\_env\_cfg.py}: (joint position control) is the most basic and default approach. It works by learning the correct weights to articulate each of the joints of the robot, learning the angle which they must adopt in order to move the arm correctly. While once learned a good policy it is the best choice, it can be extremely hard to get the right coordination weights of the network. 
@@ -659,7 +647,7 @@ The \textit{vlm\_data} variable contains all the information encapsulated with t
 	float=ht,
 	style=python_pro_black,
 	language=Python, 
-	caption={Custom training approach script snippet},
+	caption={Custom training approach script snippet.},
 	label={code:rlclosescript},
 	morekeywords={role, content, type, image, text}]
 	if vlm_data:
@@ -683,13 +671,13 @@ I trained it for 25M steps and using the parameter configuration that can be fou
 	float=ht, 
 	style=python_pro_black,
 	language=Python, 
-	caption={Custom training command},
+	caption={Custom training command.},
 	label={code:rlruntraining},
 	morekeywords={role, content, type, image, text}]
 	scripts/reinforcement_learning/sb3/train.py --task Isaac-Lift-Cube-Franka-v0 --num_envs 4096 --headless
 \end{lstlisting}
 
-Where the path to the training script inside the IsaacLab directory specified alongside the name of the task to train, the number of parallel heads and the training interface mode. In my case headless to optimize time. And the command for visualizing the training is pretty similar. 
+Where the path to the training script inside the Isaac Lab directory specified alongside the name of the task to train, the number of parallel heads and the training interface mode. In my case headless to optimize time. And the command for visualizing the training is pretty similar. 
 
 \begin{lstlisting}[
 	float=ht, 
