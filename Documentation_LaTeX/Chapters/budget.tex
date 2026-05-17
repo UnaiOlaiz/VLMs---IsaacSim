@@ -1,0 +1,70 @@
+This section breaks down the economic investment required to develop this project. The budget is split into human resource costs, hardware/software acquisitions, and a final estimation of the consolidated project cost. Because the architectural development relies heavily on open-source platforms, physical material acquisitions were optimized, focusing the budget allocation on development time and localized cloud compute usage, however, this project has required a considerable hardware acquisition investment. 
+
+\section{Human Resources Planning}
+The project has been entirely developed by the student, who has acted as the only project developer, assuming full responsibility for both the technical and organizational aspects required for its completion. The project developer has carried out all phases of the project, including the initial theoretical research, multi-agent environment design within simulation platforms, model integration, implementation of unprojection logic, and writing the final documentation. 
+
+Complementing the development process, the project director maintained academic supervision from start to end. Acting as a mentor, the director offered essential methodological support while monitoring the technical integrity and logical flow of the study. This supervision also involved coordinating regular review meetings, providing actionable feedback, and helping delineate a realistic boundary for the project's objectives. Table \ref{tab:budget_labor} provides a breakdown of the estimated workload and cost per role.
+
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabular}{l c c r}
+		\toprule
+		\textbf{Role} & \textbf{Hourly Rate (€/h)} & \textbf{Estimated Hours (h)} & \textbf{Total Cost (€)} \\
+		\midrule
+		Project Director  & 70.00 € & 25h  & 1,750.00 € \\
+		Project Developer & 50.00 € & 330h & 16,500.00 € \\
+		\midrule
+		\textbf{Total cost} & -- & \textbf{355h} & \textbf{18,250.00 €} \\
+		\bottomrule
+	\end{tabular}
+	\caption{Human Resource Cost breakdown.}
+	\label{tab:budget_labor}
+\end{table}
+
+\section{Technical and Material Costs}
+The developmental infrastructure for this project relied primarily on the engineer's personal workstation and open-source frameworks, effectively eliminating expenditures regarding proprietary software licenses or supplementary physical hardware. Nevertheless, given the high computational demands imposed by simulating high-fidelity physical environments, maintaining multi-agent cooperative frameworks, and running local SOTA models, purchasing a competitive GPU was necessary for specific intensive workloads. The operational and material expenses calculated for this research are categorized as follows:
+
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabularx}{\textwidth}{l c X}
+		\toprule
+		\textbf{Item} & \textbf{Estimated Cost (€)} & \textbf{Comments} \\
+		\midrule
+		GPU & 180.00 € & Second-hand 3060 12GB VRAM GPU. \\
+		\midrule
+		RAM Memory & 40.00 € & Additional RAM memory to run the heavy processes more comfortably, they were also second hand. \\
+		\midrule
+		Power supply & 80.00 € & The original power supply of my equipment was not powerful enough to run the new GPU. \\
+		\midrule
+		Software licenses & 0.00 € & All tools used were free and open-source (NVIDIA Isaac Sim, Hugging Face). \\
+		\midrule
+		Local storage & 0.00 € & Everything was stored locally or in free cloud services such as GitHub. \\
+		\midrule
+		\textbf{Total cost} & \textbf{300.00 €} & -- \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Technical and material costs.}
+	\label{tab:budget_materials}
+\end{table}
+
+\section{Estimated Project Budget Summary}
+Table \ref{tab:budget_summary} summarizes the approximate total cost of the project. By combining the material acquirement with the human resources costs. 
+
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabular}{l r}
+		\toprule
+		\textbf{Category} & \textbf{Amount (€)} \\
+		\midrule
+		Human resources & 18,250.00 € \\
+		Technical and Material Costs & 300.00 € \\
+		\midrule
+		\textbf{Total project cost} & \textbf{18,550.00 €} \\
+		\bottomrule
+	\end{tabular}
+	\caption{Consolidated project budget summary.}
+	\label{tab:budget_summary}
+\end{table}

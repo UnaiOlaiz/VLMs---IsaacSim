@@ -49,6 +49,7 @@ bookmarks=true]{hyperref}
 \RequirePackage{caption}
 \RequirePackage{pgfgantt}
 \RequirePackage{rotating}
+\RequirePackage{xurl}
 
 
 % TO NOT RAISE CHINESE ERRORS

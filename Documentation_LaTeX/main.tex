@@ -78,15 +78,6 @@
 	
 	\frontmatter % writes down roman letters + other things, compulsory before the index page
 	
-	% Acknowledgements section
-	\section*{Acknowledgments}
-	\addcontentsline{toc}{chapter}{Acknowledgments}
-	I must state I did not know anything about vision language models before selecting what would be my final degree project, and that I felt quite insecure about the choice when I was told that there had not been any previous work on the subject before. Nevertheless, my tutor Iñaki Vázquez Gómez was the one who encouraged me to take on this challenge. Challenge which has not been easy at all, as it has been my first experiences working with these new technologies but based on Iñaki's organized workflow and consistent planning structure, has been much easier to tackle. 
-	
-	This section aims to emphasize on the constant support my tutor has given me throughout the development process, and I would like to thank him for all the tutoring he gave me in previous subjects of the grade which served as the essential foundation for this project. 
-	
-	Furthermore, I would also like to thank the University of Deusto for providing all the resources to carry out the research and the education received during these years, which have been a fundamental pillar upon the project built. Finally I would like to thank my family and colleagues for the encouragement and patience, their support allowed me to successfully achieve the challenge the final degree project is. 
-	
 	% Custom abstract + key words loading
 	\customAbstract{
 		This project proposes the development and implementation of a Multi-Agent system integrated with Vision Language Models (VLMs) for the execution of cooperative robotic tasks within a simulated NVIDIA Isaac Sim environment. 
@@ -112,6 +103,9 @@
 	\chapter{Planning}
 	\input{Chapters/Planning.tex}
 	
+	\chapter{Budget}
+	\input{Chapters/budget.tex}
+	
 	% DONE?
 	\chapter{State of the Art}
 	\input{Chapters/SOTA}
@@ -126,7 +120,7 @@
 	\chapter{Results and Evaluation}
 	\input{Chapters/Experimentation_and_evolution.tex}
 	
-	\chapter{Ethical aspects}
+	\chapter{Ethical valoration of the project}
 	\input{Chapters/Ethical_aspects.tex}
 	
 	\chapter{Conclusions}
@@ -136,6 +130,42 @@
 	% bibliography
 	\bibliographystyle{unsrt} % bibliography properties
 	\bibliography{bibliography} % my blibliography file
+	
+	% Acknowledgements section
+	\chapter*{Acknowledgments}
+	\addcontentsline{toc}{chapter}{Acknowledgments}
+	I must state I did not know anything about vision language models before selecting what would be my final degree project, and that I felt quite insecure about the choice when I was told that there had not been any previous work on the subject before. Nevertheless, my tutor Iñaki Vázquez Gómez was the one who encouraged me to take on this challenge. Challenge which has not been easy at all, as it has been my first experiences working with these new technologies but based on Iñaki's organized workflow and consistent planning structure, has been much easier to tackle. 
+	
+	This section aims to emphasize on the constant support my tutor has given me throughout the development process, and I would like to thank him for all the tutoring he gave me in previous subjects of the grade which served as the essential foundation for this project. 
+	
+	Furthermore, I would also like to thank the University of Deusto for providing all the resources to carry out the research and the education received during these years, which have been a fundamental pillar upon the project built. Finally I would like to thank my family and colleagues for the encouragement and patience, their support allowed me to successfully achieve the challenge the final degree project is. 
+	
+	\chapter*{Acronyms and Abbreviations}
+	\addcontentsline{toc}{chapter}{Acronyms and Abbreviations}
+	The following stand for all the abbreviations and acronyms used throughout the documentation.
+	
+	\begin{itemize}
+		\item \textbf{VLM}: Vision Language Model
+		\item \textbf{LLM}: Large Language Model
+		\item \textbf{LMM}: Large Multimodal Models
+		\item \textbf{SOTA}: State-of-the-Art
+		\item \textbf{RL}: Reinforcement Learning
+		\item \textbf{VLA}: Vision Language Action Model
+		\item \textbf{CLIP}: Contrastive Language Image Pretraining
+		\item \textbf{ViT}: Vision Transformer
+		\item \textbf{CNN}: Convolutional Neural Network
+		\item \textbf{RNN}: Recurrent Neural Network
+		\item \textbf{PPO}: Proximal Policy Optimization
+		\item \textbf{MEDE}: Mean Euclidean Distance Error
+		\item \textbf{CV}: Computer Vision
+		\item \textbf{USD}: Universal Scene Description
+		\item \textbf{JSON}: JavaScript Object Notation
+		\item \textbf{GPU}: Graphics Processing Unit
+		\item \textbf{DL}: Deep Learning
+		\item \textbf{MARL}: Multi Agent Reinforcement Learning
+		
+	\end{itemize}
+	% \input{Chapters/acronyms.tex}
 	
 	% appendix
 	\appendix 
