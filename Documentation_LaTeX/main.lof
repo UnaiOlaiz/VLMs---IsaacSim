@@ -48,9 +48,9 @@
 \contentsline {figure}{\numberline {6.19}{\ignorespaces First multi agent environment, consisting of two Franka arms, a Jetbot robot and some cubes and platforms.}}{77}{figure.caption.268}%
 \contentsline {figure}{\numberline {6.20}{\ignorespaces Alternative scenario where each cube shows a different position configuration.}}{78}{figure.caption.270}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {7.1}{\ignorespaces Tensorboard \textit {rollout/ep\_rew\_mean} graph progression over near 50M steps.}}{88}{figure.caption.321}%
-\contentsline {figure}{\numberline {7.2}{\ignorespaces Tensorboard \textit {train/explained\_variance} graph progression over near 50M steps.}}{89}{figure.caption.322}%
-\contentsline {figure}{\numberline {7.3}{\ignorespaces Tensorboard \textit {train/entropy\_loss} graph progression over near 50M steps.}}{89}{figure.caption.323}%
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Tensorboard \textit {rollout/ep\_rew\_mean} graph progression over near 50M steps.}}{90}{figure.caption.328}%
+\contentsline {figure}{\numberline {7.2}{\ignorespaces Tensorboard \textit {train/explained\_variance} graph progression over near 50M steps.}}{90}{figure.caption.329}%
+\contentsline {figure}{\numberline {7.3}{\ignorespaces Tensorboard \textit {train/entropy\_loss} graph progression over near 50M steps.}}{90}{figure.caption.330}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

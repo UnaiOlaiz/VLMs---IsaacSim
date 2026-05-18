@@ -1,4 +1,4 @@
-This section breaks down the economic investment required to develop this project. The budget is split into human resource costs, hardware/software acquisitions, and a final estimation of the consolidated project cost. Because the architectural development relies heavily on open-source platforms, physical material acquisitions were optimized, focusing the budget allocation on development time and localized cloud compute usage, however, this project has required a considerable hardware acquisition investment. 
+This section breaks down the economic investment required to develop this project. The budget is split into human resource costs, hardware asset acquisition, and a final estimation of the consolidated project cost. The architectural development relies heavily on open-source platforms, although some physical materials were purchased for optimizing the performance and make the project feasible. However, instead of putting a full purchase cost, an estimated amortization was calculated taking into account the real price and the project's development process. 
 
 \section{Human Resources Planning}
 The project has been entirely developed by the student, who has acted as the only project developer, assuming full responsibility for both the technical and organizational aspects required for its completion. The project developer has carried out all phases of the project, including the initial theoretical research, multi-agent environment design within simulation platforms, model integration, implementation of unprojection logic, and writing the final documentation. 
@@ -23,34 +23,36 @@ Complementing the development process, the project director maintained academic 
 \end{table}
 
 \section{Technical and Material Costs}
-The developmental infrastructure for this project relied primarily on the engineer's personal workstation and open-source frameworks, effectively eliminating expenditures regarding proprietary software licenses or supplementary physical hardware. Nevertheless, given the high computational demands imposed by simulating high-fidelity physical environments, maintaining multi-agent cooperative frameworks, and running local SOTA models, purchasing a competitive GPU was necessary for specific intensive workloads. The operational and material expenses calculated for this research are categorized as follows:
+The developmental infrastructure for this project relied primarily on the engineer's personal workstation and open-source frameworks, effectively eliminating expenditures regarding proprietary software licenses. Nevertheless, given the high computational demands imposed by simulating high-fidelity physical environments and running local SOTA models, specific hardware components were upgraded. 
+
+In accordance with standard accounting practices, these hardware items are treated as fixed investments based on an estimated 3-year hardware lifespan, applied strictly across the 6 months of active project execution. The calculated material expenses are detailed in table \ref{tab:budget_materials} below:
 
 \begin{table}[H]
 	\centering
 	\small
-	\begin{tabularx}{\textwidth}{l c X}
+	\begin{tabularx}{\textwidth}{l c c X}
 		\toprule
-		\textbf{Item} & \textbf{Estimated Cost (€)} & \textbf{Comments} \\
+		\textbf{Item} & \textbf{Base Cost (€)} & \textbf{Amortization (6 months)} & \textbf{Comments} \\
 		\midrule
-		GPU & 180.00 € & Second-hand 3060 12GB VRAM GPU. \\
+		GPU & 180.00 € & 30.00 € & Second-hand 3060 12GB VRAM GPU. \\
 		\midrule
-		RAM Memory & 40.00 € & Additional RAM memory to run the heavy processes more comfortably, they were also second hand. \\
+		RAM Memory & 40.00 € & 6.67 € & Additional second-hand RAM modules for processing. \\
 		\midrule
-		Power supply & 80.00 € & The original power supply of my equipment was not powerful enough to run the new GPU. \\
+		Power supply & 80.00 € & 13.33 € & Upgraded PSU to support the new GPU power load. \\
 		\midrule
-		Software licenses & 0.00 € & All tools used were free and open-source (NVIDIA Isaac Sim, Hugging Face). \\
+		Software licenses & 0.00 € & 0.00 € & Free and open-source tools (NVIDIA Isaac Sim, Hugging Face). \\
 		\midrule
-		Local storage & 0.00 € & Everything was stored locally or in free cloud services such as GitHub. \\
+		Local storage & 0.00 € & 0.00 € & Data stored locally and on free cloud services (GitHub). \\
 		\midrule
-		\textbf{Total cost} & \textbf{300.00 €} & -- \\
+		\textbf{Total cost} & -- & \textbf{50.00 €} & -- \\
 		\bottomrule
 	\end{tabularx}
-	\caption{Technical and material costs.}
+	\caption{Technical and material amortized costs.}
 	\label{tab:budget_materials}
 \end{table}
 
 \section{Estimated Project Budget Summary}
-Table \ref{tab:budget_summary} summarizes the approximate total cost of the project. By combining the material acquirement with the human resources costs. 
+Table \ref{tab:budget_summary} summarizes the consolidated total execution cost of the project by combining the prorated technical material assets with the human resources expenditures.
 
 \begin{table}[H]
 	\centering
@@ -60,9 +62,9 @@ Table \ref{tab:budget_summary} summarizes the approximate total cost of the proj
 		\textbf{Category} & \textbf{Amount (€)} \\
 		\midrule
 		Human resources & 18,250.00 € \\
-		Technical and Material Costs & 300.00 € \\
+		Technical and Material Costs & 50.00 € \\
 		\midrule
-		\textbf{Total project cost} & \textbf{18,550.00 €} \\
+		\textbf{Total project cost} & \textbf{18,300.00 €} \\
 		\bottomrule
 	\end{tabular}
 	\caption{Consolidated project budget summary.}

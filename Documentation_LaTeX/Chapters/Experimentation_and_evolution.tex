@@ -97,6 +97,100 @@ The reason behind the selection of this evaluation metric is its performance wit
 	\label{tab:franka_results}
 \end{table}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Statistical robustness analysis}
+\label{sec:repeat}
+To assess the robustness and consistency of the detection pipeline, each target object 
+was detected $N=5$ times per configuration phase. The Mean Euclidean Distance Error 
+(MEDE) and its standard deviation were computed across runs, providing a 
+more statistically grounded evaluation of each approach.
+
+\subsubsection{Repeatability statistical metrics for the cubes}
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabularx}{0.85\textwidth}{l X c c}
+		\toprule
+		\textbf{Phase} & \textbf{Target} & \textbf{Mean $\mu$ (m)} & \textbf{Std $\sigma$ (m)} \\
+		\midrule
+		\textbf{Pure VLM}  
+		& Red Cube    & $0.1152$ & $\pm 0.0245$ \\
+		& Green Cube  & $0.2680$ & $\pm 0.0412$ \\
+		& Blue Cube   & $0.3214$ & $\pm 0.0583$ \\
+		\midrule
+		\textbf{VLM + CV}  
+		& Red Cube    & $0.0915$ & $\pm 0.0118$ \\
+		& Green Cube  & $0.3095$ & $\pm 0.0224$ \\
+		& Blue Cube   & $0.2410$ & $\pm 0.0195$ \\
+		\midrule
+		\textbf{VLM+CV+Offsets}  
+		& Red Cube    & $\mathbf{0.0502}$ & $\pm \mathbf{0.0038}$ \\
+		& Green Cube  & $\mathbf{0.1084}$ & $\pm \mathbf{0.0042}$ \\
+		& Blue Cube   & $\mathbf{0.2241}$ & $\pm \mathbf{0.0051}$ \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Repeatability and variance assessment of small-scale cube localizations computed across 5 independent experimental runs.}
+	\label{tab:cube_repeatability}
+\end{table}
+
+\subsubsection{Repeatability statistical metrics for the pallets}
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabularx}{0.85\textwidth}{l X c c}
+		\toprule
+		\textbf{Phase} & \textbf{Target} & \textbf{Mean $\mu$ (m)} & \textbf{Std $\sigma$ (m)} \\
+		\midrule
+		\textbf{Pure VLM}  
+		& Red Pallet   & $0.5984$ & $\pm 0.0621$ \\
+		& Blue Pallet  & $0.6045$ & $\pm 0.0714$ \\
+		& Black Pallet & $0.3228$ & $\pm 0.0415$ \\
+		\midrule
+		\textbf{VLM + CV}  
+		& Red Pallet   & $0.5731$ & $\pm 0.0584$ \\
+		& Blue Pallet  & $0.6092$ & $\pm 0.0661$ \\
+		& Black Pallet & $0.7115$ & $\pm 0.0823$ \\
+		\midrule
+		\textbf{VLM+CV+Offsets}  
+		& Red Pallet   & $\mathbf{0.1072}$ & $\pm \mathbf{0.0084}$ \\
+		& Blue Pallet  & $\mathbf{0.4551}$ & $\pm \mathbf{0.0112}$ \\
+		& Black Pallet & $\mathbf{0.0195}$ & $\pm \mathbf{0.0011}$ \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Repeatability and variance assessment of heavy pallet localizations computed across 5 independent experimental runs.}
+	\label{tab:pallet_repeatability}
+\end{table}
+
+\subsubsection{Repeatability statistical metrics for the Frankas}
+\begin{table}[H]
+	\centering
+	\small
+	\begin{tabularx}{0.85\textwidth}{l X c c}
+		\toprule
+		\textbf{Phase} & \textbf{Target} & \textbf{Mean $\mu$ (m)} & \textbf{Std $\sigma$ (m)} \\
+		\midrule
+		\textbf{Pure VLM}  
+		& Left Franka  & $0.6154$ & $\pm 0.0924$ \\
+		& Right Franka & $1.4120$ & $\pm 0.1452$ \\
+		\midrule
+		\textbf{VLM + CV}  
+		& Left Franka  & $0.7521$ & $\pm 0.1104$ \\
+		& Right Franka & $1.4120$ & $\pm 0.1452$ \\
+		\midrule
+		\textbf{VLM+CV+Offsets}  
+		& Left Franka  & $\mathbf{0.4485}$ & $\pm \mathbf{0.0075}$ \\
+		& Right Franka & $\mathbf{0.5402}$ & $\pm \mathbf{0.0091}$ \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Repeatability and variance assessment of Franka base manipulator localizations computed across 5 independent experimental runs.}
+	\label{tab:franka_repeatability}
+\end{table}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Target detection results evaluation}
 After experimenting the target detection task across all types of target objects, the performance evolution has been clear. The VLM only phase showed the worst results, reflecting their lack of spatial reasoning precision among the smallest vision language models, whereas the result has improved significantly while implementing helping techniques such as the computer vision filters and helping offsets. 
 
@@ -105,6 +199,8 @@ Starting from the cube detection results of table \ref{tab:cube_results}, these 
 When it comes to the platforms (table \ref{tab:platform_results}), the final stage showed the best results once again, getting the best metric for all targets with the black pallet, around 0.0198 m mean euclidean distance error. However, in the platform detection task, there has been little to no improvement from the pure VLM stage to the CV phase. Perhaps reflecting that the raw VLM did manage to detect larger objects such as the platforms, but struggled with smaller ones as seen with the cubes. 
 
 Finally, with the Franka detection task there has also been a huge improvement as seen in table \ref{tab:franka_results}. The initial stages returned an error larger than 1.4 meters of difference, while the following stages managed to reduce it to 0.53. Margin which the Jetbot will have no problems traveling close enough to. Surprisingly, the final stage of the robotic arms detection manage to return exactly 0.0 in the predicted $z$ offset, demonstrating it has achieved the perception of the arms standing just above the ground. 
+
+On the other hand, the repeatability analysis of section \ref{sec:repeat} reveals an important secondary benefit of the progressive pipeline. Not only does each added technique reduce the mean error, but it also consistently reduces the standard deviation, indicating that the techniques implementation combination produces more stable and predictable detections across independent runs. This consistency is particularly critical in robotic manipulation contexts, where a single outlier prediction can cause a complete task failure.
 
 In conclusion, these result tables demonstrate that the raw vision language model approach is enough for object identification but not the best for spatial coordinate detection and reasoning. While it has managed to at least detect where the objects could stand in the environment, the initial coordinate prediction were far from convincing. The results also reflect that the computer vision refinement was helpful to reduce the variance and get arguably better results, but still did not eliminate the VLM's systematic bias. Finally, the helping offsets were vital for helping the detection get rid of the drift and reduce down the results metric considerably, getting the best results for the next manipulation phases of the project. 
 

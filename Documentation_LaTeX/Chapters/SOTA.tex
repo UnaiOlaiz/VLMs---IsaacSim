@@ -30,7 +30,7 @@ Transformers can also be adapted for modalities, usually finding a way to \texti
 
 \subsubsection{Image generation Transformer models}
 \begin{itemize}
-	\item \textbf{DALL-E 1} (2021): When it comes to image generation models, \textit{DALL-E 1} is not a \textit{difussion model}. It uses a decoder-only transformer which autoregressively generates a text followed by the token representation of an image, which is ten converted by a variational autoencoder to an image. 
+	\item \textbf{DALL-E 1} (2021): When it comes to image generation models, \textit{DALL-E 1} is not a \textit{difussion model}. It uses a decoder-only transformer which autoregressively generates a text followed by the token representation of an image, which is then converted by a variational autoencoder to an image. 
 	
 	\item \textbf{Parti} (2022): On the other hand, models like \textit{Parti} use an encoder-decoder schema. Where the encoder processes a text prompt and the decoder generates the token representation of an image.
 	
@@ -48,7 +48,7 @@ The integration of data from different domains has allowed a deeper understandin
 	
 	\item \textbf{Content generation}: models such as \textit{DALL-E} generate images from textual descriptions. 
 	
-	\item \textbf{Classification and missing data retrieval}: multimodal \textit{Deep Boltzmann Machines} outperform traditional shallow machine learning algorithms like the \textit{support vector machines} (SVMss) in classification tasks and are able to predict missing instances in multimodal datasets. 
+	\item \textbf{Classification and missing data retrieval}: multimodal \textit{Deep Boltzmann Machines} outperform traditional shallow machine learning algorithms like the \textit{support vector machines} (SVMs) in classification tasks and are able to predict missing instances in multimodal datasets. 
 	
 	\item \textbf{Robotics and human-computer interaction}: multimodal learning has improved the interaction in robotics and AI by integrating sensory inputs like speech, vision and touch, aiding autonomous systems and human-computer interaction.
 \end{itemize}
@@ -84,7 +84,7 @@ P(w_1, \dots, w_m) \approx \prod_{i=1}^{m} P(w_i \mid w_{i-(n-1)}, \dots, w_{i-1
 	P(w_1, \dots, w_m) \approx \prod_{i=1}^{m} P(w_i)
 	\]
 	
-	\item Bigram odel ($n=2$): depends on the single previous word.
+	\item Bigram model ($n=2$): depends on the single previous word.
 	\[
 	P(w_1, \dots, w_m) \approx \prod_{i=1}^{m} P(w_i \mid w_{i-1})
 	\]
@@ -315,7 +315,7 @@ Vision language models are trained not only in a single step process, but in a m
 The core of contrastive methods is the idea  of learning how to contrast between pairs of similar and dissimilar data points \cite{rethmeier2021primercontrastivepretraininglanguage}. A pair of similar data points is called positive sample if both points are different representations of the same data instance, in our case multimodal representations of the same sample. Whereas the negative samples are those pairs in which the data points belong to different examples. While computer vision methods learn from input-input (image-image) pairs and natural language processing methods deal with input-output (text, label) pairs, vision language models receive input-input (text, image) pairs. Previously mentioned models such as \textit{CLIP} \cite{radford2021learningtransferablevisualmodels}, apply this learning approach to maximize the \textit{cosine similarity} distance metric between matching image-text pairs in a shared embedding space, aiming to maximize the metric for the positive samples while minimizing the negative ones. The loss function used is the \textit{cross-entropy} function.
 
 \subsection{Generative Pre-Training}
-While contrastive learning focuses on aligning data points from different modalities in a shared single embedding space, generative pre-training shapes that task as a sequence-to-sequence problem. Using thie \textit{Prefix Language Modeling} (PrefixLM) approach \cite{wang2022simvlmsimplevisuallanguage}, the model receives a prefix consisting of a pair of image patches and a text sequence. The goal of the model is to predict the continuation of that textual sequence, just like \textit{seq2seq} models like \textit{RNNs} and \textit{LSTMs} try to predict. The loss function used is the negative log-likelihood loss, identical to the ones used in large language models like \textit{GPT}:
+While contrastive learning focuses on aligning data points from different modalities in a shared single embedding space, generative pre-training shapes that task as a sequence-to-sequence problem. Using this \textit{Prefix Language Modeling} (PrefixLM) approach \cite{wang2022simvlmsimplevisuallanguage}, the model receives a prefix consisting of a pair of image patches and a text sequence. The goal of the model is to predict the continuation of that textual sequence, just like \textit{seq2seq} models like \textit{RNNs} and \textit{LSTMs} try to predict. The loss function used is the negative log-likelihood loss, identical to the ones used in large language models like \textit{GPT}:
 % loss function formula
 
 $$\mathcal{L}_{PrefixLM} = -\sum_{t=1}^{|y|} \log P(y_t \mid y_{<t}, x_{prefix})$$

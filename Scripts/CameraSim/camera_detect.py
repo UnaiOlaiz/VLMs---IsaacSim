@@ -15,20 +15,28 @@ import json
 import sys
 import cv2
 
-TARGET_TYPE = "pallet"  # cube / pallet / robot
-TARGET_COLOR = "black"  # red, green, blue, black (for pallet) , white (for robots)
+# Available colors for each target type
+AVAILABLE_COLORS = {
+    "cube": ["red", "green", "blue"],
+    "pallet": ["red", "blue", "black"],
+    "robot": ["white"],
+}
+
+# Ask user for target type
+print("\n##### SELECT TARGET TYPE #####")
+print("1. cube")
+print("2. pallet")
+print("3. robot")
+target_choice = input("Enter choice (1/2/3): ").strip()
+target_map = {"1": "cube", "2": "pallet", "3": "robot"}
+TARGET_TYPE = target_map.get(target_choice, "pallet")
+
 RESOLUTION = (1280, 720)  # screen resolution
 ROBOT_PATH = "/World/Franka_Robot"  # franka name in environment
 URL_MULTI = "http://127.0.0.1:8000/ground_multi"  # endpoint of the function we will use inside our bentoml server
 
-# Camera config: Camera_01 for cubes, Camera_02 for pallets
-CAMERA_PATH = (
-    "/World/Cameras/Camera_02"
-    if TARGET_TYPE == "pallet"
-    else "/World/Cameras/Camera_01"
-    if TARGET_TYPE == "cube"
-    else "/World/Cameras/Camera_03"
-)  # if target equals robot
+# Available colors for selected target
+COLORS_TO_TEST = AVAILABLE_COLORS.get(TARGET_TYPE, ["white"])
 
 # We load the CV detection scripts
 sys.path.append(os.path.expanduser("~/Documents/PFG/Scripts/CameraSim/CV"))
@@ -61,6 +69,16 @@ OFFSETS = {
     },
     "robot": {"left": [0.56, -0.39, 0.0], "right": [-1.62, -0.93, 0.0]},
 }
+
+
+def get_camera_path(target_type):
+    """Get camera path based on target type"""
+    if target_type == "pallet":
+        return "/World/Cameras/Camera_02"
+    elif target_type == "cube":
+        return "/World/Cameras/Camera_01"
+    else:  # robot
+        return "/World/Cameras/Camera_03"
 
 
 def apply_calibration(xyz, color, t_type):
@@ -125,17 +143,39 @@ def unproject(u, v, depth_map, cam_matrix):
     return world_p[:3]
 
 
-async def main_vision():
-    print(f"##### BUSCANDO {TARGET_TYPE.upper()} {TARGET_COLOR.upper()} #####")
+def calculate_statistics(detections_list):
+    """
+    Calculate mean and std for a list of detections
+    """
+    if not detections_list:
+        return None, None
+    
+    detections_array = np.array(detections_list)
+    mean = np.mean(detections_array, axis=0)
+    std = np.std(detections_array, axis=0)
+    return mean, std
 
-    rp = rep.create.render_product(CAMERA_PATH, resolution=RESOLUTION)
+
+async def main_vision_with_tracking(detection_type="cv_offsets", target_color="black", camera_path=None):
+    """
+    Modified main_vision that supports 3 types of detection:
+    - "raw": VLM only (no CV processing, no offsets)
+    - "cv": CV detection without offsets
+    - "cv_offsets": CV detection with calibration offsets
+    """
+    if camera_path is None:
+        camera_path = get_camera_path(TARGET_TYPE)
+    
+    print(f"##### BUSCANDO {TARGET_TYPE.upper()} {target_color.upper()} ({detection_type.upper()}) #####")
+
+    rp = rep.create.render_product(camera_path, resolution=RESOLUTION)
     rgb_ann = rep.AnnotatorRegistry.get_annotator("rgb")
     dep_ann = rep.AnnotatorRegistry.get_annotator("distance_to_camera")
     rgb_ann.attach([rp])
     dep_ann.attach([rp])
 
     stage = omni.usd.get_context().get_stage()
-    cam_prim = stage.GetPrimAtPath(CAMERA_PATH)
+    cam_prim = stage.GetPrimAtPath(camera_path)
 
     for _ in range(20):
         await rep.orchestrator.step_async()
@@ -151,12 +191,19 @@ async def main_vision():
         if rgb_data is None or dep_data is None:
             continue
 
-        if TARGET_TYPE == "pallet":
-            proc_rgb, found = detect_palette(rgb_data, TARGET_COLOR)
-        elif TARGET_TYPE == "robot":
-            proc_rgb, found = detect_frankas(rgb_data, "white")
+        # Process image based on detection type
+        if detection_type == "raw":
+            # VLM only - send raw RGB without CV preprocessing
+            proc_rgb = rgb_data
+            found = True
         else:
-            proc_rgb, found = detect_cubes(rgb_data, TARGET_COLOR)
+            # CV detection (both "cv" and "cv_offsets" use CV preprocessing)
+            if TARGET_TYPE == "pallet":
+                proc_rgb, found = detect_palette(rgb_data, target_color)
+            elif TARGET_TYPE == "robot":
+                proc_rgb, found = detect_frankas(rgb_data, "white")
+            else:
+                proc_rgb, found = detect_cubes(rgb_data, target_color)
 
         if not found:
             continue
@@ -167,7 +214,7 @@ async def main_vision():
         img_str = base64.b64encode(buffered.getvalue()).decode("utf-8")
 
         payload = {
-            "color": "white" if TARGET_TYPE == "robot" else TARGET_COLOR,
+            "color": "white" if TARGET_TYPE == "robot" else target_color,
             "image_b64": img_str,
             "target_type": TARGET_TYPE,
         }
@@ -198,15 +245,12 @@ async def main_vision():
                                     f"##### DETECTION IGNORED, MAY BE JETBOT: {xyz_raw[0]:.2f} #####"
                                 )
                                 continue
-                                
-                        """
-                        if TARGET_TYPE == "cube":
-                            if TARGET_COLOR == "blue":
-                                xyz_raw[2] = 0.315
-                            else:
-                                xyz_raw[2] = 0.015
-                        """
-                        xyz = apply_calibration(xyz_raw, color=TARGET_COLOR, t_type=TARGET_TYPE)
+                        
+                        # Apply offsets only if detection_type is "cv_offsets"
+                        if detection_type == "cv_offsets":
+                            xyz = apply_calibration(xyz_raw, color=target_color, t_type=TARGET_TYPE)
+                        else:
+                            xyz = xyz_raw
 
                         obj_id = (
                             ("left" if xyz[0] < 2.0 else "right")
@@ -227,11 +271,9 @@ async def main_vision():
                             tracking_state[obj_id][1] >= STABILITY_COUNT
                             and obj_id not in final_results
                         ):
-                            print(
-                                f"##### {TARGET_TYPE.upper()} {obj_id.upper()} DETECTED #####"
-                            )
+                            print(f"##### {TARGET_TYPE.upper()} {obj_id.upper()} DETECTED ({detection_type.upper()}) #####")
                             final_results[obj_id] = xyz
-                            spawn_marker(xyz, TARGET_COLOR, obj_id)
+                            spawn_marker(xyz, target_color, obj_id)
 
             if TARGET_TYPE == "robot" and len(final_results) >= 2:
                 return final_results
@@ -245,38 +287,84 @@ async def main_vision():
 
 
 async def run():
-    # MAIN FUNCTION
-    all_targets = await main_vision()
-    if not all_targets:
-        return
-
-    r_pos, _ = get_world_pose(ROBOT_PATH)
+    # MAIN FUNCTION - Run 5 detections with 3 detection types for each color
+    NUM_RUNS = 5
+    DETECTION_TYPES = ["raw", "cv", "cv_offsets"]
     results_dir = os.path.expanduser("~/Documents/PFG/Scripts/CameraSim/CV+VLM_results")
     os.makedirs(results_dir, exist_ok=True)
+    
+    r_pos, _ = get_world_pose(ROBOT_PATH)
+    camera_path = get_camera_path(TARGET_TYPE)
+    
+    print(f"\n##### TESTING {TARGET_TYPE.upper()} WITH COLORS: {COLORS_TO_TEST} #####\n")
+    
+    # Iterate over each color
+    for color_idx, target_color in enumerate(COLORS_TO_TEST, 1):
+        print(f"\n\n{'='*60}")
+        print(f"COLOR {color_idx}/{len(COLORS_TO_TEST)}: {target_color.upper()}")
+        print(f"{'='*60}\n")
+        
+        # Storage for all runs: {obj_id: {detection_type: [positions]}}
+        all_runs = {}
+        
+        print(f"##### STARTING {NUM_RUNS} DETECTION RUNS FOR {target_color.upper()} #####\n")
+        
+        for run_num in range(NUM_RUNS):
+            print(f"\n========== RUN {run_num + 1}/{NUM_RUNS} ==========")
+            
+            for detection_type in DETECTION_TYPES:
+                print(f"  - Running {detection_type.upper()} detection...")
+                targets = await main_vision_with_tracking(
+                    detection_type=detection_type,
+                    target_color=target_color,
+                    camera_path=camera_path
+                )
+                
+                if targets:
+                    for obj_id, pos in targets.items():
+                        if obj_id not in all_runs:
+                            all_runs[obj_id] = {dt: [] for dt in DETECTION_TYPES}
+                        all_runs[obj_id][detection_type].append(pos)
+        
+        print(f"\n##### CALCULATING STATISTICS FOR {target_color.upper()} #####\n")
+        
+        # Calculate statistics for each object
+        for obj_id in all_runs.keys():
+            suffix = f"_{obj_id}" if TARGET_TYPE == "robot" else ""
+            filename = f"detection_statistics_{TARGET_TYPE}{suffix}_{target_color}.json"
+            
+            data_save = {
+                "target_type": TARGET_TYPE,
+                "target_color": target_color,
+                "side": obj_id,
+                "num_runs": NUM_RUNS,
+                "camera_used": camera_path,
+                "robot_world_pos": r_pos.tolist(),
+            }
+            
+            for detection_type in DETECTION_TYPES:
+                detections_list = all_runs[obj_id].get(detection_type, [])
+                mean, std = calculate_statistics(detections_list)
+                
+                data_save[detection_type] = {
+                    "description": f"{detection_type.replace('_', ' ').title()} detection",
+                    "detections": [det.tolist() for det in detections_list],
+                    "mean": mean.tolist() if mean is not None else None,
+                    "std": std.tolist() if std is not None else None,
+                }
+                
+                print(f"{obj_id} - {detection_type.upper()}: Mean={mean}, Std={std}")
 
-    for obj_id, t_pos in all_targets.items():
-        # Custom filename if multiple robots
-        suffix = f"_{obj_id}" if TARGET_TYPE == "robot" else ""
-        filename = f"detection_{TARGET_TYPE}{suffix}_{TARGET_COLOR}.json"
+            path = os.path.join(results_dir, filename)
+            with open(path, "w") as f:
+                json.dump(data_save, f, indent=4)
 
-        data_save = {
-            "target_type": TARGET_TYPE,
-            "target_color": TARGET_COLOR,
-            "side": obj_id,
-            "world_pos": t_pos.tolist(),
-            "robot_world_pos": r_pos.tolist(),
-            "relative_pos": (t_pos - np.array(r_pos)).tolist(),
-            "camera_used": CAMERA_PATH,
-            "status": "calibrated_success",
-        }
-
-        path = os.path.join(results_dir, filename)
-        with open(path, "w") as f:
-            json.dump(data_save, f, indent=4)
-
-        print(
-            f"##### SUCCESS: {TARGET_TYPE.upper()} {obj_id.upper()} SAVED AT {path} #####"
-        )
+            print(f"\n##### SUCCESS: {TARGET_TYPE.upper()} {obj_id.upper()} ({target_color.upper()}) STATISTICS SAVED #####")
+    
+    print(f"\n\n{'='*60}")
+    print(f"##### ALL TESTS COMPLETED #####")
+    print(f"Results saved in: {results_dir}")
+    print(f"{'='*60}\n")
 
 
 asyncio.ensure_future(run())

@@ -5,7 +5,7 @@
 \contentsline {table}{\numberline {2.1}{\ignorespaces Table indicating the time spent in each major phase of the project.}}{5}{table.caption.21}%
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {3.1}{\ignorespaces Human Resource Cost breakdown.}}{7}{table.caption.25}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Technical and material costs.}}{8}{table.caption.27}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Technical and material amortized costs.}}{8}{table.caption.27}%
 \contentsline {table}{\numberline {3.3}{\ignorespaces Consolidated project budget summary.}}{8}{table.caption.29}%
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {4.1}{\ignorespaces Architectural comparison of representative SOTA Vision-Language Models.}}{29}{table.caption.85}%
@@ -17,6 +17,9 @@
 \contentsline {table}{\numberline {7.1}{\ignorespaces Comparative analysis of the localization accuracy across different processing phases, the cube positions correspond to the first multi agent environment without any alternatives.}}{85}{table.caption.312}%
 \contentsline {table}{\numberline {7.2}{\ignorespaces Comparative analysis of the localization accuracy across different processing phases for the pallets. }}{85}{table.caption.314}%
 \contentsline {table}{\numberline {7.3}{\ignorespaces Comparative analysis of the localization accuracy for the Franka arm positions in the primary multi-agent environment.}}{86}{table.caption.316}%
+\contentsline {table}{\numberline {7.4}{\ignorespaces Repeatability and variance assessment of small-scale cube localizations computed across 5 independent experimental runs.}}{86}{table.caption.319}%
+\contentsline {table}{\numberline {7.5}{\ignorespaces Repeatability and variance assessment of heavy pallet localizations computed across 5 independent experimental runs.}}{87}{table.caption.321}%
+\contentsline {table}{\numberline {7.6}{\ignorespaces Repeatability and variance assessment of Franka base manipulator localizations computed across 5 independent experimental runs.}}{87}{table.caption.323}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
